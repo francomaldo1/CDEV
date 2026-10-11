@@ -1,0 +1,65 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/hud.gd" id="1_ahhtf"]
+
+[node name="HUD" type="CanvasLayer" unique_id=862552845]
+script = ExtResource("1_ahhtf")
+
+[node name="MicContainer" type="VBoxContainer" parent="." unique_id=1120417329]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 30.0
+offset_top = -90.0
+offset_right = 280.0
+offset_bottom = -30.0
+grow_vertical = 0
+
+[node name="MicLabel" type="Label" parent="MicContainer" unique_id=1692722881]
+layout_mode = 2
+text = "🎤 RUIDO DEL MICRÓFONO"
+
+[node name="ProgressBar" type="ProgressBar" parent="MicContainer" unique_id=890349624]
+custom_minimum_size = Vector2(250, 24)
+layout_mode = 2
+show_percentage = false
+
+[node name="AlertLabel" type="Label" parent="." unique_id=309380434]
+modulate = Color(1, 0.2, 0.2, 1)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -250.0
+offset_top = 40.0
+offset_right = 250.0
+grow_horizontal = 2
+text = "¡PELIGRO: HACES DEMASIADO RUIDO!"
+horizontal_alignment = 1
+
+[node name="InstructionLabel" type="Label" parent="." unique_id=1512574462]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -500.0
+offset_top = -40.0
+offset_right = -30.0
+offset_bottom = -15.0
+grow_horizontal = 0
+grow_vertical = 0
+horizontal_alignment = 2
+
+[node name="Crosshair" type="ColorRect" parent="." unique_id=2025009499]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 2.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0.6)
