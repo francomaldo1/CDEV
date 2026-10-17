@@ -17,6 +17,7 @@ var bob_time: float = 0.0
 var original_cam_y: float = 0.0
 
 func _ready() -> void:
+	add_to_group("player")
 	# Capturar el ratón inmediatamente
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	if camera:
@@ -27,7 +28,17 @@ func _ready() -> void:
 	floor_max_angle = deg_to_rad(50.0)
 	floor_block_on_wall = false
 
+func _is_ui_active() -> bool:
+	var hud = get_tree().root.find_child("HUD", true, false)
+	if hud and hud.has_method("is_modal_active") and hud.is_modal_active():
+		return true
+	return false
+
 func _input(event: InputEvent) -> void:
+	# Si hay un menú o examen abierto, no capturar mouse ni rotar cámara
+	if _is_ui_active():
+		return
+
 	# Al hacer clic con cualquier botón, si el mouse no está capturado, capturarlo
 	if event is InputEventMouseButton and event.pressed:
 		if Input.get_mouse_mode() != Input.MOUSE_MODE_CAPTURED:
@@ -56,6 +67,13 @@ func toggle_flashlight() -> void:
 		flashlight.visible = not flashlight.visible
 
 func _physics_process(delta: float) -> void:
+	# Si hay un menú/examen abierto, no procesar movimiento
+	if _is_ui_active():
+		velocity.x = 0.0
+		velocity.z = 0.0
+		move_and_slide()
+		return
+
 	# Gravedad
 	if not is_on_floor():
 		velocity.y -= gravity * delta

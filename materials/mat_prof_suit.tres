@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[resource]
+resource_name = "ProfSaco"
+albedo_color = Color(0.26, 0.22, 0.18, 1.0)
+roughness = 0.85
+uv1_scale = Vector3(2, 2, 2)
+uv1_triplanar = true

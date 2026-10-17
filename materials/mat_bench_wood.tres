@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[resource]
+resource_name = "MaderaBanco"
+albedo_color = Color(0.55, 0.40, 0.28, 1.0)
+roughness = 0.7
+uv1_scale = Vector3(1, 1, 1)
+uv1_triplanar = true

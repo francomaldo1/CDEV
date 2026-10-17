@@ -12,6 +12,16 @@
 [ext_resource type="Material" path="res://materials/mat_chair_red.tres" id="10_teuvw"]
 [ext_resource type="Material" path="res://materials/mat_stairs.tres" id="11_g4jqe"]
 [ext_resource type="Material" path="res://materials/mat_yellow_stripe.tres" id="12_uwdqk"]
+[ext_resource type="Material" path="res://materials/mat_fountain_water.tres" id="13_fw001"]
+[ext_resource type="Material" path="res://materials/mat_fountain_concrete.tres" id="14_fc001"]
+[ext_resource type="Material" path="res://materials/mat_bench_wood.tres" id="15_bw001"]
+[ext_resource type="Material" path="res://materials/mat_bench_metal.tres" id="16_bm001"]
+[ext_resource type="Material" path="res://materials/mat_bush.tres" id="17_bu001"]
+[ext_resource type="Material" path="res://materials/mat_palm_trunk.tres" id="18_pt001"]
+[ext_resource type="Material" path="res://materials/mat_palm_leaves.tres" id="19_pl001"]
+[ext_resource type="Material" path="res://materials/mat_ac_unit.tres" id="20_ac001"]
+[ext_resource type="Material" path="res://materials/mat_cantero_border.tres" id="21_cb001"]
+[ext_resource type="Script" path="res://scripts/patio_estudiante.gd" id="22_pe001"]
 
 [node name="EdificioCentral" type="Node3D" unique_id=397447900]
 
@@ -5241,7 +5251,9 @@ shadow_enabled = true
 omni_range = 16.0
 
 [node name="PatioEstudiante" type="Node3D" parent="." unique_id=199124533]
+script = ExtResource("22_pe001")
 
+; === GALERIAS PRIMER PISO (pasarelas techadas) ===
 [node name="GaleriaOeste_1" type="CSGBox3D" parent="PatioEstudiante" unique_id=1025732956]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.5, 4.5, 0.5)
 use_collision = true
@@ -5266,6 +5278,7 @@ use_collision = true
 size = Vector3(34, 0.2, 3)
 material = ExtResource("3_t6nnw")
 
+; === BARANDAS PRIMER PISO ===
 [node name="BarandaO_1" type="CSGBox3D" parent="PatioEstudiante" unique_id=409607591]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.1, 5, 0.5)
 use_collision = true
@@ -5290,6 +5303,7 @@ use_collision = true
 size = Vector3(34, 1, 0.1)
 material = ExtResource("4_0kga5")
 
+; === GALERIAS SEGUNDO PISO ===
 [node name="GaleriaOeste_2" type="CSGBox3D" parent="PatioEstudiante" unique_id=1729860167]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.5, 9, 0.5)
 use_collision = true
@@ -5314,6 +5328,7 @@ use_collision = true
 size = Vector3(34, 0.2, 3)
 material = ExtResource("3_t6nnw")
 
+; === BARANDAS SEGUNDO PISO ===
 [node name="BarandaO_2" type="CSGBox3D" parent="PatioEstudiante" unique_id=46385521]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.1, 9.5, 0.5)
 use_collision = true
@@ -5338,6 +5353,7 @@ use_collision = true
 size = Vector3(34, 1, 0.1)
 material = ExtResource("4_0kga5")
 
+; === COLUMNAS DEL PATIO (6 por lado, de piso a techo) ===
 [node name="ColPatio_-17_-20" type="CSGBox3D" parent="PatioEstudiante" unique_id=383951233]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 6.75, -20)
 use_collision = true
@@ -5410,38 +5426,782 @@ use_collision = true
 size = Vector3(0.6, 13.5, 0.6)
 material = ExtResource("4_0kga5")
 
-[node name="CanteroGrande" type="CSGBox3D" parent="PatioEstudiante" unique_id=403654682]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0.35, -2)
+; === FUENTE / PILETA CENTRAL (elemento icónico del patio) ===
+; Borde exterior de la fuente (concreto, centrada y compacta para permitir paso amplio alrededor)
+[node name="FuenteBordeNorte" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, -2.6)
 use_collision = true
-size = Vector3(10, 0.7, 14)
+size = Vector3(6, 0.6, 0.4)
+material = ExtResource("14_fc001")
+
+[node name="FuenteBordeSur" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 1.6)
+use_collision = true
+size = Vector3(6, 0.6, 0.4)
+material = ExtResource("14_fc001")
+
+[node name="FuenteBordeOeste" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.8, 0.3, -0.5)
+use_collision = true
+size = Vector3(0.4, 0.6, 4.6)
+material = ExtResource("14_fc001")
+
+[node name="FuenteBordeEste" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.8, 0.3, -0.5)
+use_collision = true
+size = Vector3(0.4, 0.6, 4.6)
+material = ExtResource("14_fc001")
+
+; Fondo de la fuente
+[node name="FuenteFondo" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, -0.5)
+use_collision = true
+size = Vector3(5.6, 0.1, 4.2)
+material = ExtResource("14_fc001")
+
+; Agua de la fuente
+[node name="FuenteAgua" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, -0.5)
+use_collision = true
+size = Vector3(5.2, 0.05, 3.8)
+material = ExtResource("13_fw001")
+
+; === CANTEROS ELEVADOS (separados ampliamente de la fuente con 4.5m de paso libre) ===
+; Cantero Norte-Oeste (lado oeste, retirado hacia X = -10.5, Z = -11.0)
+[node name="CanteroNOTierra" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5, 0.35, -11)
+use_collision = true
+size = Vector3(6, 0.7, 7)
 material = ExtResource("2_pu2gp")
 
-[node name="CanteroChico" type="CSGBox3D" parent="PatioEstudiante" unique_id=993888901]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.35, 7)
+[node name="CanteroNOBordeN" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5, 0.45, -14.65)
 use_collision = true
-size = Vector3(7, 0.7, 10)
+size = Vector3(6.6, 0.9, 0.3)
+material = ExtResource("21_cb001")
+
+[node name="CanteroNOBordeS" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5, 0.45, -7.35)
+use_collision = true
+size = Vector3(6.6, 0.9, 0.3)
+material = ExtResource("21_cb001")
+
+[node name="CanteroNOBordeO" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.65, 0.45, -11)
+use_collision = true
+size = Vector3(0.3, 0.9, 7.6)
+material = ExtResource("21_cb001")
+
+[node name="CanteroNOBordeE" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.35, 0.45, -11)
+use_collision = true
+size = Vector3(0.3, 0.9, 7.6)
+material = ExtResource("21_cb001")
+
+; Cantero Norte-Este (lado este, X = 10.5, Z = -11.0)
+[node name="CanteroNETierra" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5, 0.35, -11)
+use_collision = true
+size = Vector3(6, 0.7, 7)
 material = ExtResource("2_pu2gp")
 
+[node name="CanteroNEBordeN" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5, 0.45, -14.65)
+use_collision = true
+size = Vector3(6.6, 0.9, 0.3)
+material = ExtResource("21_cb001")
+
+[node name="CanteroNEBordeS" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5, 0.45, -7.35)
+use_collision = true
+size = Vector3(6.6, 0.9, 0.3)
+material = ExtResource("21_cb001")
+
+[node name="CanteroNEBordeO" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.35, 0.45, -11)
+use_collision = true
+size = Vector3(0.3, 0.9, 7.6)
+material = ExtResource("21_cb001")
+
+[node name="CanteroNEBordeE" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.65, 0.45, -11)
+use_collision = true
+size = Vector3(0.3, 0.9, 7.6)
+material = ExtResource("21_cb001")
+
+; Cantero Sur-Oeste (lado oeste sur, X = -10.5, Z = 11.0)
+[node name="CanteroSOTierra" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5, 0.35, 11)
+use_collision = true
+size = Vector3(6, 0.7, 7)
+material = ExtResource("2_pu2gp")
+
+[node name="CanteroSOBordeN" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5, 0.45, 7.35)
+use_collision = true
+size = Vector3(6.6, 0.9, 0.3)
+material = ExtResource("21_cb001")
+
+[node name="CanteroSOBordeS" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5, 0.45, 14.65)
+use_collision = true
+size = Vector3(6.6, 0.9, 0.3)
+material = ExtResource("21_cb001")
+
+[node name="CanteroSOBordeO" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.65, 0.45, 11)
+use_collision = true
+size = Vector3(0.3, 0.9, 7.6)
+material = ExtResource("21_cb001")
+
+[node name="CanteroSOBordeE" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.35, 0.45, 11)
+use_collision = true
+size = Vector3(0.3, 0.9, 7.6)
+material = ExtResource("21_cb001")
+
+; Cantero Sur-Este (lado este sur, X = 10.5, Z = 11.0)
+[node name="CanteroSETierra" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5, 0.35, 11)
+use_collision = true
+size = Vector3(6, 0.7, 7)
+material = ExtResource("2_pu2gp")
+
+[node name="CanteroSEBordeN" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5, 0.45, 7.35)
+use_collision = true
+size = Vector3(6.6, 0.9, 0.3)
+material = ExtResource("21_cb001")
+
+[node name="CanteroSEBordeS" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5, 0.45, 14.65)
+use_collision = true
+size = Vector3(6.6, 0.9, 0.3)
+material = ExtResource("21_cb001")
+
+[node name="CanteroSEBordeO" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.35, 0.45, 11)
+use_collision = true
+size = Vector3(0.3, 0.9, 7.6)
+material = ExtResource("21_cb001")
+
+[node name="CanteroSEBordeE" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.65, 0.45, 11)
+use_collision = true
+size = Vector3(0.3, 0.9, 7.6)
+material = ExtResource("21_cb001")
+
+; === SENDEROS (amplios caminos peatonales de granito) ===
+; Sendero principal longitudinal (N-S de punta a punta del patio)
 [node name="SenderoLongitudinal" type="CSGBox3D" parent="PatioEstudiante" unique_id=665749062]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0.01, 0.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0.5)
 use_collision = true
-size = Vector3(3.5, 0.02, 47)
+size = Vector3(4.5, 0.02, 47)
 material = ExtResource("1_2hdtu")
 
-[node name="SenderoTransversal" type="CSGBox3D" parent="PatioEstudiante" unique_id=1637211851]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 5)
+; Sendero transversal central (cruza entre la fuente y los canteros)
+[node name="SenderoTransversalNorte" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, -5)
 use_collision = true
-size = Vector3(32, 0.02, 3.5)
+size = Vector3(32, 0.02, 4)
 material = ExtResource("1_2hdtu")
 
+[node name="SenderoTransversalSur" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 4.5)
+use_collision = true
+size = Vector3(32, 0.02, 4)
+material = ExtResource("1_2hdtu")
+
+; Sendero perimetral oeste
+[node name="SenderoPerimO" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.5, 0.01, 0.5)
+use_collision = true
+size = Vector3(2.5, 0.02, 43)
+material = ExtResource("1_2hdtu")
+
+; Sendero perimetral este
+[node name="SenderoPerimE" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.5, 0.01, 0.5)
+use_collision = true
+size = Vector3(2.5, 0.02, 43)
+material = ExtResource("1_2hdtu")
+
+; === PALMERAS (centradas perfectamente en los 4 canteros) ===
+; Palmera 1 - cantero NO
+[node name="PalmeraTronco1" type="CSGCylinder3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5, 2.5, -11)
+use_collision = true
+radius = 0.25
+height = 5
+material = ExtResource("18_pt001")
+
+[node name="PalmeraHojas1" type="CSGSphere3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5, 5.5, -11)
+use_collision = true
+radius = 2.0
+material = ExtResource("19_pl001")
+
+; Palmera 2 - cantero NE
+[node name="PalmeraTronco2" type="CSGCylinder3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5, 2.5, -11)
+use_collision = true
+radius = 0.25
+height = 5
+material = ExtResource("18_pt001")
+
+[node name="PalmeraHojas2" type="CSGSphere3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5, 5.5, -11)
+use_collision = true
+radius = 2.0
+material = ExtResource("19_pl001")
+
+; Palmera 3 - cantero SO
+[node name="PalmeraTronco3" type="CSGCylinder3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5, 2.5, 11)
+use_collision = true
+radius = 0.25
+height = 5
+material = ExtResource("18_pt001")
+
+[node name="PalmeraHojas3" type="CSGSphere3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5, 5.5, 11)
+use_collision = true
+radius = 2.0
+material = ExtResource("19_pl001")
+
+; Palmera 4 - cantero SE
+[node name="PalmeraTronco4" type="CSGCylinder3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5, 2.5, 11)
+use_collision = true
+radius = 0.25
+height = 5
+material = ExtResource("18_pt001")
+
+[node name="PalmeraHojas4" type="CSGSphere3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5, 5.5, 11)
+use_collision = true
+radius = 2.0
+material = ExtResource("19_pl001")
+
+; === ARBUSTOS (ubicados con precisión dentro de cada cantero) ===
+; Arbustos cantero NO
+[node name="Arbusto1" type="CSGSphere3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 1.0, -12.5)
+use_collision = true
+radius = 0.8
+material = ExtResource("17_bu001")
+
+[node name="Arbusto2" type="CSGSphere3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0.9, -9.5)
+use_collision = true
+radius = 0.75
+material = ExtResource("17_bu001")
+
+; Arbustos cantero NE
+[node name="Arbusto3" type="CSGSphere3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 1.0, -12.5)
+use_collision = true
+radius = 0.8
+material = ExtResource("17_bu001")
+
+[node name="Arbusto4" type="CSGSphere3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0.9, -9.5)
+use_collision = true
+radius = 0.75
+material = ExtResource("17_bu001")
+
+; Arbustos cantero SO
+[node name="Arbusto5" type="CSGSphere3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 1.0, 9.5)
+use_collision = true
+radius = 0.8
+material = ExtResource("17_bu001")
+
+[node name="Arbusto6" type="CSGSphere3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0.9, 12.5)
+use_collision = true
+radius = 0.75
+material = ExtResource("17_bu001")
+
+; Arbustos cantero SE
+[node name="Arbusto7" type="CSGSphere3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 1.0, 9.5)
+use_collision = true
+radius = 0.8
+material = ExtResource("17_bu001")
+
+[node name="Arbusto8" type="CSGSphere3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0.9, 12.5)
+use_collision = true
+radius = 0.75
+material = ExtResource("17_bu001")
+
+; === PILAR CON CARTEL "PATIO DEL ESTUDIANTE" (en la entrada sur) ===
+; Pilar izquierdo
+[node name="PilarCartelIzq" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 2.25, 22)
+use_collision = true
+size = Vector3(0.5, 4.5, 0.5)
+material = ExtResource("4_0kga5")
+
+; Pilar derecho
+[node name="PilarCartelDer" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 2.25, 22)
+use_collision = true
+size = Vector3(0.5, 4.5, 0.5)
+material = ExtResource("4_0kga5")
+
+; Dintel del cartel
+[node name="PilarCartelDintel" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.8, 22)
+use_collision = true
+size = Vector3(5.5, 0.6, 0.5)
+material = ExtResource("4_0kga5")
+
+; Cartel "PATIO DEL ESTUDIANTE" (en el dintel)
 [node name="CartelPatioEntrada" type="Label3D" parent="PatioEstudiante" unique_id=1156114551]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 24.6)
-modulate = Color(1, 0.9, 0.45, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.8, 22.3)
+modulate = Color(0.85, 0.75, 0.35, 1)
 text = "PATIO DEL ESTUDIANTE"
-font_size = 42
-outline_size = 10
+font_size = 32
+outline_size = 8
+
+; Cartel mirando al otro lado
+[node name="CartelPatioEntradaRev" type="Label3D" parent="PatioEstudiante"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 3.8, 21.7)
+modulate = Color(0.85, 0.75, 0.35, 1)
+text = "PATIO DEL ESTUDIANTE"
+font_size = 32
+outline_size = 8
+
+; === BANCOS DE PLAZA (tipo los blancos con estructura de metal) ===
+; Banco noroeste
+[node name="BancoPatio_NO_Asiento" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0.5, -16)
+use_collision = true
+size = Vector3(3, 0.1, 0.7)
+material = ExtResource("15_bw001")
+
+[node name="BancoPatio_NO_Respaldo" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 0.96593, -0.25882, 0, 0.25882, 0.96593, -14, 0.9, -16.35)
+use_collision = true
+size = Vector3(3, 0.7, 0.08)
+material = ExtResource("15_bw001")
+
+[node name="BancoPatio_NO_PataL" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.2, 0.25, -16)
+use_collision = true
+size = Vector3(0.08, 0.5, 0.7)
+material = ExtResource("16_bm001")
+
+[node name="BancoPatio_NO_PataR" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.8, 0.25, -16)
+use_collision = true
+size = Vector3(0.08, 0.5, 0.7)
+material = ExtResource("16_bm001")
+
+; Banco noreste
+[node name="BancoPatio_NE_Asiento" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0.5, -16)
+use_collision = true
+size = Vector3(3, 0.1, 0.7)
+material = ExtResource("15_bw001")
+
+[node name="BancoPatio_NE_Respaldo" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 0.96593, -0.25882, 0, 0.25882, 0.96593, 14, 0.9, -16.35)
+use_collision = true
+size = Vector3(3, 0.7, 0.08)
+material = ExtResource("15_bw001")
+
+[node name="BancoPatio_NE_PataL" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.8, 0.25, -16)
+use_collision = true
+size = Vector3(0.08, 0.5, 0.7)
+material = ExtResource("16_bm001")
+
+[node name="BancoPatio_NE_PataR" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.2, 0.25, -16)
+use_collision = true
+size = Vector3(0.08, 0.5, 0.7)
+material = ExtResource("16_bm001")
+
+; Banco suroeste
+[node name="BancoPatio_SO_Asiento" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0.5, 16)
+use_collision = true
+size = Vector3(3, 0.1, 0.7)
+material = ExtResource("15_bw001")
+
+[node name="BancoPatio_SO_Respaldo" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 0.96593, 0.25882, 0, -0.25882, 0.96593, -14, 0.9, 16.35)
+use_collision = true
+size = Vector3(3, 0.7, 0.08)
+material = ExtResource("15_bw001")
+
+[node name="BancoPatio_SO_PataL" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.2, 0.25, 16)
+use_collision = true
+size = Vector3(0.08, 0.5, 0.7)
+material = ExtResource("16_bm001")
+
+[node name="BancoPatio_SO_PataR" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.8, 0.25, 16)
+use_collision = true
+size = Vector3(0.08, 0.5, 0.7)
+material = ExtResource("16_bm001")
+
+; Banco sureste
+[node name="BancoPatio_SE_Asiento" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0.5, 16)
+use_collision = true
+size = Vector3(3, 0.1, 0.7)
+material = ExtResource("15_bw001")
+
+[node name="BancoPatio_SE_Respaldo" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 0.96593, 0.25882, 0, -0.25882, 0.96593, 14, 0.9, 16.35)
+use_collision = true
+size = Vector3(3, 0.7, 0.08)
+material = ExtResource("15_bw001")
+
+[node name="BancoPatio_SE_PataL" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.8, 0.25, 16)
+use_collision = true
+size = Vector3(0.08, 0.5, 0.7)
+material = ExtResource("16_bm001")
+
+[node name="BancoPatio_SE_PataR" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.2, 0.25, 16)
+use_collision = true
+size = Vector3(0.08, 0.5, 0.7)
+material = ExtResource("16_bm001")
+
+; === VENTANAS INTERIORES DEL PATIO (vidrios en las fachadas) ===
+; Fachada Oeste - Piso 1
+[node name="VentanaO_P1_1" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.8, 2.5, -16)
+use_collision = true
+size = Vector3(0.05, 1.8, 3.5)
+material = ExtResource("5_68yaw")
+
+[node name="VentanaO_P1_2" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.8, 2.5, -8)
+use_collision = true
+size = Vector3(0.05, 1.8, 3.5)
+material = ExtResource("5_68yaw")
+
+[node name="VentanaO_P1_3" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.8, 2.5, 0)
+use_collision = true
+size = Vector3(0.05, 1.8, 3.5)
+material = ExtResource("5_68yaw")
+
+[node name="VentanaO_P1_4" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.8, 2.5, 8)
+use_collision = true
+size = Vector3(0.05, 1.8, 3.5)
+material = ExtResource("5_68yaw")
+
+[node name="VentanaO_P1_5" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.8, 2.5, 16)
+use_collision = true
+size = Vector3(0.05, 1.8, 3.5)
+material = ExtResource("5_68yaw")
+
+; Fachada Este - Piso 1
+[node name="VentanaE_P1_1" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.8, 2.5, -16)
+use_collision = true
+size = Vector3(0.05, 1.8, 3.5)
+material = ExtResource("5_68yaw")
+
+[node name="VentanaE_P1_2" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.8, 2.5, -8)
+use_collision = true
+size = Vector3(0.05, 1.8, 3.5)
+material = ExtResource("5_68yaw")
+
+[node name="VentanaE_P1_3" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.8, 2.5, 0)
+use_collision = true
+size = Vector3(0.05, 1.8, 3.5)
+material = ExtResource("5_68yaw")
+
+[node name="VentanaE_P1_4" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.8, 2.5, 8)
+use_collision = true
+size = Vector3(0.05, 1.8, 3.5)
+material = ExtResource("5_68yaw")
+
+[node name="VentanaE_P1_5" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.8, 2.5, 16)
+use_collision = true
+size = Vector3(0.05, 1.8, 3.5)
+material = ExtResource("5_68yaw")
+
+; Fachada Oeste - Piso 2
+[node name="VentanaO_P2_1" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.8, 7, -16)
+use_collision = true
+size = Vector3(0.05, 1.8, 3.5)
+material = ExtResource("5_68yaw")
+
+[node name="VentanaO_P2_2" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.8, 7, -8)
+use_collision = true
+size = Vector3(0.05, 1.8, 3.5)
+material = ExtResource("5_68yaw")
+
+[node name="VentanaO_P2_3" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.8, 7, 0)
+use_collision = true
+size = Vector3(0.05, 1.8, 3.5)
+material = ExtResource("5_68yaw")
+
+[node name="VentanaO_P2_4" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.8, 7, 8)
+use_collision = true
+size = Vector3(0.05, 1.8, 3.5)
+material = ExtResource("5_68yaw")
+
+[node name="VentanaO_P2_5" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.8, 7, 16)
+use_collision = true
+size = Vector3(0.05, 1.8, 3.5)
+material = ExtResource("5_68yaw")
+
+; Fachada Este - Piso 2
+[node name="VentanaE_P2_1" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.8, 7, -16)
+use_collision = true
+size = Vector3(0.05, 1.8, 3.5)
+material = ExtResource("5_68yaw")
+
+[node name="VentanaE_P2_2" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.8, 7, -8)
+use_collision = true
+size = Vector3(0.05, 1.8, 3.5)
+material = ExtResource("5_68yaw")
+
+[node name="VentanaE_P2_3" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.8, 7, 0)
+use_collision = true
+size = Vector3(0.05, 1.8, 3.5)
+material = ExtResource("5_68yaw")
+
+[node name="VentanaE_P2_4" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.8, 7, 8)
+use_collision = true
+size = Vector3(0.05, 1.8, 3.5)
+material = ExtResource("5_68yaw")
+
+[node name="VentanaE_P2_5" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.8, 7, 16)
+use_collision = true
+size = Vector3(0.05, 1.8, 3.5)
+material = ExtResource("5_68yaw")
+
+; === AIRES ACONDICIONADOS (debajo de ventanas, como en las fotos) ===
+; Lado Oeste - PB
+[node name="AC_O_PB_1" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.6, 1.2, -12)
+use_collision = true
+size = Vector3(0.6, 0.4, 0.8)
+material = ExtResource("20_ac001")
+
+[node name="AC_O_PB_2" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.6, 1.2, -4)
+use_collision = true
+size = Vector3(0.6, 0.4, 0.8)
+material = ExtResource("20_ac001")
+
+[node name="AC_O_PB_3" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.6, 1.2, 4)
+use_collision = true
+size = Vector3(0.6, 0.4, 0.8)
+material = ExtResource("20_ac001")
+
+[node name="AC_O_PB_4" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.6, 1.2, 12)
+use_collision = true
+size = Vector3(0.6, 0.4, 0.8)
+material = ExtResource("20_ac001")
+
+; Lado Este - PB
+[node name="AC_E_PB_1" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.6, 1.2, -12)
+use_collision = true
+size = Vector3(0.6, 0.4, 0.8)
+material = ExtResource("20_ac001")
+
+[node name="AC_E_PB_2" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.6, 1.2, -4)
+use_collision = true
+size = Vector3(0.6, 0.4, 0.8)
+material = ExtResource("20_ac001")
+
+[node name="AC_E_PB_3" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.6, 1.2, 4)
+use_collision = true
+size = Vector3(0.6, 0.4, 0.8)
+material = ExtResource("20_ac001")
+
+[node name="AC_E_PB_4" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.6, 1.2, 12)
+use_collision = true
+size = Vector3(0.6, 0.4, 0.8)
+material = ExtResource("20_ac001")
+
+; Lado Oeste - Piso 1
+[node name="AC_O_P1_1" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.6, 5.7, -12)
+use_collision = true
+size = Vector3(0.6, 0.4, 0.8)
+material = ExtResource("20_ac001")
+
+[node name="AC_O_P1_2" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.6, 5.7, 4)
+use_collision = true
+size = Vector3(0.6, 0.4, 0.8)
+material = ExtResource("20_ac001")
+
+; Lado Este - Piso 1
+[node name="AC_E_P1_1" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.6, 5.7, -12)
+use_collision = true
+size = Vector3(0.6, 0.4, 0.8)
+material = ExtResource("20_ac001")
+
+[node name="AC_E_P1_2" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.6, 5.7, 4)
+use_collision = true
+size = Vector3(0.6, 0.4, 0.8)
+material = ExtResource("20_ac001")
+
+; === LUCES DE TERROR (tenues, inquietantes) ===
+; Luz de la fuente (verdosa, fantasmal)
+[node name="LuzFuente" type="OmniLight3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -0.5)
+light_color = Color(0.3, 0.5, 0.4, 1)
+light_energy = 0.6
+omni_range = 8
+shadow_enabled = true
+
+; Luces tenues en los senderos (frías, azuladas)
+[node name="LuzSendero1" type="OmniLight3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -10)
+light_color = Color(0.4, 0.45, 0.6, 1)
+light_energy = 0.3
+omni_range = 6
+shadow_enabled = true
+
+[node name="LuzSendero2" type="OmniLight3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 10)
+light_color = Color(0.4, 0.45, 0.6, 1)
+light_energy = 0.3
+omni_range = 6
+shadow_enabled = true
+
+; Luz parpadeante en la galería (horror)
+[node name="LuzGaleriaO" type="OmniLight3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 4.2, 0)
+light_color = Color(0.8, 0.7, 0.5, 1)
+light_energy = 0.4
+omni_range = 5
+shadow_enabled = true
+
+[node name="LuzGaleriaE" type="OmniLight3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 4.2, 0)
+light_color = Color(0.8, 0.7, 0.5, 1)
+light_energy = 0.4
+omni_range = 5
+shadow_enabled = true
+
+; Faroles de piso en los caminos (postes)
+[node name="Farol1_Poste" type="CSGCylinder3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1.0, -2)
+use_collision = true
+radius = 0.06
+height = 2
+material = ExtResource("16_bm001")
+
+[node name="Farol1_Luz" type="OmniLight3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2.1, -2)
+light_color = Color(0.9, 0.6, 0.3, 1)
+light_energy = 0.25
+omni_range = 3.5
+shadow_enabled = true
+
+[node name="Farol2_Poste" type="CSGCylinder3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.0, 10)
+use_collision = true
+radius = 0.06
+height = 2
+material = ExtResource("16_bm001")
+
+[node name="Farol2_Luz" type="OmniLight3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2.1, 10)
+light_color = Color(0.9, 0.6, 0.3, 1)
+light_energy = 0.25
+omni_range = 3.5
+shadow_enabled = true
+
+; === PAREDES INTERIORES DEL PATIO (fachada dando al patio) ===
+; Pared oeste interior PB (debajo de galería P1)
+[node name="ParedIntO_PB" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 2.25, 0.5)
+use_collision = true
+size = Vector3(0.2, 4.5, 43)
+material = ExtResource("4_0kga5")
+
+; Pared este interior PB
+[node name="ParedIntE_PB" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 2.25, 0.5)
+use_collision = true
+size = Vector3(0.2, 4.5, 43)
+material = ExtResource("4_0kga5")
+
+
+; === TECHO SUPERIOR DEL EDIFICIO (visible desde el patio) ===
+[node name="TechoEdificioO" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.5, 13.5, 0.5)
+use_collision = true
+size = Vector3(3.5, 0.2, 49)
+material = ExtResource("3_t6nnw")
+
+[node name="TechoEdificioE" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.5, 13.5, 0.5)
+use_collision = true
+size = Vector3(3.5, 0.2, 49)
+material = ExtResource("3_t6nnw")
+
+[node name="TechoEdificioN" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13.5, -22.5)
+use_collision = true
+size = Vector3(34, 0.2, 3)
+material = ExtResource("3_t6nnw")
+
+; === ANTENA (visible en las fotos sobre el edificio) ===
+[node name="AntenaPoste" type="CSGCylinder3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 16, -22)
+use_collision = true
+radius = 0.08
+height = 5
+material = ExtResource("16_bm001")
+
+[node name="AntenaCruz1" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 17, -22)
+use_collision = true
+size = Vector3(2, 0.06, 0.06)
+material = ExtResource("16_bm001")
+
+[node name="AntenaCruz2" type="CSGBox3D" parent="PatioEstudiante"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 18, -22)
+use_collision = true
+size = Vector3(1.5, 0.06, 0.06)
+material = ExtResource("16_bm001")
 
 [node name="AuditorioPrincipal" type="Node3D" parent="." unique_id=158469564]
+
 
 [node name="AudSuelo" type="CSGBox3D" parent="AuditorioPrincipal" unique_id=1071828117]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.06, 60)
