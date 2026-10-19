@@ -795,11 +795,14 @@ func _escaleras_torres(r: Node):
 	var esc = Node3D.new()
 	esc.name = "TorresEscaleras"; r.add_child(esc); esc.owner = r
 
-	# Material metálico para pasamanos (gris oscuro metalizado)
+	# Material metálico cepillado para pasamanos (con textura)
 	var m_metal = StandardMaterial3D.new()
-	m_metal.albedo_color = Color(0.35, 0.35, 0.38)
-	m_metal.metallic = 0.8
-	m_metal.roughness = 0.3
+	m_metal.albedo_color = Color(0.85, 0.85, 0.88)
+	m_metal.albedo_texture = load("res://textures/tex_metal_brushed.png")
+	m_metal.metallic = 0.85
+	m_metal.roughness = 0.28
+	m_metal.uv1_scale = Vector3(2.0, 2.0, 2.0)
+	m_metal.uv1_triplanar = true
 
 	var torres = [
 		["TorreOeste", -69.5, 30.0],
