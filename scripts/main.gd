@@ -19,6 +19,11 @@ var is_blackout: bool = false
 var original_ambient_energy: float = 0.4
 var original_moon_energy: float = 0.35
 
+var ambient_drone_player: AudioStreamPlayer = null
+var spook_audio_3d: AudioStreamPlayer3D = null
+var spook_interval_timer: float = 0.0
+var next_spook_delay: float = 12.0
+
 ## Ubicaciones de pupitres en todas las aulas de Planta Baja
 var classroom_spots = [
 	{"pos": Vector3(-52.5, 0.82, -39.0), "name": "Aula 101 (Norte)"},
@@ -33,6 +38,8 @@ var classroom_spots = [
 
 func _ready() -> void:
 	randomize()
+	
+	_setup_ambient_audio()
 	
 	if mic_detector and hud:
 		mic_detector.volume_updated.connect(hud.on_mic_volume_updated)
@@ -49,6 +56,25 @@ func _ready() -> void:
 	
 	# Programar el corte de luz
 	_start_blackout_timer()
+
+func _setup_ambient_audio() -> void:
+	ambient_drone_player = AudioStreamPlayer.new()
+	ambient_drone_player.name = "AmbientDronePlayer"
+	ambient_drone_player.stream = HorrorAudio.get_ambient_drone(false)
+	ambient_drone_player.volume_db = -12.0
+	ambient_drone_player.bus = &"Master"
+	add_child(ambient_drone_player)
+	ambient_drone_player.play()
+	
+	spook_audio_3d = AudioStreamPlayer3D.new()
+	spook_audio_3d.name = "SpookAudio3D"
+	spook_audio_3d.unit_size = 4.0
+	spook_audio_3d.max_distance = 45.0
+	spook_audio_3d.volume_db = -4.0
+	spook_audio_3d.bus = &"Master"
+	add_child(spook_audio_3d)
+	
+	next_spook_delay = randf_range(10.0, 20.0)
 
 var turned_off_lights: Array[Light3D] = []
 
@@ -175,6 +201,12 @@ func _trigger_blackout() -> void:
 	if moon_light:
 		moon_light.light_energy = 0.04
 		
+	# Transicionar a dron oscuro de apagón
+	if ambient_drone_player:
+		ambient_drone_player.stream = HorrorAudio.get_ambient_drone(true)
+		ambient_drone_player.volume_db = -10.0
+		ambient_drone_player.play()
+		
 	if tablero_electrico:
 		tablero_electrico.trigger_blackout()
 		
@@ -188,6 +220,12 @@ func _trigger_blackout() -> void:
 
 func _on_power_restored() -> void:
 	is_blackout = false
+	
+	# Restaurar dron ambiental normal
+	if ambient_drone_player:
+		ambient_drone_player.stream = HorrorAudio.get_ambient_drone(false)
+		ambient_drone_player.volume_db = -12.0
+		ambient_drone_player.play()
 	
 	# Restaurar iluminación ambiental y lunar
 	if world_env and world_env.environment:
@@ -205,3 +243,30 @@ func _on_power_restored() -> void:
 		hud.show_temporary_alert("💡 ¡Energía restablecida! Las luces volvieron a encenderse.", Color(0.3, 1.0, 0.5))
 		
 	print(">>> ¡ENERGÍA RESTABLECIDA EN TODA LA FACULTAD!")
+
+func _process(delta: float) -> void:
+	# Crujidos y sonidos espeluznantes periódicos a lo lejos en el edificio
+	spook_interval_timer += delta
+	if spook_interval_timer >= next_spook_delay:
+		spook_interval_timer = 0.0
+		next_spook_delay = randf_range(14.0, 28.0)
+		_play_distant_spook()
+
+func _play_distant_spook() -> void:
+	if not spook_audio_3d:
+		return
+	# Elegir un punto aleatorio del edificio lejos del centro
+	var spook_spots = [
+		Vector3(0.0, 2.0, 0.0),    # Auditorio central
+		Vector3(-45.0, 1.0, -30.0), # Pasillos noroeste
+		Vector3(45.0, 1.0, 30.0),  # Cafetería este
+		Vector3(0.0, 4.5, -20.0),  # Galería alta piso 1
+		Vector3(-20.0, 0.5, 25.0)  # Cerca de las escaleras
+	]
+	var spot = spook_spots[randi() % spook_spots.size()]
+	spook_audio_3d.global_position = spot
+	spook_audio_3d.stream = HorrorAudio.get_spooky_creak()
+	spook_audio_3d.pitch_scale = randf_range(0.85, 1.15)
+	spook_audio_3d.volume_db = randf_range(-6.0, -1.0)
+	spook_audio_3d.play()
+

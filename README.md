@@ -45,11 +45,14 @@ El jugador se encuentra solo de noche en la facultad intentando aprobar un parci
   * Generación dinámica de fórmulas aritméticas con opciones múltiples (1 correcta y 3 distractores).
   * Acertar otorga la llave de escape; fallar enfurece y atrae al profesor.
 
-* 🔊 **Audio Procedural de Terror (`scripts/horror_audio.gd`):**
+* 🔊 **Audio Procedural de Terror & Paisaje Sonoro (`scripts/horror_audio.gd`):**
   * Generación matemática en tiempo de ejecución de buffers WAV (PCM 16-bit) sin assets externos pesados:
-    * Chispazo de arco voltaico y zumbido de 60/120 Hz.
-    * Golpe de madera seca resonante (regla contra mesada).
-    * *Stinger* orquestal disonante con tritono agudo y frecuencias subgraves.
+    * **Dron Ambiental Continuo (Dark Ambient Drone):** Zumbido grave envolvente en bucle perfecto que cambia a una atmósfera más densa, oscura y disonante durante el apagón general.
+    * **Pisadas del Jugador:** Pasos sincronizados con el balanceo de cabeza (*head bobbing*), distinguiendo entre caminar y correr sobre mosaico/granito.
+    * **Pisadas Pesadas del Profesor en 3D (`AudioStreamPlayer3D`):** Taconeo de zapato formal con resonancia de pasillo atenuada en el espacio 3D, permitiendo percibir si se acerca o por dónde patrulla.
+    * **Latidos Cardíacos de Tensión:** Sistema dinámico de pulso que se activa y acelera según la proximidad y persecución del profesor.
+    * **Crujidos Ambientales Espeluznantes:** Emisión periódica aleatoria de quejidos en cañerías o maderas en distintos puntos distantes del edificio (auditorio, escaleras, pasillos altos).
+    * **Screamer & Efectos de Impacto:** Chispazo eléctrico caótico, golpe de regla sobre mesada y stinger disonante de terror.
 
 * 🏛️ **Entorno 3D Arquitectónico (`scenes/edificio_central.tscn`):**
   * Recreación de 3 niveles del edificio central de la UTN FRC:

@@ -14,12 +14,18 @@ class_name Player
 
 var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity", 9.8)
 var bob_time: float = 0.0
+var step_phase: float = 0.0
 var original_cam_y: float = 0.0
 var is_frozen: bool = false
 var shake_tween: Tween = null
 
+var footstep_player: AudioStreamPlayer = null
+var heartbeat_player: AudioStreamPlayer = null
+var heartbeat_timer: float = 0.0
+
 func _ready() -> void:
 	add_to_group("player")
+	_setup_audio_players()
 	# Capturar el ratón inmediatamente
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	if camera:
@@ -164,19 +170,76 @@ func _physics_process(delta: float) -> void:
 				global_position = pre_pos + Vector3(0, step_h, 0)
 				move_and_slide()
 
-	# Head Bobbing (balanceo de cámara)
-	_apply_head_bob(delta, is_sprinting)
+	# Head Bobbing y pasos
+	_apply_head_bob_and_footsteps(delta, is_sprinting)
+	
+	# Latidos cardíacos cuando el peligro acecha
+	_update_heartbeat(delta)
 
-func _apply_head_bob(delta: float, is_sprinting: bool) -> void:
+func _setup_audio_players() -> void:
+	footstep_player = AudioStreamPlayer.new()
+	footstep_player.name = "FootstepPlayer"
+	footstep_player.volume_db = -8.0
+	footstep_player.bus = &"Master"
+	add_child(footstep_player)
+
+	heartbeat_player = AudioStreamPlayer.new()
+	heartbeat_player.name = "HeartbeatPlayer"
+	heartbeat_player.volume_db = -6.0
+	heartbeat_player.bus = &"Master"
+	add_child(heartbeat_player)
+
+func _apply_head_bob_and_footsteps(delta: float, is_sprinting: bool) -> void:
 	if not camera:
 		return
 	var horizontal_vel = Vector2(velocity.x, velocity.z).length()
 	if is_on_floor() and horizontal_vel > 0.5:
 		var speed_mult = 1.35 if is_sprinting else 1.0
-		bob_time += delta * bob_frequency * speed_mult
+		var step_delta = delta * bob_frequency * speed_mult
+		bob_time += step_delta
+		step_phase += step_delta
+		
+		# Cada medio ciclo (apoyo alternado de pie izquierdo y derecho)
+		if step_phase >= PI:
+			step_phase -= PI
+			_play_footstep(is_sprinting)
+			
 		camera.position.y = original_cam_y + sin(bob_time) * bob_amplitude
 		camera.position.x = cos(bob_time * 0.5) * (bob_amplitude * 0.5)
 	else:
 		bob_time = 0.0
+		step_phase = 0.0
 		camera.position.y = lerpf(camera.position.y, original_cam_y, delta * 6.0)
 		camera.position.x = lerpf(camera.position.x, 0.0, delta * 6.0)
+
+func _play_footstep(is_sprint: bool) -> void:
+	if not footstep_player:
+		return
+	footstep_player.stream = HorrorAudio.get_player_footstep(is_sprint)
+	footstep_player.pitch_scale = randf_range(0.94, 1.06)
+	footstep_player.play()
+
+func _update_heartbeat(delta: float) -> void:
+	var prof = get_tree().root.find_child("Profesor", true, false)
+	if not is_instance_valid(prof):
+		return
+		
+	var dist = global_position.distance_to(prof.global_position)
+	var is_chasing = (prof.current_state == 1) # State.CHASE
+	
+	# Latidos si está persiguiendo o si está muy cerca en la oscuridad
+	if is_chasing or dist < 8.0:
+		var danger_factor = clampf(1.0 - (dist / 22.0), 0.15, 1.0)
+		var beat_interval = lerpf(1.3, 0.45, danger_factor) # Más rápido cuanto más cerca
+		
+		heartbeat_timer += delta
+		if heartbeat_timer >= beat_interval:
+			heartbeat_timer = 0.0
+			if heartbeat_player:
+				heartbeat_player.stream = HorrorAudio.get_heartbeat_sound()
+				heartbeat_player.volume_db = lerpf(-14.0, -3.0, danger_factor)
+				heartbeat_player.pitch_scale = lerpf(0.92, 1.18, danger_factor)
+				heartbeat_player.play()
+	else:
+		heartbeat_timer = 0.0
+

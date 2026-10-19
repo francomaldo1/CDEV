@@ -100,9 +100,14 @@ var phrases_enraged: Array[String] = [
 	"¡¡NO TIENEN NIVEL PARA LA FACULTAD!!"
 ]
 var phrase_timer: float = 0.0
+var step_audio: AudioStreamPlayer3D = null
+var step_phase: float = 0.0
 
 func _ready() -> void:
 	add_to_group("enemies")
+	
+	# Audio 3D espacial de pasos
+	_setup_step_audio()
 	
 	# Configuración de física para caminar suave y sin saltos
 	floor_snap_length = 0.4
@@ -402,9 +407,33 @@ func boost_speed() -> void:
 		
 	_say(phrases_enraged[randi() % phrases_enraged.size()], Color(1.0, 0.0, 0.0))
 
+func _setup_step_audio() -> void:
+	step_audio = AudioStreamPlayer3D.new()
+	step_audio.name = "ProfesorStepAudio3D"
+	step_audio.unit_size = 3.5
+	step_audio.max_distance = 32.0
+	step_audio.volume_db = 2.0
+	step_audio.bus = &"Master"
+	add_child(step_audio)
+
+func _play_prof_step() -> void:
+	if not step_audio:
+		return
+	step_audio.stream = HorrorAudio.get_profesor_footstep()
+	step_audio.pitch_scale = randf_range(0.92, 1.05)
+	step_audio.play()
+
 func _animate_walk(delta: float, is_moving: bool) -> void:
 	if is_moving and is_on_floor():
-		walk_anim_time += delta * (current_speed * 2.3)
+		var anim_delta = delta * (current_speed * 2.3)
+		walk_anim_time += anim_delta
+		step_phase += anim_delta
+		
+		# Cada medio ciclo se apoya un zapato (izquierdo o derecho)
+		if step_phase >= PI:
+			step_phase -= PI
+			_play_prof_step()
+			
 		var swing_legs = sin(walk_anim_time) * deg_to_rad(28.0)
 		var swing_arms = cos(walk_anim_time) * deg_to_rad(25.0)
 		
@@ -419,6 +448,7 @@ func _animate_walk(delta: float, is_moving: bool) -> void:
 				regla.rotation.x = deg_to_rad(20.0) + cos(walk_anim_time * 1.5) * deg_to_rad(10.0)
 	else:
 		walk_anim_time = 0.0
+		step_phase = 0.0
 		if pierna_izq: pierna_izq.rotation.x = lerpf(pierna_izq.rotation.x, 0.0, delta * 6.0)
 		if pierna_der: pierna_der.rotation.x = lerpf(pierna_der.rotation.x, 0.0, delta * 6.0)
 		if brazo_izq: brazo_izq.rotation.x = lerpf(brazo_izq.rotation.x, 0.0, delta * 6.0)
