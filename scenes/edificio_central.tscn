@@ -8575,7 +8575,7 @@ use_collision = true
 size = Vector3(8, 2.5, 3)
 material = ExtResource("4_0kga5")
 
-﻿[node name="TorresEscaleras" type="Node3D" parent="." unique_id=554014967]
+[node name="TorresEscaleras" type="Node3D" parent="." unique_id=554014967]
 
 [node name="TorreOeste" type="Node3D" parent="TorresEscaleras" unique_id=315933300]
 
