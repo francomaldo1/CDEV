@@ -49,21 +49,33 @@ var time_without_sight: float = 0.0
 var search_timer: float = 0.0
 var last_known_player_pos: Vector3 = Vector3.ZERO
 
-## Puntos de patrullaje por toda la facultad (Planta Baja y Patio)
+var stuck_timer: float = 0.0
+var prev_pos: Vector3 = Vector3.ZERO
+var pos_sample_timer: float = 0.0
+
+## Puntos de patrullaje por toda la facultad (Pasillos despejados y Patio)
 var patrol_waypoints: Array[Vector3] = [
-	Vector3(0.0, 0.2, -18.0),   # Patio Norte (acceso a pasillos)
-	Vector3(-25.0, 0.2, -28.0), # Pasillo Norte frente a Aulas 101/102
-	Vector3(-52.0, 0.2, -28.0), # Pasillo Norte ala oeste
-	Vector3(-43.0, 0.2, -12.0), # Pasillo Oeste (aulas W1/W2)
-	Vector3(-43.0, 0.2, 12.0),  # Pasillo Oeste (aulas W3/W4)
-	Vector3(-25.0, 0.2, 28.0),  # Pasillo Sur oeste (frente al auditorio)
-	Vector3(0.0, 0.2, 22.0),    # Entrada Sur del Patio (pilar del estudiante)
+	Vector3(0.0, 0.2, -18.0),   # Patio Norte
+	Vector3(0.0, 0.2, -28.5),   # Pasillo Norte centro
+	Vector3(-25.0, 0.2, -28.5), # Pasillo Norte frente a Aula 102
+	Vector3(-42.0, 0.2, -28.5), # Esquina Noroeste (frente a Aula 105)
+	Vector3(-42.0, 0.2, -12.0), # Pasillo Oeste (frente a Aula 106)
+	Vector3(-42.0, 0.2, 5.0),   # Pasillo Oeste (frente a Aula 107)
+	Vector3(-42.0, 0.2, 20.0),  # Pasillo Oeste (frente a Aula 108)
+	Vector3(-42.0, 0.2, 30.0),  # Esquina Suroeste
+	Vector3(-25.0, 0.2, 30.0),  # Pasillo Sur oeste (frente a fotocopiadora 1)
+	Vector3(0.0, 0.2, 30.0),    # Pasillo Sur centro (frente a auditorio)
+	Vector3(0.0, 0.2, 22.0),    # Entrada Sur al Patio
 	Vector3(0.0, 0.2, 4.0),     # Patio interior frente a la fuente
 	Vector3(0.0, 0.2, -4.0),    # Patio interior norte
-	Vector3(25.0, 0.2, 28.0),   # Pasillo Sur este
-	Vector3(43.0, 0.2, 12.0),   # Pasillo Este sur
-	Vector3(43.0, 0.2, -12.0),  # Pasillo Este norte
-	Vector3(25.0, 0.2, -28.0)   # Pasillo Norte frente a Aulas 103/104
+	Vector3(0.0, 0.2, 22.0),    # Salida Patio Sur
+	Vector3(25.0, 0.2, 30.0),   # Pasillo Sur este (frente a fotocopiadora 2)
+	Vector3(42.0, 0.2, 30.0),   # Esquina Sureste
+	Vector3(42.0, 0.2, 17.0),   # Pasillo Este sur (frente a Aula 115)
+	Vector3(42.0, 0.2, 0.0),    # Pasillo Este centro (frente a Cafetería PB)
+	Vector3(42.0, 0.2, -15.0),  # Pasillo Este norte (frente a Aula 114)
+	Vector3(42.0, 0.2, -28.5),  # Esquina Noreste
+	Vector3(25.0, 0.2, -28.5)   # Pasillo Norte este (frente a Aula 104)
 ]
 var current_waypoint_idx: int = 0
 
@@ -100,6 +112,8 @@ func _ready() -> void:
 	patrol_speed = base_patrol_speed
 	chase_speed = base_chase_speed
 	current_speed = patrol_speed
+	
+	prev_pos = global_position
 	
 	_find_player()
 	
@@ -283,19 +297,62 @@ func _process_attack_state(delta: float) -> void:
 ## MOVIMIENTO Y ORIENTACIÓN SUAVE
 ## =====================================================================
 func _move_towards(delta: float, dir: Vector3, speed_to_use: float, rot_speed: float) -> void:
+	var move_vec = dir
+	
 	if dir.length() > 0.05:
-		# La cara del profesor está orientada hacia +Z del modelo
-		# atan2(dir.x, dir.z) apunta la cara (+Z) directamente hacia el objetivo
-		var target_rot_y = atan2(dir.x, dir.z)
+		# Si toca una pared, deslizarse suavemente a lo largo de ella
+		if is_on_wall():
+			var wall_n = get_wall_normal()
+			var slide = dir.slide(wall_n).normalized()
+			if slide.length() > 0.1:
+				move_vec = slide
+
+		var target_rot_y = atan2(move_vec.x, move_vec.z)
 		rotation.y = lerp_angle(rotation.y, target_rot_y, rot_speed * delta)
 		
-		velocity.x = move_toward(velocity.x, dir.x * speed_to_use, 10.0 * delta)
-		velocity.z = move_toward(velocity.z, dir.z * speed_to_use, 10.0 * delta)
+		velocity.x = move_toward(velocity.x, move_vec.x * speed_to_use, 12.0 * delta)
+		velocity.z = move_toward(velocity.z, move_vec.z * speed_to_use, 12.0 * delta)
 	else:
 		velocity.x = move_toward(velocity.x, 0.0, 10.0 * delta)
 		velocity.z = move_toward(velocity.z, 0.0, 10.0 * delta)
 
+	var pre_pos = global_position
+	var was_on_floor = is_on_floor()
 	move_and_slide()
+
+	# Subir pequeños desniveles (Step-up hasta 35cm)
+	if was_on_floor and is_on_wall() and dir != Vector3.ZERO:
+		var step_h: float = 0.35
+		var step_t: Transform3D = global_transform
+		step_t.origin.y += step_h
+		if not test_move(global_transform, Vector3(0, step_h, 0)):
+			var fwd: Vector3 = dir.normalized() * (speed_to_use * delta + 0.1)
+			if not test_move(step_t, fwd):
+				global_position = pre_pos + Vector3(0, step_h, 0)
+				move_and_slide()
+
+	# Detección y recuperación automática si se traba (Watchdog anti-stuck)
+	pos_sample_timer += delta
+	if pos_sample_timer >= 0.4:
+		pos_sample_timer = 0.0
+		var moved_dist = global_position.distance_to(prev_pos)
+		prev_pos = global_position
+		if is_on_wall() and moved_dist < 0.2 and dir.length() > 0.1:
+			stuck_timer += 0.4
+		else:
+			stuck_timer = max(0.0, stuck_timer - 0.4)
+
+	# Si estuvo trabado contra una pared más de 1.0 segundo
+	if stuck_timer >= 1.0:
+		stuck_timer = 0.0
+		if current_state == State.PATROL:
+			current_waypoint_idx = (current_waypoint_idx + 1) % patrol_waypoints.size()
+			var away_wall = get_wall_normal() * 1.5
+			velocity.x = away_wall.x * speed_to_use
+			velocity.z = away_wall.z * speed_to_use
+		elif current_state == State.CHASE and not _can_see_player():
+			_enter_search_state()
+
 	_animate_walk(delta, dir.length() > 0.1)
 
 ## =====================================================================

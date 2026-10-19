@@ -50,6 +50,8 @@ func _ready() -> void:
 	# Programar el corte de luz
 	_start_blackout_timer()
 
+var turned_off_lights: Array[Light3D] = []
+
 func _spawn_exit_door() -> void:
 	var puerta = puerta_salida_scene.instantiate()
 	puerta.position = Vector3(0.0, 0.0, 34.8)
@@ -57,13 +59,25 @@ func _spawn_exit_door() -> void:
 	add_child(puerta)
 
 func _spawn_tablero_electronica() -> void:
-	# Ubicado en el Departamento de Ingeniería Electrónica (Planta Baja Oeste)
+	# Ubicado en el Departamento de Ingeniería Electrónica (Planta Baja Oeste), montado en la pared este bajo la luz
 	tablero_electrico = tablero_scene.instantiate() as Area3D
-	tablero_electrico.position = Vector3(-25.0, 0.0, -4.5)
-	tablero_electrico.rotation_degrees = Vector3(0, 90, 0)
+	tablero_electrico.position = Vector3(-17.22, 0.0, 0.0)
+	tablero_electrico.rotation_degrees = Vector3(0, -90, 0)
 	tablero_electrico.power_restored.connect(_on_power_restored)
 	add_child(tablero_electrico)
-	print(">>> Tablero Eléctrico instalado en Depto. de Ingeniería Electrónica")
+	
+	# Luz puntual en la pared justo sobre el tablero
+	var luz_tablero = OmniLight3D.new()
+	luz_tablero.name = "LuzParedTablero"
+	luz_tablero.position = Vector3(-17.4, 2.5, 0.0)
+	luz_tablero.light_color = Color(1.0, 0.95, 0.8)
+	luz_tablero.light_energy = 0.8
+	luz_tablero.omni_range = 5.0
+	luz_tablero.shadow_enabled = true
+	luz_tablero.add_to_group("building_lights")
+	add_child(luz_tablero)
+	
+	print(">>> Tablero Eléctrico instalado en Depto. de Electrónica (montado en pared bajo la luz)")
 
 func _spawn_fusible() -> void:
 	# El fusible está guardado en la Cafetería o Bedelía (ala este)
@@ -88,23 +102,68 @@ func _spawn_multiple_cuadernos() -> void:
 func _start_blackout_timer() -> void:
 	get_tree().create_timer(blackout_delay).timeout.connect(_trigger_blackout)
 
+func _collect_all_building_lights() -> Array[Light3D]:
+	var result: Array[Light3D] = []
+	
+	# 1. Grupo explícito "building_lights"
+	for l in get_tree().get_nodes_in_group("building_lights"):
+		if l is Light3D and not result.has(l):
+			result.append(l)
+			
+	# 2. Todas las luces de EdificioCentral
+	var edificio = find_child("EdificioCentral", true, false)
+	if edificio:
+		for child in edificio.find_children("*", "Light3D", true, false):
+			if child is Light3D and not result.has(child):
+				result.append(child)
+				
+	# 3. Cualquier otra luz en la escena que no sea linterna, ojos del profesor o tablero
+	for light in get_tree().root.find_children("*", "Light3D", true, false):
+		if light is Light3D and not result.has(light) and light != moon_light:
+			var is_exempt = false
+			var curr: Node = light
+			while curr != null and curr != get_tree().root:
+				if curr.name == "Player" or curr.name == "Profesor" or curr.name == "TableroElectrico" or curr.name.begins_with("Fusible"):
+					is_exempt = true
+					break
+				curr = curr.get_parent()
+			if not is_exempt:
+				result.append(light)
+				
+	return result
+
 func _trigger_blackout() -> void:
 	if is_blackout:
 		return
 	is_blackout = true
 	
-	# Efecto de parpadeo y corte general
-	if world_env and world_env.environment:
-		world_env.environment.ambient_light_energy = 0.04
-	if moon_light:
-		moon_light.light_energy = 0.08
+	# Recolectar todas las luces del edificio
+	var all_building_lights = _collect_all_building_lights()
+	turned_off_lights.clear()
+	for l in all_building_lights:
+		if is_instance_valid(l) and l.visible:
+			turned_off_lights.append(l)
+			
+	# Efecto de parpadeo realista antes del corte total
+	for flicker in range(2):
+		for l in turned_off_lights:
+			if is_instance_valid(l): l.visible = false
+		await get_tree().create_timer(0.09).timeout
+		for l in turned_off_lights:
+			if is_instance_valid(l): l.visible = true
+		await get_tree().create_timer(0.06).timeout
 		
-	# Apagar luces de galerías en el patio si existen
-	var luces_galeria = get_tree().get_nodes_in_group("building_lights")
-	for l in luces_galeria:
-		if l is Light3D:
+	# Apagón total en toda la facultad
+	for l in turned_off_lights:
+		if is_instance_valid(l):
 			l.visible = false
 			
+	# Oscuridad casi total (solo tenue luz de luna en patio)
+	if world_env and world_env.environment:
+		world_env.environment.ambient_light_energy = 0.01
+	if moon_light:
+		moon_light.light_energy = 0.04
+		
 	if tablero_electrico:
 		tablero_electrico.trigger_blackout()
 		
@@ -114,20 +173,24 @@ func _trigger_blackout() -> void:
 	if profesor and profesor.has_method("_say"):
 		profesor._say("¡¿Quién tocó los disyuntores?! ¡Quedaron todos a oscuras!", Color(1.0, 0.3, 0.3))
 		
-	print(">>> ¡CORTE DE LUZ ACTIVADO EN LA FACULTAD!")
+	print(">>> ¡CORTE DE LUZ ACTIVADO! (%d luces apagadas en toda la facultad)" % turned_off_lights.size())
 
 func _on_power_restored() -> void:
 	is_blackout = false
 	
-	# Restaurar iluminación
+	# Restaurar iluminación ambiental y lunar
 	if world_env and world_env.environment:
 		world_env.environment.ambient_light_energy = original_ambient_energy
 	if moon_light:
 		moon_light.light_energy = original_moon_energy
 		
-	var luces_galeria = get_tree().get_nodes_in_group("building_lights")
-	for l in luces_galeria:
-		if l is Light3D:
+	# Reencender todas las luces
+	for l in turned_off_lights:
+		if is_instance_valid(l):
 			l.visible = true
+	turned_off_lights.clear()
 			
+	if hud and hud.has_method("show_temporary_alert"):
+		hud.show_temporary_alert("💡 ¡Energía restablecida! Las luces volvieron a encenderse.", Color(0.3, 1.0, 0.5))
+		
 	print(">>> ¡ENERGÍA RESTABLECIDA EN TODA LA FACULTAD!")
