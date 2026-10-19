@@ -34,11 +34,13 @@ El jugador se encuentra solo de noche en la facultad intentando aprobar un parci
 * 👨‍🏫 **Inteligencia Artificial del Profesor (`scripts/profesor.gd`):**
   * Modelo procedural 3D con CSG (traje gris, anteojos, corbata roja, bigote y regla de madera de 1.05m).
   * **Máquina de estados finitos (FSM):**
-    * `PATROL`: Recorrido de 21 puntos estratégicos en pasillos de PB y patio central con sistema anti-bloqueo (*watchdog* de colisión).
+    * `PATROL`: Recorrido multinivel de **91 waypoints** cubriendo Planta Baja, Piso 1 y Piso 2, subiendo y bajando por las escaleras en 3D.
     * `CHASE`: Persecución activa con visión cónica (80°) y raycasts que respetan paredes.
     * `SEARCH`: Búsqueda activa girando en el lugar si pierde de vista al jugador.
     * `ATTACK`: Azote con la regla de madera al alcanzar al jugador, aplicando impulso de retroceso físico y sacudida de cámara.
+  * **Watchdog Anti-Stuck Agresivo:** Si el profesor colisiona contra una pared o esquina durante más de 0.8s, se empuja en dirección a la normal; si permanece trabado por 2.0s, se teletransporta automáticamente al waypoint libre más cercano.
   * **Furia acumulativa:** Cada parcial desaprobado aumenta permanentemente la velocidad de patrulla y persecución, encendiendo sus ojos en rojo intenso.
+  * **Fix post-screamer:** Tras el evento del fusible, el profesor ya no queda atascado en el laboratorio de electrónica.
 
 * 🧮 **Exámenes de Matemáticas (`scripts/cuaderno_matematica.gd` y `hud.gd`):**
   * Cuadernos repartidos aleatoriamente entre 8 aulas de Planta Baja.
@@ -60,7 +62,7 @@ El jugador se encuentra solo de noche en la facultad intentando aprobar un parci
     * **Patio del Estudiante:** A cielo abierto con canteros, árboles, faroles, pasarelas balconadas y fuente de agua con reflejos oscilantes (`scripts/patio_estudiante.gd`).
     * **Auditorio Principal:** Doble altura (9m) con escenario, atril y 64 butacas individuales rojas.
     * **Pisos 1 y 2:** Departamentos (Sistemas, Electrónica, Bedelía, Biblioteca, CETRA), aulas 201-219, cafetería piso 2 con monumento/escultura UTN.
-    * **Escaleras:** 3 cajas de escaleras en U completamente transitables.
+    * **Escaleras Realistas (Foto UTN FRC):** 3 cajas de escaleras en U con escalones individuales de granito negro (13 escalones por tramo), pasamanos/barandas metálicas a ambos lados, muro bajo divisorio y franja amarilla de seguridad al pie.
 
 ---
 
@@ -81,19 +83,15 @@ El jugador se encuentra solo de noche en la facultad intentando aprobar un parci
 A continuación se detallan los bugs detectados y características faltantes para seguimiento del equipo:
 
 ### 🔴 Críticos / Prioritarios
-- [ ] **Sobrescritura peligrosa en `tools/generate_level.gd` (Líneas 995-998):**
-  * La función `_gen_main()` crea un `scripts/main.gd` básico de 8 líneas y lo guarda en disco.
-  * **Riesgo:** Si se llega a ejecutar el generador para modificar o regenerar el mapa, sobrescribirá el `main.gd` completo del juego, perdiendo toda la lógica de apagón, screamer y ciclo de vida.
-  * *Solución recomendada:* Eliminar o comentar la llamada a guardar `main.gd` dentro de `generate_level.gd`.
-
+- [x] **Sobrescritura peligrosa en `tools/generate_level.gd`:** Resuelto, desactivada la llamada a `_gen_main()` y el guardado destructivo de `main.gd`.
 - [ ] **Sin Muerte / Game Over al ser atrapado:**
   * Cuando el profesor alcanza al jugador, lo golpea con la regla y lo empuja, pero el jugador no muere ni pierde vida. No existe pantalla de derrota ("Game Over").
   * *Solución recomendada:* Implementar sistema de salud/vidas o captura directa con cinemática corta y reinicio de nivel.
 
 ### 🟡 Medios / Jugabilidad
+- [x] **Ruteo del profesor en 3 pisos y desbugueo:** Resuelto con 91 waypoints multinivel y watchdog anti-stuck con teletransporte de emergencia.
 - [ ] **Pisos 1 y 2 sin objetivos de gameplay:**
-  * Toda la experiencia interactiva (fusibles, parciales, tablero, salida y patrulla del profesor) ocurre en Planta Baja. Los pisos superiores están vacíos a nivel de juego y el profesor no tiene waypoints allí.
-  * *Mejora planeada:* Distribuir parciales o llaves secundarias en los pisos 1 y 2, y extender la red de waypoints de la IA.
+  * Distribuir parciales, fusibles alternativos o llaves secundarias en los pisos 1 y 2 para incentivar subir.
 
 - [ ] **Doble disparo en interacción por tecla `E`:**
   * Varios scripts evalúan `Input.is_key_pressed(KEY_E)` en lugar de `Input.is_action_just_pressed("interact")`. Al mantener apretada la tecla un milisegundo de más, se dispara en múltiples frames consecutivos.

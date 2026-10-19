@@ -54,29 +54,99 @@ var prev_pos: Vector3 = Vector3.ZERO
 var pos_sample_timer: float = 0.0
 var is_screamer_ambush: bool = false
 
-## Puntos de patrullaje por toda la facultad (Pasillos despejados y Patio)
+## Puntos de patrullaje por toda la facultad (3 pisos con transiciones de escalera)
+## PB = Y 0.2 | P1 = Y 4.7 | P2 = Y 9.2
 var patrol_waypoints: Array[Vector3] = [
-	Vector3(0.0, 0.2, -18.0),   # Patio Norte
-	Vector3(0.0, 0.2, -28.5),   # Pasillo Norte centro
-	Vector3(-25.0, 0.2, -28.5), # Pasillo Norte frente a Aula 102
-	Vector3(-42.0, 0.2, -28.5), # Esquina Noroeste (frente a Aula 105)
-	Vector3(-42.0, 0.2, -12.0), # Pasillo Oeste (frente a Aula 106)
-	Vector3(-42.0, 0.2, 5.0),   # Pasillo Oeste (frente a Aula 107)
-	Vector3(-42.0, 0.2, 20.0),  # Pasillo Oeste (frente a Aula 108)
-	Vector3(-42.0, 0.2, 30.0),  # Esquina Suroeste
-	Vector3(-25.0, 0.2, 30.0),  # Pasillo Sur oeste (frente a fotocopiadora 1)
-	Vector3(0.0, 0.2, 30.0),    # Pasillo Sur centro (frente a auditorio)
-	Vector3(0.0, 0.2, 22.0),    # Entrada Sur al Patio
-	Vector3(0.0, 0.2, 4.0),     # Patio interior frente a la fuente
-	Vector3(0.0, 0.2, -4.0),    # Patio interior norte
-	Vector3(0.0, 0.2, 22.0),    # Salida Patio Sur
-	Vector3(25.0, 0.2, 30.0),   # Pasillo Sur este (frente a fotocopiadora 2)
-	Vector3(42.0, 0.2, 30.0),   # Esquina Sureste
-	Vector3(42.0, 0.2, 17.0),   # Pasillo Este sur (frente a Aula 115)
-	Vector3(42.0, 0.2, 0.0),    # Pasillo Este centro (frente a Cafetería PB)
-	Vector3(42.0, 0.2, -15.0),  # Pasillo Este norte (frente a Aula 114)
-	Vector3(42.0, 0.2, -28.5),  # Esquina Noreste
-	Vector3(25.0, 0.2, -28.5)   # Pasillo Norte este (frente a Aula 104)
+	# ========== PLANTA BAJA (Y=0.2) ==========
+	Vector3(0.0, 0.2, -18.0),     # PB: Patio Norte
+	Vector3(0.0, 0.2, -28.5),     # PB: Pasillo Norte centro
+	Vector3(-25.0, 0.2, -28.5),   # PB: Pasillo Norte frente a Aula 102
+	Vector3(-42.0, 0.2, -28.5),   # PB: Esquina Noroeste (frente a Aula 105)
+	Vector3(-42.0, 0.2, -12.0),   # PB: Pasillo Oeste (frente a Aula 106)
+	Vector3(-42.0, 0.2, 5.0),     # PB: Pasillo Oeste (frente a Aula 107)
+	Vector3(-42.0, 0.2, 20.0),    # PB: Pasillo Oeste (frente a Aula 108)
+	Vector3(-42.0, 0.2, 30.0),    # PB: Esquina Suroeste
+	Vector3(-25.0, 0.2, 30.0),    # PB: Pasillo Sur oeste
+	Vector3(0.0, 0.2, 30.0),      # PB: Pasillo Sur centro (frente a auditorio)
+	Vector3(0.0, 0.2, 22.0),      # PB: Entrada Sur al Patio
+	Vector3(0.0, 0.2, 4.0),       # PB: Patio interior frente a la fuente
+	Vector3(0.0, 0.2, -4.0),      # PB: Patio interior norte
+	Vector3(0.0, 0.2, 22.0),      # PB: Salida Patio Sur
+	Vector3(25.0, 0.2, 30.0),     # PB: Pasillo Sur este
+	Vector3(42.0, 0.2, 30.0),     # PB: Esquina Sureste
+	Vector3(42.0, 0.2, 17.0),     # PB: Pasillo Este sur (frente a Aula 115)
+	Vector3(42.0, 0.2, 0.0),      # PB: Pasillo Este centro (Cafetería PB)
+	Vector3(42.0, 0.2, -15.0),    # PB: Pasillo Este norte (frente a Aula 114)
+	Vector3(42.0, 0.2, -28.5),    # PB: Esquina Noreste
+	Vector3(25.0, 0.2, -28.5),    # PB: Pasillo Norte este (frente a Aula 104)
+	# --- Caminar hacia Torre Oeste para subir a P1 ---
+	Vector3(-42.0, 0.2, 27.5),    # PB: Acercarse a Torre Oeste
+	Vector3(-65.0, 0.2, 27.5),    # PB: Entrada escalera Torre Oeste
+	# --- Subir escalera Torre Oeste PB -> P1 ---
+	Vector3(-67.5, 1.3, 27.5),    # Escalera: tramo inferior
+	Vector3(-70.0, 2.45, 27.5),   # Escalera: descanso medio (Y = 0.2 + 2.25)
+	Vector3(-67.5, 3.6, 30.0),    # Escalera: tramo superior
+	Vector3(-65.0, 4.7, 32.5),    # P1: Salida escalera Torre Oeste
+	# ========== PISO 1 (Y=4.7) ==========
+	Vector3(-42.0, 4.7, 30.0),    # P1: Pasillo Oeste sur
+	Vector3(-42.0, 4.7, 15.0),    # P1: Pasillo Oeste centro
+	Vector3(-42.0, 4.7, 0.0),     # P1: Pasillo Oeste norte
+	Vector3(-42.0, 4.7, -15.0),   # P1: Pasillo Oeste (oficinas dept.)
+	Vector3(-42.0, 4.7, -28.5),   # P1: Esquina Noroeste
+	Vector3(-20.0, 4.7, -28.5),   # P1: Pasillo Norte oeste
+	Vector3(0.0, 4.7, -28.5),     # P1: Pasillo Norte centro
+	Vector3(20.0, 4.7, -28.5),    # P1: Pasillo Norte este
+	Vector3(42.0, 4.7, -28.5),    # P1: Esquina Noreste
+	Vector3(42.0, 4.7, -15.0),    # P1: Pasillo Este norte
+	Vector3(42.0, 4.7, 0.0),      # P1: Pasillo Este centro
+	Vector3(42.0, 4.7, 15.0),     # P1: Pasillo Este sur
+	Vector3(42.0, 4.7, 30.0),     # P1: Esquina Sureste
+	Vector3(20.0, 4.7, 30.0),     # P1: Pasillo Sur este
+	Vector3(0.0, 4.7, 30.0),      # P1: Pasillo Sur centro
+	Vector3(-20.0, 4.7, 30.0),    # P1: Pasillo Sur oeste
+	# --- Caminar hacia Torre Este para subir a P2 ---
+	Vector3(42.0, 4.7, 27.5),     # P1: Acercarse a Torre Este
+	Vector3(65.0, 4.7, 27.5),     # P1: Entrada escalera Torre Este
+	# --- Subir escalera Torre Este P1 -> P2 ---
+	Vector3(67.5, 5.8, 27.5),     # Escalera: tramo inferior
+	Vector3(70.0, 6.95, 27.5),    # Escalera: descanso medio (Y = 4.7 + 2.25)
+	Vector3(67.5, 8.1, 30.0),     # Escalera: tramo superior
+	Vector3(65.0, 9.2, 32.5),     # P2: Salida escalera Torre Este
+	# ========== PISO 2 (Y=9.2) ==========
+	Vector3(42.0, 9.2, 30.0),     # P2: Esquina Sureste
+	Vector3(42.0, 9.2, 15.0),     # P2: Pasillo Este sur
+	Vector3(42.0, 9.2, 0.0),      # P2: Pasillo Este centro (Cafetería P2)
+	Vector3(42.0, 9.2, -15.0),    # P2: Pasillo Este norte
+	Vector3(42.0, 9.2, -28.5),    # P2: Esquina Noreste
+	Vector3(20.0, 9.2, -28.5),    # P2: Pasillo Norte este (Aula 215)
+	Vector3(0.0, 9.2, -28.5),     # P2: Pasillo Norte centro (Aula 210)
+	Vector3(-20.0, 9.2, -28.5),   # P2: Pasillo Norte oeste (Aula 205)
+	Vector3(-42.0, 9.2, -28.5),   # P2: Esquina Noroeste (Aula 201)
+	Vector3(-42.0, 9.2, -15.0),   # P2: Pasillo Oeste norte
+	Vector3(-42.0, 9.2, 0.0),     # P2: Pasillo Oeste centro
+	Vector3(-42.0, 9.2, 15.0),    # P2: Pasillo Oeste sur
+	Vector3(-42.0, 9.2, 30.0),    # P2: Esquina Suroeste
+	Vector3(-20.0, 9.2, 30.0),    # P2: Pasillo Sur oeste
+	Vector3(0.0, 9.2, 30.0),      # P2: Pasillo Sur centro
+	Vector3(20.0, 9.2, 30.0),     # P2: Pasillo Sur este
+	# --- Caminar hacia Torre Norte para bajar a P1 ---
+	Vector3(39.5, 9.2, -28.5),    # P2: Acercarse a Torre Norte
+	Vector3(39.5, 9.2, -45.0),    # P2: Entrada escalera Torre Norte
+	# --- Bajar escalera Torre Norte P2 -> P1 ---
+	Vector3(39.5, 8.1, -48.5),    # Escalera: tramo superior bajando
+	Vector3(39.5, 6.95, -52.0),   # Escalera: descanso medio (Y = 9.2 - 2.25)
+	Vector3(42.0, 5.8, -48.5),    # Escalera: tramo inferior bajando
+	Vector3(44.5, 4.7, -45.0),    # P1: Salida escalera Torre Norte
+	# --- Breve pasillo P1 antes de seguir bajando ---
+	Vector3(42.0, 4.7, -28.5),    # P1: Esquina Noreste (reconectar)
+	Vector3(39.5, 4.7, -45.0),    # P1: Entrada escalera Torre Norte (para bajar a PB)
+	# --- Bajar escalera Torre Norte P1 -> PB ---
+	Vector3(39.5, 3.6, -48.5),    # Escalera: tramo superior bajando
+	Vector3(39.5, 2.45, -52.0),   # Escalera: descanso medio (Y = 4.7 - 2.25)
+	Vector3(42.0, 1.3, -48.5),    # Escalera: tramo inferior bajando
+	Vector3(44.5, 0.2, -45.0),    # PB: Salida escalera Torre Norte
+	# --- Volver al circuito PB ---
+	Vector3(42.0, 0.2, -28.5),    # PB: Esquina Noreste (reconectar al inicio)
 ]
 var current_waypoint_idx: int = 0
 
@@ -237,16 +307,24 @@ func _process_patrol_state(delta: float, can_see_player: bool) -> void:
 
 	var target_wp = patrol_waypoints[current_waypoint_idx]
 	var to_wp = target_wp - global_position
-	to_wp.y = 0.0
+	# Use full 3D distance so we can navigate stairs properly
 	var dist_wp = to_wp.length()
 
-	if dist_wp < 1.4:
+	if dist_wp < 2.0:
 		current_waypoint_idx = (current_waypoint_idx + 1) % patrol_waypoints.size()
 		target_wp = patrol_waypoints[current_waypoint_idx]
 		to_wp = target_wp - global_position
-		to_wp.y = 0.0
 
-	var move_dir = to_wp.normalized()
+	# For horizontal movement direction, zero Y only on flat ground
+	# On stairs (large Y difference), keep Y so the professor walks upward
+	var move_dir: Vector3
+	if absf(to_wp.y) > 0.5:
+		# On stairs: use full 3D direction but normalize XZ plane movement
+		move_dir = to_wp.normalized()
+	else:
+		# On flat corridors: zero Y for stable horizontal movement
+		to_wp.y = 0.0
+		move_dir = to_wp.normalized()
 	_move_towards(delta, move_dir, current_speed, 4.0)
 
 func _process_chase_state(delta: float, can_see_player: bool) -> void:
@@ -343,7 +421,7 @@ func _move_towards(delta: float, dir: Vector3, speed_to_use: float, rot_speed: f
 				global_position = pre_pos + Vector3(0, step_h, 0)
 				move_and_slide()
 
-	# Detección y recuperación automática si se traba (Watchdog anti-stuck)
+	# Detección y recuperación automática si se traba (Watchdog anti-stuck AGRESIVO)
 	pos_sample_timer += delta
 	if pos_sample_timer >= 0.4:
 		pos_sample_timer = 0.0
@@ -354,16 +432,44 @@ func _move_towards(delta: float, dir: Vector3, speed_to_use: float, rot_speed: f
 		else:
 			stuck_timer = max(0.0, stuck_timer - 0.4)
 
-	# Si estuvo trabado contra una pared más de 1.0 segundo
-	if stuck_timer >= 1.0:
-		stuck_timer = 0.0
+	# Si estuvo trabado contra una pared más de 0.8 segundos: empujar lejos
+	if stuck_timer >= 0.8:
+		var wall_n = get_wall_normal() if is_on_wall() else Vector3.ZERO
+		var push_away = wall_n * 2.0
+		velocity.x += push_away.x * speed_to_use
+		velocity.z += push_away.z * speed_to_use
+		global_position += push_away * 0.3  # Empuje inmediato lejos de la pared
+
 		if current_state == State.PATROL:
 			current_waypoint_idx = (current_waypoint_idx + 1) % patrol_waypoints.size()
-			var away_wall = get_wall_normal() * 1.5
-			velocity.x = away_wall.x * speed_to_use
-			velocity.z = away_wall.z * speed_to_use
 		elif current_state == State.CHASE and not _can_see_player():
+			# Perdió visión mientras estaba trabado: buscar
 			_enter_search_state()
+		elif current_state == State.SEARCH:
+			# Trabado buscando: volver a patrullar
+			current_state = State.PATROL
+			_pick_closest_waypoint()
+
+		# Si lleva más de 2.0 segundos acumulados trabado: TELETRANSPORTE
+		if stuck_timer >= 2.0:
+			stuck_timer = 0.0
+			# Buscar el waypoint más cercano que esté a al menos 3m de distancia
+			var best_idx: int = -1
+			var best_dist: float = 99999.0
+			for i in range(patrol_waypoints.size()):
+				var d = global_position.distance_to(patrol_waypoints[i])
+				if d >= 3.0 and d < best_dist:
+					best_dist = d
+					best_idx = i
+			if best_idx >= 0:
+				global_position = patrol_waypoints[best_idx]
+				prev_pos = global_position
+				current_waypoint_idx = (best_idx + 1) % patrol_waypoints.size()
+				velocity = Vector3.ZERO
+				if current_state != State.PATROL:
+					current_state = State.PATROL
+		else:
+			stuck_timer = max(stuck_timer, 0.0)  # Mantener el acumulado
 
 	_animate_walk(delta, dir.length() > 0.1)
 
@@ -509,6 +615,12 @@ func play_ruler_slam_animation() -> void:
 
 func release_screamer_ambush() -> void:
 	is_screamer_ambush = false
+	stuck_timer = 0.0
+	prev_pos = global_position
+	_pick_closest_waypoint()
+	# Asegurar que tiene un destino válido de movimiento
+	if current_state == State.CHASE and not _can_see_player():
+		_enter_search_state()
 
 func _start_attack() -> void:
 	current_state = State.ATTACK
