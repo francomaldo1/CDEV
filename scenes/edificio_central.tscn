@@ -22,6 +22,14 @@
 [ext_resource type="Material" path="res://materials/mat_ac_unit.tres" id="20_ac001"]
 [ext_resource type="Material" path="res://materials/mat_cantero_border.tres" id="21_cb001"]
 [ext_resource type="Script" path="res://scripts/patio_estudiante.gd" id="22_pe001"]
+[ext_resource type="Material" path="res://materials/mat_wall_pasillo.tres" id="23_pasillo"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oluwi"]
+albedo_color = Color(0.85, 0.85, 0.88, 1)
+metallic = 0.85
+roughness = 0.28
+uv1_scale = Vector3(2, 2, 2)
+uv1_triplanar = true
 
 [node name="EdificioCentral" type="Node3D" unique_id=397447900]
 
@@ -67,49 +75,49 @@ material = ExtResource("3_t6nnw")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 2.25, -45)
 use_collision = true
 size = Vector3(102, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="ExtNorteEste" type="CSGBox3D" parent="PlantaBaja" unique_id=605625606]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56, 2.25, -45)
 use_collision = true
 size = Vector3(18, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="ExtOesteNorte" type="CSGBox3D" parent="PlantaBaja" unique_id=1128988087]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65, 2.25, -10)
 use_collision = true
 size = Vector3(0.3, 4.5, 70)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="ExtOesteSur" type="CSGBox3D" parent="PlantaBaja" unique_id=1839297603]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65, 2.25, 40)
 use_collision = true
 size = Vector3(0.3, 4.5, 10)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="ExtEsteNorte" type="CSGBox3D" parent="PlantaBaja" unique_id=1982730028]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, 2.25, -10)
 use_collision = true
 size = Vector3(0.3, 4.5, 70)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="ExtEsteSur" type="CSGBox3D" parent="PlantaBaja" unique_id=581639114]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, 2.25, 40)
 use_collision = true
 size = Vector3(0.3, 4.5, 10)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="ExtSurOeste" type="CSGBox3D" parent="PlantaBaja" unique_id=875247707]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40.5, 2.25, 45)
 use_collision = true
 size = Vector3(49, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="ExtSurEste" type="CSGBox3D" parent="PlantaBaja" unique_id=1267556136]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.5, 2.25, 45)
 use_collision = true
 size = Vector3(49, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="HabitacionesPB" type="Node3D" parent="PlantaBaja" unique_id=1327785077]
 
@@ -117,73 +125,73 @@ material = ExtResource("4_0kga5")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.45, 2.25, -33)
 use_collision = true
 size = Vector3(11.1, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="AulaN1_Sur_R" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=569738834]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.55, 2.25, -33)
 use_collision = true
 size = Vector3(11.1, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="AulaN1_Sur_Dintel" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1011217383]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 4.1, -33)
 use_collision = true
 size = Vector3(2.9, 0.8, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="AulaN2_Sur_L" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=2038737548]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.45, 2.25, -33)
 use_collision = true
 size = Vector3(11.1, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="AulaN2_Sur_R" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1879696301]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.55, 2.25, -33)
 use_collision = true
 size = Vector3(11.1, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="AulaN2_Sur_Dintel" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=435957298]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 4.1, -33)
 use_collision = true
 size = Vector3(2.9, 0.8, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="AulaN3_Sur_L" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=437893893]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.45, 2.25, -33)
 use_collision = true
 size = Vector3(11.1, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="AulaN3_Sur_R" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1513041910]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.45, 2.25, -33)
 use_collision = true
 size = Vector3(11.1, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="AulaN3_Sur_Dintel" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=402055598]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 4.1, -33)
 use_collision = true
 size = Vector3(2.9, 0.8, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="AulaN4_Sur_L" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1058882428]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.05, 2.25, -33)
 use_collision = true
 size = Vector3(12.1, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="AulaN4_Sur_R" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1592114445]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.95, 2.25, -33)
 use_collision = true
 size = Vector3(12.1, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="AulaN4_Sur_Dintel" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=62198612]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.5, 4.1, -33)
 use_collision = true
 size = Vector3(2.9, 0.8, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="DivN_1_2" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=57723402]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 2.25, -39)
@@ -207,7 +215,7 @@ material = ExtResource("4_0kga5")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37, 2.25, -39)
 use_collision = true
 size = Vector3(0.3, 4.5, 12)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="PizN1" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=2001171565]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 1.5, -44.6)
@@ -505,73 +513,73 @@ outline_size = 10
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 2.25, -30.2)
 use_collision = true
 size = Vector3(0.3, 4.5, 5.6)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="AulaW1_Este_B" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1504937350]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 2.25, -21.8)
 use_collision = true
 size = Vector3(0.3, 4.5, 5.6)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="AulaW1_Este_Dintel" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1992422708]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 4.1, -26)
 use_collision = true
 size = Vector3(0.3, 0.8, 2.9)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="AulaW2_Este_F" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1954165130]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 2.25, -16.2)
 use_collision = true
 size = Vector3(0.3, 4.5, 5.6)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="AulaW2_Este_B" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=218829961]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 2.25, -7.8)
 use_collision = true
 size = Vector3(0.3, 4.5, 5.6)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="AulaW2_Este_Dintel" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1508247101]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 4.1, -12)
 use_collision = true
 size = Vector3(0.3, 0.8, 2.9)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="AulaW3_Este_F" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1222664918]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 2.25, -1.95)
 use_collision = true
 size = Vector3(0.3, 4.5, 6.1)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="AulaW3_Este_B" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1144231901]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 2.25, 6.95)
 use_collision = true
 size = Vector3(0.3, 4.5, 6.1)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="AulaW3_Este_Dintel" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1482941847]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 4.1, 2.5)
 use_collision = true
 size = Vector3(0.3, 0.8, 2.9)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="AulaW4_Este_F" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=727859550]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 2.25, 13.05)
 use_collision = true
 size = Vector3(0.3, 4.5, 6.1)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="AulaW4_Este_B" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=415364296]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 2.25, 21.95)
 use_collision = true
 size = Vector3(0.3, 4.5, 6.1)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="AulaW4_Este_Dintel" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=837232834]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 4.1, 17.5)
 use_collision = true
 size = Vector3(0.3, 0.8, 2.9)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="DivW_1_2" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1919718203]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56, 2.25, -19)
@@ -595,7 +603,7 @@ material = ExtResource("4_0kga5")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56, 2.25, 25)
 use_collision = true
 size = Vector3(18, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="PizW1" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1040650374]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -64.6, 1.5, -26)
@@ -869,13 +877,13 @@ outline_size = 10
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 2.25, -24)
 use_collision = true
 size = Vector3(20, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="BloqueWI_Sur" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=243642276]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 2.25, 25)
 use_collision = true
 size = Vector3(20, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="BloqueWI_Patio" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=530755136]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 2.25, 0.5)
@@ -887,19 +895,19 @@ material = ExtResource("4_0kga5")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 2.25, -21.2)
 use_collision = true
 size = Vector3(0.3, 4.5, 5.6)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="AulaWI1_Oeste_B" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=2141661556]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 2.25, -12.8)
 use_collision = true
 size = Vector3(0.3, 4.5, 5.6)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="AulaWI1_Oeste_Dintel" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=2129746076]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 4.1, -17)
 use_collision = true
 size = Vector3(0.3, 0.8, 2.9)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="DivWI_1_Lab" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1129839663]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 2.25, -10)
@@ -972,19 +980,19 @@ outline_size = 10
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 2.25, -5.45)
 use_collision = true
 size = Vector3(0.3, 4.5, 9.1)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="Lab_Oeste_B" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=2122038525]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 2.25, 6.45)
 use_collision = true
 size = Vector3(0.3, 4.5, 9.1)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="Lab_Oeste_Dintel" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1208836413]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 4.1, 0.5)
 use_collision = true
 size = Vector3(0.3, 0.8, 2.9)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="LabVidrio" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=2090937971]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 2, -4.5)
@@ -1011,19 +1019,19 @@ material = ExtResource("6_rgebg")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 0.45, -6)
 use_collision = true
 size = Vector3(14, 0.9, 1.6)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="MesadaLab_1" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=400833173]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 0.45, -1)
 use_collision = true
 size = Vector3(14, 0.9, 1.6)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="MesadaLab_2" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=570839054]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 0.45, 4)
 use_collision = true
 size = Vector3(14, 0.9, 1.6)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="DivLab_WI2" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1756076211]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 2.25, 11)
@@ -1035,19 +1043,19 @@ material = ExtResource("4_0kga5")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 2.25, 13.8)
 use_collision = true
 size = Vector3(0.3, 4.5, 5.6)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="AulaWI2_Oeste_B" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=878451949]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 2.25, 22.2)
 use_collision = true
 size = Vector3(0.3, 4.5, 5.6)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="AulaWI2_Oeste_Dintel" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=594994599]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 4.1, 18)
 use_collision = true
 size = Vector3(0.3, 0.8, 2.9)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="PupWI2_0" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=726583741]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.5, 0.4, 15)
@@ -1114,13 +1122,13 @@ outline_size = 10
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 2.25, -24)
 use_collision = true
 size = Vector3(20, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="BloqueEI_Sur" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1401186927]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 2.25, 25)
 use_collision = true
 size = Vector3(20, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="BloqueEI_Patio" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=884612331]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 2.25, 0.5)
@@ -1132,19 +1140,19 @@ material = ExtResource("4_0kga5")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37, 2.25, -20.7)
 use_collision = true
 size = Vector3(0.3, 4.5, 6.6)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="AulaEI1_Este_B" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1212831978]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37, 2.25, -11.3)
 use_collision = true
 size = Vector3(0.3, 4.5, 6.6)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="AulaEI1_Este_Dintel" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1176736904]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37, 4.1, -16)
 use_collision = true
 size = Vector3(0.3, 0.8, 2.9)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="DivEI_1_2" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=392866499]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 2.25, -8)
@@ -1217,19 +1225,19 @@ outline_size = 10
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37, 2.25, -4.7)
 use_collision = true
 size = Vector3(0.3, 4.5, 6.6)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="AulaEI2_Este_B" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1577845406]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37, 2.25, 4.7)
 use_collision = true
 size = Vector3(0.3, 4.5, 6.6)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="AulaEI2_Este_Dintel" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1461998427]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37, 4.1, 0)
 use_collision = true
 size = Vector3(0.3, 0.8, 2.9)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="DivEI_2_3" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1948831891]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 2.25, 8)
@@ -1302,19 +1310,19 @@ outline_size = 10
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37, 2.25, 11.55)
 use_collision = true
 size = Vector3(0.3, 4.5, 7.1)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="AulaEI3_Este_B" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1807219806]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37, 2.25, 21.45)
 use_collision = true
 size = Vector3(0.3, 4.5, 7.1)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="AulaEI3_Este_Dintel" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1219189050]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37, 4.1, 16.5)
 use_collision = true
 size = Vector3(0.3, 0.8, 2.9)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="PupEI3_0" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=319522260]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.5, 0.4, 12)
@@ -1381,19 +1389,19 @@ outline_size = 10
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47, 2.25, -38.2)
 use_collision = true
 size = Vector3(0.3, 4.5, 13.6)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="AulaE1_Oeste_B" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1095515845]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47, 2.25, -21.8)
 use_collision = true
 size = Vector3(0.3, 4.5, 13.6)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="AulaE1_Oeste_Dintel" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1885405634]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47, 4.1, -30)
 use_collision = true
 size = Vector3(0.3, 0.8, 2.9)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="DivE_1_Cafe" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1725817228]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56, 2.25, -15)
@@ -1635,25 +1643,25 @@ outline_size = 10
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47, 2.25, 13.05)
 use_collision = true
 size = Vector3(0.3, 4.5, 6.1)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="AulaE2_Oeste_B" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1506934731]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47, 2.25, 21.95)
 use_collision = true
 size = Vector3(0.3, 4.5, 6.1)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="AulaE2_Oeste_Dintel" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=2026030981]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47, 4.1, 17.5)
 use_collision = true
 size = Vector3(0.3, 0.8, 2.9)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="AulaE2_Sur" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1379968558]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56, 2.25, 25)
 use_collision = true
 size = Vector3(18, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="PupE2_0" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=2074948900]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.5, 0.4, 14)
@@ -1720,31 +1728,31 @@ outline_size = 10
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.7, 2.25, 35)
 use_collision = true
 size = Vector3(18.6, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="FotoO_Norte_R" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1916647017]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.8, 2.25, 35)
 use_collision = true
 size = Vector3(17.6, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="FotoO_Norte_Dintel" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=120456063]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 4.1, 35)
 use_collision = true
 size = Vector3(2.9, 0.8, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="FotoO_Oeste" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1159321801]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55, 2.25, 40)
 use_collision = true
 size = Vector3(0.3, 4.5, 10)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="FotoO_Este" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=545157493]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 2.25, 40)
 use_collision = true
 size = Vector3(0.3, 4.5, 10)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="FotoO_Mostrador" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1979972713]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 0.55, 38)
@@ -1763,31 +1771,31 @@ outline_size = 10
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.8, 2.25, 35)
 use_collision = true
 size = Vector3(17.6, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="FotoE_Norte_R" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1529892597]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45.7, 2.25, 35)
 use_collision = true
 size = Vector3(18.6, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="FotoE_Norte_Dintel" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1499175140]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 4.1, 35)
 use_collision = true
 size = Vector3(2.9, 0.8, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="FotoE_Oeste" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=879488064]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 2.25, 40)
 use_collision = true
 size = Vector3(0.3, 4.5, 10)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="FotoE_Este" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=44562947]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 2.25, 40)
 use_collision = true
 size = Vector3(0.3, 4.5, 10)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="FotoE_Mostrador" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=170871709]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 0.55, 38)
@@ -1913,49 +1921,49 @@ material = ExtResource("3_t6nnw")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 6.75, -45)
 use_collision = true
 size = Vector3(102, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="ExtNorteEste" type="CSGBox3D" parent="PrimerPiso" unique_id=1703796201]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56, 6.75, -45)
 use_collision = true
 size = Vector3(18, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="ExtOesteNorte" type="CSGBox3D" parent="PrimerPiso" unique_id=617595347]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65, 6.75, -10)
 use_collision = true
 size = Vector3(0.3, 4.5, 70)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="ExtOesteSur" type="CSGBox3D" parent="PrimerPiso" unique_id=360825614]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65, 6.75, 40)
 use_collision = true
 size = Vector3(0.3, 4.5, 10)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="ExtEsteNorte" type="CSGBox3D" parent="PrimerPiso" unique_id=945230243]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, 6.75, -10)
 use_collision = true
 size = Vector3(0.3, 4.5, 70)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="ExtEsteSur" type="CSGBox3D" parent="PrimerPiso" unique_id=1914104382]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, 6.75, 40)
 use_collision = true
 size = Vector3(0.3, 4.5, 10)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="ExtSurOeste" type="CSGBox3D" parent="PrimerPiso" unique_id=1117253433]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40.5, 6.75, 45)
 use_collision = true
 size = Vector3(49, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="ExtSurEste" type="CSGBox3D" parent="PrimerPiso" unique_id=1889577522]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.5, 6.75, 45)
 use_collision = true
 size = Vector3(49, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="OficinasP1" type="Node3D" parent="PrimerPiso" unique_id=1146135319]
 
@@ -1963,37 +1971,37 @@ material = ExtResource("4_0kga5")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -53.2, 6.75, -33)
 use_collision = true
 size = Vector3(23.6, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P1_Bedelia_Sur_R" type="CSGBox3D" parent="PrimerPiso/OficinasP1" unique_id=1774492500]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.8, 6.75, -33)
 use_collision = true
 size = Vector3(23.6, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P1_Bedelia_Sur_Dintel" type="CSGBox3D" parent="PrimerPiso/OficinasP1" unique_id=124815323]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 8.6, -33)
 use_collision = true
 size = Vector3(2.9, 0.8, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P1_Direccion_Sur_L" type="CSGBox3D" parent="PrimerPiso/OficinasP1" unique_id=243315328]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.2, 6.75, -33)
 use_collision = true
 size = Vector3(23.6, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P1_Direccion_Sur_R" type="CSGBox3D" parent="PrimerPiso/OficinasP1" unique_id=1282934319]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.2, 6.75, -33)
 use_collision = true
 size = Vector3(25.6, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P1_Direccion_Sur_Dintel" type="CSGBox3D" parent="PrimerPiso/OficinasP1" unique_id=1506471892]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 8.6, -33)
 use_collision = true
 size = Vector3(2.9, 0.8, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P1_Div_Bed_Dir" type="CSGBox3D" parent="PrimerPiso/OficinasP1" unique_id=831900056]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 6.75, -39)
@@ -2005,7 +2013,7 @@ material = ExtResource("4_0kga5")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37, 6.75, -39)
 use_collision = true
 size = Vector3(0.3, 4.5, 12)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="CartelBedelia" type="Label3D" parent="PrimerPiso/OficinasP1" unique_id=502832218]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -40, 7.7, -32.7)
@@ -2025,37 +2033,37 @@ outline_size = 10
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 6.75, -26.7)
 use_collision = true
 size = Vector3(0.3, 4.5, 12.6)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P1_Sistemas_Este_B" type="CSGBox3D" parent="PrimerPiso/OficinasP1" unique_id=1910343635]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 6.75, -11.3)
 use_collision = true
 size = Vector3(0.3, 4.5, 12.6)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P1_Sistemas_Este_Dintel" type="CSGBox3D" parent="PrimerPiso/OficinasP1" unique_id=1843164747]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 8.6, -19)
 use_collision = true
 size = Vector3(0.3, 0.8, 2.9)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P1_Electronica_Este_F" type="CSGBox3D" parent="PrimerPiso/OficinasP1" unique_id=961372333]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 6.75, 1.8)
 use_collision = true
 size = Vector3(0.3, 4.5, 13.6)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P1_Electronica_Este_B" type="CSGBox3D" parent="PrimerPiso/OficinasP1" unique_id=2088951444]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 6.75, 18.2)
 use_collision = true
 size = Vector3(0.3, 4.5, 13.6)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P1_Electronica_Este_Dintel" type="CSGBox3D" parent="PrimerPiso/OficinasP1" unique_id=340300501]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 8.6, 10)
 use_collision = true
 size = Vector3(0.3, 0.8, 2.9)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P1_Div_Sist_Elec" type="CSGBox3D" parent="PrimerPiso/OficinasP1" unique_id=143601609]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56, 6.75, -5)
@@ -2067,7 +2075,7 @@ material = ExtResource("4_0kga5")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56, 6.75, 25)
 use_collision = true
 size = Vector3(18, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="CartelSistemas" type="Label3D" parent="PrimerPiso/OficinasP1" unique_id=583866495]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.7, 7.7, -19)
@@ -2087,37 +2095,37 @@ outline_size = 10
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47, 6.75, -36.95)
 use_collision = true
 size = Vector3(0.3, 4.5, 16.1)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P1_CETRA_Oeste_B" type="CSGBox3D" parent="PrimerPiso/OficinasP1" unique_id=220644367]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47, 6.75, -18.05)
 use_collision = true
 size = Vector3(0.3, 4.5, 16.1)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P1_CETRA_Oeste_Dintel" type="CSGBox3D" parent="PrimerPiso/OficinasP1" unique_id=378992701]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47, 8.6, -27.5)
 use_collision = true
 size = Vector3(0.3, 0.8, 2.9)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P1_Biblio_Oeste_F" type="CSGBox3D" parent="PrimerPiso/OficinasP1" unique_id=124408758]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47, 6.75, -1.95)
 use_collision = true
 size = Vector3(0.3, 4.5, 16.1)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P1_Biblio_Oeste_B" type="CSGBox3D" parent="PrimerPiso/OficinasP1" unique_id=827498484]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47, 6.75, 16.95)
 use_collision = true
 size = Vector3(0.3, 4.5, 16.1)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P1_Biblio_Oeste_Dintel" type="CSGBox3D" parent="PrimerPiso/OficinasP1" unique_id=959429545]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47, 8.6, 7.5)
 use_collision = true
 size = Vector3(0.3, 0.8, 2.9)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P1_Div_CETRA_Bib" type="CSGBox3D" parent="PrimerPiso/OficinasP1" unique_id=1106587755]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56, 6.75, -10)
@@ -2129,7 +2137,7 @@ material = ExtResource("4_0kga5")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56, 6.75, 25)
 use_collision = true
 size = Vector3(18, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="CartelCETRA" type="Label3D" parent="PrimerPiso/OficinasP1" unique_id=1703765751]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 46.7, 7.7, -27.5)
@@ -2211,49 +2219,49 @@ material = ExtResource("3_t6nnw")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 11.25, -45)
 use_collision = true
 size = Vector3(102, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="ExtNorteEste" type="CSGBox3D" parent="SegundoPiso" unique_id=1656987052]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56, 11.25, -45)
 use_collision = true
 size = Vector3(18, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="ExtOesteNorte" type="CSGBox3D" parent="SegundoPiso" unique_id=846562386]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65, 11.25, -10)
 use_collision = true
 size = Vector3(0.3, 4.5, 70)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="ExtOesteSur" type="CSGBox3D" parent="SegundoPiso" unique_id=981303606]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65, 11.25, 40)
 use_collision = true
 size = Vector3(0.3, 4.5, 10)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="ExtEsteNorte" type="CSGBox3D" parent="SegundoPiso" unique_id=43878089]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, 11.25, -10)
 use_collision = true
 size = Vector3(0.3, 4.5, 70)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="ExtEsteSur" type="CSGBox3D" parent="SegundoPiso" unique_id=1886756908]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, 11.25, 40)
 use_collision = true
 size = Vector3(0.3, 4.5, 10)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="ExtSurOeste" type="CSGBox3D" parent="SegundoPiso" unique_id=2039562436]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40.5, 11.25, 45)
 use_collision = true
 size = Vector3(49, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="ExtSurEste" type="CSGBox3D" parent="SegundoPiso" unique_id=1603208252]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.5, 11.25, 45)
 use_collision = true
 size = Vector3(49, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="Piso2_AulasYCafeteria" type="Node3D" parent="SegundoPiso" unique_id=764518628]
 
@@ -2261,73 +2269,73 @@ material = ExtResource("4_0kga5")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.45, 11.25, -33)
 use_collision = true
 size = Vector3(11.1, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_AulaN1_Sur_R" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1079660105]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.55, 11.25, -33)
 use_collision = true
 size = Vector3(11.1, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_AulaN1_Sur_Dintel" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1862928888]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 13.1, -33)
 use_collision = true
 size = Vector3(2.9, 0.8, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_AulaN2_Sur_L" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1416640603]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.45, 11.25, -33)
 use_collision = true
 size = Vector3(11.1, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_AulaN2_Sur_R" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=14584633]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.55, 11.25, -33)
 use_collision = true
 size = Vector3(11.1, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_AulaN2_Sur_Dintel" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1436158563]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 13.1, -33)
 use_collision = true
 size = Vector3(2.9, 0.8, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_AulaN3_Sur_L" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1964688593]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.45, 11.25, -33)
 use_collision = true
 size = Vector3(11.1, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_AulaN3_Sur_R" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=654741849]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.45, 11.25, -33)
 use_collision = true
 size = Vector3(11.1, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_AulaN3_Sur_Dintel" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=155559532]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 13.1, -33)
 use_collision = true
 size = Vector3(2.9, 0.8, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_AulaN4_Sur_L" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=335633273]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.05, 11.25, -33)
 use_collision = true
 size = Vector3(12.1, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_AulaN4_Sur_R" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=254454427]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.95, 11.25, -33)
 use_collision = true
 size = Vector3(12.1, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_AulaN4_Sur_Dintel" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1072085475]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.5, 13.1, -33)
 use_collision = true
 size = Vector3(2.9, 0.8, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_DivN_1_2" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1886122898]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 11.25, -39)
@@ -2351,7 +2359,7 @@ material = ExtResource("4_0kga5")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37, 11.25, -39)
 use_collision = true
 size = Vector3(0.3, 4.5, 12)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_PizN1" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1565725947]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 10.5, -44.6)
@@ -2649,73 +2657,73 @@ outline_size = 10
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 11.25, -30.2)
 use_collision = true
 size = Vector3(0.3, 4.5, 5.6)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_AulaW1_Este_B" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1024928172]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 11.25, -21.8)
 use_collision = true
 size = Vector3(0.3, 4.5, 5.6)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_AulaW1_Este_Dintel" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1555399084]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 13.1, -26)
 use_collision = true
 size = Vector3(0.3, 0.8, 2.9)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_AulaW2_Este_F" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=877532714]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 11.25, -16.2)
 use_collision = true
 size = Vector3(0.3, 4.5, 5.6)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_AulaW2_Este_B" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1768324571]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 11.25, -7.8)
 use_collision = true
 size = Vector3(0.3, 4.5, 5.6)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_AulaW2_Este_Dintel" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1642689405]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 13.1, -12)
 use_collision = true
 size = Vector3(0.3, 0.8, 2.9)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_AulaW3_Este_F" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=855517471]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 11.25, -1.95)
 use_collision = true
 size = Vector3(0.3, 4.5, 6.1)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_AulaW3_Este_B" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=992853202]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 11.25, 6.95)
 use_collision = true
 size = Vector3(0.3, 4.5, 6.1)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_AulaW3_Este_Dintel" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=827823414]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 13.1, 2.5)
 use_collision = true
 size = Vector3(0.3, 0.8, 2.9)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_AulaW4_Este_F" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=499802566]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 11.25, 13.05)
 use_collision = true
 size = Vector3(0.3, 4.5, 6.1)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_AulaW4_Este_B" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=72525218]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 11.25, 21.95)
 use_collision = true
 size = Vector3(0.3, 4.5, 6.1)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_AulaW4_Este_Dintel" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=280956489]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 13.1, 17.5)
 use_collision = true
 size = Vector3(0.3, 0.8, 2.9)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_DivW_1_2" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=120570469]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56, 11.25, -19)
@@ -2739,7 +2747,7 @@ material = ExtResource("4_0kga5")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56, 11.25, 25)
 use_collision = true
 size = Vector3(18, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_PizW1" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=855680003]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -64.6, 10.5, -26)
@@ -3013,13 +3021,13 @@ outline_size = 10
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 11.25, -24)
 use_collision = true
 size = Vector3(20, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_BloqueWI_Sur" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=888683249]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 11.25, 25)
 use_collision = true
 size = Vector3(20, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_BloqueWI_Patio" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=945352288]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 11.25, 0.5)
@@ -3031,19 +3039,19 @@ material = ExtResource("4_0kga5")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 11.25, -21.2)
 use_collision = true
 size = Vector3(0.3, 4.5, 5.6)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_AulaWI1_Oeste_B" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1300066113]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 11.25, -12.8)
 use_collision = true
 size = Vector3(0.3, 4.5, 5.6)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_AulaWI1_Oeste_Dintel" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2113862271]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 13.1, -17)
 use_collision = true
 size = Vector3(0.3, 0.8, 2.9)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_DivWI_1_2" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=453203297]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 11.25, -10)
@@ -3116,19 +3124,19 @@ outline_size = 10
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 11.25, -5.45)
 use_collision = true
 size = Vector3(0.3, 4.5, 9.1)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_Aula210_Oeste_B" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1993628390]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 11.25, 6.45)
 use_collision = true
 size = Vector3(0.3, 4.5, 9.1)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_Aula210_Oeste_Dintel" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1480051970]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 13.1, 0.5)
 use_collision = true
 size = Vector3(0.3, 0.8, 2.9)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_DivWI_2_3" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=416345851]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 11.25, 11)
@@ -3243,19 +3251,19 @@ outline_size = 10
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 11.25, 13.8)
 use_collision = true
 size = Vector3(0.3, 4.5, 5.6)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_AulaWI2_Oeste_B" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=232037710]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 11.25, 22.2)
 use_collision = true
 size = Vector3(0.3, 4.5, 5.6)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_AulaWI2_Oeste_Dintel" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=198086524]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 13.1, 18)
 use_collision = true
 size = Vector3(0.3, 0.8, 2.9)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_PupWI2_0" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1082578275]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.5, 9.4, 15)
@@ -3322,13 +3330,13 @@ outline_size = 10
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 11.25, -24)
 use_collision = true
 size = Vector3(20, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_BloqueEI_Sur" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=416195748]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 11.25, 25)
 use_collision = true
 size = Vector3(20, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_BloqueEI_Patio" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1897487903]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 11.25, 0.5)
@@ -3340,19 +3348,19 @@ material = ExtResource("4_0kga5")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37, 11.25, -20.7)
 use_collision = true
 size = Vector3(0.3, 4.5, 6.6)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_AulaEI1_Este_B" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1127627892]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37, 11.25, -11.3)
 use_collision = true
 size = Vector3(0.3, 4.5, 6.6)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_AulaEI1_Este_Dintel" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1513592853]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37, 13.1, -16)
 use_collision = true
 size = Vector3(0.3, 0.8, 2.9)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_DivEI_1_2" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=202538574]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 11.25, -8)
@@ -3425,19 +3433,19 @@ outline_size = 10
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37, 11.25, -4.7)
 use_collision = true
 size = Vector3(0.3, 4.5, 6.6)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_AulaEI2_Este_B" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=933880920]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37, 11.25, 4.7)
 use_collision = true
 size = Vector3(0.3, 4.5, 6.6)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_AulaEI2_Este_Dintel" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=107197589]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37, 13.1, 0)
 use_collision = true
 size = Vector3(0.3, 0.8, 2.9)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_DivEI_2_3" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2087619448]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 11.25, 8)
@@ -3510,19 +3518,19 @@ outline_size = 10
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37, 11.25, 11.55)
 use_collision = true
 size = Vector3(0.3, 4.5, 7.1)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_AulaEI3_Este_B" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1588145262]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37, 11.25, 21.45)
 use_collision = true
 size = Vector3(0.3, 4.5, 7.1)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_AulaEI3_Este_Dintel" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=546193081]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37, 13.1, 16.5)
 use_collision = true
 size = Vector3(0.3, 0.8, 2.9)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_PupEI3_0" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1742957884]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.5, 9.4, 12)
@@ -3589,19 +3597,19 @@ outline_size = 10
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47, 11.25, -38.2)
 use_collision = true
 size = Vector3(0.3, 4.5, 13.6)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_AulaE1_Oeste_B" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1430029516]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47, 11.25, -21.8)
 use_collision = true
 size = Vector3(0.3, 4.5, 13.6)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_AulaE1_Oeste_Dintel" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1279212972]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47, 13.1, -30)
 use_collision = true
 size = Vector3(0.3, 0.8, 2.9)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_DivE_1_2" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1597077069]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56, 11.25, -15)
@@ -3770,19 +3778,19 @@ outline_size = 10
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47, 11.25, -9.45)
 use_collision = true
 size = Vector3(0.3, 4.5, 11.1)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_AulaE2_Oeste_B" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=646414258]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47, 11.25, 4.45)
 use_collision = true
 size = Vector3(0.3, 4.5, 11.1)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_AulaE2_Oeste_Dintel" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=198342627]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47, 13.1, -2.5)
 use_collision = true
 size = Vector3(0.3, 0.8, 2.9)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_DivE_2_3" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=908308533]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56, 11.25, 10)
@@ -3915,25 +3923,25 @@ outline_size = 10
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47, 11.25, 13.05)
 use_collision = true
 size = Vector3(0.3, 4.5, 6.1)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_AulaE3_Oeste_B" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=985823767]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47, 11.25, 21.95)
 use_collision = true
 size = Vector3(0.3, 4.5, 6.1)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_AulaE3_Oeste_Dintel" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1689255361]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47, 13.1, 17.5)
 use_collision = true
 size = Vector3(0.3, 0.8, 2.9)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_AulaE3_Sur" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1455828921]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56, 11.25, 25)
 use_collision = true
 size = Vector3(18, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_PizE3" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1074281937]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64.6, 10.5, 17.5)
@@ -4006,31 +4014,31 @@ outline_size = 10
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.7, 11.25, 35)
 use_collision = true
 size = Vector3(18.6, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_SalasO_Norte_R" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1252503689]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.8, 11.25, 35)
 use_collision = true
 size = Vector3(17.6, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_SalasO_Norte_Dintel" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1259533572]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 13.1, 35)
 use_collision = true
 size = Vector3(2.9, 0.8, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_SalasO_Oeste" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=617599985]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55, 11.25, 40)
 use_collision = true
 size = Vector3(0.3, 4.5, 10)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_SalasO_Este" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1232470736]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 11.25, 40)
 use_collision = true
 size = Vector3(0.3, 4.5, 10)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_PupSO_0" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=355319266]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50.5, 9.4, 39)
@@ -4091,31 +4099,31 @@ outline_size = 10
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.8, 11.25, 35)
 use_collision = true
 size = Vector3(17.6, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_SalasE_Norte_R" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=823122032]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45.7, 11.25, 35)
 use_collision = true
 size = Vector3(18.6, 4.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_SalasE_Norte_Dintel" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1330473105]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 13.1, 35)
 use_collision = true
 size = Vector3(2.9, 0.8, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_SalasE_Oeste" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=204095891]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 11.25, 40)
 use_collision = true
 size = Vector3(0.3, 4.5, 10)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_SalasE_Este" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=580709696]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 11.25, 40)
 use_collision = true
 size = Vector3(0.3, 4.5, 10)
-material = ExtResource("4_0kga5")
+material = ExtResource("23_pasillo")
 
 [node name="P2_PupSE_0" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1316330086]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.5, 9.4, 39)
@@ -8567,323 +8575,1442 @@ use_collision = true
 size = Vector3(8, 2.5, 3)
 material = ExtResource("4_0kga5")
 
-[node name="TorresEscaleras" type="Node3D" parent="." unique_id=1110050151]
+﻿[node name="TorresEscaleras" type="Node3D" parent="." unique_id=554014967]
 
-[node name="TorreOeste" type="Node3D" parent="TorresEscaleras" unique_id=198725561]
+[node name="TorreOeste" type="Node3D" parent="TorresEscaleras" unique_id=315933300]
 
-[node name="TorreOeste_ParedFondo" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=2138486250]
+[node name="TorreOeste_ParedFondo" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=250208865]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -74, 6.75, 30)
 use_collision = true
 size = Vector3(0.3, 13.5, 10)
-material = ExtResource("4_0kga5")
+material = ExtResource("3_t6nnw")
 
-[node name="TorreOeste_ParedNorte" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1865222718]
+[node name="TorreOeste_ParedNorte" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1242211595]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69.5, 6.75, 25)
 use_collision = true
 size = Vector3(9, 13.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("3_t6nnw")
 
-[node name="TorreOeste_ParedSur" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1616969019]
+[node name="TorreOeste_ParedSur" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1905049831]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69.5, 6.75, 35)
 use_collision = true
 size = Vector3(9, 13.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("3_t6nnw")
 
-[node name="TorreOeste_Ventanal" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=417061578]
+[node name="TorreOeste_Ventanal" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=52176124]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -74, 6.75, 30)
 use_collision = true
 size = Vector3(0.08, 11.5, 7)
-material = ExtResource("5_68yaw")
+material = ExtResource("1_2hdtu")
 
-[node name="TorreOeste_PisoBase" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=593275434]
+[node name="TorreOeste_PisoBase" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=103300356]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69.5, -0.1, 30)
 use_collision = true
 size = Vector3(9, 0.2, 10)
-material = ExtResource("1_2hdtu")
 
-[node name="TorreOeste_TechoFinal" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1463949482]
+[node name="TorreOeste_TechoFinal" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1749815318]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69.5, 13.6, 30)
 use_collision = true
 size = Vector3(9, 0.2, 10)
-material = ExtResource("3_t6nnw")
-
-[node name="TorreOeste_P0_Tramo1" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=395935332]
-transform = Transform3D(0.9449861, 0.32711056, 0, -0.32711056, 0.9449861, 0, 0, 0, 1, -68.28, 1.054, 27.5)
-use_collision = true
-size = Vector3(7.178408, 0.15, 3.8)
 material = ExtResource("11_g4jqe")
 
-[node name="TorreOeste_P0_Franja1" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1895121804]
+[node name="TorreOeste_P0_T1_S0" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=2129232277]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65.25, 0.08807693, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P0_T1_S1" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=121250128]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65.75, 0.26115385, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P0_T1_S2" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1442780745]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -66.25, 0.43423077, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P0_T1_S3" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1980063641]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -66.75, 0.6073077, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P0_T1_S4" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1584807044]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -67.25, 0.7803846, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P0_T1_S5" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1518358113]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -67.75, 0.9534615, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P0_T1_S6" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=895331416]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -68.25, 1.1265385, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P0_T1_S7" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=940374551]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -68.75, 1.2996154, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P0_T1_S8" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=201961511]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69.25, 1.4726923, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P0_T1_S9" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=881224913]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69.75, 1.6457692, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P0_T1_S10" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=970836055]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -70.25, 1.8188461, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P0_T1_S11" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=668013762]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -70.75, 1.9919231, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P0_T1_S12" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1441786560]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -71.25, 2.165, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P0_T1_Zanca" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=2065986832]
+transform = Transform3D(0.9449861, 0.32711056, 0, -0.32711056, 0.9449861, 0, 0, 0, 1, -68.25, 0.905, 27.5)
+use_collision = true
+size = Vector3(6.8784084, 0.3, 3.8)
+
+[node name="TorreOeste_P0_Franja1" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=178193179]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65.3, 0.02, 27.5)
 use_collision = true
 size = Vector3(0.4, 0.04, 3.8)
 material = ExtResource("12_uwdqk")
 
-[node name="TorreOeste_P0_Descanso" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1230955855]
+[node name="TorreOeste_P0_T1_RailDiv" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=941449228]
+transform = Transform3D(0.9449861, 0.32711056, 0, -0.32711056, 0.9449861, 0, 0, 0, 1, -68.25, 2.025, 29.4)
+use_collision = true
+size = Vector3(6.8784084, 0.05, 0.05)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreOeste_P0_T1_WallDiv" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1179225807]
+transform = Transform3D(0.9449861, 0.32711056, 0, -0.32711056, 0.9449861, 0, 0, 0, 1, -68.25, 1.375, 29.4)
+use_collision = true
+size = Vector3(6.8784084, 0.5, 0.1)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreOeste_P0_T1_RailOut" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=949559500]
+transform = Transform3D(0.9449861, 0.32711056, 0, -0.32711056, 0.9449861, 0, 0, 0, 1, -68.25, 2.025, 25.6)
+use_collision = true
+size = Vector3(6.8784084, 0.05, 0.05)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreOeste_P0_T1_PostOut0" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=124840770]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65.25, 0.6230769, 25.6)
+use_collision = true
+size = Vector3(0.05, 0.9, 0.05)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreOeste_P0_T1_PostOut1" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=208279566]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -71.25, 2.7, 25.6)
+use_collision = true
+size = Vector3(0.05, 0.9, 0.05)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreOeste_P0_Descanso" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1336644750]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -72.75, 2.15, 30)
 use_collision = true
 size = Vector3(3, 0.2, 9)
-material = ExtResource("11_g4jqe")
 
-[node name="TorreOeste_P0_Tramo2" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=683209723]
-transform = Transform3D(0.9449861, -0.32711056, 0, 0.32711056, 0.9449861, 0, 0, 0, 1, -68.22, 3.304, 32.5)
+[node name="TorreOeste_P0_T2_S0" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=761849192]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -71.25, 2.3380768, 32.5)
 use_collision = true
-size = Vector3(7.178408, 0.15, 3.8)
-material = ExtResource("11_g4jqe")
+size = Vector3(0.5, 0.17, 3.8)
 
-[node name="TorreOeste_P1_Tramo1" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1198356514]
-transform = Transform3D(0.9449861, 0.32711056, 0, -0.32711056, 0.9449861, 0, 0, 0, 1, -68.28, 5.554, 27.5)
+[node name="TorreOeste_P0_T2_S1" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1525298804]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -70.75, 2.511154, 32.5)
 use_collision = true
-size = Vector3(7.178408, 0.15, 3.8)
-material = ExtResource("11_g4jqe")
+size = Vector3(0.5, 0.17, 3.8)
 
-[node name="TorreOeste_P1_Franja1" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1004901456]
+[node name="TorreOeste_P0_T2_S2" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=731885536]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -70.25, 2.6842308, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P0_T2_S3" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1361295335]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69.75, 2.8573077, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P0_T2_S4" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=363320668]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69.25, 3.0303845, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P0_T2_S5" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=454705956]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -68.75, 3.2034616, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P0_T2_S6" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1285184375]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -68.25, 3.3765385, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P0_T2_S7" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1384897359]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -67.75, 3.5496154, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P0_T2_S8" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1947787982]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -67.25, 3.7226923, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P0_T2_S9" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1349364601]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -66.75, 3.8957691, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P0_T2_S10" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1476074069]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -66.25, 4.068846, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P0_T2_S11" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=714208586]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65.75, 4.241923, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P0_T2_S12" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1967243718]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65.25, 4.415, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P0_T2_Zanca" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=2011139729]
+transform = Transform3D(0.9449861, -0.32711056, 0, 0.32711056, 0.9449861, 0, 0, 0, 1, -68.25, 3.155, 32.5)
+use_collision = true
+size = Vector3(6.8784084, 0.3, 3.8)
+
+[node name="TorreOeste_P0_T2_RailDiv" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1740543343]
+transform = Transform3D(0.9449861, -0.32711056, 0, 0.32711056, 0.9449861, 0, 0, 0, 1, -68.25, 4.275, 30.6)
+use_collision = true
+size = Vector3(6.8784084, 0.05, 0.05)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreOeste_P0_T2_WallDiv" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1877612414]
+transform = Transform3D(0.9449861, -0.32711056, 0, 0.32711056, 0.9449861, 0, 0, 0, 1, -68.25, 3.625, 30.6)
+use_collision = true
+size = Vector3(6.8784084, 0.5, 0.1)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreOeste_P0_T2_RailOut" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=245395544]
+transform = Transform3D(0.9449861, -0.32711056, 0, 0.32711056, 0.9449861, 0, 0, 0, 1, -68.25, 4.275, 34.4)
+use_collision = true
+size = Vector3(6.8784084, 0.05, 0.05)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreOeste_P0_T2_PostOut0" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=771726358]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -71.25, 2.873077, 34.4)
+use_collision = true
+size = Vector3(0.05, 0.9, 0.05)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreOeste_P0_T2_PostOut1" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1712143267]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65.25, 4.95, 34.4)
+use_collision = true
+size = Vector3(0.05, 0.9, 0.05)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreOeste_P1_T1_S0" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=704292270]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65.25, 4.588077, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P1_T1_S1" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=391782932]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65.75, 4.7611537, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P1_T1_S2" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1230470112]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -66.25, 4.934231, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P1_T1_S3" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1513508594]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -66.75, 5.107308, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P1_T1_S4" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=426539321]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -67.25, 5.2803845, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P1_T1_S5" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1144155562]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -67.75, 5.4534616, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P1_T1_S6" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1514794236]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -68.25, 5.6265383, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P1_T1_S7" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=2115137406]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -68.75, 5.7996154, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P1_T1_S8" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=289808955]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69.25, 5.9726925, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P1_T1_S9" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=659398044]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69.75, 6.145769, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P1_T1_S10" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=118473141]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -70.25, 6.318846, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P1_T1_S11" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=2105467096]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -70.75, 6.491923, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P1_T1_S12" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1378118517]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -71.25, 6.665, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P1_T1_Zanca" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=87017990]
+transform = Transform3D(0.9449861, 0.32711056, 0, -0.32711056, 0.9449861, 0, 0, 0, 1, -68.25, 5.405, 27.5)
+use_collision = true
+size = Vector3(6.8784084, 0.3, 3.8)
+
+[node name="TorreOeste_P1_Franja1" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1642801401]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65.3, 4.52, 27.5)
 use_collision = true
 size = Vector3(0.4, 0.04, 3.8)
 material = ExtResource("12_uwdqk")
 
-[node name="TorreOeste_P1_Descanso" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=285376846]
+[node name="TorreOeste_P1_T1_RailDiv" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1585756358]
+transform = Transform3D(0.9449861, 0.32711056, 0, -0.32711056, 0.9449861, 0, 0, 0, 1, -68.25, 6.525, 29.4)
+use_collision = true
+size = Vector3(6.8784084, 0.05, 0.05)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreOeste_P1_T1_WallDiv" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1961935591]
+transform = Transform3D(0.9449861, 0.32711056, 0, -0.32711056, 0.9449861, 0, 0, 0, 1, -68.25, 5.875, 29.4)
+use_collision = true
+size = Vector3(6.8784084, 0.5, 0.1)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreOeste_P1_T1_RailOut" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=249268566]
+transform = Transform3D(0.9449861, 0.32711056, 0, -0.32711056, 0.9449861, 0, 0, 0, 1, -68.25, 6.525, 25.6)
+use_collision = true
+size = Vector3(6.8784084, 0.05, 0.05)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreOeste_P1_T1_PostOut0" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=324711970]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65.25, 5.123077, 25.6)
+use_collision = true
+size = Vector3(0.05, 0.9, 0.05)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreOeste_P1_T1_PostOut1" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=2140059801]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -71.25, 7.2, 25.6)
+use_collision = true
+size = Vector3(0.05, 0.9, 0.05)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreOeste_P1_Descanso" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=35518766]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -72.75, 6.65, 30)
 use_collision = true
 size = Vector3(3, 0.2, 9)
-material = ExtResource("11_g4jqe")
 
-[node name="TorreOeste_P1_Tramo2" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=62174277]
-transform = Transform3D(0.9449861, -0.32711056, 0, 0.32711056, 0.9449861, 0, 0, 0, 1, -68.22, 7.804, 32.5)
+[node name="TorreOeste_P1_T2_S0" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=141222563]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -71.25, 6.838077, 32.5)
 use_collision = true
-size = Vector3(7.178408, 0.15, 3.8)
-material = ExtResource("11_g4jqe")
+size = Vector3(0.5, 0.17, 3.8)
 
-[node name="TorreOeste_Luz_0" type="OmniLight3D" parent="TorresEscaleras/TorreOeste" unique_id=201919310]
+[node name="TorreOeste_P1_T2_S1" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=664859124]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -70.75, 7.0111537, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P1_T2_S2" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1336872274]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -70.25, 7.184231, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P1_T2_S3" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=185180541]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69.75, 7.357308, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P1_T2_S4" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1596565439]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69.25, 7.5303845, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P1_T2_S5" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1241871591]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -68.75, 7.7034616, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P1_T2_S6" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=756011688]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -68.25, 7.8765383, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P1_T2_S7" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=405849582]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -67.75, 8.049616, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P1_T2_S8" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=779972153]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -67.25, 8.2226925, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P1_T2_S9" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=932758110]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -66.75, 8.395769, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P1_T2_S10" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=721983922]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -66.25, 8.568846, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P1_T2_S11" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1857398816]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65.75, 8.741923, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P1_T2_S12" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=881422644]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65.25, 8.915, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreOeste_P1_T2_Zanca" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=200976880]
+transform = Transform3D(0.9449861, -0.32711056, 0, 0.32711056, 0.9449861, 0, 0, 0, 1, -68.25, 7.655, 32.5)
+use_collision = true
+size = Vector3(6.8784084, 0.3, 3.8)
+
+[node name="TorreOeste_P1_T2_RailDiv" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1445105073]
+transform = Transform3D(0.9449861, -0.32711056, 0, 0.32711056, 0.9449861, 0, 0, 0, 1, -68.25, 8.775, 30.6)
+use_collision = true
+size = Vector3(6.8784084, 0.05, 0.05)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreOeste_P1_T2_WallDiv" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1885939358]
+transform = Transform3D(0.9449861, -0.32711056, 0, 0.32711056, 0.9449861, 0, 0, 0, 1, -68.25, 8.125, 30.6)
+use_collision = true
+size = Vector3(6.8784084, 0.5, 0.1)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreOeste_P1_T2_RailOut" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=1899977321]
+transform = Transform3D(0.9449861, -0.32711056, 0, 0.32711056, 0.9449861, 0, 0, 0, 1, -68.25, 8.775, 34.4)
+use_collision = true
+size = Vector3(6.8784084, 0.05, 0.05)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreOeste_P1_T2_PostOut0" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=2070435386]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -71.25, 7.373077, 34.4)
+use_collision = true
+size = Vector3(0.05, 0.9, 0.05)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreOeste_P1_T2_PostOut1" type="CSGBox3D" parent="TorresEscaleras/TorreOeste" unique_id=109102179]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65.25, 9.45, 34.4)
+use_collision = true
+size = Vector3(0.05, 0.9, 0.05)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreOeste_Luz_0" type="OmniLight3D" parent="TorresEscaleras/TorreOeste" unique_id=444043655]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69.5, 3.2, 30)
 light_color = Color(0.9, 0.95, 1, 1)
 light_energy = 0.8
 shadow_enabled = true
 omni_range = 10.0
 
-[node name="TorreOeste_Luz_1" type="OmniLight3D" parent="TorresEscaleras/TorreOeste" unique_id=1142307663]
+[node name="TorreOeste_Luz_1" type="OmniLight3D" parent="TorresEscaleras/TorreOeste" unique_id=1101904172]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69.5, 7.7, 30)
 light_color = Color(0.9, 0.95, 1, 1)
 light_energy = 0.8
 shadow_enabled = true
 omni_range = 10.0
 
-[node name="TorreOeste_Luz_2" type="OmniLight3D" parent="TorresEscaleras/TorreOeste" unique_id=776860473]
+[node name="TorreOeste_Luz_2" type="OmniLight3D" parent="TorresEscaleras/TorreOeste" unique_id=1073076958]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69.5, 12.2, 30)
 light_color = Color(0.9, 0.95, 1, 1)
 light_energy = 0.8
 shadow_enabled = true
 omni_range = 10.0
 
-[node name="TorreEste" type="Node3D" parent="TorresEscaleras" unique_id=1305297801]
+[node name="TorreEste" type="Node3D" parent="TorresEscaleras" unique_id=1902261219]
 
-[node name="TorreEste_ParedFondo" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=646356856]
+[node name="TorreEste_ParedFondo" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1357325788]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 74, 6.75, 30)
 use_collision = true
 size = Vector3(0.3, 13.5, 10)
-material = ExtResource("4_0kga5")
+material = ExtResource("3_t6nnw")
 
-[node name="TorreEste_ParedNorte" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=538535672]
+[node name="TorreEste_ParedNorte" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=2092171003]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69.5, 6.75, 25)
 use_collision = true
 size = Vector3(9, 13.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("3_t6nnw")
 
-[node name="TorreEste_ParedSur" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=473783768]
+[node name="TorreEste_ParedSur" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=330559094]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69.5, 6.75, 35)
 use_collision = true
 size = Vector3(9, 13.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("3_t6nnw")
 
-[node name="TorreEste_Ventanal" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1784056906]
+[node name="TorreEste_Ventanal" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=935266144]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 74, 6.75, 30)
 use_collision = true
 size = Vector3(0.08, 11.5, 7)
-material = ExtResource("5_68yaw")
+material = ExtResource("1_2hdtu")
 
-[node name="TorreEste_PisoBase" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=533598135]
+[node name="TorreEste_PisoBase" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1620457526]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69.5, -0.1, 30)
 use_collision = true
 size = Vector3(9, 0.2, 10)
-material = ExtResource("1_2hdtu")
 
-[node name="TorreEste_TechoFinal" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1968434210]
+[node name="TorreEste_TechoFinal" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1767648544]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69.5, 13.6, 30)
 use_collision = true
 size = Vector3(9, 0.2, 10)
-material = ExtResource("3_t6nnw")
-
-[node name="TorreEste_P0_Tramo1" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=445932545]
-transform = Transform3D(0.9449861, -0.32711056, 0, 0.32711056, 0.9449861, 0, 0, 0, 1, 68.22, 1.054, 27.5)
-use_collision = true
-size = Vector3(7.178408, 0.15, 3.8)
 material = ExtResource("11_g4jqe")
 
-[node name="TorreEste_P0_Franja1" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1305363647]
+[node name="TorreEste_P0_T1_S0" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=546599842]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.25, 0.08807693, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P0_T1_S1" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=298462720]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.75, 0.26115385, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P0_T1_S2" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1602873597]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.25, 0.43423077, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P0_T1_S3" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=237259289]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.75, 0.6073077, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P0_T1_S4" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=232122153]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 67.25, 0.7803846, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P0_T1_S5" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=814043807]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 67.75, 0.9534615, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P0_T1_S6" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=2100395600]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 68.25, 1.1265385, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P0_T1_S7" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=241303760]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 68.75, 1.2996154, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P0_T1_S8" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1028614720]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69.25, 1.4726923, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P0_T1_S9" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1817545477]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69.75, 1.6457692, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P0_T1_S10" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1569908173]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70.25, 1.8188461, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P0_T1_S11" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=413888617]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70.75, 1.9919231, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P0_T1_S12" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1307094796]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 71.25, 2.165, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P0_T1_Zanca" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=35250371]
+transform = Transform3D(0.9449861, -0.32711056, 0, 0.32711056, 0.9449861, 0, 0, 0, 1, 68.25, 0.905, 27.5)
+use_collision = true
+size = Vector3(6.8784084, 0.3, 3.8)
+
+[node name="TorreEste_P0_Franja1" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=611662426]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.3, 0.02, 27.5)
 use_collision = true
 size = Vector3(0.4, 0.04, 3.8)
 material = ExtResource("12_uwdqk")
 
-[node name="TorreEste_P0_Descanso" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1315460988]
+[node name="TorreEste_P0_T1_RailDiv" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1853891342]
+transform = Transform3D(0.9449861, -0.32711056, 0, 0.32711056, 0.9449861, 0, 0, 0, 1, 68.25, 2.025, 29.4)
+use_collision = true
+size = Vector3(6.8784084, 0.05, 0.05)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreEste_P0_T1_WallDiv" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1037982138]
+transform = Transform3D(0.9449861, -0.32711056, 0, 0.32711056, 0.9449861, 0, 0, 0, 1, 68.25, 1.375, 29.4)
+use_collision = true
+size = Vector3(6.8784084, 0.5, 0.1)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreEste_P0_T1_RailOut" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1451373194]
+transform = Transform3D(0.9449861, -0.32711056, 0, 0.32711056, 0.9449861, 0, 0, 0, 1, 68.25, 2.025, 25.6)
+use_collision = true
+size = Vector3(6.8784084, 0.05, 0.05)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreEste_P0_T1_PostOut0" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=536928836]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.25, 0.6230769, 25.6)
+use_collision = true
+size = Vector3(0.05, 0.9, 0.05)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreEste_P0_T1_PostOut1" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=821127442]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 71.25, 2.7, 25.6)
+use_collision = true
+size = Vector3(0.05, 0.9, 0.05)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreEste_P0_Descanso" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1431995372]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72.75, 2.15, 30)
 use_collision = true
 size = Vector3(3, 0.2, 9)
-material = ExtResource("11_g4jqe")
 
-[node name="TorreEste_P0_Tramo2" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=183139818]
-transform = Transform3D(0.9449861, 0.32711056, 0, -0.32711056, 0.9449861, 0, 0, 0, 1, 68.28, 3.304, 32.5)
+[node name="TorreEste_P0_T2_S0" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=120668861]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 71.25, 2.3380768, 32.5)
 use_collision = true
-size = Vector3(7.178408, 0.15, 3.8)
-material = ExtResource("11_g4jqe")
+size = Vector3(0.5, 0.17, 3.8)
 
-[node name="TorreEste_P1_Tramo1" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=279306919]
-transform = Transform3D(0.9449861, -0.32711056, 0, 0.32711056, 0.9449861, 0, 0, 0, 1, 68.22, 5.554, 27.5)
+[node name="TorreEste_P0_T2_S1" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1024932700]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70.75, 2.511154, 32.5)
 use_collision = true
-size = Vector3(7.178408, 0.15, 3.8)
-material = ExtResource("11_g4jqe")
+size = Vector3(0.5, 0.17, 3.8)
 
-[node name="TorreEste_P1_Franja1" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=144519717]
+[node name="TorreEste_P0_T2_S2" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1092537707]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70.25, 2.6842308, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P0_T2_S3" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=2057202791]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69.75, 2.8573077, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P0_T2_S4" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1736461199]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69.25, 3.0303845, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P0_T2_S5" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=764747644]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 68.75, 3.2034616, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P0_T2_S6" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=271379071]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 68.25, 3.3765385, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P0_T2_S7" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1526079386]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 67.75, 3.5496154, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P0_T2_S8" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1379725751]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 67.25, 3.7226923, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P0_T2_S9" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1597807213]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.75, 3.8957691, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P0_T2_S10" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1971629177]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.25, 4.068846, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P0_T2_S11" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=130840337]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.75, 4.241923, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P0_T2_S12" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=551088301]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.25, 4.415, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P0_T2_Zanca" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=684200174]
+transform = Transform3D(0.9449861, 0.32711056, 0, -0.32711056, 0.9449861, 0, 0, 0, 1, 68.25, 3.155, 32.5)
+use_collision = true
+size = Vector3(6.8784084, 0.3, 3.8)
+
+[node name="TorreEste_P0_T2_RailDiv" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1745734176]
+transform = Transform3D(0.9449861, 0.32711056, 0, -0.32711056, 0.9449861, 0, 0, 0, 1, 68.25, 4.275, 30.6)
+use_collision = true
+size = Vector3(6.8784084, 0.05, 0.05)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreEste_P0_T2_WallDiv" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1889435984]
+transform = Transform3D(0.9449861, 0.32711056, 0, -0.32711056, 0.9449861, 0, 0, 0, 1, 68.25, 3.625, 30.6)
+use_collision = true
+size = Vector3(6.8784084, 0.5, 0.1)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreEste_P0_T2_RailOut" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=302576586]
+transform = Transform3D(0.9449861, 0.32711056, 0, -0.32711056, 0.9449861, 0, 0, 0, 1, 68.25, 4.275, 34.4)
+use_collision = true
+size = Vector3(6.8784084, 0.05, 0.05)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreEste_P0_T2_PostOut0" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1788299183]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 71.25, 2.873077, 34.4)
+use_collision = true
+size = Vector3(0.05, 0.9, 0.05)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreEste_P0_T2_PostOut1" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=2136483511]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.25, 4.95, 34.4)
+use_collision = true
+size = Vector3(0.05, 0.9, 0.05)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreEste_P1_T1_S0" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=2113781168]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.25, 4.588077, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P1_T1_S1" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=2041708480]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.75, 4.7611537, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P1_T1_S2" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1081528317]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.25, 4.934231, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P1_T1_S3" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1729756794]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.75, 5.107308, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P1_T1_S4" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=217048745]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 67.25, 5.2803845, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P1_T1_S5" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1459355407]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 67.75, 5.4534616, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P1_T1_S6" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1202522809]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 68.25, 5.6265383, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P1_T1_S7" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=177857618]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 68.75, 5.7996154, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P1_T1_S8" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1192601400]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69.25, 5.9726925, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P1_T1_S9" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=446269930]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69.75, 6.145769, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P1_T1_S10" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1534429332]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70.25, 6.318846, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P1_T1_S11" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=915148486]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70.75, 6.491923, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P1_T1_S12" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1784782133]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 71.25, 6.665, 27.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P1_T1_Zanca" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=122504748]
+transform = Transform3D(0.9449861, -0.32711056, 0, 0.32711056, 0.9449861, 0, 0, 0, 1, 68.25, 5.405, 27.5)
+use_collision = true
+size = Vector3(6.8784084, 0.3, 3.8)
+
+[node name="TorreEste_P1_Franja1" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1083216561]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.3, 4.52, 27.5)
 use_collision = true
 size = Vector3(0.4, 0.04, 3.8)
 material = ExtResource("12_uwdqk")
 
-[node name="TorreEste_P1_Descanso" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1236006396]
+[node name="TorreEste_P1_T1_RailDiv" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1684476547]
+transform = Transform3D(0.9449861, -0.32711056, 0, 0.32711056, 0.9449861, 0, 0, 0, 1, 68.25, 6.525, 29.4)
+use_collision = true
+size = Vector3(6.8784084, 0.05, 0.05)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreEste_P1_T1_WallDiv" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1266525550]
+transform = Transform3D(0.9449861, -0.32711056, 0, 0.32711056, 0.9449861, 0, 0, 0, 1, 68.25, 5.875, 29.4)
+use_collision = true
+size = Vector3(6.8784084, 0.5, 0.1)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreEste_P1_T1_RailOut" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=832734218]
+transform = Transform3D(0.9449861, -0.32711056, 0, 0.32711056, 0.9449861, 0, 0, 0, 1, 68.25, 6.525, 25.6)
+use_collision = true
+size = Vector3(6.8784084, 0.05, 0.05)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreEste_P1_T1_PostOut0" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=830348203]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.25, 5.123077, 25.6)
+use_collision = true
+size = Vector3(0.05, 0.9, 0.05)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreEste_P1_T1_PostOut1" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=988120380]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 71.25, 7.2, 25.6)
+use_collision = true
+size = Vector3(0.05, 0.9, 0.05)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreEste_P1_Descanso" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1463119681]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72.75, 6.65, 30)
 use_collision = true
 size = Vector3(3, 0.2, 9)
-material = ExtResource("11_g4jqe")
 
-[node name="TorreEste_P1_Tramo2" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=296277627]
-transform = Transform3D(0.9449861, 0.32711056, 0, -0.32711056, 0.9449861, 0, 0, 0, 1, 68.28, 7.804, 32.5)
+[node name="TorreEste_P1_T2_S0" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=988835291]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 71.25, 6.838077, 32.5)
 use_collision = true
-size = Vector3(7.178408, 0.15, 3.8)
-material = ExtResource("11_g4jqe")
+size = Vector3(0.5, 0.17, 3.8)
 
-[node name="TorreEste_Luz_0" type="OmniLight3D" parent="TorresEscaleras/TorreEste" unique_id=1448256350]
+[node name="TorreEste_P1_T2_S1" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1901582914]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70.75, 7.0111537, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P1_T2_S2" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1556711854]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70.25, 7.184231, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P1_T2_S3" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=2027147177]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69.75, 7.357308, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P1_T2_S4" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1883335668]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69.25, 7.5303845, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P1_T2_S5" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=171629321]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 68.75, 7.7034616, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P1_T2_S6" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=413778041]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 68.25, 7.8765383, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P1_T2_S7" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1025401189]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 67.75, 8.049616, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P1_T2_S8" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1250008532]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 67.25, 8.2226925, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P1_T2_S9" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=399277967]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.75, 8.395769, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P1_T2_S10" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1374384966]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.25, 8.568846, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P1_T2_S11" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1236728631]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.75, 8.741923, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P1_T2_S12" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1162487801]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.25, 8.915, 32.5)
+use_collision = true
+size = Vector3(0.5, 0.17, 3.8)
+
+[node name="TorreEste_P1_T2_Zanca" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=384103028]
+transform = Transform3D(0.9449861, 0.32711056, 0, -0.32711056, 0.9449861, 0, 0, 0, 1, 68.25, 7.655, 32.5)
+use_collision = true
+size = Vector3(6.8784084, 0.3, 3.8)
+
+[node name="TorreEste_P1_T2_RailDiv" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1393727860]
+transform = Transform3D(0.9449861, 0.32711056, 0, -0.32711056, 0.9449861, 0, 0, 0, 1, 68.25, 8.775, 30.6)
+use_collision = true
+size = Vector3(6.8784084, 0.05, 0.05)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreEste_P1_T2_WallDiv" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=725407103]
+transform = Transform3D(0.9449861, 0.32711056, 0, -0.32711056, 0.9449861, 0, 0, 0, 1, 68.25, 8.125, 30.6)
+use_collision = true
+size = Vector3(6.8784084, 0.5, 0.1)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreEste_P1_T2_RailOut" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=40520187]
+transform = Transform3D(0.9449861, 0.32711056, 0, -0.32711056, 0.9449861, 0, 0, 0, 1, 68.25, 8.775, 34.4)
+use_collision = true
+size = Vector3(6.8784084, 0.05, 0.05)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreEste_P1_T2_PostOut0" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1766501429]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 71.25, 7.373077, 34.4)
+use_collision = true
+size = Vector3(0.05, 0.9, 0.05)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreEste_P1_T2_PostOut1" type="CSGBox3D" parent="TorresEscaleras/TorreEste" unique_id=1658065297]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.25, 9.45, 34.4)
+use_collision = true
+size = Vector3(0.05, 0.9, 0.05)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreEste_Luz_0" type="OmniLight3D" parent="TorresEscaleras/TorreEste" unique_id=1300464459]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69.5, 3.2, 30)
 light_color = Color(0.9, 0.95, 1, 1)
 light_energy = 0.8
 shadow_enabled = true
 omni_range = 10.0
 
-[node name="TorreEste_Luz_1" type="OmniLight3D" parent="TorresEscaleras/TorreEste" unique_id=888672344]
+[node name="TorreEste_Luz_1" type="OmniLight3D" parent="TorresEscaleras/TorreEste" unique_id=1733356761]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69.5, 7.7, 30)
 light_color = Color(0.9, 0.95, 1, 1)
 light_energy = 0.8
 shadow_enabled = true
 omni_range = 10.0
 
-[node name="TorreEste_Luz_2" type="OmniLight3D" parent="TorresEscaleras/TorreEste" unique_id=1379380267]
+[node name="TorreEste_Luz_2" type="OmniLight3D" parent="TorresEscaleras/TorreEste" unique_id=2096828304]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69.5, 12.2, 30)
 light_color = Color(0.9, 0.95, 1, 1)
 light_energy = 0.8
 shadow_enabled = true
 omni_range = 10.0
 
-[node name="TorreNorte" type="Node3D" parent="TorresEscaleras" unique_id=1054125489]
+[node name="TorreNorte" type="Node3D" parent="TorresEscaleras" unique_id=1427374922]
 
-[node name="TorreNorte_ParedFondo" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1763615451]
+[node name="TorreNorte_ParedFondo" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1108284966]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 6.75, -54)
 use_collision = true
 size = Vector3(10, 13.5, 0.3)
-material = ExtResource("4_0kga5")
+material = ExtResource("3_t6nnw")
 
-[node name="TorreNorte_ParedOeste" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=387925835]
+[node name="TorreNorte_ParedOeste" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=385711644]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37, 6.75, -49.5)
 use_collision = true
 size = Vector3(0.3, 13.5, 9)
-material = ExtResource("4_0kga5")
+material = ExtResource("3_t6nnw")
 
-[node name="TorreNorte_ParedEste" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1944173067]
+[node name="TorreNorte_ParedEste" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=118625728]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47, 6.75, -49.5)
 use_collision = true
 size = Vector3(0.3, 13.5, 9)
-material = ExtResource("4_0kga5")
+material = ExtResource("3_t6nnw")
 
-[node name="TorreNorte_Ventanal" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=959625797]
+[node name="TorreNorte_Ventanal" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1422931772]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 6.75, -54)
 use_collision = true
 size = Vector3(7, 11.5, 0.08)
-material = ExtResource("5_68yaw")
+material = ExtResource("1_2hdtu")
 
-[node name="TorreNorte_PisoBase" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1820460565]
+[node name="TorreNorte_PisoBase" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1224836590]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, -0.1, -49.5)
 use_collision = true
 size = Vector3(10, 0.2, 9)
-material = ExtResource("1_2hdtu")
 
-[node name="TorreNorte_TechoFinal" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=2114965206]
+[node name="TorreNorte_TechoFinal" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1994868529]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 13.6, -49.5)
 use_collision = true
 size = Vector3(10, 0.2, 9)
-material = ExtResource("3_t6nnw")
-
-[node name="TorreNorte_P0_Tramo1" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=224627929]
-transform = Transform3D(1, 0, 0, 0, 0.9449861, -0.32711056, 0, 0.32711056, 0.9449861, 39.5, 1.054, -48.28)
-use_collision = true
-size = Vector3(3.8, 0.15, 7.178408)
 material = ExtResource("11_g4jqe")
 
-[node name="TorreNorte_P0_Franja1" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=679657190]
+[node name="TorreNorte_P0_T1_S0" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=853046202]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 0.08807693, -45.25)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P0_T1_S1" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=2120315726]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 0.26115385, -45.75)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P0_T1_S2" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=658109461]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 0.43423077, -46.25)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P0_T1_S3" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1624524040]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 0.6073077, -46.75)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P0_T1_S4" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1865079723]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 0.7803846, -47.25)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P0_T1_S5" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1161438421]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 0.9534615, -47.75)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P0_T1_S6" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=6970058]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 1.1265385, -48.25)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P0_T1_S7" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=227271450]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 1.2996154, -48.75)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P0_T1_S8" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=2018581694]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 1.4726923, -49.25)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P0_T1_S9" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1088648113]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 1.6457692, -49.75)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P0_T1_S10" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=894210297]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 1.8188461, -50.25)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P0_T1_S11" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=2084446434]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 1.9919231, -50.75)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P0_T1_S12" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1324401529]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 2.165, -51.25)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P0_T1_Zanca" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1190886282]
+transform = Transform3D(1, 0, 0, 0, 0.9449861, -0.32711056, 0, 0.32711056, 0.9449861, 39.5, 0.905, -48.25)
+use_collision = true
+size = Vector3(3.8, 0.3, 6.8784084)
+
+[node name="TorreNorte_P0_Franja1" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1545563257]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 0.02, -45.3)
 use_collision = true
 size = Vector3(3.8, 0.04, 0.4)
 material = ExtResource("12_uwdqk")
 
-[node name="TorreNorte_P0_Descanso" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=142974785]
+[node name="TorreNorte_P0_T1_RailDiv" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=399937446]
+transform = Transform3D(1, 0, 0, 0, 0.9449861, -0.32711056, 0, 0.32711056, 0.9449861, 41.4, 2.025, -48.25)
+use_collision = true
+size = Vector3(0.05, 0.05, 6.8784084)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreNorte_P0_T1_WallDiv" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=71339564]
+transform = Transform3D(1, 0, 0, 0, 0.9449861, -0.32711056, 0, 0.32711056, 0.9449861, 41.4, 1.375, -48.25)
+use_collision = true
+size = Vector3(0.1, 0.5, 6.8784084)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreNorte_P0_T1_RailOut" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1958147280]
+transform = Transform3D(1, 0, 0, 0, 0.9449861, -0.32711056, 0, 0.32711056, 0.9449861, 37.6, 2.025, -48.25)
+use_collision = true
+size = Vector3(0.05, 0.05, 6.8784084)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreNorte_P0_T1_PostOut0" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=2096308037]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.6, 0.6230769, -45.25)
+use_collision = true
+size = Vector3(0.05, 0.9, 0.05)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreNorte_P0_T1_PostOut1" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1210453179]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.6, 2.7, -51.25)
+use_collision = true
+size = Vector3(0.05, 0.9, 0.05)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreNorte_P0_Descanso" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1516833163]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 2.15, -52.75)
 use_collision = true
 size = Vector3(9, 0.2, 3)
-material = ExtResource("11_g4jqe")
 
-[node name="TorreNorte_P0_Tramo2" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1674248650]
-transform = Transform3D(1, 0, 0, 0, 0.9449861, 0.32711056, 0, -0.32711056, 0.9449861, 44.5, 3.304, -48.22)
+[node name="TorreNorte_P0_T2_S0" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1284878635]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.5, 2.3380768, -51.25)
 use_collision = true
-size = Vector3(3.8, 0.15, 7.178408)
-material = ExtResource("11_g4jqe")
+size = Vector3(3.8, 0.17, 0.5)
 
-[node name="TorreNorte_P1_Tramo1" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=733554509]
-transform = Transform3D(1, 0, 0, 0, 0.9449861, -0.32711056, 0, 0.32711056, 0.9449861, 39.5, 5.554, -48.28)
+[node name="TorreNorte_P0_T2_S1" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1395538053]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.5, 2.511154, -50.75)
 use_collision = true
-size = Vector3(3.8, 0.15, 7.178408)
-material = ExtResource("11_g4jqe")
+size = Vector3(3.8, 0.17, 0.5)
 
-[node name="TorreNorte_P1_Franja1" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=211047547]
+[node name="TorreNorte_P0_T2_S2" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=343438661]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.5, 2.6842308, -50.25)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P0_T2_S3" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=701603218]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.5, 2.8573077, -49.75)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P0_T2_S4" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1684245188]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.5, 3.0303845, -49.25)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P0_T2_S5" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1384030519]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.5, 3.2034616, -48.75)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P0_T2_S6" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=481454294]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.5, 3.3765385, -48.25)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P0_T2_S7" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=970332284]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.5, 3.5496154, -47.75)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P0_T2_S8" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=17285629]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.5, 3.7226923, -47.25)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P0_T2_S9" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1336000125]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.5, 3.8957691, -46.75)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P0_T2_S10" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=2053435557]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.5, 4.068846, -46.25)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P0_T2_S11" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1851953450]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.5, 4.241923, -45.75)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P0_T2_S12" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1357758143]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.5, 4.415, -45.25)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P0_T2_Zanca" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1128607730]
+transform = Transform3D(1, 0, 0, 0, 0.9449861, 0.32711056, 0, -0.32711056, 0.9449861, 44.5, 3.155, -48.25)
+use_collision = true
+size = Vector3(3.8, 0.3, 6.8784084)
+
+[node name="TorreNorte_P0_T2_RailDiv" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=706069065]
+transform = Transform3D(1, 0, 0, 0, 0.9449861, 0.32711056, 0, -0.32711056, 0.9449861, 42.6, 4.275, -48.25)
+use_collision = true
+size = Vector3(0.05, 0.05, 6.8784084)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreNorte_P0_T2_WallDiv" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=259393793]
+transform = Transform3D(1, 0, 0, 0, 0.9449861, 0.32711056, 0, -0.32711056, 0.9449861, 42.6, 3.625, -48.25)
+use_collision = true
+size = Vector3(0.1, 0.5, 6.8784084)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreNorte_P0_T2_RailOut" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=260970858]
+transform = Transform3D(1, 0, 0, 0, 0.9449861, 0.32711056, 0, -0.32711056, 0.9449861, 46.4, 4.275, -48.25)
+use_collision = true
+size = Vector3(0.05, 0.05, 6.8784084)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreNorte_P0_T2_PostOut0" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1847570956]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46.4, 2.873077, -51.25)
+use_collision = true
+size = Vector3(0.05, 0.9, 0.05)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreNorte_P0_T2_PostOut1" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1762437891]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46.4, 4.95, -45.25)
+use_collision = true
+size = Vector3(0.05, 0.9, 0.05)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreNorte_P1_T1_S0" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=46376219]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 4.588077, -45.25)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P1_T1_S1" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=618664761]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 4.7611537, -45.75)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P1_T1_S2" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=902879902]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 4.934231, -46.25)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P1_T1_S3" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=2034537578]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 5.107308, -46.75)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P1_T1_S4" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=121813237]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 5.2803845, -47.25)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P1_T1_S5" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=54612836]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 5.4534616, -47.75)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P1_T1_S6" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=122251932]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 5.6265383, -48.25)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P1_T1_S7" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1864514955]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 5.7996154, -48.75)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P1_T1_S8" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1649259629]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 5.9726925, -49.25)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P1_T1_S9" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1421778533]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 6.145769, -49.75)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P1_T1_S10" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=470672858]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 6.318846, -50.25)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P1_T1_S11" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=2120421681]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 6.491923, -50.75)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P1_T1_S12" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1771409869]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 6.665, -51.25)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P1_T1_Zanca" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=287901109]
+transform = Transform3D(1, 0, 0, 0, 0.9449861, -0.32711056, 0, 0.32711056, 0.9449861, 39.5, 5.405, -48.25)
+use_collision = true
+size = Vector3(3.8, 0.3, 6.8784084)
+
+[node name="TorreNorte_P1_Franja1" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=229471150]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 4.52, -45.3)
 use_collision = true
 size = Vector3(3.8, 0.04, 0.4)
 material = ExtResource("12_uwdqk")
 
-[node name="TorreNorte_P1_Descanso" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1441642979]
+[node name="TorreNorte_P1_T1_RailDiv" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1635653851]
+transform = Transform3D(1, 0, 0, 0, 0.9449861, -0.32711056, 0, 0.32711056, 0.9449861, 41.4, 6.525, -48.25)
+use_collision = true
+size = Vector3(0.05, 0.05, 6.8784084)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreNorte_P1_T1_WallDiv" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1327773580]
+transform = Transform3D(1, 0, 0, 0, 0.9449861, -0.32711056, 0, 0.32711056, 0.9449861, 41.4, 5.875, -48.25)
+use_collision = true
+size = Vector3(0.1, 0.5, 6.8784084)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreNorte_P1_T1_RailOut" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=671328509]
+transform = Transform3D(1, 0, 0, 0, 0.9449861, -0.32711056, 0, 0.32711056, 0.9449861, 37.6, 6.525, -48.25)
+use_collision = true
+size = Vector3(0.05, 0.05, 6.8784084)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreNorte_P1_T1_PostOut0" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1563657473]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.6, 5.123077, -45.25)
+use_collision = true
+size = Vector3(0.05, 0.9, 0.05)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreNorte_P1_T1_PostOut1" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=803105090]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.6, 7.2, -51.25)
+use_collision = true
+size = Vector3(0.05, 0.9, 0.05)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreNorte_P1_Descanso" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1409309989]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 6.65, -52.75)
 use_collision = true
 size = Vector3(9, 0.2, 3)
-material = ExtResource("11_g4jqe")
 
-[node name="TorreNorte_P1_Tramo2" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=767645955]
-transform = Transform3D(1, 0, 0, 0, 0.9449861, 0.32711056, 0, -0.32711056, 0.9449861, 44.5, 7.804, -48.22)
+[node name="TorreNorte_P1_T2_S0" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1946307690]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.5, 6.838077, -51.25)
 use_collision = true
-size = Vector3(3.8, 0.15, 7.178408)
-material = ExtResource("11_g4jqe")
+size = Vector3(3.8, 0.17, 0.5)
 
-[node name="TorreNorte_Luz_0" type="OmniLight3D" parent="TorresEscaleras/TorreNorte" unique_id=650442772]
+[node name="TorreNorte_P1_T2_S1" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1297090893]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.5, 7.0111537, -50.75)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P1_T2_S2" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1941139582]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.5, 7.184231, -50.25)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P1_T2_S3" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1124209506]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.5, 7.357308, -49.75)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P1_T2_S4" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1990876844]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.5, 7.5303845, -49.25)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P1_T2_S5" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=863409771]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.5, 7.7034616, -48.75)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P1_T2_S6" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1683054893]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.5, 7.8765383, -48.25)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P1_T2_S7" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1031875163]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.5, 8.049616, -47.75)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P1_T2_S8" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=813773032]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.5, 8.2226925, -47.25)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P1_T2_S9" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1348750155]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.5, 8.395769, -46.75)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P1_T2_S10" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=172067858]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.5, 8.568846, -46.25)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P1_T2_S11" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1439982613]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.5, 8.741923, -45.75)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P1_T2_S12" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=2048556627]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.5, 8.915, -45.25)
+use_collision = true
+size = Vector3(3.8, 0.17, 0.5)
+
+[node name="TorreNorte_P1_T2_Zanca" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1605921791]
+transform = Transform3D(1, 0, 0, 0, 0.9449861, 0.32711056, 0, -0.32711056, 0.9449861, 44.5, 7.655, -48.25)
+use_collision = true
+size = Vector3(3.8, 0.3, 6.8784084)
+
+[node name="TorreNorte_P1_T2_RailDiv" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=69040304]
+transform = Transform3D(1, 0, 0, 0, 0.9449861, 0.32711056, 0, -0.32711056, 0.9449861, 42.6, 8.775, -48.25)
+use_collision = true
+size = Vector3(0.05, 0.05, 6.8784084)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreNorte_P1_T2_WallDiv" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1509813560]
+transform = Transform3D(1, 0, 0, 0, 0.9449861, 0.32711056, 0, -0.32711056, 0.9449861, 42.6, 8.125, -48.25)
+use_collision = true
+size = Vector3(0.1, 0.5, 6.8784084)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreNorte_P1_T2_RailOut" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1301982717]
+transform = Transform3D(1, 0, 0, 0, 0.9449861, 0.32711056, 0, -0.32711056, 0.9449861, 46.4, 8.775, -48.25)
+use_collision = true
+size = Vector3(0.05, 0.05, 6.8784084)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreNorte_P1_T2_PostOut0" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=268619515]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46.4, 7.373077, -51.25)
+use_collision = true
+size = Vector3(0.05, 0.9, 0.05)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreNorte_P1_T2_PostOut1" type="CSGBox3D" parent="TorresEscaleras/TorreNorte" unique_id=1688276510]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46.4, 9.45, -45.25)
+use_collision = true
+size = Vector3(0.05, 0.9, 0.05)
+material = SubResource("StandardMaterial3D_oluwi")
+
+[node name="TorreNorte_Luz_0" type="OmniLight3D" parent="TorresEscaleras/TorreNorte" unique_id=1875194736]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 3.2, -49.5)
 light_color = Color(0.9, 0.95, 1, 1)
 light_energy = 0.8
 shadow_enabled = true
 omni_range = 10.0
 
-[node name="TorreNorte_Luz_1" type="OmniLight3D" parent="TorresEscaleras/TorreNorte" unique_id=937987213]
+[node name="TorreNorte_Luz_1" type="OmniLight3D" parent="TorresEscaleras/TorreNorte" unique_id=713090553]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 7.7, -49.5)
 light_color = Color(0.9, 0.95, 1, 1)
 light_energy = 0.8
 shadow_enabled = true
 omni_range = 10.0
 
-[node name="TorreNorte_Luz_2" type="OmniLight3D" parent="TorresEscaleras/TorreNorte" unique_id=282766333]
+[node name="TorreNorte_Luz_2" type="OmniLight3D" parent="TorresEscaleras/TorreNorte" unique_id=1734825919]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 12.2, -49.5)
 light_color = Color(0.9, 0.95, 1, 1)
 light_energy = 0.8

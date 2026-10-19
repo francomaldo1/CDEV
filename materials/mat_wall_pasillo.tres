@@ -1,0 +1,14 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3]
+
+[ext_resource type="Shader" path="res://materials/shader_pared_pasillo.gdshader" id="1_shader"]
+
+[resource]
+resource_name = "ParedPasilloUTN"
+render_priority = 0
+shader = ExtResource("1_shader")
+shader_parameter/color_pared = Color(0.72, 0.7, 0.65, 1)
+shader_parameter/color_madera = Color(0.64, 0.38, 0.18, 1)
+shader_parameter/color_moldura = Color(0.32, 0.18, 0.08, 1)
+shader_parameter/altura_piso = 4.5
+shader_parameter/altura_madera = 1.35
+shader_parameter/grosor_moldura = 0.04
