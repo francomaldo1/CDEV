@@ -23,6 +23,7 @@ var ml: Material   # locker
 var mco: Material  # comedor
 var mu: Material   # UTN azul
 var mcr: Material  # silla roja
+var mwp: Material  # revestimiento madera pasillo UTN
 
 func _init():
 	print(">>> Generando UTN FRC con Piso 2 clonado de PB y Cafetería real...")
@@ -38,6 +39,7 @@ func _init():
 	mco = load("res://materials/mat_comedor.tres")
 	mu = load("res://materials/mat_utn_blue.tres")
 	mcr = load("res://materials/mat_chair_red.tres")
+	mwp = load("res://materials/mat_wall_wood_panel.tres")
 
 	var ed = Node3D.new()
 	ed.name = "EdificioCentral"
@@ -85,29 +87,54 @@ func _lbl(p: Node, r: Node, n: String, txt: String, pos: Vector3, rot: Vector3):
 	l.font_size = 42; l.modulate = Color(1.0, 0.9, 0.45); l.outline_size = 10
 	p.add_child(l); l.owner = r
 
+func _es_pared_pasillo(n: String) -> bool:
+	# Divisorias internas de aulas, pizarrones o equipamiento son blancas
+	if "Div" in n or "Piz" in n or "Pup" in n or "Techo" in n or "Piso" in n or "Ventanal" in n or "ParedFondo" in n:
+		return false
+	# Fachadas exteriores de aulas hacia pasillos o paredes de pasillos perimetrales
+	if "Sur" in n or "Este" in n or "Oeste" in n or "Norte" in n or "Ext" in n or "Patio" in n or "Lab" in n or "Aud" in n or "Foto" in n or "Bedelia" in n or "Sistemas" in n or "Cetra" in n:
+		return true
+	return false
+
+func _muro_seccion(p: Node, r: Node, n: String, pos_x: float, y: float, pos_z: float, sz_x: float, h: float, sz_z: float, mat: Material, es_pasillo_manual: bool):
+	var es_pas = es_pasillo_manual or _es_pared_pasillo(n)
+	if es_pas and h > 2.0:
+		var hm = 1.35 # 1/3 madera en la parte inferior
+		var h_sup = h - hm
+		# 1/3 inferior de madera barnizada
+		_caja(p, r, n+"_Madera", Vector3(pos_x, y + hm/2.0, pos_z), Vector3(sz_x, hm, sz_z), mwp)
+		# 2/3 superior de pared blanca
+		_caja(p, r, n+"_Blanco", Vector3(pos_x, y + hm + h_sup/2.0, pos_z), Vector3(sz_x, h_sup, sz_z), mat)
+		# Moldura / listón oscuro divisor en la unión (como en la foto real)
+		var lx = sz_x if sz_x > sz_z else sz_x + 0.04
+		var lz = sz_z if sz_z > sz_x else sz_z + 0.04
+		_caja(p, r, n+"_Moldura", Vector3(pos_x, y + hm, pos_z), Vector3(lx, 0.04, lz), mwp)
+	else:
+		_caja(p, r, n, Vector3(pos_x, y + h/2.0, pos_z), Vector3(sz_x, h, sz_z), mat)
+
 # Pared E-W (corre a lo largo de X) con puerta opcional
-func _pew(p: Node, r: Node, n: String, z: float, x1: float, x2: float, y: float, h: float, dx: float, mat: Material):
+func _pew(p: Node, r: Node, n: String, z: float, x1: float, x2: float, y: float, h: float, dx: float, mat: Material, es_pasillo: bool = false):
 	if x1 > x2: var tmp = x1; x1 = x2; x2 = tmp
 	if dx < 90000:
 		var lw = (dx - PW/2.0) - x1
-		if lw > 0.3: _caja(p, r, n+"_L", Vector3(x1 + lw/2.0, y + h/2.0, z), Vector3(lw, h, G), mat)
+		if lw > 0.3: _muro_seccion(p, r, n+"_L", x1 + lw/2.0, y, z, lw, h, G, mat, es_pasillo)
 		var rw = x2 - (dx + PW/2.0)
-		if rw > 0.3: _caja(p, r, n+"_R", Vector3(x2 - rw/2.0, y + h/2.0, z), Vector3(rw, h, G), mat)
+		if rw > 0.3: _muro_seccion(p, r, n+"_R", x2 - rw/2.0, y, z, rw, h, G, mat, es_pasillo)
 		_caja(p, r, n+"_Dintel", Vector3(dx, y + h - 0.4, z), Vector3(PW + 0.1, 0.8, G), mat)
 	else:
-		_caja(p, r, n, Vector3((x1+x2)/2.0, y + h/2.0, z), Vector3(x2 - x1, h, G), mat)
+		_muro_seccion(p, r, n, (x1+x2)/2.0, y, z, x2 - x1, h, G, mat, es_pasillo)
 
 # Pared N-S (corre a lo largo de Z) con puerta opcional
-func _pns(p: Node, r: Node, n: String, x: float, z1: float, z2: float, y: float, h: float, dz: float, mat: Material):
+func _pns(p: Node, r: Node, n: String, x: float, z1: float, z2: float, y: float, h: float, dz: float, mat: Material, es_pasillo: bool = false):
 	if z1 > z2: var tmp = z1; z1 = z2; z2 = tmp
 	if dz < 90000:
 		var fw = (dz - PW/2.0) - z1
-		if fw > 0.3: _caja(p, r, n+"_F", Vector3(x, y + h/2.0, z1 + fw/2.0), Vector3(G, h, fw), mat)
+		if fw > 0.3: _muro_seccion(p, r, n+"_F", x, y, z1 + fw/2.0, G, h, fw, mat, es_pasillo)
 		var bw = z2 - (dz + PW/2.0)
-		if bw > 0.3: _caja(p, r, n+"_B", Vector3(x, y + h/2.0, z2 - bw/2.0), Vector3(G, h, bw), mat)
+		if bw > 0.3: _muro_seccion(p, r, n+"_B", x, y, z2 - bw/2.0, G, h, bw, mat, es_pasillo)
 		_caja(p, r, n+"_Dintel", Vector3(x, y + h - 0.4, dz), Vector3(G, 0.8, PW + 0.1), mat)
 	else:
-		_caja(p, r, n, Vector3(x, y + h/2.0, (z1+z2)/2.0), Vector3(G, h, z2 - z1), mat)
+		_muro_seccion(p, r, n, x, y, (z1+z2)/2.0, G, h, z2 - z1, mat, es_pasillo)
 
 func _pupitres(p: Node, r: Node, n: String, x1: float, z1: float, x2: float, z2: float, y: float):
 	var c = 0
@@ -661,10 +688,8 @@ func _cafeteria_segundo_piso(p: Node, r: Node, y: float):
 	cf.name = "CafeteriaP2"; p.add_child(cf); cf.owner = r
 
 	# Paredes perimetrales de la cafetería del 2do piso
-	# Entrada vidriada en Z = 35.0
-	_caja(cf, r, "CafeVidrioL", Vector3(-9.5, y + H/2.0, 35.0), Vector3(13.0, H, 0.08), mg)
-	_caja(cf, r, "CafeVidrioR", Vector3(9.5, y + H/2.0, 35.0), Vector3(13.0, H, 0.08), mg)
-	_caja(cf, r, "CafeDintel", Vector3(0.0, y + H - 0.4, 35.0), Vector3(6.2, 0.8, 0.15), mw)
+	# Entrada abierta y libre hacia el multiespacio en Z = 35.0 (sin vidrios)
+	_caja(cf, r, "CafeDintel", Vector3(0.0, y + H - 0.4, 35.0), Vector3(20.0, 0.8, 0.25), mw)
 	_lbl(cf, r, "CartelEntradaCafe", "CAFETERÍA Y COMEDOR\nPISO 2", Vector3(0.0, y + 3.5, 34.8), Vector3(0, 0, 0))
 
 	# Paredes laterales con grandes ventanales (como en las fotos)
@@ -820,9 +845,6 @@ func _escaleras_torres(r: Node):
 			# Ventanal grande exterior en el descanso (como en la foto real)
 			_caja(tn, r, t[0]+"_Ventanal", Vector3(ext_x, th/2.0, cz), Vector3(0.08, th - 2.0, 7.0), mg)
 
-			# Muro divisorio central entre los dos tramos de la U
-			_caja(tn, r, t[0]+"_Divisorio", Vector3(cx + (0.5 if cx < 0 else -0.5), th/2.0, cz), Vector3(run_len, th, 0.3), mw)
-
 			# Suelo base abajo de todo (PB) y techo ÚNICAMENTE arriba de todo (13.5m)
 			_caja(tn, r, t[0]+"_PisoBase", Vector3(cx, -0.1, cz), Vector3(tw, 0.2, td), mp)
 			_caja(tn, r, t[0]+"_TechoFinal", Vector3(cx, th + 0.1, cz), Vector3(tw, 0.2, td), mc)
@@ -965,8 +987,6 @@ func _escaleras_torres(r: Node):
 			_caja(tn, r, t[0]+"_ParedOeste", Vector3(cx - tw/2.0, th/2.0, cz), Vector3(G, th, td), mw)
 			_caja(tn, r, t[0]+"_ParedEste", Vector3(cx + tw/2.0, th/2.0, cz), Vector3(G, th, td), mw)
 			_caja(tn, r, t[0]+"_Ventanal", Vector3(cx, th/2.0, ext_z), Vector3(7.0, th - 2.0, 0.08), mg)
-
-			_caja(tn, r, t[0]+"_Divisorio", Vector3(cx, th/2.0, cz + 0.5), Vector3(0.3, th, run_len), mw)
 
 			_caja(tn, r, t[0]+"_PisoBase", Vector3(cx, -0.1, cz), Vector3(tw, 0.2, td), mp)
 			_caja(tn, r, t[0]+"_TechoFinal", Vector3(cx, th + 0.1, cz), Vector3(tw, 0.2, td), mc)

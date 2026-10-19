@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[resource]
+resource_name = "RevestimientoMaderaPasillo"
+albedo_color = Color(0.62, 0.38, 0.18, 1.0)
+roughness = 0.5
+uv1_scale = Vector3(1, 1, 1)
+uv1_triplanar = true
