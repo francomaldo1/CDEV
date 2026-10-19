@@ -9,9 +9,12 @@ static var _cached_slam: AudioStreamWAV = null
 static var _cached_stinger: AudioStreamWAV = null
 static var _cached_drone_normal: AudioStreamWAV = null
 static var _cached_drone_blackout: AudioStreamWAV = null
-static var _cached_footstep_walk: AudioStreamWAV = null
-static var _cached_footstep_sprint: AudioStreamWAV = null
-static var _cached_prof_step: AudioStreamWAV = null
+static var _cached_player_walk: Array[AudioStreamWAV] = []
+static var _cached_player_sprint: Array[AudioStreamWAV] = []
+static var _cached_prof_step: Array[AudioStreamWAV] = []
+static var _player_walk_idx: int = 0
+static var _player_sprint_idx: int = 0
+static var _prof_step_idx: int = 0
 static var _cached_heartbeat: AudioStreamWAV = null
 static var _cached_creak: AudioStreamWAV = null
 
@@ -41,19 +44,58 @@ static func get_ambient_drone(is_blackout: bool = false) -> AudioStreamWAV:
 		return _cached_drone_normal
 
 static func get_player_footstep(is_sprint: bool = false) -> AudioStreamWAV:
+	_ensure_footsteps_loaded()
 	if is_sprint:
-		if _cached_footstep_sprint == null:
-			_cached_footstep_sprint = _generate_footstep(true)
-		return _cached_footstep_sprint
+		if _cached_player_sprint.is_empty():
+			return _generate_footstep(true)
+		_player_sprint_idx = (_player_sprint_idx + 1) % _cached_player_sprint.size()
+		return _cached_player_sprint[_player_sprint_idx]
 	else:
-		if _cached_footstep_walk == null:
-			_cached_footstep_walk = _generate_footstep(false)
-		return _cached_footstep_walk
+		if _cached_player_walk.is_empty():
+			return _generate_footstep(false)
+		_player_walk_idx = (_player_walk_idx + 1) % _cached_player_walk.size()
+		return _cached_player_walk[_player_walk_idx]
 
 static func get_profesor_footstep() -> AudioStreamWAV:
-	if _cached_prof_step == null:
-		_cached_prof_step = _generate_prof_step()
-	return _cached_prof_step
+	_ensure_footsteps_loaded()
+	if _cached_prof_step.is_empty():
+		return _generate_prof_step()
+	_prof_step_idx = (_prof_step_idx + 1) % _cached_prof_step.size()
+	return _cached_prof_step[_prof_step_idx]
+
+static func _ensure_footsteps_loaded() -> void:
+	if _cached_player_walk.is_empty():
+		for i in range(1, 5):
+			var path = "res://audio/footsteps/player_walk_%02d.wav" % i
+			if ResourceLoader.exists(path):
+				var stream = load(path) as AudioStreamWAV
+				if stream:
+					_cached_player_walk.append(stream)
+		if _cached_player_walk.is_empty():
+			for i in range(4):
+				_cached_player_walk.append(_generate_realistic_player_step(i, false))
+
+	if _cached_player_sprint.is_empty():
+		for i in range(1, 3):
+			var path = "res://audio/footsteps/player_sprint_%02d.wav" % i
+			if ResourceLoader.exists(path):
+				var stream = load(path) as AudioStreamWAV
+				if stream:
+					_cached_player_sprint.append(stream)
+		if _cached_player_sprint.is_empty():
+			for i in range(2):
+				_cached_player_sprint.append(_generate_realistic_player_step(i, true))
+
+	if _cached_prof_step.is_empty():
+		for i in range(1, 4):
+			var path = "res://audio/footsteps/profesor_step_%02d.wav" % i
+			if ResourceLoader.exists(path):
+				var stream = load(path) as AudioStreamWAV
+				if stream:
+					_cached_prof_step.append(stream)
+		if _cached_prof_step.is_empty():
+			for i in range(3):
+				_cached_prof_step.append(_generate_realistic_prof_step(i))
 
 static func get_heartbeat_sound() -> AudioStreamWAV:
 	if _cached_heartbeat == null:
@@ -184,65 +226,130 @@ static func _generate_ambient_drone(is_blackout: bool) -> AudioStreamWAV:
 	wav.loop_end = samples_count
 	return wav
 
-## Pasos claros, audibles y realistas del jugador sobre piso de granito/mosaico
+## Pasos realistas y naturales de zapatilla sobre piso duro (baldosa / granito)
 static func _generate_footstep(is_sprint: bool) -> AudioStreamWAV:
+	return _generate_realistic_player_step(0, is_sprint)
+
+## Pasos realistas del profesor con zapatos de vestir sobre piso duro
+static func _generate_prof_step() -> AudioStreamWAV:
+	return _generate_realistic_prof_step(0)
+
+## Generador acústico de pasos del jugador modelando impacto de talón y planta con fricción de goma
+static func _generate_realistic_player_step(variation: int, is_sprint: bool) -> AudioStreamWAV:
 	var wav = AudioStreamWAV.new()
 	wav.format = AudioStreamWAV.FORMAT_16_BITS
 	wav.mix_rate = 22050
 	wav.stereo = false
 	
-	var length_sec = 0.18 if not is_sprint else 0.15
+	var length_sec = 0.15 if not is_sprint else 0.12
 	var samples_count = int(22050 * length_sec)
 	var data = PackedByteArray()
 	data.resize(samples_count * 2)
 	
-	var speed_mult = 1.15 if is_sprint else 1.0
+	var heel_freq = 90.0 + (variation % 4) * 8.0 # Frecuencia sorda de impacto (85-115 Hz)
+	var toe_freq = 135.0 + (variation % 4) * 10.0 # Contacto de la planta delantera
+	var toe_delay = 0.034 + (variation % 2) * 0.006 # Retardo talón-punta (34-40 ms)
+	if is_sprint:
+		toe_delay *= 0.70
+		heel_freq *= 1.15
+	
+	# Filtros de estado variable (Chamberlin SVF) para modelar fricción acústica de goma contra cerámica
+	var svf1_low = 0.0
+	var svf1_band = 0.0
+	var f1 = 2.0 * sin(PI * 650.0 / 22050.0)
+	var q1 = 1.5
+	
+	var svf2_low = 0.0
+	var svf2_band = 0.0
+	var f2 = 2.0 * sin(PI * 1250.0 / 22050.0)
+	var q2 = 2.0
 	
 	for i in range(samples_count):
 		var t = float(i) / 22050.0
-		# Impacto táctil de suela contra piso duro (transición de frecuencia rápida 540Hz -> 180Hz)
-		var sweep_freq = lerpf(540.0 * speed_mult, 180.0 * speed_mult, clampf(t * 32.0, 0.0, 1.0))
-		var impact = sin(t * sweep_freq * TAU) * exp(-t * 36.0) * 0.85
-		# Resonancia corporal y peso del calzado
-		var thud = sin(t * 135.0 * speed_mult * TAU) * exp(-t * 24.0) * 0.60
-		# Fricción breve de suela
-		var scuff = (randf() * 2.0 - 1.0) * exp(-t * 48.0) * 0.28
-		# Eco sutil de pasillo
-		var room_tail = sin(t * 260.0 * TAU) * exp(-t * 18.0) * 0.20
+		var noise = randf() * 2.0 - 1.0
 		
-		var sample_val = clampf((impact + thud + scuff + room_tail) * 1.3, -1.0, 1.0)
-		var pcm = int(sample_val * 31000.0)
+		svf1_low += f1 * svf1_band
+		var svf1_high = noise - svf1_low - q1 * svf1_band
+		svf1_band += f1 * svf1_high
+		
+		svf2_low += f2 * svf2_band
+		var svf2_high = noise - svf2_low - q2 * svf2_band
+		svf2_band += f2 * svf2_high
+		
+		# Impacto 1: Talón al pisar (sordo, amortiguado rápidamente)
+		var env_heel = exp(-t * 75.0)
+		var heel_thud = sin(t * heel_freq * TAU) * env_heel * 0.48
+		var heel_friction = svf1_band * env_heel * 0.35
+		
+		# Impacto 2: Apoyo de la planta delantera
+		var toe_thud = 0.0
+		var toe_friction = 0.0
+		if t >= toe_delay:
+			var t_toe = t - toe_delay
+			var env_toe = exp(-t_toe * 90.0)
+			toe_thud = sin(t_toe * toe_freq * TAU) * env_toe * 0.24
+			toe_friction = (svf2_band * 0.65 + svf1_band * 0.35) * env_toe * 0.26
+			
+		var total = heel_thud + heel_friction + toe_thud + toe_friction
+		total = tanh(total * 1.5) * 0.82
+		
+		var pcm = int(clampf(total, -1.0, 1.0) * 16000.0)
 		data.encode_s16(i * 2, pcm)
 		
 	wav.data = data
 	return wav
 
-## Pasos pesados, autoritarios y con eco de zapatos formales del profesor
-static func _generate_prof_step() -> AudioStreamWAV:
+## Generador acústico de pasos del profesor con zapatos de vestir (taconeo seco y peso)
+static func _generate_realistic_prof_step(variation: int) -> AudioStreamWAV:
 	var wav = AudioStreamWAV.new()
 	wav.format = AudioStreamWAV.FORMAT_16_BITS
 	wav.mix_rate = 22050
 	wav.stereo = false
 	
-	var length_sec = 0.32
+	var length_sec = 0.24
 	var samples_count = int(22050 * length_sec)
 	var data = PackedByteArray()
 	data.resize(samples_count * 2)
 	
+	var heel_freq = 76.0 + variation * 6.0
+	var clack_freq = 1450.0 + variation * 100.0
+	var toe_delay = 0.048 + (variation % 2) * 0.008
+	
+	var svf_low = 0.0
+	var svf_band = 0.0
+	var f_clack = 2.0 * sin(PI * clack_freq / 22050.0)
+	var q_clack = 1.3
+	
 	for i in range(samples_count):
 		var t = float(i) / 22050.0
-		# Taconeo seco y contundente de zapato de cuero (CLACK)
-		var heel_freq = lerpf(980.0, 240.0, clampf(t * 38.0, 0.0, 1.0))
-		var heel_strike = sin(t * heel_freq * TAU) * exp(-t * 32.0) * 0.90
-		# Golpe grave del peso corporal contra la losa
-		var body_thud = sin(t * 92.0 * TAU) * exp(-t * 16.0) * 0.85
-		# Fricción del cuero
-		var leather = (randf() * 2.0 - 1.0) * exp(-t * 45.0) * 0.25
-		# Reverberación en pasillos altos
-		var reverb = (sin(t * 180.0 * TAU) + sin(t * 310.0 * TAU)) * 0.25 * exp(-t * 9.0)
+		var noise = randf() * 2.0 - 1.0
 		
-		var sample_val = clampf((heel_strike + body_thud + leather + reverb) * 1.35, -1.0, 1.0)
-		var pcm = int(sample_val * 32000.0)
+		svf_low += f_clack * svf_band
+		var svf_high = noise - svf_low - q_clack * svf_band
+		svf_band += f_clack * svf_high
+		
+		# Taconeo seco inicial
+		var env_clack = exp(-t * 85.0)
+		var heel_clack = (sin(t * clack_freq * TAU) * 0.30 + svf_band * 0.45) * env_clack
+		
+		# Peso corporal en baja frecuencia
+		var env_thud = exp(-t * 32.0)
+		var heel_thud = sin(t * heel_freq * TAU) * env_thud * 0.58
+		
+		# Apoyo secundario de la suela
+		var toe_sound = 0.0
+		if t >= toe_delay:
+			var t_toe = t - toe_delay
+			var env_toe = exp(-t_toe * 75.0)
+			toe_sound = (sin(t_toe * (heel_freq * 1.6) * TAU) * 0.22 + svf_band * 0.20) * env_toe
+			
+		# Eco sutil de pasillo vacío
+		var echo = sin(t * 155.0 * TAU) * exp(-t * 20.0) * 0.12
+		
+		var total = heel_clack + heel_thud + toe_sound + echo
+		total = tanh(total * 1.5) * 0.85
+		
+		var pcm = int(clampf(total, -1.0, 1.0) * 18000.0)
 		data.encode_s16(i * 2, pcm)
 		
 	wav.data = data

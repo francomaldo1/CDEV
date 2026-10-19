@@ -209,7 +209,7 @@ func _physics_process(delta: float) -> void:
 func _setup_audio_players() -> void:
 	footstep_player = AudioStreamPlayer.new()
 	footstep_player.name = "FootstepPlayer"
-	footstep_player.volume_db = -1.5
+	footstep_player.volume_db = -18.0
 	footstep_player.bus = &"Master"
 	add_child(footstep_player)
 
@@ -248,7 +248,8 @@ func _play_footstep(is_sprint: bool) -> void:
 	if not footstep_player:
 		return
 	footstep_player.stream = HorrorAudio.get_player_footstep(is_sprint)
-	footstep_player.pitch_scale = randf_range(0.95, 1.05)
+	footstep_player.volume_db = -18.0 + randf_range(-1.2, 1.2) if not is_sprint else -16.0 + randf_range(-1.0, 1.0)
+	footstep_player.pitch_scale = randf_range(0.97, 1.03)
 	footstep_player.play()
 
 func _update_heartbeat(delta: float) -> void:

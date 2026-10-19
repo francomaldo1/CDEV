@@ -516,9 +516,9 @@ func boost_speed() -> void:
 func _setup_step_audio() -> void:
 	step_audio = AudioStreamPlayer3D.new()
 	step_audio.name = "ProfesorStepAudio3D"
-	step_audio.unit_size = 5.0
-	step_audio.max_distance = 42.0
-	step_audio.volume_db = 6.0
+	step_audio.unit_size = 3.5
+	step_audio.max_distance = 35.0
+	step_audio.volume_db = -3.0
 	step_audio.bus = &"Master"
 	add_child(step_audio)
 
@@ -526,7 +526,7 @@ func _play_prof_step() -> void:
 	if not step_audio:
 		return
 	step_audio.stream = HorrorAudio.get_profesor_footstep()
-	step_audio.pitch_scale = randf_range(0.92, 1.05)
+	step_audio.pitch_scale = randf_range(0.96, 1.04)
 	step_audio.play()
 
 func _animate_walk(delta: float, is_moving: bool) -> void:
