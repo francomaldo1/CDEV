@@ -76,8 +76,19 @@ func _spawn_tablero_electronica() -> void:
 	luz_tablero.shadow_enabled = true
 	luz_tablero.add_to_group("building_lights")
 	add_child(luz_tablero)
+
+	# Luz de techo central del laboratorio (ilumina desde atrás y proyecta la sombra del profesor)
+	var luz_techo_lab = OmniLight3D.new()
+	luz_techo_lab.name = "LuzTechoLabElectronica"
+	luz_techo_lab.position = Vector3(-25.0, 3.6, 0.0)
+	luz_techo_lab.light_color = Color(0.9, 0.95, 1.0)
+	luz_techo_lab.light_energy = 1.0
+	luz_techo_lab.omni_range = 11.0
+	luz_techo_lab.shadow_enabled = true
+	luz_techo_lab.add_to_group("building_lights")
+	add_child(luz_techo_lab)
 	
-	print(">>> Tablero Eléctrico instalado en Depto. de Electrónica (montado en pared bajo la luz)")
+	print(">>> Tablero Eléctrico instalado en Depto. de Electrónica (con iluminación y sombras de laboratorio)")
 
 func _spawn_fusible() -> void:
 	# El fusible está guardado en la Cafetería o Bedelía (ala este)

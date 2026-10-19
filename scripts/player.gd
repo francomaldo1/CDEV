@@ -15,6 +15,8 @@ class_name Player
 var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity", 9.8)
 var bob_time: float = 0.0
 var original_cam_y: float = 0.0
+var is_frozen: bool = false
+var shake_tween: Tween = null
 
 func _ready() -> void:
 	add_to_group("player")
@@ -27,6 +29,45 @@ func _ready() -> void:
 	floor_constant_speed = true
 	floor_max_angle = deg_to_rad(50.0)
 	floor_block_on_wall = false
+
+func set_frozen(frozen: bool) -> void:
+	is_frozen = frozen
+	if is_frozen:
+		velocity.x = 0.0
+		velocity.z = 0.0
+
+func shake_camera(amount: float = 0.5, duration: float = 0.5) -> void:
+	if not camera:
+		return
+	if shake_tween and shake_tween.is_valid():
+		shake_tween.kill()
+	shake_tween = create_tween()
+	var steps = int(duration / 0.04)
+	for i in range(steps):
+		var factor = (1.0 - float(i) / float(steps)) * amount
+		var rand_h = randf_range(-factor, factor) * 0.12
+		var rand_v = randf_range(-factor, factor) * 0.12
+		var rand_rot = randf_range(-factor, factor) * 0.04
+		shake_tween.tween_property(camera, "h_offset", rand_h, 0.04)
+		shake_tween.parallel().tween_property(camera, "v_offset", rand_v, 0.04)
+		shake_tween.parallel().tween_property(camera, "rotation:z", rand_rot, 0.04)
+	shake_tween.tween_property(camera, "h_offset", 0.0, 0.04)
+	shake_tween.parallel().tween_property(camera, "v_offset", 0.0, 0.04)
+	shake_tween.parallel().tween_property(camera, "rotation:z", 0.0, 0.04)
+
+func force_flashlight(state: bool) -> void:
+	if flashlight:
+		flashlight.visible = state
+
+func flicker_flashlight(times: int = 3, interval: float = 0.08) -> void:
+	if not flashlight:
+		return
+	var tw = create_tween()
+	for i in range(times):
+		tw.tween_callback(func(): if flashlight: flashlight.visible = false)
+		tw.tween_interval(interval)
+		tw.tween_callback(func(): if flashlight: flashlight.visible = true)
+		tw.tween_interval(interval)
 
 func _is_ui_active() -> bool:
 	var hud = get_tree().root.find_child("HUD", true, false)
@@ -51,9 +92,10 @@ func _input(event: InputEvent) -> void:
 			camera_pivot.rotate_x(-event.relative.y * mouse_sensitivity)
 			camera_pivot.rotation.x = clampf(camera_pivot.rotation.x, deg_to_rad(-85.0), deg_to_rad(85.0))
 
-	# Linterna
+	# Linterna (solo si no está congelado por evento)
 	if event.is_action_pressed("flashlight") or (event is InputEventKey and event.pressed and event.keycode == KEY_F):
-		toggle_flashlight()
+		if not is_frozen:
+			toggle_flashlight()
 
 	# Tecla ESC para liberar o volver a capturar el cursor
 	if event.is_action_pressed("ui_cancel") or (event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE):
@@ -63,12 +105,14 @@ func _input(event: InputEvent) -> void:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func toggle_flashlight() -> void:
+	if is_frozen:
+		return
 	if flashlight:
 		flashlight.visible = not flashlight.visible
 
 func _physics_process(delta: float) -> void:
-	# Si hay un menú/examen abierto, no procesar movimiento
-	if _is_ui_active():
+	# Si hay un menú/examen abierto o el jugador está congelado en una cinemática de terror
+	if _is_ui_active() or is_frozen:
 		velocity.x = 0.0
 		velocity.z = 0.0
 		move_and_slide()

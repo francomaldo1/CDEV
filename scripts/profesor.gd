@@ -52,6 +52,7 @@ var last_known_player_pos: Vector3 = Vector3.ZERO
 var stuck_timer: float = 0.0
 var prev_pos: Vector3 = Vector3.ZERO
 var pos_sample_timer: float = 0.0
+var is_screamer_ambush: bool = false
 
 ## Puntos de patrullaje por toda la facultad (Pasillos despejados y Patio)
 var patrol_waypoints: Array[Vector3] = [
@@ -244,6 +245,12 @@ func _process_patrol_state(delta: float, can_see_player: bool) -> void:
 	_move_towards(delta, move_dir, current_speed, 4.0)
 
 func _process_chase_state(delta: float, can_see_player: bool) -> void:
+	if is_screamer_ambush:
+		velocity.x = 0.0
+		velocity.z = 0.0
+		move_and_slide()
+		return
+
 	current_speed = chase_speed
 	
 	var to_player = player.global_position - global_position
@@ -415,9 +422,63 @@ func _animate_walk(delta: float, is_moving: bool) -> void:
 		if pierna_izq: pierna_izq.rotation.x = lerpf(pierna_izq.rotation.x, 0.0, delta * 6.0)
 		if pierna_der: pierna_der.rotation.x = lerpf(pierna_der.rotation.x, 0.0, delta * 6.0)
 		if brazo_izq: brazo_izq.rotation.x = lerpf(brazo_izq.rotation.x, 0.0, delta * 6.0)
-		if not is_attacking and brazo_der:
+		if not is_attacking and not is_screamer_ambush and brazo_der:
 			brazo_der.rotation.x = lerpf(brazo_der.rotation.x, deg_to_rad(-40.0), delta * 5.0)
 			brazo_der.rotation.z = lerpf(brazo_der.rotation.z, deg_to_rad(-10.0), delta * 5.0)
+
+## =====================================================================
+## CINEMÁTICA Y SCREAMER DEL LABORATORIO
+## =====================================================================
+func trigger_screamer_ambush(ambush_pos: Vector3, look_at_pos: Vector3) -> void:
+	is_screamer_ambush = true
+	global_position = ambush_pos
+	prev_pos = ambush_pos
+	velocity = Vector3.ZERO
+	stuck_timer = 0.0
+	attack_timer = 1.8
+	is_attacking = false
+	
+	# Mirar fijamente hacia el jugador y la pared del tablero
+	var to_target = look_at_pos - ambush_pos
+	to_target.y = 0.0
+	if to_target.length() > 0.1:
+		rotation.y = atan2(to_target.x, to_target.z)
+		
+	# Postura amenazante con la regla en alto
+	if brazo_der:
+		brazo_der.rotation.x = deg_to_rad(-125.0)
+		brazo_der.rotation.y = deg_to_rad(-15.0)
+		brazo_der.rotation.z = deg_to_rad(-10.0)
+	if regla:
+		regla.rotation.x = deg_to_rad(-45.0)
+		
+	# Ojos al rojo vivo con máxima intensidad
+	if ojos_luz:
+		ojos_luz.light_color = Color(1.0, 0.0, 0.0)
+		ojos_luz.light_energy = 4.0
+		ojos_luz.spot_range = 15.0
+		ojos_luz.visible = true
+		
+	# Entrar en persecución agresiva con incremento de velocidad
+	current_state = State.CHASE
+	chase_speed = base_chase_speed + 1.1
+	time_without_sight = 0.0
+	if is_instance_valid(player):
+		last_known_player_pos = player.global_position
+
+func play_ruler_slam_animation() -> void:
+	if not brazo_der or not regla:
+		return
+	var tw = create_tween()
+	# Azote rápido hacia abajo contra la mesada
+	tw.tween_property(brazo_der, "rotation:x", deg_to_rad(35.0), 0.09)
+	tw.parallel().tween_property(regla, "rotation:x", deg_to_rad(65.0), 0.09)
+	# Volver a levantar amenazante
+	tw.tween_property(brazo_der, "rotation:x", deg_to_rad(-120.0), 0.22)
+	tw.parallel().tween_property(regla, "rotation:x", deg_to_rad(-40.0), 0.22)
+
+func release_screamer_ambush() -> void:
+	is_screamer_ambush = false
 
 func _start_attack() -> void:
 	current_state = State.ATTACK
