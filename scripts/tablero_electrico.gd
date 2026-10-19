@@ -143,23 +143,22 @@ func _execute_fuse_screamer_sequence(hud: Node) -> void:
 	if is_instance_valid(player) and player.has_method("force_flashlight"):
 		player.force_flashlight(false)
 		
-	# 4. TELETRANSPORTAR AL PROFESOR EN SILENCIO TRAS EL JUGADOR
+	# 4. TELETRANSPORTAR AL PROFESOR A LA PUERTA DEL LABORATORIO (bloqueando la única salida)
+	# La puerta del lab hacia el pasillo oeste está exactamente en X = -36.2, Z = 0.5
+	var door_ambush_pos = Vector3(-36.2, 0.2, 0.5)
 	if is_instance_valid(prof):
 		var p_pos = player.global_position if is_instance_valid(player) else Vector3(-18.5, 0.0, 0.0)
-		var ambush_x = p_pos.x - 2.6
-		var ambush_z = clampf(p_pos.z, -0.1, 1.6)
-		var ambush_pos = Vector3(ambush_x, 0.2, ambush_z)
-		var look_target = Vector3(p_pos.x, 1.2, p_pos.z)
-		prof.trigger_screamer_ambush(ambush_pos, look_target)
+		var look_target = p_pos + Vector3(0, 1.4, 0)
+		prof.trigger_screamer_ambush(door_ambush_pos, look_target)
 		
-	# 5. GOLPE SECO DE MADERA CONTRA LA MESADA EN LA OSCURIDAD (T = 0.85s)
-	await get_tree().create_timer(0.67).timeout
+	# 5. GOLPE SECO DE MADERA CONTRA EL MARCO DE LA PUERTA EN LA OSCURIDAD (T = 0.60s)
+	await get_tree().create_timer(0.42).timeout
 	
 	var slam_player = AudioStreamPlayer3D.new()
 	slam_player.stream = HorrorAudio.get_wood_slam_sound()
-	slam_player.position = Vector3(-21.0, 1.0, 0.0)
-	slam_player.volume_db = 7.0
-	slam_player.unit_size = 12.0
+	slam_player.position = door_ambush_pos + Vector3(0, 1.2, 0)
+	slam_player.volume_db = 8.0
+	slam_player.unit_size = 14.0
 	get_tree().root.add_child(slam_player)
 	slam_player.play()
 	slam_player.finished.connect(slam_player.queue_free)
@@ -168,10 +167,15 @@ func _execute_fuse_screamer_sequence(hud: Node) -> void:
 		prof.play_ruler_slam_animation()
 		
 	if is_instance_valid(player) and player.has_method("shake_camera"):
-		player.shake_camera(0.65, 0.3)
+		player.shake_camera(0.55, 0.25)
 		
-	# 6. ENERGÍA RESTABLECIDA, STINGER Y PERSECUCIÓN (T = 1.22s)
-	await get_tree().create_timer(0.37).timeout
+	# 6. GIRO DRAMÁTICO DE CÁMARA HACIA LA PUERTA (T = 0.75s)
+	# La cámara del jugador gira 180° hacia el pasillo central apuntando directamente a la puerta
+	if is_instance_valid(player) and player.has_method("force_look_at"):
+		player.force_look_at(door_ambush_pos + Vector3(0, 1.6, 0), 0.40)
+		
+	# 7. ENERGÍA RESTABLECIDA, JUMPSCARE EN LA PUERTA Y PERSECUCIÓN (T = 1.18s)
+	await get_tree().create_timer(0.43).timeout
 	
 	if is_instance_valid(player) and player.has_method("force_flashlight"):
 		player.force_flashlight(true)
@@ -188,27 +192,27 @@ func _execute_fuse_screamer_sequence(hud: Node) -> void:
 		prompt_label.text = "✓ ¡ENERGÍA RESTABLECIDA!"
 		prompt_label.modulate = Color(0.2, 1.0, 0.4)
 		
-	# Encender las 95 luces del edificio (proyecta la sombra del profesor)
+	# Encender las luces del edificio (la luz del pasillo recorta al profesor parado en la puerta)
 	power_restored.emit()
 	
 	# Screamer stinger orquestal
 	var stinger = AudioStreamPlayer.new()
 	stinger.stream = HorrorAudio.get_screamer_stinger()
-	stinger.volume_db = 2.5
+	stinger.volume_db = 3.0
 	get_tree().root.add_child(stinger)
 	stinger.play()
 	stinger.finished.connect(stinger.queue_free)
 	
 	if is_instance_valid(player) and player.has_method("shake_camera"):
-		player.shake_camera(0.9, 0.7)
+		player.shake_camera(0.95, 0.7)
 		
 	if is_instance_valid(prof):
 		prof._say("¡¡HORARIO DE CONSULTA FINALIZADO, ALUMNO!! ¡¡A MARZO DIRECTO!!", Color(1.0, 0.0, 0.0))
 		prof.release_screamer_ambush()
 		
-	hud.show_temporary_alert("⚡ ¡¡CUIDADO!! ¡¡EL PROFESOR ESTÁ JUSTO DETRÁS TUYO!!", Color(1.0, 0.1, 0.1))
+	hud.show_temporary_alert("⚡ ¡¡EL PROFESOR ESTÁ BLOQUEANDO LA PUERTA!! ¡¡BUSCA CÓMO ESCAPAR!!", Color(1.0, 0.1, 0.1))
 	
-	# Liberar el movimiento del jugador para escapar
+	# Liberar el movimiento del jugador para escapar y esquivarlo por las mesadas
 	await get_tree().create_timer(0.25).timeout
 	if is_instance_valid(player) and player.has_method("set_frozen"):
 		player.set_frozen(false)

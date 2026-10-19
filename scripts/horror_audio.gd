@@ -135,50 +135,47 @@ static func _generate_stinger() -> AudioStreamWAV:
 	wav.data = data
 	return wav
 
-## Dron oscuro continuo (Dark Ambient Drone) en bucle perfecto
+## Dron oscuro continuo (Dark Ambient Drone) - atmósfera profunda, suave y sin zumbidos molestos
 static func _generate_ambient_drone(is_blackout: bool) -> AudioStreamWAV:
 	var wav = AudioStreamWAV.new()
 	wav.format = AudioStreamWAV.FORMAT_16_BITS
 	wav.mix_rate = 22050
 	wav.stereo = false
 	
-	# Duración exacta de 4.0 segundos para bucle periódico sin chasquidos
 	var length_sec = 4.0
 	var samples_count = int(22050 * length_sec)
 	var data = PackedByteArray()
 	data.resize(samples_count * 2)
 	
-	# Frecuencias armónicas base múltiplos exactos de 1/4 Hz (0.25 Hz) para fase perfecta en extremos
-	var f1 = 55.0  # A1 subgrave
-	var f2 = 82.5  # E2 quinta
-	var f3 = 110.0 # A2 octava
-	var f_dissonance = 58.25 if is_blackout else 55.0 # Tono disonante siniestro en apagón
+	# Frecuencias armónicas suaves para colchón atmosférico envolvente
+	var f_base = 44.0 # Sub-grave F1 muy limpio
+	var f_harm = 88.0 # Octava armónica suave
+	var noise_filter = 0.0
 	
 	for i in range(samples_count):
 		var t = float(i) / 22050.0
-		var phase_progress = t / length_sec
+		var progress = t / length_sec
 		
-		# Viento/aire filtrado sutil con modulación lenta
-		var slow_lfo = sin(phase_progress * TAU * 1.0) * 0.5 + 0.5
-		var slow_lfo2 = cos(phase_progress * TAU * 2.0) * 0.5 + 0.5
+		# Modulación LFO suave y lenta (0.25 Hz y 0.5 Hz)
+		var lfo = sin(progress * TAU) * 0.5 + 0.5
 		
-		var sub = sin(t * f1 * TAU) * 0.45
-		var fifth = sin(t * f2 * TAU) * 0.25 * (0.8 + 0.2 * slow_lfo)
-		var rumble = sin(t * 32.0 * TAU) * (0.35 if is_blackout else 0.2)
+		# Generador de aire frío / viento distante (ruido browniano filtrado paso bajo)
+		noise_filter = noise_filter * 0.965 + (randf() * 2.0 - 1.0) * 0.035
+		var air_draft = noise_filter * (0.18 + 0.08 * lfo)
 		
-		# En apagón añadimos disonancia oscura y zumbido electromagnético distante
-		var extra = 0.0
+		# Tonos sinusoidales puros y calmos (sin frecuencias que vibren como redoblante)
+		var sub = sin(t * f_base * TAU) * 0.28
+		var harm = sin(t * f_harm * TAU) * 0.10 * (0.7 + 0.3 * lfo)
+		
+		# En apagón añadimos un tono disonante fantasmal tenue
+		var blackout_layer = 0.0
 		if is_blackout:
-			var dark_drone = sin(t * f_dissonance * TAU) * 0.3
-			var distant_hiss = (randf() * 2.0 - 1.0) * 0.06 * (0.6 + 0.4 * slow_lfo2)
-			extra = dark_drone + distant_hiss
-		else:
-			# Zumbido normal de transformadores/iluminación tenue
-			var light_hum = sin(t * 100.0 * TAU) * 0.08
-			extra = light_hum
+			blackout_layer = sin(t * 46.5 * TAU) * 0.16 + noise_filter * 0.08
 			
-		var sample_val = clampf((sub + fifth + rumble + extra) * 0.7, -1.0, 1.0)
-		var pcm = int(sample_val * 28000.0)
+		# Ventana de fundido suave en los bordes para bucle 100% perfecto sin chasquidos
+		var edge_fade = minf(1.0, minf(t / 0.06, (length_sec - t) / 0.06))
+		var sample_val = clampf((sub + harm + air_draft + blackout_layer) * edge_fade * 0.85, -1.0, 1.0)
+		var pcm = int(sample_val * 24000.0)
 		data.encode_s16(i * 2, pcm)
 		
 	wav.data = data
@@ -187,59 +184,65 @@ static func _generate_ambient_drone(is_blackout: bool) -> AudioStreamWAV:
 	wav.loop_end = samples_count
 	return wav
 
-## Pasos del jugador sobre piso de granito/mosaico
+## Pasos claros, audibles y realistas del jugador sobre piso de granito/mosaico
 static func _generate_footstep(is_sprint: bool) -> AudioStreamWAV:
 	var wav = AudioStreamWAV.new()
 	wav.format = AudioStreamWAV.FORMAT_16_BITS
 	wav.mix_rate = 22050
 	wav.stereo = false
 	
-	var length_sec = 0.22 if not is_sprint else 0.26
+	var length_sec = 0.18 if not is_sprint else 0.15
 	var samples_count = int(22050 * length_sec)
 	var data = PackedByteArray()
 	data.resize(samples_count * 2)
 	
-	var pitch_mult = 1.15 if is_sprint else 1.0
-	var vol_mult = 1.3 if is_sprint else 0.85
+	var speed_mult = 1.15 if is_sprint else 1.0
 	
 	for i in range(samples_count):
 		var t = float(i) / 22050.0
-		# Golpe inicial de suela (transitorio duro) + resonancia hueca de pasillo
-		var env = exp(-t * (24.0 if not is_sprint else 18.0))
-		var heel_click = exp(-t * 90.0) * (randf() * 2.0 - 1.0) * 0.9
-		var thud = sin(t * 95.0 * pitch_mult * TAU) * 0.7 * exp(-t * 18.0)
-		var floor_resonance = sin(t * 220.0 * pitch_mult * TAU) * 0.25 * env
-		var reverb_tail = (randf() * 2.0 - 1.0) * 0.12 * exp(-t * 10.0)
+		# Impacto táctil de suela contra piso duro (transición de frecuencia rápida 540Hz -> 180Hz)
+		var sweep_freq = lerpf(540.0 * speed_mult, 180.0 * speed_mult, clampf(t * 32.0, 0.0, 1.0))
+		var impact = sin(t * sweep_freq * TAU) * exp(-t * 36.0) * 0.85
+		# Resonancia corporal y peso del calzado
+		var thud = sin(t * 135.0 * speed_mult * TAU) * exp(-t * 24.0) * 0.60
+		# Fricción breve de suela
+		var scuff = (randf() * 2.0 - 1.0) * exp(-t * 48.0) * 0.28
+		# Eco sutil de pasillo
+		var room_tail = sin(t * 260.0 * TAU) * exp(-t * 18.0) * 0.20
 		
-		var sample_val = clampf((heel_click + thud + floor_resonance + reverb_tail) * vol_mult, -1.0, 1.0)
-		var pcm = int(sample_val * 26000.0)
+		var sample_val = clampf((impact + thud + scuff + room_tail) * 1.3, -1.0, 1.0)
+		var pcm = int(sample_val * 31000.0)
 		data.encode_s16(i * 2, pcm)
 		
 	wav.data = data
 	return wav
 
-## Pasos pesados y amenazantes del profesor (suela de zapato de vestir con eco 3D)
+## Pasos pesados, autoritarios y con eco de zapatos formales del profesor
 static func _generate_prof_step() -> AudioStreamWAV:
 	var wav = AudioStreamWAV.new()
 	wav.format = AudioStreamWAV.FORMAT_16_BITS
 	wav.mix_rate = 22050
 	wav.stereo = false
 	
-	var length_sec = 0.38
+	var length_sec = 0.32
 	var samples_count = int(22050 * length_sec)
 	var data = PackedByteArray()
 	data.resize(samples_count * 2)
 	
 	for i in range(samples_count):
 		var t = float(i) / 22050.0
-		# Taconeo seco de zapato formal + golpe sordo grave en losa
-		var heel = exp(-t * 120.0) * (randf() * 2.0 - 1.0) * 1.1
-		var sole = exp(-t * 45.0) * sin(t * 140.0 * TAU) * 0.65
-		var bass_impact = exp(-t * 14.0) * sin(t * 58.0 * TAU) * 0.8
-		var hall_reverb = (sin(t * 185.0 * TAU) + sin(t * 310.0 * TAU)) * 0.2 * exp(-t * 8.0)
+		# Taconeo seco y contundente de zapato de cuero (CLACK)
+		var heel_freq = lerpf(980.0, 240.0, clampf(t * 38.0, 0.0, 1.0))
+		var heel_strike = sin(t * heel_freq * TAU) * exp(-t * 32.0) * 0.90
+		# Golpe grave del peso corporal contra la losa
+		var body_thud = sin(t * 92.0 * TAU) * exp(-t * 16.0) * 0.85
+		# Fricción del cuero
+		var leather = (randf() * 2.0 - 1.0) * exp(-t * 45.0) * 0.25
+		# Reverberación en pasillos altos
+		var reverb = (sin(t * 180.0 * TAU) + sin(t * 310.0 * TAU)) * 0.25 * exp(-t * 9.0)
 		
-		var sample_val = clampf((heel + sole + bass_impact + hall_reverb) * 1.15, -1.0, 1.0)
-		var pcm = int(sample_val * 30000.0)
+		var sample_val = clampf((heel_strike + body_thud + leather + reverb) * 1.35, -1.0, 1.0)
+		var pcm = int(sample_val * 32000.0)
 		data.encode_s16(i * 2, pcm)
 		
 	wav.data = data
@@ -252,24 +255,23 @@ static func _generate_heartbeat() -> AudioStreamWAV:
 	wav.mix_rate = 22050
 	wav.stereo = false
 	
-	var length_sec = 0.55
+	var length_sec = 0.50
 	var samples_count = int(22050 * length_sec)
 	var data = PackedByteArray()
 	data.resize(samples_count * 2)
 	
 	for i in range(samples_count):
 		var t = float(i) / 22050.0
-		# Primer latido (lub) en t=0.0s, segundo latido (dub) en t=0.18s
-		var beat1_env = exp(-t * 16.0) if t >= 0.0 else 0.0
-		var beat1 = sin(t * 52.0 * TAU) * beat1_env * 0.95
+		# Primer latido (lub) suave y profundo
+		var beat1 = sin(t * 45.0 * TAU) * exp(-t * 18.0) * 0.85
+		# Segundo latido (dub) a los 0.16s
+		var t2 = t - 0.16
+		var beat2 = 0.0
+		if t2 >= 0.0:
+			beat2 = sin(t2 * 52.0 * TAU) * exp(-t2 * 16.0) * 0.70
 		
-		var t2 = t - 0.18
-		var beat2_env = exp(-t2 * 14.0) if t2 >= 0.0 else 0.0
-		var beat2 = sin(maxf(0.0, t2) * 62.0 * TAU) * beat2_env * 0.75
-		
-		var sub_rumble = sin(t * 38.0 * TAU) * 0.3 * exp(-t * 8.0)
-		var sample_val = clampf((beat1 + beat2 + sub_rumble) * 1.3, -1.0, 1.0)
-		var pcm = int(sample_val * 31000.0)
+		var sample_val = clampf((beat1 + beat2) * 1.25, -1.0, 1.0)
+		var pcm = int(sample_val * 30000.0)
 		data.encode_s16(i * 2, pcm)
 		
 	wav.data = data

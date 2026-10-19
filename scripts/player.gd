@@ -14,10 +14,12 @@ class_name Player
 
 var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity", 9.8)
 var bob_time: float = 0.0
-var step_phase: float = 0.0
+var step_distance_accum: float = 0.0
+var time_stopped: float = 0.0
 var original_cam_y: float = 0.0
 var is_frozen: bool = false
 var shake_tween: Tween = null
+var look_tween: Tween = null
 
 var footstep_player: AudioStreamPlayer = null
 var heartbeat_player: AudioStreamPlayer = null
@@ -75,6 +77,33 @@ func flicker_flashlight(times: int = 3, interval: float = 0.08) -> void:
 		tw.tween_callback(func(): if flashlight: flashlight.visible = true)
 		tw.tween_interval(interval)
 
+func force_look_at(target_global_pos: Vector3, duration: float = 0.45) -> Tween:
+	var flat_target = Vector3(target_global_pos.x, global_position.y, target_global_pos.z)
+	var to_flat = flat_target - global_position
+	if to_flat.length() < 0.1:
+		return null
+		
+	var target_rot_y = atan2(-to_flat.x, -to_flat.z)
+	var cam_target_pitch = 0.0
+	if camera_pivot:
+		var eye_y = global_position.y + 1.5
+		var dy = target_global_pos.y - eye_y
+		var dist_h = to_flat.length()
+		cam_target_pitch = clampf(atan2(dy, dist_h), deg_to_rad(-40.0), deg_to_rad(40.0))
+		
+	if look_tween and look_tween.is_valid():
+		look_tween.kill()
+		
+	look_tween = create_tween()
+	look_tween.set_parallel(true)
+	var start_rot_y = rotation.y
+	var diff_angle = wrapf(target_rot_y - start_rot_y, -PI, PI)
+	var final_rot_y = start_rot_y + diff_angle
+	look_tween.tween_property(self, "rotation:y", final_rot_y, duration).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	if camera_pivot:
+		look_tween.tween_property(camera_pivot, "rotation:x", cam_target_pitch, duration).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	return look_tween
+
 func _is_ui_active() -> bool:
 	var hud = get_tree().root.find_child("HUD", true, false)
 	if hud and hud.has_method("is_modal_active") and hud.is_modal_active():
@@ -91,12 +120,13 @@ func _input(event: InputEvent) -> void:
 		if Input.get_mouse_mode() != Input.MOUSE_MODE_CAPTURED:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
-	# Control de la cámara con el movimiento del ratón
+	# Control de la cámara con el movimiento del ratón (solo si no está congelado en cinemática)
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-		rotate_y(-event.relative.x * mouse_sensitivity)
-		if camera_pivot:
-			camera_pivot.rotate_x(-event.relative.y * mouse_sensitivity)
-			camera_pivot.rotation.x = clampf(camera_pivot.rotation.x, deg_to_rad(-85.0), deg_to_rad(85.0))
+		if not is_frozen:
+			rotate_y(-event.relative.x * mouse_sensitivity)
+			if camera_pivot:
+				camera_pivot.rotate_x(-event.relative.y * mouse_sensitivity)
+				camera_pivot.rotation.x = clampf(camera_pivot.rotation.x, deg_to_rad(-85.0), deg_to_rad(85.0))
 
 	# Linterna (solo si no está congelado por evento)
 	if event.is_action_pressed("flashlight") or (event is InputEventKey and event.pressed and event.keycode == KEY_F):
@@ -179,13 +209,13 @@ func _physics_process(delta: float) -> void:
 func _setup_audio_players() -> void:
 	footstep_player = AudioStreamPlayer.new()
 	footstep_player.name = "FootstepPlayer"
-	footstep_player.volume_db = -8.0
+	footstep_player.volume_db = -1.5
 	footstep_player.bus = &"Master"
 	add_child(footstep_player)
 
 	heartbeat_player = AudioStreamPlayer.new()
 	heartbeat_player.name = "HeartbeatPlayer"
-	heartbeat_player.volume_db = -6.0
+	heartbeat_player.volume_db = -8.0
 	heartbeat_player.bus = &"Master"
 	add_child(heartbeat_player)
 
@@ -193,22 +223,24 @@ func _apply_head_bob_and_footsteps(delta: float, is_sprinting: bool) -> void:
 	if not camera:
 		return
 	var horizontal_vel = Vector2(velocity.x, velocity.z).length()
-	if is_on_floor() and horizontal_vel > 0.5:
+	if is_on_floor() and horizontal_vel > 0.4:
+		time_stopped = 0.0
 		var speed_mult = 1.35 if is_sprinting else 1.0
-		var step_delta = delta * bob_frequency * speed_mult
-		bob_time += step_delta
-		step_phase += step_delta
-		
-		# Cada medio ciclo (apoyo alternado de pie izquierdo y derecho)
-		if step_phase >= PI:
-			step_phase -= PI
-			_play_footstep(is_sprinting)
-			
+		bob_time += delta * bob_frequency * speed_mult
 		camera.position.y = original_cam_y + sin(bob_time) * bob_amplitude
 		camera.position.x = cos(bob_time * 0.5) * (bob_amplitude * 0.5)
+		
+		# Pasos perfectamente proporcionados a la distancia recorrida
+		step_distance_accum += horizontal_vel * delta
+		var required_dist = 1.85 if is_sprinting else 1.55
+		if step_distance_accum >= required_dist:
+			step_distance_accum = 0.0
+			_play_footstep(is_sprinting)
 	else:
 		bob_time = 0.0
-		step_phase = 0.0
+		time_stopped += delta
+		if time_stopped > 0.25:
+			step_distance_accum = 1.25 # Al reanudar la marcha, el primer paso suena casi de inmediato
 		camera.position.y = lerpf(camera.position.y, original_cam_y, delta * 6.0)
 		camera.position.x = lerpf(camera.position.x, 0.0, delta * 6.0)
 
@@ -216,7 +248,7 @@ func _play_footstep(is_sprint: bool) -> void:
 	if not footstep_player:
 		return
 	footstep_player.stream = HorrorAudio.get_player_footstep(is_sprint)
-	footstep_player.pitch_scale = randf_range(0.94, 1.06)
+	footstep_player.pitch_scale = randf_range(0.95, 1.05)
 	footstep_player.play()
 
 func _update_heartbeat(delta: float) -> void:
@@ -227,18 +259,18 @@ func _update_heartbeat(delta: float) -> void:
 	var dist = global_position.distance_to(prof.global_position)
 	var is_chasing = (prof.current_state == 1) # State.CHASE
 	
-	# Latidos si está persiguiendo o si está muy cerca en la oscuridad
-	if is_chasing or dist < 8.0:
-		var danger_factor = clampf(1.0 - (dist / 22.0), 0.15, 1.0)
-		var beat_interval = lerpf(1.3, 0.45, danger_factor) # Más rápido cuanto más cerca
+	# Latidos cardíacos únicamente cuando el profesor está cerca y acechando/persiguiendo
+	if (is_chasing and dist < 14.0) or dist < 6.5:
+		var danger_factor = clampf(1.0 - (dist / 14.0), 0.2, 1.0)
+		var beat_interval = lerpf(1.15, 0.45, danger_factor)
 		
 		heartbeat_timer += delta
 		if heartbeat_timer >= beat_interval:
 			heartbeat_timer = 0.0
 			if heartbeat_player:
 				heartbeat_player.stream = HorrorAudio.get_heartbeat_sound()
-				heartbeat_player.volume_db = lerpf(-14.0, -3.0, danger_factor)
-				heartbeat_player.pitch_scale = lerpf(0.92, 1.18, danger_factor)
+				heartbeat_player.volume_db = lerpf(-12.0, -2.0, danger_factor)
+				heartbeat_player.pitch_scale = lerpf(0.92, 1.15, danger_factor)
 				heartbeat_player.play()
 	else:
 		heartbeat_timer = 0.0

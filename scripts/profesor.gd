@@ -516,9 +516,9 @@ func boost_speed() -> void:
 func _setup_step_audio() -> void:
 	step_audio = AudioStreamPlayer3D.new()
 	step_audio.name = "ProfesorStepAudio3D"
-	step_audio.unit_size = 3.5
-	step_audio.max_distance = 32.0
-	step_audio.volume_db = 2.0
+	step_audio.unit_size = 5.0
+	step_audio.max_distance = 42.0
+	step_audio.volume_db = 6.0
 	step_audio.bus = &"Master"
 	add_child(step_audio)
 
@@ -531,11 +531,12 @@ func _play_prof_step() -> void:
 
 func _animate_walk(delta: float, is_moving: bool) -> void:
 	if is_moving and is_on_floor():
-		var anim_delta = delta * (current_speed * 2.3)
+		var step_mult = 2.8 if current_state == State.CHASE else 2.2
+		var anim_delta = delta * (current_speed * step_mult)
 		walk_anim_time += anim_delta
 		step_phase += anim_delta
 		
-		# Cada medio ciclo se apoya un zapato (izquierdo o derecho)
+		# Cada medio ciclo se apoya un zapato formal (izquierdo o derecho)
 		if step_phase >= PI:
 			step_phase -= PI
 			_play_prof_step()
@@ -554,7 +555,7 @@ func _animate_walk(delta: float, is_moving: bool) -> void:
 				regla.rotation.x = deg_to_rad(20.0) + cos(walk_anim_time * 1.5) * deg_to_rad(10.0)
 	else:
 		walk_anim_time = 0.0
-		step_phase = 0.0
+		step_phase = 1.0 # Pre-cargado para sonar apenas retome el paso
 		if pierna_izq: pierna_izq.rotation.x = lerpf(pierna_izq.rotation.x, 0.0, delta * 6.0)
 		if pierna_der: pierna_der.rotation.x = lerpf(pierna_der.rotation.x, 0.0, delta * 6.0)
 		if brazo_izq: brazo_izq.rotation.x = lerpf(brazo_izq.rotation.x, 0.0, delta * 6.0)
