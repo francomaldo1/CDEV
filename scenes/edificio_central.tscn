@@ -5615,63 +5615,63 @@ outline_size = 10
 [node name="LuzCafeP2_-12_44" type="OmniLight3D" parent="SegundoPiso/Piso2_AulasYCafeteria/CafeteriaP2" unique_id=68466299]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 12.8, 44)
 light_color = Color(1, 0.98, 0.92, 1)
-light_energy = 0.42
+light_energy = 0.22
 shadow_enabled = true
 omni_range = 16.0
 
 [node name="LuzCafeP2_-12_58" type="OmniLight3D" parent="SegundoPiso/Piso2_AulasYCafeteria/CafeteriaP2" unique_id=1004367659]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 12.8, 58)
 light_color = Color(1, 0.98, 0.92, 1)
-light_energy = 0.42
+light_energy = 0.22
 shadow_enabled = true
 omni_range = 16.0
 
 [node name="LuzCafeP2_-12_72" type="OmniLight3D" parent="SegundoPiso/Piso2_AulasYCafeteria/CafeteriaP2" unique_id=749465687]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 12.8, 72)
 light_color = Color(1, 0.98, 0.92, 1)
-light_energy = 0.42
+light_energy = 0.22
 shadow_enabled = true
 omni_range = 16.0
 
 [node name="LuzCafeP2_0_44" type="OmniLight3D" parent="SegundoPiso/Piso2_AulasYCafeteria/CafeteriaP2" unique_id=668893000]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.8, 44)
 light_color = Color(1, 0.98, 0.92, 1)
-light_energy = 0.42
+light_energy = 0.22
 shadow_enabled = true
 omni_range = 16.0
 
 [node name="LuzCafeP2_0_58" type="OmniLight3D" parent="SegundoPiso/Piso2_AulasYCafeteria/CafeteriaP2" unique_id=2038837504]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.8, 58)
 light_color = Color(1, 0.98, 0.92, 1)
-light_energy = 0.42
+light_energy = 0.22
 shadow_enabled = true
 omni_range = 16.0
 
 [node name="LuzCafeP2_0_72" type="OmniLight3D" parent="SegundoPiso/Piso2_AulasYCafeteria/CafeteriaP2" unique_id=1148502963]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.8, 72)
 light_color = Color(1, 0.98, 0.92, 1)
-light_energy = 0.42
+light_energy = 0.22
 shadow_enabled = true
 omni_range = 16.0
 
 [node name="LuzCafeP2_12_44" type="OmniLight3D" parent="SegundoPiso/Piso2_AulasYCafeteria/CafeteriaP2" unique_id=1713366509]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 12.8, 44)
 light_color = Color(1, 0.98, 0.92, 1)
-light_energy = 0.42
+light_energy = 0.22
 shadow_enabled = true
 omni_range = 16.0
 
 [node name="LuzCafeP2_12_58" type="OmniLight3D" parent="SegundoPiso/Piso2_AulasYCafeteria/CafeteriaP2" unique_id=1770253734]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 12.8, 58)
 light_color = Color(1, 0.98, 0.92, 1)
-light_energy = 0.42
+light_energy = 0.22
 shadow_enabled = true
 omni_range = 16.0
 
 [node name="LuzCafeP2_12_72" type="OmniLight3D" parent="SegundoPiso/Piso2_AulasYCafeteria/CafeteriaP2" unique_id=1825692980]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 12.8, 72)
 light_color = Color(1, 0.98, 0.92, 1)
-light_energy = 0.42
+light_energy = 0.22
 shadow_enabled = true
 omni_range = 16.0
 
@@ -6453,34 +6453,34 @@ material = ExtResource("20_ac001")
 [node name="LuzFuente" type="OmniLight3D" parent="PatioEstudiante" unique_id=95384063]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -0.5)
 light_color = Color(0.3, 0.5, 0.4, 1)
-light_energy = 0.30
+light_energy = 0.18
 shadow_enabled = true
 omni_range = 8.0
 
 [node name="LuzSendero1" type="OmniLight3D" parent="PatioEstudiante" unique_id=743354972]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -10)
 light_color = Color(0.4, 0.45, 0.6, 1)
-light_energy = 0.3
+light_energy = 0.18
 shadow_enabled = true
 omni_range = 6.0
 
 [node name="LuzSendero2" type="OmniLight3D" parent="PatioEstudiante" unique_id=186008396]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 10)
 light_color = Color(0.4, 0.45, 0.6, 1)
-light_energy = 0.3
+light_energy = 0.18
 shadow_enabled = true
 omni_range = 6.0
 
 [node name="LuzGaleriaO" type="OmniLight3D" parent="PatioEstudiante" unique_id=791712050]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 4.2, 0)
 light_color = Color(0.8, 0.7, 0.5, 1)
-light_energy = 0.4
+light_energy = 0.22
 shadow_enabled = true
 
 [node name="LuzGaleriaE" type="OmniLight3D" parent="PatioEstudiante" unique_id=2039056389]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 4.2, 0)
 light_color = Color(0.8, 0.7, 0.5, 1)
-light_energy = 0.4
+light_energy = 0.22
 shadow_enabled = true
 
 [node name="Farol1_Poste" type="CSGCylinder3D" parent="PatioEstudiante" unique_id=1844373328]
@@ -9459,21 +9459,21 @@ material = SubResource("StandardMaterial3D_oluwi")
 [node name="TorreOeste_Luz_0" type="OmniLight3D" parent="TorresEscaleras/TorreOeste" unique_id=444043655]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69.5, 3.2, 30)
 light_color = Color(0.9, 0.95, 1, 1)
-light_energy = 0.40
+light_energy = 0.22
 shadow_enabled = true
 omni_range = 10.0
 
 [node name="TorreOeste_Luz_1" type="OmniLight3D" parent="TorresEscaleras/TorreOeste" unique_id=1101904172]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69.5, 7.7, 30)
 light_color = Color(0.9, 0.95, 1, 1)
-light_energy = 0.40
+light_energy = 0.22
 shadow_enabled = true
 omni_range = 10.0
 
 [node name="TorreOeste_Luz_2" type="OmniLight3D" parent="TorresEscaleras/TorreOeste" unique_id=1073076958]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69.5, 12.2, 30)
 light_color = Color(0.9, 0.95, 1, 1)
-light_energy = 0.40
+light_energy = 0.22
 shadow_enabled = true
 omni_range = 10.0
 
@@ -9998,21 +9998,21 @@ material = SubResource("StandardMaterial3D_oluwi")
 [node name="TorreEste_Luz_0" type="OmniLight3D" parent="TorresEscaleras/TorreEste" unique_id=1300464459]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69.5, 3.2, 30)
 light_color = Color(0.9, 0.95, 1, 1)
-light_energy = 0.40
+light_energy = 0.22
 shadow_enabled = true
 omni_range = 10.0
 
 [node name="TorreEste_Luz_1" type="OmniLight3D" parent="TorresEscaleras/TorreEste" unique_id=1733356761]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69.5, 7.7, 30)
 light_color = Color(0.9, 0.95, 1, 1)
-light_energy = 0.40
+light_energy = 0.22
 shadow_enabled = true
 omni_range = 10.0
 
 [node name="TorreEste_Luz_2" type="OmniLight3D" parent="TorresEscaleras/TorreEste" unique_id=2096828304]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69.5, 12.2, 30)
 light_color = Color(0.9, 0.95, 1, 1)
-light_energy = 0.40
+light_energy = 0.22
 shadow_enabled = true
 omni_range = 10.0
 
@@ -10537,21 +10537,21 @@ material = SubResource("StandardMaterial3D_oluwi")
 [node name="TorreNorte_Luz_0" type="OmniLight3D" parent="TorresEscaleras/TorreNorte" unique_id=1875194736]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 3.2, -49.5)
 light_color = Color(0.9, 0.95, 1, 1)
-light_energy = 0.40
+light_energy = 0.22
 shadow_enabled = true
 omni_range = 10.0
 
 [node name="TorreNorte_Luz_1" type="OmniLight3D" parent="TorresEscaleras/TorreNorte" unique_id=713090553]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 7.7, -49.5)
 light_color = Color(0.9, 0.95, 1, 1)
-light_energy = 0.40
+light_energy = 0.22
 shadow_enabled = true
 omni_range = 10.0
 
 [node name="TorreNorte_Luz_2" type="OmniLight3D" parent="TorresEscaleras/TorreNorte" unique_id=1734825919]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 12.2, -49.5)
 light_color = Color(0.9, 0.95, 1, 1)
-light_energy = 0.40
+light_energy = 0.22
 shadow_enabled = true
 omni_range = 10.0
 
@@ -10560,427 +10560,427 @@ omni_range = 10.0
 [node name="LuzN_0_-35" type="OmniLight3D" parent="Iluminacion" unique_id=462085360]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 3.8, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzN_0_-15" type="OmniLight3D" parent="Iluminacion" unique_id=1758662212]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 3.8, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzN_0_5" type="OmniLight3D" parent="Iluminacion" unique_id=357788118]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 3.8, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzN_0_25" type="OmniLight3D" parent="Iluminacion" unique_id=97557268]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 3.8, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzN_0_42" type="OmniLight3D" parent="Iluminacion" unique_id=2125024479]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 3.8, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzW_0_-20" type="OmniLight3D" parent="Iluminacion" unique_id=80344666]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 3.8, -20)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzW_0_-5" type="OmniLight3D" parent="Iluminacion" unique_id=833110907]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 3.8, -5)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzW_0_10" type="OmniLight3D" parent="Iluminacion" unique_id=1395245080]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 3.8, 10)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzE_0_-35" type="OmniLight3D" parent="Iluminacion" unique_id=1881163511]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 3.8, -35)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzE_0_-20" type="OmniLight3D" parent="Iluminacion" unique_id=1877808653]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 3.8, -20)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzE_0_-5" type="OmniLight3D" parent="Iluminacion" unique_id=942608371]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 3.8, -5)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzE_0_10" type="OmniLight3D" parent="Iluminacion" unique_id=530006498]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 3.8, 10)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzS_0_-55" type="OmniLight3D" parent="Iluminacion" unique_id=1095732532]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55, 3.8, 30)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzS_0_-35" type="OmniLight3D" parent="Iluminacion" unique_id=2024443760]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 3.8, 30)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzS_0_-15" type="OmniLight3D" parent="Iluminacion" unique_id=1599276475]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 3.8, 30)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzS_0_0" type="OmniLight3D" parent="Iluminacion" unique_id=714227564]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.8, 30)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzS_0_15" type="OmniLight3D" parent="Iluminacion" unique_id=342494087]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 3.8, 30)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzS_0_35" type="OmniLight3D" parent="Iluminacion" unique_id=1970482175]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 3.8, 30)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzS_0_55" type="OmniLight3D" parent="Iluminacion" unique_id=110315203]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 3.8, 30)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzN_1_-35" type="OmniLight3D" parent="Iluminacion" unique_id=1212673366]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 8.3, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzN_1_-15" type="OmniLight3D" parent="Iluminacion" unique_id=1790797503]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 8.3, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzN_1_5" type="OmniLight3D" parent="Iluminacion" unique_id=1252096262]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 8.3, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzN_1_25" type="OmniLight3D" parent="Iluminacion" unique_id=1462803328]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 8.3, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzN_1_42" type="OmniLight3D" parent="Iluminacion" unique_id=868027865]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 8.3, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzW_1_-20" type="OmniLight3D" parent="Iluminacion" unique_id=179849245]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 8.3, -20)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzW_1_-5" type="OmniLight3D" parent="Iluminacion" unique_id=1738001090]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 8.3, -5)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzW_1_10" type="OmniLight3D" parent="Iluminacion" unique_id=1540967019]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 8.3, 10)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzE_1_-35" type="OmniLight3D" parent="Iluminacion" unique_id=580595963]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 8.3, -35)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzE_1_-20" type="OmniLight3D" parent="Iluminacion" unique_id=281453490]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 8.3, -20)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzE_1_-5" type="OmniLight3D" parent="Iluminacion" unique_id=99459545]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 8.3, -5)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzE_1_10" type="OmniLight3D" parent="Iluminacion" unique_id=1561895578]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 8.3, 10)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzS_1_-55" type="OmniLight3D" parent="Iluminacion" unique_id=1495636754]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55, 8.3, 30)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzS_1_-35" type="OmniLight3D" parent="Iluminacion" unique_id=211060080]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 8.3, 30)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzS_1_-15" type="OmniLight3D" parent="Iluminacion" unique_id=1932935046]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 8.3, 30)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzS_1_0" type="OmniLight3D" parent="Iluminacion" unique_id=1199289481]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.3, 30)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzS_1_15" type="OmniLight3D" parent="Iluminacion" unique_id=581225423]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 8.3, 30)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzS_1_35" type="OmniLight3D" parent="Iluminacion" unique_id=141507876]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 8.3, 30)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzS_1_55" type="OmniLight3D" parent="Iluminacion" unique_id=322994950]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 8.3, 30)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzN_2_-35" type="OmniLight3D" parent="Iluminacion" unique_id=382267342]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 12.8, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzN_2_-15" type="OmniLight3D" parent="Iluminacion" unique_id=811738981]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 12.8, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzN_2_5" type="OmniLight3D" parent="Iluminacion" unique_id=354021895]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 12.8, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzN_2_25" type="OmniLight3D" parent="Iluminacion" unique_id=1633217193]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 12.8, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzN_2_42" type="OmniLight3D" parent="Iluminacion" unique_id=1573249484]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 12.8, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzW_2_-20" type="OmniLight3D" parent="Iluminacion" unique_id=2049852187]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 12.8, -20)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzW_2_-5" type="OmniLight3D" parent="Iluminacion" unique_id=2116847873]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 12.8, -5)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzW_2_10" type="OmniLight3D" parent="Iluminacion" unique_id=3128950]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 12.8, 10)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzE_2_-35" type="OmniLight3D" parent="Iluminacion" unique_id=1742668598]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 12.8, -35)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzE_2_-20" type="OmniLight3D" parent="Iluminacion" unique_id=1644824378]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 12.8, -20)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzE_2_-5" type="OmniLight3D" parent="Iluminacion" unique_id=969060386]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 12.8, -5)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzE_2_10" type="OmniLight3D" parent="Iluminacion" unique_id=435114014]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 12.8, 10)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzS_2_-55" type="OmniLight3D" parent="Iluminacion" unique_id=1254941893]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55, 12.8, 30)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzS_2_-35" type="OmniLight3D" parent="Iluminacion" unique_id=586556440]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 12.8, 30)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzS_2_-15" type="OmniLight3D" parent="Iluminacion" unique_id=2095872168]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 12.8, 30)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzS_2_0" type="OmniLight3D" parent="Iluminacion" unique_id=444431717]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.8, 30)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzS_2_15" type="OmniLight3D" parent="Iluminacion" unique_id=1376336157]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 12.8, 30)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzS_2_35" type="OmniLight3D" parent="Iluminacion" unique_id=176642427]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 12.8, 30)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzS_2_55" type="OmniLight3D" parent="Iluminacion" unique_id=1086207201]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 12.8, 30)
 light_color = Color(0.85, 0.9, 1, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzAud_-8_50" type="OmniLight3D" parent="Iluminacion" unique_id=1919949964]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 8, 50)
 light_color = Color(1, 0.9, 0.7, 1)
-light_energy = 0.45
+light_energy = 0.225
 shadow_enabled = true
 omni_range = 20.0
 
 [node name="LuzAud_-8_70" type="OmniLight3D" parent="Iluminacion" unique_id=859263614]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 8, 70)
 light_color = Color(1, 0.9, 0.7, 1)
-light_energy = 0.45
+light_energy = 0.225
 shadow_enabled = true
 omni_range = 20.0
 
 [node name="LuzAud_8_50" type="OmniLight3D" parent="Iluminacion" unique_id=61882721]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 8, 50)
 light_color = Color(1, 0.9, 0.7, 1)
-light_energy = 0.45
+light_energy = 0.225
 shadow_enabled = true
 omni_range = 20.0
 
 [node name="LuzAud_8_70" type="OmniLight3D" parent="Iluminacion" unique_id=1456820978]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 8, 70)
 light_color = Color(1, 0.9, 0.7, 1)
-light_energy = 0.45
+light_energy = 0.225
 shadow_enabled = true
 omni_range = 20.0
 

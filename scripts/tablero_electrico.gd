@@ -220,6 +220,7 @@ func _execute_fuse_screamer_sequence(hud: Node) -> void:
 	jumpscare.stream = HorrorAudio.get_screamer_jumpscare_sound()
 	jumpscare.volume_db = 5.0
 	jumpscare.bus = &"Master"
+	jumpscare.add_to_group("screamer_audio")
 	get_tree().root.add_child(jumpscare)
 	jumpscare.play()
 	

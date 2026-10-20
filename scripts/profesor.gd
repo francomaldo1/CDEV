@@ -349,6 +349,8 @@ func _process_chase_state(delta: float, can_see_player: bool) -> void:
 	var dist_to_player = Vector2(to_player.x, to_player.z).length()
 
 	# Si estaba cargando a toda velocidad y ya alcanzo al jugador, volver a velocidad normal
+	if dist_to_player <= attack_range + 0.6:
+		_cut_screamer_audio()
 	if is_screamer_charging and dist_to_player <= attack_range + 0.6:
 		_end_screamer_charge()
 
@@ -649,6 +651,7 @@ func start_screamer_charge() -> void:
 			velocity.z = dir_p.z * 42.0
 
 func _end_screamer_charge() -> void:
+	_cut_screamer_audio()
 	is_screamer_charging = false
 	screamer_charge_timer = 0.0
 	chase_speed = base_chase_speed + (speed_boost_count * 0.85)
@@ -669,6 +672,7 @@ func release_screamer_ambush() -> void:
 		_enter_search_state()
 
 func _start_attack() -> void:
+	_cut_screamer_audio()
 	if is_screamer_charging:
 		_end_screamer_charge()
 	current_state = State.ATTACK
@@ -709,6 +713,7 @@ func _process_attack(delta: float) -> void:
 		current_state = State.CHASE
 
 func _hit_player() -> void:
+	_cut_screamer_audio()
 	if is_instance_valid(player):
 		var push_dir = (player.global_position - global_position).normalized()
 		player.velocity += push_dir * 9.0 + Vector3(0, 3.2, 0)
@@ -746,3 +751,15 @@ func _on_player_noise(volume: float) -> void:
 		last_known_player_pos = player.global_position
 		var to_player = player.global_position - global_position
 		rotation.y = atan2(to_player.x, to_player.z)
+
+func _cut_screamer_audio() -> void:
+	if not is_inside_tree():
+		return
+	for node in get_tree().get_nodes_in_group("screamer_audio"):
+		if is_instance_valid(node) and node is AudioStreamPlayer:
+			node.stop()
+			node.queue_free()
+	var root_sc = get_tree().root.find_child("ScreamerJumpscareAudio", true, false)
+	if root_sc and is_instance_valid(root_sc) and root_sc is AudioStreamPlayer:
+		root_sc.stop()
+		root_sc.queue_free()

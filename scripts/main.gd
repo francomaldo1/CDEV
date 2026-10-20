@@ -103,7 +103,7 @@ func _spawn_tablero_electronica() -> void:
 	luz_tablero.name = "LuzParedTablero"
 	luz_tablero.position = Vector3(-17.4, 2.5, 0.0)
 	luz_tablero.light_color = Color(1.0, 0.95, 0.8)
-	luz_tablero.light_energy = 0.45
+	luz_tablero.light_energy = 0.25
 	luz_tablero.omni_range = 5.0
 	luz_tablero.shadow_enabled = true
 	luz_tablero.add_to_group("building_lights")
@@ -114,7 +114,7 @@ func _spawn_tablero_electronica() -> void:
 	luz_techo_lab.name = "LuzTechoLabElectronica"
 	luz_techo_lab.position = Vector3(-25.0, 3.6, 0.0)
 	luz_techo_lab.light_color = Color(0.9, 0.95, 1.0)
-	luz_techo_lab.light_energy = 0.50
+	luz_techo_lab.light_energy = 0.28
 	luz_techo_lab.omni_range = 11.0
 	luz_techo_lab.shadow_enabled = true
 	luz_techo_lab.add_to_group("building_lights")
