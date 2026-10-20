@@ -7,6 +7,7 @@ extends RefCounted
 static var _cached_spark: AudioStreamWAV = null
 static var _cached_slam: AudioStreamWAV = null
 static var _cached_stinger: AudioStreamWAV = null
+static var _cached_ambient_file: AudioStreamWAV = null
 static var _cached_drone_normal: AudioStreamWAV = null
 static var _cached_drone_blackout: AudioStreamWAV = null
 static var _cached_player_walk: Array[AudioStreamWAV] = []
@@ -34,6 +35,15 @@ static func get_screamer_stinger() -> AudioStreamWAV:
 	return _cached_stinger
 
 static func get_ambient_drone(is_blackout: bool = false) -> AudioStreamWAV:
+	if _cached_ambient_file == null:
+		var path = "res://audio/ambient/horror_ambience_atmos_11.wav"
+		if ResourceLoader.exists(path):
+			var s = load(path) as AudioStreamWAV
+			if s:
+				s.loop_mode = AudioStreamWAV.LOOP_FORWARD
+				_cached_ambient_file = s
+	if _cached_ambient_file != null:
+		return _cached_ambient_file
 	if is_blackout:
 		if _cached_drone_blackout == null:
 			_cached_drone_blackout = _generate_ambient_drone(true)

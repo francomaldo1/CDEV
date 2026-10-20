@@ -27,6 +27,7 @@
 [ext_resource type="Material" path="res://materials/mat_utn_glass_logo.tres" id="25_logo"]
 [ext_resource type="Material" path="res://materials/mat_granite_black.tres" id="26_zocalo"]
 [ext_resource type="Material" path="res://materials/mat_bulkhead_grey.tres" id="27_dintel"]
+[ext_resource type="Material" path="res://materials/mat_asphalt.tres" id="28_asphalt"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oluwi"]
 albedo_color = Color(0.85, 0.85, 0.88, 1)
@@ -111,11 +112,135 @@ use_collision = true
 size = Vector3(0.3, 4.5, 10)
 material = ExtResource("4_0kga5")
 
-[node name="ExtSurOeste" type="CSGBox3D" parent="PlantaBaja" unique_id=875247707]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40.5, 2.25, 45)
+[node name="ExtSurOeste_Foto" type="CSGBox3D" parent="PlantaBaja" unique_id=875247707]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.5, 2.25, 45)
 use_collision = true
-size = Vector3(49, 4.5, 0.3)
+size = Vector3(39, 4.5, 0.3)
 material = ExtResource("4_0kga5")
+
+[node name="Entrada_DintelSuperior" type="CSGBox3D" parent="PlantaBaja" unique_id=981001]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60, 4, 45)
+use_collision = true
+size = Vector3(10, 1, 0.35)
+material = ExtResource("27_dintel")
+
+[node name="Entrada_ZocaloBase_L" type="CSGBox3D" parent="PlantaBaja" unique_id=981002]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -63.3, 0.06, 45)
+use_collision = true
+size = Vector3(3.4, 0.12, 0.35)
+material = ExtResource("26_zocalo")
+
+[node name="Entrada_ZocaloBase_R" type="CSGBox3D" parent="PlantaBaja" unique_id=981003]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.7, 0.06, 45)
+use_collision = true
+size = Vector3(3.4, 0.12, 0.35)
+material = ExtResource("26_zocalo")
+
+[node name="Entrada_JambaExtIzq" type="CSGBox3D" parent="PlantaBaja" unique_id=981004]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -64.95, 1.81, 45)
+use_collision = true
+size = Vector3(0.1, 3.38, 0.15)
+material = ExtResource("23_alum")
+
+[node name="Entrada_JambaExtDer" type="CSGBox3D" parent="PlantaBaja" unique_id=981005]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55.05, 1.81, 45)
+use_collision = true
+size = Vector3(0.1, 3.38, 0.15)
+material = ExtResource("23_alum")
+
+[node name="Entrada_BarraSuperior_L" type="CSGBox3D" parent="PlantaBaja" unique_id=981008]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -63.3, 3.46, 45)
+use_collision = true
+size = Vector3(3.4, 0.08, 0.12)
+material = ExtResource("23_alum")
+
+[node name="Entrada_BarraSuperior_R" type="CSGBox3D" parent="PlantaBaja" unique_id=981009]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.7, 3.46, 45)
+use_collision = true
+size = Vector3(3.4, 0.08, 0.12)
+material = ExtResource("23_alum")
+
+[node name="Entrada_TravesanoMedio_L" type="CSGBox3D" parent="PlantaBaja" unique_id=981010]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -63.3, 2.49, 45)
+use_collision = true
+size = Vector3(3.4, 0.08, 0.12)
+material = ExtResource("23_alum")
+
+[node name="Entrada_TravesanoMedio_R" type="CSGBox3D" parent="PlantaBaja" unique_id=981011]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.7, 2.49, 45)
+use_collision = true
+size = Vector3(3.4, 0.08, 0.12)
+material = ExtResource("23_alum")
+
+[node name="Entrada_Mullion_L" type="CSGBox3D" parent="PlantaBaja" unique_id=981012]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -63.3, 1.81, 45)
+use_collision = true
+size = Vector3(0.08, 3.38, 0.12)
+material = ExtResource("23_alum")
+
+[node name="Entrada_Mullion_R" type="CSGBox3D" parent="PlantaBaja" unique_id=981013]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.7, 1.81, 45)
+use_collision = true
+size = Vector3(0.08, 3.38, 0.12)
+material = ExtResource("23_alum")
+
+[node name="Entrada_Vidrio_L1" type="CSGBox3D" parent="PlantaBaja" unique_id=981014]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -64.12, 1.3, 45)
+use_collision = true
+size = Vector3(1.56, 2.24, 0.04)
+material = ExtResource("5_68yaw")
+
+[node name="Entrada_Vidrio_L2" type="CSGBox3D" parent="PlantaBaja" unique_id=981015]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -62.48, 1.3, 45)
+use_collision = true
+size = Vector3(1.56, 2.24, 0.04)
+material = ExtResource("5_68yaw")
+
+[node name="Entrada_Transom_L1" type="CSGBox3D" parent="PlantaBaja" unique_id=981016]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -64.12, 2.97, 45)
+use_collision = true
+size = Vector3(1.56, 0.88, 0.04)
+material = ExtResource("5_68yaw")
+
+[node name="Entrada_Transom_L2" type="CSGBox3D" parent="PlantaBaja" unique_id=981017]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -62.48, 2.97, 45)
+use_collision = true
+size = Vector3(1.56, 0.88, 0.04)
+material = ExtResource("5_68yaw")
+
+[node name="Entrada_Franja_L" type="CSGBox3D" parent="PlantaBaja" unique_id=981018]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -63.3, 1.35, 44.98)
+size = Vector3(3.2, 0.15, 0.02)
+material = ExtResource("24_frost")
+
+[node name="Entrada_Vidrio_R1" type="CSGBox3D" parent="PlantaBaja" unique_id=981019]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57.52, 1.3, 45)
+use_collision = true
+size = Vector3(1.56, 2.24, 0.04)
+material = ExtResource("5_68yaw")
+
+[node name="Entrada_Vidrio_R2" type="CSGBox3D" parent="PlantaBaja" unique_id=981020]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55.88, 1.3, 45)
+use_collision = true
+size = Vector3(1.56, 2.24, 0.04)
+material = ExtResource("5_68yaw")
+
+[node name="Entrada_Transom_R1" type="CSGBox3D" parent="PlantaBaja" unique_id=981021]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57.52, 2.97, 45)
+use_collision = true
+size = Vector3(1.56, 0.88, 0.04)
+material = ExtResource("5_68yaw")
+
+[node name="Entrada_Transom_R2" type="CSGBox3D" parent="PlantaBaja" unique_id=981022]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55.88, 2.97, 45)
+use_collision = true
+size = Vector3(1.56, 0.88, 0.04)
+material = ExtResource("5_68yaw")
+
+[node name="Entrada_Franja_R" type="CSGBox3D" parent="PlantaBaja" unique_id=981023]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.7, 1.35, 44.98)
+size = Vector3(3.2, 0.15, 0.02)
+material = ExtResource("24_frost")
 
 [node name="ExtSurEste" type="CSGBox3D" parent="PlantaBaja" unique_id=1267556136]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.5, 2.25, 45)
@@ -1987,6 +2112,69 @@ material = ExtResource("5_68yaw")
 
 [node name="Aud_Puerta1_TransomDer" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=980031]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4, 2.97, 35)
+use_collision = true
+size = Vector3(1.42, 0.88, 0.04)
+material = ExtResource("5_68yaw")
+
+[node name="Aud_Puerta2_BarraSuperior" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=980060]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.46, 35)
+use_collision = true
+size = Vector3(3.2, 0.08, 0.12)
+material = ExtResource("23_alum")
+
+[node name="Aud_Puerta2_TravesanoMedio" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=980061]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.49, 35)
+use_collision = true
+size = Vector3(3.2, 0.08, 0.12)
+material = ExtResource("23_alum")
+
+[node name="Aud_Puerta2_Centro" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=980062]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 35)
+use_collision = true
+size = Vector3(0.08, 2.26, 0.08)
+material = ExtResource("23_alum")
+
+[node name="Aud_Puerta2_MullionTransom" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=980063]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.97, 35)
+use_collision = true
+size = Vector3(0.08, 0.88, 0.1)
+material = ExtResource("23_alum")
+
+[node name="Aud_Puerta2_VidrioIzq" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=980064]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, 1.3, 35)
+use_collision = true
+size = Vector3(1.42, 2.24, 0.04)
+material = ExtResource("5_68yaw")
+
+[node name="Aud_Puerta2_VidrioDer" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=980065]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, 1.3, 35)
+use_collision = true
+size = Vector3(1.42, 2.24, 0.04)
+material = ExtResource("5_68yaw")
+
+[node name="Aud_Puerta2_Franja" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=980066]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35, 34.98)
+size = Vector3(3.04, 0.15, 0.02)
+material = ExtResource("24_frost")
+
+[node name="Aud_Puerta2_ManijonL" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=980067]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.14, 1.35, 34.94)
+size = Vector3(0.04, 0.85, 0.04)
+material = ExtResource("23_alum")
+
+[node name="Aud_Puerta2_ManijonR" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=980068]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.14, 1.35, 34.94)
+size = Vector3(0.04, 0.85, 0.04)
+material = ExtResource("23_alum")
+
+[node name="Aud_Puerta2_TransomIzq" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=980069]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, 2.97, 35)
+use_collision = true
+size = Vector3(1.42, 0.88, 0.04)
+material = ExtResource("5_68yaw")
+
+[node name="Aud_Puerta2_TransomDer" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=980070]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, 2.97, 35)
 use_collision = true
 size = Vector3(1.42, 0.88, 0.04)
 material = ExtResource("5_68yaw")
@@ -10795,3 +10983,283 @@ light_color = Color(1, 0.9, 0.7, 1)
 light_energy = 0.9
 shadow_enabled = true
 omni_range = 20.0
+
+[node name="ExteriorEntrada" type="Node3D" parent="." unique_id=982000]
+
+[node name="AleroTecho" type="CSGBox3D" parent="ExteriorEntrada" unique_id=982001]
+transform = Transform3D(1, 0, 0, 0, 0.995037, -0.0995037, 0, 0.0995037, 0.995037, -60, 3.6, 47.5)
+use_collision = true
+size = Vector3(12, 0.15, 5.02)
+material = ExtResource("16_bm001")
+
+[node name="AleroFasciaFront" type="CSGBox3D" parent="ExteriorEntrada" unique_id=982002]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60, 3.35, 50)
+use_collision = true
+size = Vector3(12.04, 0.35, 0.12)
+material = ExtResource("23_alum")
+
+[node name="AleroFasciaIzq" type="CSGBox3D" parent="ExteriorEntrada" unique_id=982003]
+transform = Transform3D(1, 0, 0, 0, 0.995037, -0.0995037, 0, 0.0995037, 0.995037, -66, 3.6, 47.5)
+use_collision = true
+size = Vector3(0.12, 0.35, 5.02)
+material = ExtResource("23_alum")
+
+[node name="AleroFasciaDer" type="CSGBox3D" parent="ExteriorEntrada" unique_id=982004]
+transform = Transform3D(1, 0, 0, 0, 0.995037, -0.0995037, 0, 0.0995037, 0.995037, -54, 3.6, 47.5)
+use_collision = true
+size = Vector3(0.12, 0.35, 5.02)
+material = ExtResource("23_alum")
+
+[node name="AleroColumnaIzq" type="CSGBox3D" parent="ExteriorEntrada" unique_id=982005]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65.7, 1.675, 49.9)
+use_collision = true
+size = Vector3(0.2, 3.35, 0.2)
+material = ExtResource("16_bm001")
+
+[node name="AleroColumnaDer" type="CSGBox3D" parent="ExteriorEntrada" unique_id=982006]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -54.3, 1.675, 49.9)
+use_collision = true
+size = Vector3(0.2, 3.35, 0.2)
+material = ExtResource("16_bm001")
+
+[node name="LuzAlero1" type="OmniLight3D" parent="ExteriorEntrada" unique_id=982007]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -63, 3.3, 47.5)
+light_color = Color(1, 0.95, 0.85, 1)
+light_energy = 1.3
+shadow_enabled = true
+omni_range = 9.0
+
+[node name="LuzAlero2" type="OmniLight3D" parent="ExteriorEntrada" unique_id=982008]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57, 3.3, 47.5)
+light_color = Color(1, 0.95, 0.85, 1)
+light_energy = 1.3
+shadow_enabled = true
+omni_range = 9.0
+
+[node name="VeredaAcceso" type="CSGBox3D" parent="ExteriorEntrada" unique_id=982010]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60, 0.06, 47.25)
+use_collision = true
+size = Vector3(14, 0.12, 4.5)
+material = ExtResource("27_dintel")
+
+[node name="EstacionamientoAsfalto" type="CSGBox3D" parent="ExteriorEntrada" unique_id=982011]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60, -0.05, 67.5)
+use_collision = true
+size = Vector3(50, 0.1, 36)
+material = ExtResource("28_asphalt")
+
+[node name="CordonVereda" type="CSGBox3D" parent="ExteriorEntrada" unique_id=982012]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60, 0.1, 49.55)
+use_collision = true
+size = Vector3(14.2, 0.2, 0.15)
+material = ExtResource("12_uwdqk")
+
+[node name="LineaEst_1" type="CSGBox3D" parent="ExteriorEntrada" unique_id=982021]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69, 0.01, 54.5)
+size = Vector3(0.12, 0.02, 6)
+material = ExtResource("12_uwdqk")
+
+[node name="LineaEst_2" type="CSGBox3D" parent="ExteriorEntrada" unique_id=982022]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -66, 0.01, 54.5)
+size = Vector3(0.12, 0.02, 6)
+material = ExtResource("12_uwdqk")
+
+[node name="LineaEst_3" type="CSGBox3D" parent="ExteriorEntrada" unique_id=982023]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -63, 0.01, 54.5)
+size = Vector3(0.12, 0.02, 6)
+material = ExtResource("12_uwdqk")
+
+[node name="LineaEst_4" type="CSGBox3D" parent="ExteriorEntrada" unique_id=982024]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60, 0.01, 54.5)
+size = Vector3(0.12, 0.02, 6)
+material = ExtResource("12_uwdqk")
+
+[node name="LineaEst_5" type="CSGBox3D" parent="ExteriorEntrada" unique_id=982025]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57, 0.01, 54.5)
+size = Vector3(0.12, 0.02, 6)
+material = ExtResource("12_uwdqk")
+
+[node name="LineaEst_6" type="CSGBox3D" parent="ExteriorEntrada" unique_id=982026]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -54, 0.01, 54.5)
+size = Vector3(0.12, 0.02, 6)
+material = ExtResource("12_uwdqk")
+
+[node name="LineaEst_7" type="CSGBox3D" parent="ExteriorEntrada" unique_id=982027]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51, 0.01, 54.5)
+size = Vector3(0.12, 0.02, 6)
+material = ExtResource("12_uwdqk")
+
+[node name="FarolaPoste" type="CSGBox3D" parent="ExteriorEntrada" unique_id=982030]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 3.5, 52)
+use_collision = true
+size = Vector3(0.2, 7, 0.2)
+material = ExtResource("16_bm001")
+
+[node name="FarolaBrazo" type="CSGBox3D" parent="ExteriorEntrada" unique_id=982031]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51.2, 7, 52)
+use_collision = true
+size = Vector3(2.4, 0.15, 0.15)
+material = ExtResource("16_bm001")
+
+[node name="FarolaLuminaria" type="CSGBox3D" parent="ExteriorEntrada" unique_id=982032]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.3, 6.85, 52)
+size = Vector3(0.6, 0.15, 0.35)
+material = ExtResource("23_alum")
+
+[node name="LuzFarola" type="SpotLight3D" parent="ExteriorEntrada" unique_id=982033]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -52.3, 6.7, 52)
+light_color = Color(0.85, 0.92, 1, 1)
+light_energy = 3.5
+shadow_enabled = true
+spot_range = 28.0
+spot_angle = 55.0
+
+[node name="AutoBlanco" type="Node3D" parent="ExteriorEntrada" unique_id=982040]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -64.5, 0, 54.5)
+
+[node name="Chasis" type="CSGBox3D" parent="ExteriorEntrada/AutoBlanco" unique_id=982041]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0)
+use_collision = true
+size = Vector3(2, 0.55, 4.4)
+material = ExtResource("23_alum")
+
+[node name="Cabina" type="CSGBox3D" parent="ExteriorEntrada/AutoBlanco" unique_id=982042]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, -0.2)
+use_collision = true
+size = Vector3(1.75, 0.65, 2.2)
+material = ExtResource("23_alum")
+
+[node name="Vidrios" type="CSGBox3D" parent="ExteriorEntrada/AutoBlanco" unique_id=982043]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, -0.2)
+size = Vector3(1.78, 0.6, 2.15)
+material = ExtResource("5_68yaw")
+
+[node name="RuedaFL" type="CSGBox3D" parent="ExteriorEntrada/AutoBlanco" unique_id=982044]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.32, -1.3)
+size = Vector3(0.25, 0.64, 0.64)
+material = ExtResource("26_zocalo")
+
+[node name="RuedaFR" type="CSGBox3D" parent="ExteriorEntrada/AutoBlanco" unique_id=982045]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.32, -1.3)
+size = Vector3(0.25, 0.64, 0.64)
+material = ExtResource("26_zocalo")
+
+[node name="RuedaRL" type="CSGBox3D" parent="ExteriorEntrada/AutoBlanco" unique_id=982046]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.32, 1.3)
+size = Vector3(0.25, 0.64, 0.64)
+material = ExtResource("26_zocalo")
+
+[node name="RuedaRR" type="CSGBox3D" parent="ExteriorEntrada/AutoBlanco" unique_id=982047]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.32, 1.3)
+size = Vector3(0.25, 0.64, 0.64)
+material = ExtResource("26_zocalo")
+
+[node name="LucesFrente" type="CSGBox3D" parent="ExteriorEntrada/AutoBlanco" unique_id=982048]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -2.21)
+size = Vector3(1.6, 0.16, 0.05)
+material = ExtResource("12_uwdqk")
+
+[node name="LucesAtras" type="CSGBox3D" parent="ExteriorEntrada/AutoBlanco" unique_id=982049]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 2.21)
+size = Vector3(1.6, 0.16, 0.05)
+material = ExtResource("10_teuvw")
+
+[node name="AutoAzul" type="Node3D" parent="ExteriorEntrada" unique_id=982050]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -58.5, 0, 54.5)
+
+[node name="ChasisAzul" type="CSGBox3D" parent="ExteriorEntrada/AutoAzul" unique_id=982051]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0)
+use_collision = true
+size = Vector3(2, 0.55, 4.4)
+material = ExtResource("9_t4cw7")
+
+[node name="CabinaAzul" type="CSGBox3D" parent="ExteriorEntrada/AutoAzul" unique_id=982052]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, -0.2)
+use_collision = true
+size = Vector3(1.75, 0.65, 2.2)
+material = ExtResource("9_t4cw7")
+
+[node name="VidriosAzul" type="CSGBox3D" parent="ExteriorEntrada/AutoAzul" unique_id=982053]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, -0.2)
+size = Vector3(1.78, 0.6, 2.15)
+material = ExtResource("5_68yaw")
+
+[node name="RuedaFL_A" type="CSGBox3D" parent="ExteriorEntrada/AutoAzul" unique_id=982054]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.32, -1.3)
+size = Vector3(0.25, 0.64, 0.64)
+material = ExtResource("26_zocalo")
+
+[node name="RuedaFR_A" type="CSGBox3D" parent="ExteriorEntrada/AutoAzul" unique_id=982055]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.32, -1.3)
+size = Vector3(0.25, 0.64, 0.64)
+material = ExtResource("26_zocalo")
+
+[node name="RuedaRL_A" type="CSGBox3D" parent="ExteriorEntrada/AutoAzul" unique_id=982056]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.32, 1.3)
+size = Vector3(0.25, 0.64, 0.64)
+material = ExtResource("26_zocalo")
+
+[node name="RuedaRR_A" type="CSGBox3D" parent="ExteriorEntrada/AutoAzul" unique_id=982057]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.32, 1.3)
+size = Vector3(0.25, 0.64, 0.64)
+material = ExtResource("26_zocalo")
+
+[node name="LucesFrente_A" type="CSGBox3D" parent="ExteriorEntrada/AutoAzul" unique_id=982058]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -2.21)
+size = Vector3(1.6, 0.16, 0.05)
+material = ExtResource("12_uwdqk")
+
+[node name="LucesAtras_A" type="CSGBox3D" parent="ExteriorEntrada/AutoAzul" unique_id=982059]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 2.21)
+size = Vector3(1.6, 0.16, 0.05)
+material = ExtResource("10_teuvw")
+
+[node name="AutoGris" type="Node3D" parent="ExteriorEntrada" unique_id=982060]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 0, 54.5)
+
+[node name="ChasisGris" type="CSGBox3D" parent="ExteriorEntrada/AutoGris" unique_id=982061]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0)
+use_collision = true
+size = Vector3(2, 0.55, 4.4)
+material = ExtResource("16_bm001")
+
+[node name="CabinaGris" type="CSGBox3D" parent="ExteriorEntrada/AutoGris" unique_id=982062]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, -0.2)
+use_collision = true
+size = Vector3(1.75, 0.65, 2.2)
+material = ExtResource("16_bm001")
+
+[node name="VidriosGris" type="CSGBox3D" parent="ExteriorEntrada/AutoGris" unique_id=982063]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, -0.2)
+size = Vector3(1.78, 0.6, 2.15)
+material = ExtResource("5_68yaw")
+
+[node name="RuedaFL_G" type="CSGBox3D" parent="ExteriorEntrada/AutoGris" unique_id=982064]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.32, -1.3)
+size = Vector3(0.25, 0.64, 0.64)
+material = ExtResource("26_zocalo")
+
+[node name="RuedaFR_G" type="CSGBox3D" parent="ExteriorEntrada/AutoGris" unique_id=982065]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.32, -1.3)
+size = Vector3(0.25, 0.64, 0.64)
+material = ExtResource("26_zocalo")
+
+[node name="RuedaRL_G" type="CSGBox3D" parent="ExteriorEntrada/AutoGris" unique_id=982066]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.32, 1.3)
+size = Vector3(0.25, 0.64, 0.64)
+material = ExtResource("26_zocalo")
+
+[node name="RuedaRR_G" type="CSGBox3D" parent="ExteriorEntrada/AutoGris" unique_id=982067]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.32, 1.3)
+size = Vector3(0.25, 0.64, 0.64)
+material = ExtResource("26_zocalo")
+
+[node name="LucesFrente_G" type="CSGBox3D" parent="ExteriorEntrada/AutoGris" unique_id=982068]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -2.21)
+size = Vector3(1.6, 0.16, 0.05)
+material = ExtResource("12_uwdqk")
+
+[node name="LucesAtras_G" type="CSGBox3D" parent="ExteriorEntrada/AutoGris" unique_id=982069]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 2.21)
+size = Vector3(1.6, 0.16, 0.05)
+material = ExtResource("10_teuvw")
