@@ -26,6 +26,12 @@ var active_cuaderno: Node = null
 var current_correct_answer: int = 0
 var option_buttons: Array[Button] = []
 
+var debug_coords_panel: PanelContainer = null
+var debug_coords_label: Label = null
+var show_debug_coords: bool = true
+var last_coords_string: String = ""
+var player_cached: CharacterBody3D = null
+
 func _ready() -> void:
 	if alert_label:
 		alert_label.visible = false
@@ -49,7 +55,7 @@ func _ready() -> void:
 		
 	if instruction_label:
 		instruction_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		instruction_label.text = "[W,A,S,D] Caminar | [Shift] Correr | [F] Linterna | [E] Interactuar | [ESC] Cursor"
+		instruction_label.text = "[W,A,S,D] Mover | [Shift] Correr | [F] Linterna | [E] Usar | [F3] Coords | [F2] Copiar"
 
 	option_buttons = [btn_opt0, btn_opt1, btn_opt2, btn_opt3]
 	for i in range(option_buttons.size()):
@@ -70,6 +76,7 @@ func _ready() -> void:
 		btn_restart.pressed.connect(func(): get_tree().reload_current_scene())
 
 	update_inventory_display()
+	_setup_debug_coords()
 
 func is_modal_active() -> bool:
 	return (math_panel and math_panel.visible) or (victory_panel and victory_panel.visible)
@@ -89,6 +96,17 @@ func _unhandled_input(event: InputEvent) -> void:
 		if math_panel and math_panel.visible:
 			_close_math_exam()
 			get_viewport().set_input_as_handled()
+	elif event is InputEventKey and event.pressed:
+		if event.keycode == KEY_F3:
+			show_debug_coords = not show_debug_coords
+			if debug_coords_panel:
+				debug_coords_panel.visible = show_debug_coords
+			get_viewport().set_input_as_handled()
+		elif event.keycode == KEY_F2:
+			if last_coords_string != "":
+				DisplayServer.clipboard_set(last_coords_string)
+				show_temporary_alert("📋 ¡Copiado al portapapeles! " + last_coords_string, Color(0.3, 1.0, 0.6))
+				get_viewport().set_input_as_handled()
 
 func set_interact_prompt(text_msg: String) -> void:
 	if interact_prompt:
@@ -209,3 +227,74 @@ func trigger_victory_screen() -> void:
 	if victory_panel:
 		victory_panel.visible = true
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+
+
+func _process(_delta: float) -> void:
+	if not show_debug_coords or not debug_coords_label:
+		return
+		
+	if not is_instance_valid(player_cached):
+		var players = get_tree().get_nodes_in_group("player")
+		if not players.is_empty():
+			player_cached = players[0] as CharacterBody3D
+			
+	if not is_instance_valid(player_cached):
+		return
+		
+	var p = player_cached.global_position
+	
+	var piso = "PB"
+	if p.y >= 7.0:
+		piso = "Segundo Piso (P2)"
+	elif p.y >= 2.5:
+		piso = "Primer Piso (P1)"
+	else:
+		piso = "Planta Baja (PB)"
+		
+	var cam = player_cached.find_child("Camera3D", true, false) as Camera3D
+	var heading = "Norte"
+	if cam:
+		var fwd = -cam.global_transform.basis.z
+		if absf(fwd.z) > absf(fwd.x):
+			heading = "Sur (+Z)" if fwd.z > 0 else "Norte (-Z)"
+		else:
+			heading = "Este (+X)" if fwd.x > 0 else "Oeste (-X)"
+			
+	last_coords_string = "X: %.1f, Y: %.1f, Z: %.1f (%s)" % [p.x, p.y, p.z, piso]
+	
+	debug_coords_label.text = "📍 Pos: X: %.1f  Y: %.1f  Z: %.1f\n🏢 %s | Mirando: %s\n⌨️ [F2] Copiar | [F3] Ocultar" % [
+		p.x, p.y, p.z, piso, heading
+	]
+
+func _setup_debug_coords() -> void:
+	debug_coords_panel = PanelContainer.new()
+	debug_coords_panel.name = "DebugCoordsPanel"
+	debug_coords_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	
+	var style = StyleBoxFlat.new()
+	style.bg_color = Color(0.06, 0.08, 0.12, 0.8)
+	style.border_color = Color(0.25, 0.45, 0.75, 0.7)
+	style.set_border_width_all(1)
+	style.set_corner_radius_all(6)
+	style.content_margin_left = 10
+	style.content_margin_right = 10
+	style.content_margin_top = 6
+	style.content_margin_bottom = 6
+	debug_coords_panel.add_theme_stylebox_override("panel", style)
+	
+	debug_coords_panel.set_anchors_preset(Control.PRESET_TOP_RIGHT)
+	debug_coords_panel.offset_left = -300.0
+	debug_coords_panel.offset_right = -20.0
+	debug_coords_panel.offset_top = 20.0
+	debug_coords_panel.offset_bottom = 85.0
+	debug_coords_panel.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+	
+	debug_coords_label = Label.new()
+	debug_coords_label.name = "CoordsLabel"
+	debug_coords_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	debug_coords_label.add_theme_font_size_override("font_size", 13)
+	debug_coords_label.add_theme_color_override("font_color", Color(0.9, 0.95, 1.0))
+	debug_coords_label.text = "📍 Coordenadas: cargando..."
+	
+	debug_coords_panel.add_child(debug_coords_label)
+	add_child(debug_coords_panel)
