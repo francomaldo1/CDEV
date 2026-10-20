@@ -41,6 +41,8 @@ static func get_ambient_drone(is_blackout: bool = false) -> AudioStreamWAV:
 			var s = load(path) as AudioStreamWAV
 			if s:
 				s.loop_mode = AudioStreamWAV.LOOP_FORWARD
+				s.loop_begin = 0
+				s.loop_end = int(s.get_length() * s.mix_rate)
 				_cached_ambient_file = s
 	if _cached_ambient_file != null:
 		return _cached_ambient_file

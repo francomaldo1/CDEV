@@ -61,8 +61,9 @@ func _setup_ambient_audio() -> void:
 	ambient_drone_player = AudioStreamPlayer.new()
 	ambient_drone_player.name = "AmbientDronePlayer"
 	ambient_drone_player.stream = HorrorAudio.get_ambient_drone(false)
-	ambient_drone_player.volume_db = -10.0
+	ambient_drone_player.volume_db = 0.0
 	ambient_drone_player.bus = &"Master"
+	ambient_drone_player.finished.connect(func(): if ambient_drone_player and is_instance_valid(ambient_drone_player): ambient_drone_player.play())
 	add_child(ambient_drone_player)
 	ambient_drone_player.play()
 	
@@ -203,9 +204,9 @@ func _trigger_blackout() -> void:
 		
 	# Transicionar a dron oscuro de apagón
 	if ambient_drone_player:
-		ambient_drone_player.stream = HorrorAudio.get_ambient_drone(true)
-		ambient_drone_player.volume_db = -8.0
-		ambient_drone_player.play()
+		ambient_drone_player.volume_db = 3.0
+		if not ambient_drone_player.playing:
+			ambient_drone_player.play()
 		
 	if tablero_electrico:
 		tablero_electrico.trigger_blackout()
@@ -223,9 +224,9 @@ func _on_power_restored() -> void:
 	
 	# Restaurar dron ambiental normal
 	if ambient_drone_player:
-		ambient_drone_player.stream = HorrorAudio.get_ambient_drone(false)
-		ambient_drone_player.volume_db = -10.0
-		ambient_drone_player.play()
+		ambient_drone_player.volume_db = 0.0
+		if not ambient_drone_player.playing:
+			ambient_drone_player.play()
 	
 	# Restaurar iluminación ambiental y lunar
 	if world_env and world_env.environment:
