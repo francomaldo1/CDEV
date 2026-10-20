@@ -412,3 +412,41 @@ static func _generate_spooky_creak() -> AudioStreamWAV:
 		
 	wav.data = data
 	return wav
+
+
+static func get_door_unlock_sound() -> AudioStreamWAV:
+	var wav = AudioStreamWAV.new()
+	wav.format = AudioStreamWAV.FORMAT_16_BITS
+	wav.mix_rate = 22050
+	wav.stereo = false
+	var samples_count = int(22050 * 0.7)
+	var data = PackedByteArray()
+	data.resize(samples_count * 2)
+	for i in range(samples_count):
+		var t = float(i) / 22050.0
+		var click1 = sin(t * 880.0 * TAU) * exp(-t * 45.0)
+		var click2 = (sin((t - 0.12) * 1250.0 * TAU) if t > 0.12 else 0.0) * exp(-max(0.0, t - 0.12) * 35.0)
+		var heavy_thud = sin(t * 110.0 * TAU) * exp(-t * 12.0)
+		var sample_val = clampf((click1 * 0.6 + click2 * 0.7 + heavy_thud * 0.5), -1.0, 1.0)
+		var pcm = int(sample_val * 28000.0)
+		data.encode_s16(i * 2, pcm)
+	wav.data = data
+	return wav
+
+static func get_door_rattle_sound() -> AudioStreamWAV:
+	var wav = AudioStreamWAV.new()
+	wav.format = AudioStreamWAV.FORMAT_16_BITS
+	wav.mix_rate = 22050
+	wav.stereo = false
+	var samples_count = int(22050 * 0.4)
+	var data = PackedByteArray()
+	data.resize(samples_count * 2)
+	for i in range(samples_count):
+		var t = float(i) / 22050.0
+		var r1 = sin(t * 320.0 * TAU) * exp(-t * 30.0)
+		var r2 = (sin((t - 0.08) * 440.0 * TAU) if t > 0.08 else 0.0) * exp(-max(0.0, t - 0.08) * 35.0)
+		var sample_val = clampf((r1 * 0.5 + r2 * 0.6), -1.0, 1.0)
+		var pcm = int(sample_val * 22000.0)
+		data.encode_s16(i * 2, pcm)
+	wav.data = data
+	return wav

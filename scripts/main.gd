@@ -80,8 +80,8 @@ var turned_off_lights: Array[Light3D] = []
 
 func _spawn_exit_door() -> void:
 	var puerta = puerta_salida_scene.instantiate()
-	puerta.position = Vector3(0.0, 0.0, 34.8)
-	puerta.rotation_degrees = Vector3(0, 180, 0)
+	puerta.position = Vector3(0.0, 0.0, 35.0)
+	puerta.rotation_degrees = Vector3.ZERO
 	add_child(puerta)
 
 func _spawn_tablero_electronica() -> void:
