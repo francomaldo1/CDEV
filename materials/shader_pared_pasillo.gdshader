@@ -6,11 +6,10 @@ render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_burley, specular_sc
 // Moldura de madera superior divisoria con relieve
 // 2/3 superior: pared blanca institucional
 
-uniform vec4 color_pared : source_color = vec4(0.85, 0.83, 0.80, 1.0);
+uniform vec4 color_pared : source_color = vec4(0.88, 0.86, 0.83, 1.0);
 uniform vec4 color_madera_tint : source_color = vec4(1.0, 1.0, 1.0, 1.0);
 uniform sampler2D tex_madera : source_color, filter_linear_mipmap, repeat_enable;
 
-uniform float altura_piso = 4.5;
 uniform float altura_madera = 1.34;
 uniform float grosor_moldura = 0.06;
 uniform float altura_zocalo = 0.08;
@@ -24,8 +23,17 @@ void vertex() {
 }
 
 void fragment() {
-	// Altura relativa al piso actual (cada piso mide 4.5m)
-	float y_rel = mod(world_pos.y, altura_piso);
+	// Determinar el piso actual con precisión para alinear zócalo y moldura
+	// PB: base Y = 0.0 | P1: base Y = 4.6 | P2: base Y = 9.1
+	float floor_y = 0.0;
+	if (world_pos.y >= 8.0) {
+		floor_y = 9.1;
+	} else if (world_pos.y >= 3.5) {
+		floor_y = 4.6;
+	} else {
+		floor_y = 0.0;
+	}
+	float y_rel = world_pos.y - floor_y;
 	
 	// Coordenadas triplanares proyectadas según orientación de la pared
 	float u = abs(world_normal.x) > abs(world_normal.z) ? world_pos.z : world_pos.x;
@@ -39,7 +47,7 @@ void fragment() {
 	
 	if (y_rel < altura_zocalo) {
 		// ZÓCALO INFERIOR (perfil oscuro junto al piso como en la foto)
-		ALBEDO = vec3(0.20, 0.20, 0.22);
+		ALBEDO = vec3(0.18, 0.18, 0.20);
 		ROUGHNESS = 0.65;
 		METALLIC = 0.0;
 	} else if (y_rel < moldura_inicio) {
