@@ -341,12 +341,16 @@ func _process_chase_state(delta: float, can_see_player: bool) -> void:
 		current_speed = 42.0
 		if screamer_charge_timer <= 0.0:
 			is_screamer_charging = false
-			chase_speed = base_chase_speed + 1.2
+			_end_screamer_charge()
 	else:
 		current_speed = chase_speed
 	
 	var to_player = player.global_position - global_position
 	var dist_to_player = Vector2(to_player.x, to_player.z).length()
+
+	# Si estaba cargando a toda velocidad y ya alcanzo al jugador, volver a velocidad normal
+	if is_screamer_charging and dist_to_player <= attack_range + 0.6:
+		_end_screamer_charge()
 
 	if can_see_player:
 		last_known_player_pos = player.global_position
@@ -628,9 +632,8 @@ func play_ruler_slam_animation() -> void:
 func start_screamer_charge() -> void:
 	is_screamer_ambush = false
 	is_screamer_charging = true
-	screamer_charge_timer = 1.0
+	screamer_charge_timer = 1.2
 	current_state = State.CHASE
-	chase_speed = 42.0
 	current_speed = 42.0
 	stuck_timer = 0.0
 	attack_timer = 0.1
@@ -645,6 +648,17 @@ func start_screamer_charge() -> void:
 			velocity.x = dir_p.x * 42.0
 			velocity.z = dir_p.z * 42.0
 
+func _end_screamer_charge() -> void:
+	is_screamer_charging = false
+	screamer_charge_timer = 0.0
+	chase_speed = base_chase_speed + (speed_boost_count * 0.85)
+	current_speed = chase_speed
+	var horiz_vel = Vector2(velocity.x, velocity.z)
+	if horiz_vel.length() > chase_speed:
+		var clamped = horiz_vel.normalized() * chase_speed
+		velocity.x = clamped.x
+		velocity.z = clamped.y
+
 func release_screamer_ambush() -> void:
 	is_screamer_ambush = false
 	stuck_timer = 0.0
@@ -655,7 +669,8 @@ func release_screamer_ambush() -> void:
 		_enter_search_state()
 
 func _start_attack() -> void:
-	is_screamer_charging = false
+	if is_screamer_charging:
+		_end_screamer_charge()
 	current_state = State.ATTACK
 	is_attacking = true
 	attack_anim_time = 0.0
