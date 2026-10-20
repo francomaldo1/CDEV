@@ -17,6 +17,7 @@ static var _cached_prof_step: Array[AudioStreamWAV] = []
 static var _player_walk_idx: int = 0
 static var _player_sprint_idx: int = 0
 static var _prof_step_idx: int = 0
+static var _cached_heartbeat_stream: AudioStream = null
 static var _cached_heartbeat: AudioStreamWAV = null
 static var _cached_creak: AudioStreamWAV = null
 
@@ -37,7 +38,7 @@ static func get_screamer_stinger() -> AudioStreamWAV:
 
 static func get_screamer_jumpscare_sound() -> AudioStream:
 	if _cached_screamer_mp3 == null:
-		var mp3_path = "res://audio/sfx/screamer_jumpscare_66896.mp3"
+		var mp3_path = "res://audio/sfx/jumpscare_sound_effect.mp3"
 		if ResourceLoader.exists(mp3_path):
 			_cached_screamer_mp3 = load(mp3_path)
 	if _cached_screamer_mp3 != null:
@@ -119,7 +120,15 @@ static func _ensure_footsteps_loaded() -> void:
 			for i in range(3):
 				_cached_prof_step.append(_generate_realistic_prof_step(i))
 
-static func get_heartbeat_sound() -> AudioStreamWAV:
+static func get_heartbeat_sound() -> AudioStream:
+	if _cached_heartbeat_stream == null:
+		var mp3_path = "res://audio/sfx/heartbeat_sound_effect.mp3"
+		if ResourceLoader.exists(mp3_path):
+			_cached_heartbeat_stream = load(mp3_path)
+			if _cached_heartbeat_stream is AudioStreamMP3:
+				(_cached_heartbeat_stream as AudioStreamMP3).loop = true
+	if _cached_heartbeat_stream != null:
+		return _cached_heartbeat_stream
 	if _cached_heartbeat == null:
 		_cached_heartbeat = _generate_heartbeat()
 	return _cached_heartbeat

@@ -151,23 +151,14 @@ func _execute_fuse_screamer_sequence(hud: Node) -> void:
 		var look_target = p_pos + Vector3(0, 1.4, 0)
 		prof.trigger_screamer_ambush(door_ambush_pos, look_target)
 		
-	# 5. GOLPE SECO DE MADERA CONTRA EL MARCO DE LA PUERTA EN LA OSCURIDAD (T = 0.60s)
+	# 5. ANIMACION DEL PROFESOR EN LA PUERTA EN LA OSCURIDAD (T = 0.60s)
 	await get_tree().create_timer(0.42).timeout
-	
-	var slam_player = AudioStreamPlayer3D.new()
-	slam_player.stream = HorrorAudio.get_wood_slam_sound()
-	slam_player.position = door_ambush_pos + Vector3(0, 1.2, 0)
-	slam_player.volume_db = 8.0
-	slam_player.unit_size = 14.0
-	get_tree().root.add_child(slam_player)
-	slam_player.play()
-	slam_player.finished.connect(slam_player.queue_free)
 	
 	if is_instance_valid(prof):
 		prof.play_ruler_slam_animation()
 		
 	if is_instance_valid(player) and player.has_method("shake_camera"):
-		player.shake_camera(0.55, 0.25)
+		player.shake_camera(0.45, 0.2)
 		
 	# 6. GIRO DRAMÁTICO DE CÁMARA HACIA LA PUERTA (T = 0.75s)
 	# La cámara del jugador gira 180° hacia el pasillo central apuntando directamente a la puerta
@@ -195,13 +186,7 @@ func _execute_fuse_screamer_sequence(hud: Node) -> void:
 	# Encender las luces del edificio (la luz del pasillo recorta al profesor parado en la puerta)
 	power_restored.emit()
 	
-	# Screamer stinger orquestal
-	var stinger = AudioStreamPlayer.new()
-	stinger.stream = HorrorAudio.get_screamer_stinger()
-	stinger.volume_db = 3.0
-	get_tree().root.add_child(stinger)
-	stinger.play()
-	stinger.finished.connect(stinger.queue_free)
+# Stinger removido - solo jumpscare al cargar
 	
 	if is_instance_valid(player) and player.has_method("shake_camera"):
 		player.shake_camera(0.95, 0.7)
@@ -238,6 +223,9 @@ func _execute_fuse_screamer_sequence(hud: Node) -> void:
 			prof.start_screamer_charge()
 		else:
 			prof.release_screamer_ambush()
+			
+	if is_instance_valid(player) and player.has_method("trigger_post_screamer_heartbeat"):
+		player.trigger_post_screamer_heartbeat(25.0)
 		
 	hud.show_temporary_alert("⚡ ¡¡CORRE!! ¡¡ESQUÍVALO POR LAS MESADAS!!", Color(1.0, 0.1, 0.1))
 	

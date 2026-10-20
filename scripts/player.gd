@@ -24,6 +24,7 @@ var look_tween: Tween = null
 var footstep_player: AudioStreamPlayer = null
 var heartbeat_player: AudioStreamPlayer = null
 var heartbeat_timer: float = 0.0
+var post_screamer_heartbeat_timer: float = 0.0
 
 func _ready() -> void:
 	add_to_group("player")
@@ -189,15 +190,15 @@ func _physics_process(delta: float) -> void:
 	var was_on_floor := is_on_floor()
 	move_and_slide()
 
-	# Subir escalones automáticamente (Step-up hasta 35cm)
+	# Subir pequeños bordes o cordones automáticamente (Step-up suave hasta 20cm)
 	if was_on_floor and is_on_wall() and direction != Vector3.ZERO:
-		var step_h: float = 0.35
+		var step_h: float = 0.20
 		var step_transform: Transform3D = global_transform
 		step_transform.origin.y += step_h
 		if not test_move(global_transform, Vector3(0, step_h, 0)):
-			var fwd: Vector3 = direction.normalized() * (current_speed * delta + 0.1)
+			var fwd: Vector3 = direction.normalized() * (current_speed * delta + 0.05)
 			if not test_move(step_transform, fwd):
-				global_position = pre_pos + Vector3(0, step_h, 0)
+				global_position = pre_pos + Vector3(0, step_h * 0.5, 0)
 				move_and_slide()
 
 	# Head Bobbing y pasos
@@ -217,6 +218,10 @@ func _setup_audio_players() -> void:
 	heartbeat_player.name = "HeartbeatPlayer"
 	heartbeat_player.volume_db = -8.0
 	heartbeat_player.bus = &"Master"
+	var hb_stream = HorrorAudio.get_heartbeat_sound()
+	if hb_stream is AudioStreamMP3:
+		(hb_stream as AudioStreamMP3).loop = true
+	heartbeat_player.stream = hb_stream
 	add_child(heartbeat_player)
 
 func _apply_head_bob_and_footsteps(delta: float, is_sprinting: bool) -> void:
@@ -252,27 +257,40 @@ func _play_footstep(is_sprint: bool) -> void:
 	footstep_player.pitch_scale = randf_range(0.97, 1.03)
 	footstep_player.play()
 
+func trigger_post_screamer_heartbeat(duration: float = 25.0) -> void:
+	post_screamer_heartbeat_timer = maxf(post_screamer_heartbeat_timer, duration)
+	if heartbeat_player and not heartbeat_player.playing:
+		heartbeat_player.volume_db = -6.0
+		heartbeat_player.play()
+
 func _update_heartbeat(delta: float) -> void:
 	var prof = get_tree().root.find_child("Profesor", true, false)
-	if not is_instance_valid(prof):
-		return
+	var dist: float = 999.0
+	var is_chasing: bool = false
+	if is_instance_valid(prof):
+		dist = global_position.distance_to(prof.global_position)
+		is_chasing = (prof.current_state == 1) # State.CHASE
 		
-	var dist = global_position.distance_to(prof.global_position)
-	var is_chasing = (prof.current_state == 1) # State.CHASE
-	
-	# Latidos cardíacos únicamente cuando el profesor está cerca y acechando/persiguiendo
-	if (is_chasing and dist < 14.0) or dist < 6.5:
-		var danger_factor = clampf(1.0 - (dist / 14.0), 0.2, 1.0)
-		var beat_interval = lerpf(1.15, 0.45, danger_factor)
+	if post_screamer_heartbeat_timer > 0.0:
+		post_screamer_heartbeat_timer -= delta
 		
-		heartbeat_timer += delta
-		if heartbeat_timer >= beat_interval:
-			heartbeat_timer = 0.0
-			if heartbeat_player:
-				heartbeat_player.stream = HorrorAudio.get_heartbeat_sound()
-				heartbeat_player.volume_db = lerpf(-12.0, -2.0, danger_factor)
-				heartbeat_player.pitch_scale = lerpf(0.92, 1.15, danger_factor)
-				heartbeat_player.play()
+	var in_danger = (is_chasing and dist < 16.0) or dist < 8.0 or post_screamer_heartbeat_timer > 0.0
+	if in_danger:
+		if heartbeat_player and not heartbeat_player.playing:
+			heartbeat_player.volume_db = -8.0
+			heartbeat_player.play()
+		var danger_factor = 0.5
+		if post_screamer_heartbeat_timer > 0.0:
+			danger_factor = maxf(danger_factor, clampf(post_screamer_heartbeat_timer / 15.0, 0.5, 1.0))
+		if dist < 16.0:
+			var prox_factor = clampf(1.0 - (dist / 16.0), 0.35, 1.0)
+			danger_factor = maxf(danger_factor, prox_factor)
+		var target_vol = lerpf(-15.0, -4.0, danger_factor)
+		if heartbeat_player:
+			heartbeat_player.volume_db = lerpf(heartbeat_player.volume_db, target_vol, delta * 3.0)
 	else:
-		heartbeat_timer = 0.0
+		if heartbeat_player and heartbeat_player.playing:
+			heartbeat_player.volume_db = lerpf(heartbeat_player.volume_db, -45.0, delta * 2.0)
+			if heartbeat_player.volume_db <= -40.0:
+				heartbeat_player.stop()
 

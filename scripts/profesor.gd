@@ -763,3 +763,5 @@ func _cut_screamer_audio() -> void:
 	if root_sc and is_instance_valid(root_sc) and root_sc is AudioStreamPlayer:
 		root_sc.stop()
 		root_sc.queue_free()
+	if is_instance_valid(player) and player.has_method("trigger_post_screamer_heartbeat"):
+		player.trigger_post_screamer_heartbeat(25.0)
