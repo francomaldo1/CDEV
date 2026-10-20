@@ -7,6 +7,7 @@ extends RefCounted
 static var _cached_spark: AudioStreamWAV = null
 static var _cached_slam: AudioStreamWAV = null
 static var _cached_stinger: AudioStreamWAV = null
+static var _cached_screamer_mp3: AudioStream = null
 static var _cached_ambient_file: AudioStreamWAV = null
 static var _cached_drone_normal: AudioStreamWAV = null
 static var _cached_drone_blackout: AudioStreamWAV = null
@@ -33,6 +34,15 @@ static func get_screamer_stinger() -> AudioStreamWAV:
 	if _cached_stinger == null:
 		_cached_stinger = _generate_stinger()
 	return _cached_stinger
+
+static func get_screamer_jumpscare_sound() -> AudioStream:
+	if _cached_screamer_mp3 == null:
+		var mp3_path = "res://audio/sfx/screamer_jumpscare_66896.mp3"
+		if ResourceLoader.exists(mp3_path):
+			_cached_screamer_mp3 = load(mp3_path)
+	if _cached_screamer_mp3 != null:
+		return _cached_screamer_mp3
+	return get_screamer_stinger()
 
 static func get_ambient_drone(is_blackout: bool = false) -> AudioStreamWAV:
 	if _cached_ambient_file == null:

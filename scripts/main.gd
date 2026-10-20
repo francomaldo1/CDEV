@@ -56,6 +56,7 @@ func _ready() -> void:
 	
 	# Programar el corte de luz
 	_start_blackout_timer()
+	_init_building_lights()
 
 func _setup_ambient_audio() -> void:
 	ambient_drone_player = AudioStreamPlayer.new()
@@ -78,6 +79,10 @@ func _setup_ambient_audio() -> void:
 	next_spook_delay = randf_range(10.0, 20.0)
 
 var turned_off_lights: Array[Light3D] = []
+var building_lights_base_energy: Dictionary = {}
+var active_light_flickers: Dictionary = {}
+var next_light_flicker_delay: float = 2.5
+var light_flicker_timer: float = 0.0
 
 func _spawn_exit_door() -> void:
 	var puerta = puerta_salida_scene.instantiate()
@@ -98,7 +103,7 @@ func _spawn_tablero_electronica() -> void:
 	luz_tablero.name = "LuzParedTablero"
 	luz_tablero.position = Vector3(-17.4, 2.5, 0.0)
 	luz_tablero.light_color = Color(1.0, 0.95, 0.8)
-	luz_tablero.light_energy = 0.8
+	luz_tablero.light_energy = 0.45
 	luz_tablero.omni_range = 5.0
 	luz_tablero.shadow_enabled = true
 	luz_tablero.add_to_group("building_lights")
@@ -109,7 +114,7 @@ func _spawn_tablero_electronica() -> void:
 	luz_techo_lab.name = "LuzTechoLabElectronica"
 	luz_techo_lab.position = Vector3(-25.0, 3.6, 0.0)
 	luz_techo_lab.light_color = Color(0.9, 0.95, 1.0)
-	luz_techo_lab.light_energy = 1.0
+	luz_techo_lab.light_energy = 0.50
 	luz_techo_lab.omni_range = 11.0
 	luz_techo_lab.shadow_enabled = true
 	luz_techo_lab.add_to_group("building_lights")
@@ -234,10 +239,12 @@ func _on_power_restored() -> void:
 	if moon_light:
 		moon_light.light_energy = original_moon_energy
 		
-	# Reencender todas las luces
+	# Reencender todas las luces restaurando su energía tenue
 	for l in turned_off_lights:
 		if is_instance_valid(l):
 			l.visible = true
+			if building_lights_base_energy.has(l):
+				l.light_energy = building_lights_base_energy[l]
 	turned_off_lights.clear()
 			
 	if hud and hud.has_method("show_temporary_alert"):
@@ -246,6 +253,8 @@ func _on_power_restored() -> void:
 	print(">>> ¡ENERGÍA RESTABLECIDA EN TODA LA FACULTAD!")
 
 func _process(delta: float) -> void:
+	_process_light_flicker(delta)
+	
 	# Crujidos y sonidos espeluznantes periódicos a lo lejos en el edificio
 	spook_interval_timer += delta
 	if spook_interval_timer >= next_spook_delay:
@@ -271,3 +280,87 @@ func _play_distant_spook() -> void:
 	spook_audio_3d.volume_db = randf_range(-6.0, -1.0)
 	spook_audio_3d.play()
 
+
+
+func _init_building_lights() -> void:
+	building_lights_base_energy.clear()
+	for l in _collect_all_building_lights():
+		if is_instance_valid(l):
+			building_lights_base_energy[l] = l.light_energy
+
+func _process_light_flicker(delta: float) -> void:
+	if is_blackout:
+		active_light_flickers.clear()
+		return
+		
+	# 1. Programar nuevo evento de parpadeo aleatorio
+	light_flicker_timer += delta
+	if light_flicker_timer >= next_light_flicker_delay:
+		light_flicker_timer = 0.0
+		next_light_flicker_delay = randf_range(2.0, 4.5)
+		_trigger_random_light_flicker()
+		
+	# 2. Animar las luces parpadeando activamente
+	var finished_lights: Array = []
+	for l in active_light_flickers.keys():
+		if not is_instance_valid(l) or not l.visible:
+			finished_lights.append(l)
+			continue
+			
+		var data = active_light_flickers[l]
+		data["elapsed"] += delta
+		var base_e: float = data["base"]
+		
+		if data["elapsed"] >= data["duration"]:
+			l.light_energy = base_e
+			finished_lights.append(l)
+		else:
+			# Efecto de titileo con micro-caídas y destellos
+			var r = randf()
+			if r < 0.35:
+				l.light_energy = base_e * randf_range(0.0, 0.15)
+			elif r < 0.70:
+				l.light_energy = base_e * randf_range(0.3, 0.6)
+			elif r < 0.88:
+				l.light_energy = base_e * randf_range(0.9, 1.3)
+			else:
+				l.light_energy = 0.0
+				
+	for l in finished_lights:
+		active_light_flickers.erase(l)
+
+func _trigger_random_light_flicker() -> void:
+	if building_lights_base_energy.is_empty():
+		return
+		
+	var player_node = find_child("Player", true, false)
+	var player_pos = player_node.global_position if is_instance_valid(player_node) else Vector3.ZERO
+	
+	var near_lights: Array = []
+	var other_lights: Array = []
+	
+	for l in building_lights_base_energy.keys():
+		if is_instance_valid(l) and l.visible and not active_light_flickers.has(l):
+			if is_instance_valid(player_node) and l.global_position.distance_to(player_pos) < 32.0:
+				near_lights.append(l)
+			else:
+				other_lights.append(l)
+				
+	# 75% probabilidad de titilar cerca del jugador para máxima inmersión
+	var pool = near_lights if (not near_lights.is_empty() and randf() < 0.75) else other_lights
+	if pool.is_empty():
+		pool = near_lights if not near_lights.is_empty() else other_lights
+		
+	if pool.is_empty():
+		return
+		
+	pool.shuffle()
+	var count = 1 if randf() < 0.65 else 2
+	for i in range(min(count, pool.size())):
+		var light_to_flicker = pool[i]
+		var base_e = building_lights_base_energy.get(light_to_flicker, light_to_flicker.light_energy)
+		active_light_flickers[light_to_flicker] = {
+			"elapsed": 0.0,
+			"duration": randf_range(0.35, 1.25),
+			"base": base_e
+		}

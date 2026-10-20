@@ -14,7 +14,7 @@ background_mode = 1
 background_color = Color(0.01, 0.01, 0.025, 1)
 ambient_light_source = 2
 ambient_light_color = Color(0.04, 0.04, 0.06, 1)
-ambient_light_energy = 0.4
+ambient_light_energy = 0.22
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.008
 
@@ -39,7 +39,7 @@ environment = SubResource("Environment_eb6dy")
 [node name="MoonLight" type="DirectionalLight3D" parent="." unique_id=202207671]
 transform = Transform3D(0.90630776, -0.36599818, 0.21130912, 0, 0.49999997, 0.86602545, -0.42261827, -0.7848856, 0.45315385, 0, 0, 0)
 light_color = Color(0.35, 0.45, 0.65, 1)
-light_energy = 0.35
+light_energy = 0.20
 shadow_enabled = true
 
 [node name="Profesor" type="CharacterBody3D" parent="." instance=ExtResource("8_prof0")]
