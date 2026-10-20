@@ -23,6 +23,8 @@ var look_tween: Tween = null
 
 var footstep_player: AudioStreamPlayer = null
 var heartbeat_player: AudioStreamPlayer = null
+var jumpscare_player: AudioStreamPlayer = null
+var jumpscare_play_time: float = 0.0
 var heartbeat_timer: float = 0.0
 var post_screamer_heartbeat_timer: float = 0.0
 
@@ -201,6 +203,9 @@ func _physics_process(delta: float) -> void:
 				global_position = pre_pos + Vector3(0, step_h * 0.5, 0)
 				move_and_slide()
 
+	if jumpscare_player and jumpscare_player.playing:
+		jumpscare_play_time += delta
+
 	# Head Bobbing y pasos
 	_apply_head_bob_and_footsteps(delta, is_sprinting)
 	
@@ -223,6 +228,13 @@ func _setup_audio_players() -> void:
 		(hb_stream as AudioStreamMP3).loop = true
 	heartbeat_player.stream = hb_stream
 	add_child(heartbeat_player)
+
+	jumpscare_player = AudioStreamPlayer.new()
+	jumpscare_player.name = "JumpscarePlayer"
+	jumpscare_player.stream = HorrorAudio.get_screamer_jumpscare_sound()
+	jumpscare_player.volume_db = 8.0
+	jumpscare_player.bus = &"Master"
+	add_child(jumpscare_player)
 
 func _apply_head_bob_and_footsteps(delta: float, is_sprinting: bool) -> void:
 	if not camera:
@@ -256,6 +268,27 @@ func _play_footstep(is_sprint: bool) -> void:
 	footstep_player.volume_db = -14.0 + randf_range(-1.0, 1.0) if not is_sprint else -11.0 + randf_range(-1.0, 1.0)
 	footstep_player.pitch_scale = randf_range(0.97, 1.03)
 	footstep_player.play()
+
+func play_jumpscare_screamer() -> void:
+	jumpscare_play_time = 0.0
+	if jumpscare_player:
+		jumpscare_player.stop()
+		jumpscare_player.volume_db = 8.0
+		jumpscare_player.play()
+
+func fade_jumpscare_screamer(fade_time: float = 1.0) -> void:
+	if jumpscare_play_time < 3.0:
+		var wait_time = 3.0 - jumpscare_play_time
+		var tw = create_tween()
+		tw.tween_interval(wait_time)
+		if jumpscare_player:
+			tw.tween_property(jumpscare_player, "volume_db", -40.0, fade_time)
+			tw.tween_callback(jumpscare_player.stop)
+	else:
+		if jumpscare_player and jumpscare_player.playing:
+			var tw = create_tween()
+			tw.tween_property(jumpscare_player, "volume_db", -40.0, fade_time)
+			tw.tween_callback(jumpscare_player.stop)
 
 func trigger_post_screamer_heartbeat(duration: float = 25.0) -> void:
 	post_screamer_heartbeat_timer = maxf(post_screamer_heartbeat_timer, duration)

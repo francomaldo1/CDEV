@@ -200,19 +200,8 @@ func _execute_fuse_screamer_sequence(hud: Node) -> void:
 	await get_tree().create_timer(1.4).timeout
 	
 	# Sonido screamer mp3 cuando el profesor se acerca corriendo a nosotros
-	var jumpscare = AudioStreamPlayer.new()
-	jumpscare.name = "ScreamerJumpscareAudio"
-	jumpscare.stream = HorrorAudio.get_screamer_jumpscare_sound()
-	jumpscare.volume_db = 5.0
-	jumpscare.bus = &"Master"
-	jumpscare.add_to_group("screamer_audio")
-	get_tree().root.add_child(jumpscare)
-	jumpscare.play()
-	
-	var tw_sc = get_tree().create_tween()
-	tw_sc.tween_interval(4.5)
-	tw_sc.tween_property(jumpscare, "volume_db", -40.0, 1.5)
-	tw_sc.tween_callback(jumpscare.queue_free)
+	if is_instance_valid(player) and player.has_method("play_jumpscare_screamer"):
+		player.play_jumpscare_screamer()
 	
 	if is_instance_valid(player) and player.has_method("shake_camera"):
 		player.shake_camera(1.3, 0.9)
