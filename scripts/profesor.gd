@@ -53,6 +53,8 @@ var stuck_timer: float = 0.0
 var prev_pos: Vector3 = Vector3.ZERO
 var pos_sample_timer: float = 0.0
 var is_screamer_ambush: bool = false
+var is_screamer_charging: bool = false
+var screamer_charge_timer: float = 0.0
 
 ## Puntos de patrullaje por toda la facultad (3 pisos con transiciones de escalera)
 ## PB = Y 0.2 | P1 = Y 4.7 | P2 = Y 9.2
@@ -334,7 +336,14 @@ func _process_chase_state(delta: float, can_see_player: bool) -> void:
 		move_and_slide()
 		return
 
-	current_speed = chase_speed
+	if is_screamer_charging:
+		screamer_charge_timer -= delta
+		current_speed = 22.0
+		if screamer_charge_timer <= 0.0:
+			is_screamer_charging = false
+			chase_speed = base_chase_speed + 1.2
+	else:
+		current_speed = chase_speed
 	
 	var to_player = player.global_position - global_position
 	var dist_to_player = Vector2(to_player.x, to_player.z).length()
@@ -613,6 +622,22 @@ func play_ruler_slam_animation() -> void:
 	# Volver a levantar amenazante
 	tw.tween_property(brazo_der, "rotation:x", deg_to_rad(-120.0), 0.22)
 	tw.parallel().tween_property(regla, "rotation:x", deg_to_rad(-40.0), 0.22)
+
+func start_screamer_charge() -> void:
+	is_screamer_ambush = false
+	is_screamer_charging = true
+	screamer_charge_timer = 2.0
+	current_state = State.CHASE
+	chase_speed = 22.0
+	stuck_timer = 0.0
+	attack_timer = 0.25
+	_say("¡¡NO HAY SALVACIÓN, DIRECTO A MARZO!!", Color(1.0, 0.0, 0.0))
+	if is_instance_valid(player):
+		last_known_player_pos = player.global_position
+		var to_p = player.global_position - global_position
+		to_p.y = 0.0
+		if to_p.length() > 0.1:
+			rotation.y = atan2(to_p.x, to_p.z)
 
 func release_screamer_ambush() -> void:
 	is_screamer_ambush = false

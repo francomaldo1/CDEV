@@ -207,13 +207,23 @@ func _execute_fuse_screamer_sequence(hud: Node) -> void:
 		player.shake_camera(0.95, 0.7)
 		
 	if is_instance_valid(prof):
-		prof._say("¡¡HORARIO DE CONSULTA FINALIZADO, ALUMNO!! ¡¡A MARZO DIRECTO!!", Color(1.0, 0.0, 0.0))
-		prof.release_screamer_ambush()
+		prof._say("¡¡HORARIO DE CONSULTA FINALIZADO, ALUMNO!!", Color(1.0, 0.0, 0.0))
 		
-	hud.show_temporary_alert("⚡ ¡¡EL PROFESOR ESTÁ BLOQUEANDO LA PUERTA!! ¡¡BUSCA CÓMO ESCAPAR!!", Color(1.0, 0.1, 0.1))
+	hud.show_temporary_alert("⚡ ¡¡EL PROFESOR ESTÁ EN LA PUERTA!!", Color(1.0, 0.1, 0.1))
 	
-	# Liberar el movimiento del jugador para escapar y esquivarlo por las mesadas
-	await get_tree().create_timer(0.25).timeout
+	# Bloqueo de cámara fijo en el profesor durante 1.4 segundos de tensión pura
+	await get_tree().create_timer(1.4).timeout
+	
+	# El profesor sale corriendo rapidísimo hacia nosotros (casi instantáneo)
+	if is_instance_valid(prof):
+		if prof.has_method("start_screamer_charge"):
+			prof.start_screamer_charge()
+		else:
+			prof.release_screamer_ambush()
+		
+	hud.show_temporary_alert("⚡ ¡¡CORRE!! ¡¡ESQUÍVALO POR LAS MESADAS!!", Color(1.0, 0.1, 0.1))
+	
+	# Liberar el movimiento del jugador justo en el instante que arranca la embestida
 	if is_instance_valid(player) and player.has_method("set_frozen"):
 		player.set_frozen(false)
 		

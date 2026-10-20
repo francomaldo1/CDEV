@@ -1,8 +1,11 @@
-[gd_resource type="StandardMaterial3D" format=3]
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3]
+
+[ext_resource type="Texture2D" path="res://textures/tex_wood_pine_panel.png" id="1_wood"]
 
 [resource]
 resource_name = "RevestimientoMaderaPasillo"
-albedo_color = Color(0.68, 0.42, 0.22, 1.0)
-roughness = 0.4
-uv1_scale = Vector3(1, 1, 1)
+albedo_color = Color(1.0, 1.0, 1.0, 1.0)
+albedo_texture = ExtResource("1_wood")
+roughness = 0.38
+uv1_scale = Vector3(1.0, 1.0, 1.0)
 uv1_triplanar = true

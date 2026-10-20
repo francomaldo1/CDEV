@@ -467,10 +467,10 @@ func _patio_elementos(r: Node):
 	# Balcones / Galerías con baranda en pisos 1 y 2
 	for p_i in [1, 2]:
 		var ly = p_i * H
-		_caja(pt, r, "GaleriaOeste_%d" % p_i, Vector3(-18.5, ly, 0.5), Vector3(3.0, 0.2, 49.0), mc)
-		_caja(pt, r, "GaleriaEste_%d" % p_i, Vector3(18.5, ly, 0.5), Vector3(3.0, 0.2, 49.0), mc)
-		_caja(pt, r, "GaleriaNorte_%d" % p_i, Vector3(0.0, ly, -22.5), Vector3(34.0, 0.2, 3.0), mc)
-		_caja(pt, r, "GaleriaSur_%d" % p_i, Vector3(0.0, ly, 23.5), Vector3(34.0, 0.2, 3.0), mc)
+		_caja(pt, r, "GaleriaOeste_%d" % p_i, Vector3(-18.5, ly, 0.5), Vector3(3.0, 0.2, 49.0), mp)
+		_caja(pt, r, "GaleriaEste_%d" % p_i, Vector3(18.5, ly, 0.5), Vector3(3.0, 0.2, 49.0), mp)
+		_caja(pt, r, "GaleriaNorte_%d" % p_i, Vector3(0.0, ly, -22.5), Vector3(34.0, 0.2, 3.0), mp)
+		_caja(pt, r, "GaleriaSur_%d" % p_i, Vector3(0.0, ly, 23.5), Vector3(34.0, 0.2, 3.0), mp)
 
 		# Barandas de protección
 		_caja(pt, r, "BarandaO_%d" % p_i, Vector3(-17.1, ly + 0.5, 0.5), Vector3(0.1, 1.0, 49.0), mw)
