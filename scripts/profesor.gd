@@ -338,7 +338,7 @@ func _process_chase_state(delta: float, can_see_player: bool) -> void:
 
 	if is_screamer_charging:
 		screamer_charge_timer -= delta
-		current_speed = 22.0
+		current_speed = 42.0
 		if screamer_charge_timer <= 0.0:
 			is_screamer_charging = false
 			chase_speed = base_chase_speed + 1.2
@@ -366,7 +366,8 @@ func _process_chase_state(delta: float, can_see_player: bool) -> void:
 	to_target.y = 0.0
 	var move_dir = to_target.normalized()
 	
-	_move_towards(delta, move_dir, current_speed, 7.0)
+	var rot_spd = 35.0 if is_screamer_charging else 7.0
+	_move_towards(delta, move_dir, current_speed, rot_spd)
 
 func _process_search_state(delta: float, can_see_player: bool) -> void:
 	if can_see_player:
@@ -409,8 +410,9 @@ func _move_towards(delta: float, dir: Vector3, speed_to_use: float, rot_speed: f
 		var target_rot_y = atan2(move_vec.x, move_vec.z)
 		rotation.y = lerp_angle(rotation.y, target_rot_y, rot_speed * delta)
 		
-		velocity.x = move_toward(velocity.x, move_vec.x * speed_to_use, 12.0 * delta)
-		velocity.z = move_toward(velocity.z, move_vec.z * speed_to_use, 12.0 * delta)
+		var accel = 140.0 if is_screamer_charging else 12.0
+		velocity.x = move_toward(velocity.x, move_vec.x * speed_to_use, accel * delta)
+		velocity.z = move_toward(velocity.z, move_vec.z * speed_to_use, accel * delta)
 	else:
 		velocity.x = move_toward(velocity.x, 0.0, 10.0 * delta)
 		velocity.z = move_toward(velocity.z, 0.0, 10.0 * delta)
@@ -626,18 +628,22 @@ func play_ruler_slam_animation() -> void:
 func start_screamer_charge() -> void:
 	is_screamer_ambush = false
 	is_screamer_charging = true
-	screamer_charge_timer = 2.0
+	screamer_charge_timer = 1.0
 	current_state = State.CHASE
-	chase_speed = 22.0
+	chase_speed = 42.0
+	current_speed = 42.0
 	stuck_timer = 0.0
-	attack_timer = 0.25
+	attack_timer = 0.1
 	_say("¡¡NO HAY SALVACIÓN, DIRECTO A MARZO!!", Color(1.0, 0.0, 0.0))
 	if is_instance_valid(player):
 		last_known_player_pos = player.global_position
 		var to_p = player.global_position - global_position
 		to_p.y = 0.0
 		if to_p.length() > 0.1:
-			rotation.y = atan2(to_p.x, to_p.z)
+			var dir_p = to_p.normalized()
+			rotation.y = atan2(dir_p.x, dir_p.z)
+			velocity.x = dir_p.x * 42.0
+			velocity.z = dir_p.z * 42.0
 
 func release_screamer_ambush() -> void:
 	is_screamer_ambush = false
@@ -649,6 +655,7 @@ func release_screamer_ambush() -> void:
 		_enter_search_state()
 
 func _start_attack() -> void:
+	is_screamer_charging = false
 	current_state = State.ATTACK
 	is_attacking = true
 	attack_anim_time = 0.0
