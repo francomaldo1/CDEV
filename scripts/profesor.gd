@@ -174,6 +174,7 @@ var phrases_enraged: Array[String] = [
 var phrase_timer: float = 0.0
 var step_audio: AudioStreamPlayer3D = null
 var step_phase: float = 0.0
+var last_chase_screamer_time: float = -999.0
 
 func _ready() -> void:
 	add_to_group("enemies")
@@ -501,6 +502,12 @@ func _enter_chase_state() -> void:
 		ojos_luz.light_energy = 1.6
 		
 	_say(phrases_chase[randi() % phrases_chase.size()], Color(1.0, 0.2, 0.2))
+	
+	var now = Time.get_ticks_msec() / 1000.0
+	if now - last_chase_screamer_time > 15.0:
+		last_chase_screamer_time = now
+		if is_instance_valid(player) and player.has_method("play_jumpscare_screamer"):
+			player.play_jumpscare_screamer()
 
 func _enter_search_state() -> void:
 	current_state = State.SEARCH
@@ -518,9 +525,7 @@ func boost_speed() -> void:
 	chase_speed += 0.85
 	patrol_speed += 0.45
 	
-	current_state = State.CHASE
-	if is_instance_valid(player):
-		last_known_player_pos = player.global_position
+	_enter_chase_state()
 	
 	if ojos_luz:
 		ojos_luz.light_color = Color(1.0, 0.0, 0.0)
@@ -637,6 +642,7 @@ func start_screamer_charge() -> void:
 	current_speed = 40.0
 	stuck_timer = 0.0
 	attack_timer = 0.15
+	last_chase_screamer_time = Time.get_ticks_msec() / 1000.0
 	_say("¡¡NO HAY SALVACIÓN, DIRECTO A MARZO!!", Color(1.0, 0.0, 0.0))
 	if is_instance_valid(player) and player.has_method("play_jumpscare_screamer"):
 		player.play_jumpscare_screamer()
@@ -745,8 +751,8 @@ func _on_player_noise(volume: float) -> void:
 		return
 	var dist = global_position.distance_to(player.global_position)
 	if dist <= hearing_range:
+		_enter_chase_state()
 		_say("¡¿QUIÉN HACE RUIDO EN MI HORA?!", Color(1.0, 0.2, 0.2))
-		current_state = State.CHASE
 		last_known_player_pos = player.global_position
 		var to_player = player.global_position - global_position
 		rotation.y = atan2(to_player.x, to_player.z)

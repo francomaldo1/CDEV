@@ -31,13 +31,11 @@ static func get_wood_slam_sound() -> AudioStreamWAV:
 		_cached_slam = _generate_wood_slam()
 	return _cached_slam
 
-static func get_screamer_stinger() -> AudioStreamWAV:
-	if _cached_stinger == null:
-		_cached_stinger = _generate_stinger()
-	return _cached_stinger
+static func get_screamer_stinger() -> AudioStream:
+	return preload("res://audio/sfx/jumpscare_sound_effect.wav")
 
 static func get_screamer_jumpscare_sound() -> AudioStream:
-	return preload("res://audio/sfx/jumpscare_sound_effect.mp3")
+	return preload("res://audio/sfx/jumpscare_sound_effect.wav")
 
 static func get_ambient_drone(is_blackout: bool = false) -> AudioStreamWAV:
 	if _cached_ambient_file == null:

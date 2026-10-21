@@ -231,8 +231,8 @@ func _setup_audio_players() -> void:
 
 	jumpscare_player = AudioStreamPlayer.new()
 	jumpscare_player.name = "JumpscarePlayer"
-	jumpscare_player.stream = preload("res://audio/sfx/jumpscare_sound_effect.mp3")
-	jumpscare_player.volume_db = 12.0
+	jumpscare_player.stream = preload("res://audio/sfx/jumpscare_sound_effect.wav")
+	jumpscare_player.volume_db = 8.0
 	jumpscare_player.bus = &"Master"
 	add_child(jumpscare_player)
 	jumpscare_player.finished.connect(_on_jumpscare_finished)
@@ -277,7 +277,7 @@ func play_jumpscare_screamer() -> void:
 	jumpscare_play_time = 0.0
 	if jumpscare_player:
 		jumpscare_player.stop()
-		jumpscare_player.volume_db = 12.0
+		jumpscare_player.volume_db = 8.0
 		jumpscare_player.play()
 
 func stop_jumpscare_screamer(fade_time: float = 0.3) -> void:
@@ -287,7 +287,14 @@ func stop_jumpscare_screamer(fade_time: float = 0.3) -> void:
 		tw.tween_callback(jumpscare_player.stop)
 
 func fade_jumpscare_screamer(fade_time: float = 0.3) -> void:
-	stop_jumpscare_screamer(fade_time)
+	if jumpscare_play_time < 3.2:
+		var remaining = 3.2 - jumpscare_play_time
+		var tw = create_tween()
+		tw.tween_interval(remaining)
+		tw.tween_property(jumpscare_player, "volume_db", -40.0, fade_time)
+		tw.tween_callback(jumpscare_player.stop)
+	else:
+		stop_jumpscare_screamer(fade_time)
 
 func trigger_post_screamer_heartbeat(duration: float = 25.0) -> void:
 	post_screamer_heartbeat_timer = maxf(post_screamer_heartbeat_timer, duration)
