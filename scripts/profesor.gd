@@ -1,0 +1,775 @@
+extends CharacterBody3D
+class_name Profesor
+
+enum State {
+	PATROL,
+	CHASE,
+	SEARCH,
+	ATTACK
+}
+
+## Velocidades ajustables
+@export var base_patrol_speed: float = 2.4
+@export var base_chase_speed: float = 3.3 ## Ligeramente menor que el jugador (walk_speed = 4.0)
+@export var vision_range: float = 18.0 ## Metros de visión en cono
+@export var vision_angle_deg: float = 80.0 ## Apertura del cono de visión
+@export var proximity_range: float = 3.2 ## Detecta si el jugador está muy cerca en la espalda
+@export var hearing_range: float = 35.0 ## Rango para escuchar ruidos del micrófono
+@export var attack_range: float = 1.6
+@export var attack_cooldown: float = 1.3
+@export var lost_sight_timeout: float = 3.5
+
+## Estado actual
+var current_state: State = State.PATROL
+var current_speed: float = 2.4
+var chase_speed: float = 3.3
+var patrol_speed: float = 2.4
+var speed_boost_count: int = 0
+
+## Referencias al modelo
+@onready var visual_root: Node3D = $Visuals
+@onready var pierna_izq: Node3D = $Visuals/PiernaIzq
+@onready var pierna_der: Node3D = $Visuals/PiernaDer
+@onready var brazo_izq: Node3D = $Visuals/BrazoIzq
+@onready var brazo_der: Node3D = $Visuals/BrazoDer
+@onready var regla: Node3D = $Visuals/BrazoDer/ManoDer/ReglaPivot
+@onready var cabeza: Node3D = $Visuals/Torso/Cabeza
+@onready var cartel_dialogo: Label3D = $Visuals/DialogoLabel
+@onready var ojos_luz: SpotLight3D = $Visuals/Torso/Cabeza/OjosLuz
+
+var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity", 9.8)
+var player: CharacterBody3D = null
+
+var walk_anim_time: float = 0.0
+var is_attacking: bool = false
+var attack_timer: float = 0.0
+var attack_anim_time: float = 0.0
+
+var time_without_sight: float = 0.0
+var search_timer: float = 0.0
+var last_known_player_pos: Vector3 = Vector3.ZERO
+
+var stuck_timer: float = 0.0
+var prev_pos: Vector3 = Vector3.ZERO
+var pos_sample_timer: float = 0.0
+var is_screamer_ambush: bool = false
+var is_screamer_charging: bool = false
+var screamer_charge_timer: float = 0.0
+
+## Puntos de patrullaje por toda la facultad (3 pisos con transiciones de escalera)
+## PB = Y 0.2 | P1 = Y 4.7 | P2 = Y 9.2
+var patrol_waypoints: Array[Vector3] = [
+	# ========== PLANTA BAJA (Y=0.2) ==========
+	Vector3(0.0, 0.2, -18.0),     # PB: Patio Norte
+	Vector3(0.0, 0.2, -28.5),     # PB: Pasillo Norte centro
+	Vector3(-25.0, 0.2, -28.5),   # PB: Pasillo Norte frente a Aula 102
+	Vector3(-42.0, 0.2, -28.5),   # PB: Esquina Noroeste (frente a Aula 105)
+	Vector3(-42.0, 0.2, -12.0),   # PB: Pasillo Oeste (frente a Aula 106)
+	Vector3(-42.0, 0.2, 5.0),     # PB: Pasillo Oeste (frente a Aula 107)
+	Vector3(-42.0, 0.2, 20.0),    # PB: Pasillo Oeste (frente a Aula 108)
+	Vector3(-42.0, 0.2, 30.0),    # PB: Esquina Suroeste
+	Vector3(-25.0, 0.2, 30.0),    # PB: Pasillo Sur oeste
+	Vector3(0.0, 0.2, 30.0),      # PB: Pasillo Sur centro (frente a auditorio)
+	Vector3(0.0, 0.2, 22.0),      # PB: Entrada Sur al Patio
+	Vector3(0.0, 0.2, 4.0),       # PB: Patio interior frente a la fuente
+	Vector3(0.0, 0.2, -4.0),      # PB: Patio interior norte
+	Vector3(0.0, 0.2, 22.0),      # PB: Salida Patio Sur
+	Vector3(25.0, 0.2, 30.0),     # PB: Pasillo Sur este
+	Vector3(42.0, 0.2, 30.0),     # PB: Esquina Sureste
+	Vector3(42.0, 0.2, 17.0),     # PB: Pasillo Este sur (frente a Aula 115)
+	Vector3(42.0, 0.2, 0.0),      # PB: Pasillo Este centro (Cafetería PB)
+	Vector3(42.0, 0.2, -15.0),    # PB: Pasillo Este norte (frente a Aula 114)
+	Vector3(42.0, 0.2, -28.5),    # PB: Esquina Noreste
+	Vector3(25.0, 0.2, -28.5),    # PB: Pasillo Norte este (frente a Aula 104)
+	# --- Caminar hacia Torre Oeste para subir a P1 ---
+	Vector3(-42.0, 0.2, 27.5),    # PB: Acercarse a Torre Oeste
+	Vector3(-65.0, 0.2, 27.5),    # PB: Entrada escalera Torre Oeste
+	# --- Subir escalera Torre Oeste PB -> P1 ---
+	Vector3(-67.5, 1.3, 27.5),    # Escalera: tramo inferior
+	Vector3(-70.0, 2.45, 27.5),   # Escalera: descanso medio (Y = 0.2 + 2.25)
+	Vector3(-67.5, 3.6, 30.0),    # Escalera: tramo superior
+	Vector3(-65.0, 4.7, 32.5),    # P1: Salida escalera Torre Oeste
+	# ========== PISO 1 (Y=4.7) ==========
+	Vector3(-42.0, 4.7, 30.0),    # P1: Pasillo Oeste sur
+	Vector3(-42.0, 4.7, 15.0),    # P1: Pasillo Oeste centro
+	Vector3(-42.0, 4.7, 0.0),     # P1: Pasillo Oeste norte
+	Vector3(-42.0, 4.7, -15.0),   # P1: Pasillo Oeste (oficinas dept.)
+	Vector3(-42.0, 4.7, -28.5),   # P1: Esquina Noroeste
+	Vector3(-20.0, 4.7, -28.5),   # P1: Pasillo Norte oeste
+	Vector3(0.0, 4.7, -28.5),     # P1: Pasillo Norte centro
+	Vector3(20.0, 4.7, -28.5),    # P1: Pasillo Norte este
+	Vector3(42.0, 4.7, -28.5),    # P1: Esquina Noreste
+	Vector3(42.0, 4.7, -15.0),    # P1: Pasillo Este norte
+	Vector3(42.0, 4.7, 0.0),      # P1: Pasillo Este centro
+	Vector3(42.0, 4.7, 15.0),     # P1: Pasillo Este sur
+	Vector3(42.0, 4.7, 30.0),     # P1: Esquina Sureste
+	Vector3(20.0, 4.7, 30.0),     # P1: Pasillo Sur este
+	Vector3(0.0, 4.7, 30.0),      # P1: Pasillo Sur centro
+	Vector3(-20.0, 4.7, 30.0),    # P1: Pasillo Sur oeste
+	# --- Caminar hacia Torre Este para subir a P2 ---
+	Vector3(42.0, 4.7, 27.5),     # P1: Acercarse a Torre Este
+	Vector3(65.0, 4.7, 27.5),     # P1: Entrada escalera Torre Este
+	# --- Subir escalera Torre Este P1 -> P2 ---
+	Vector3(67.5, 5.8, 27.5),     # Escalera: tramo inferior
+	Vector3(70.0, 6.95, 27.5),    # Escalera: descanso medio (Y = 4.7 + 2.25)
+	Vector3(67.5, 8.1, 30.0),     # Escalera: tramo superior
+	Vector3(65.0, 9.2, 32.5),     # P2: Salida escalera Torre Este
+	# ========== PISO 2 (Y=9.2) ==========
+	Vector3(42.0, 9.2, 30.0),     # P2: Esquina Sureste
+	Vector3(42.0, 9.2, 15.0),     # P2: Pasillo Este sur
+	Vector3(42.0, 9.2, 0.0),      # P2: Pasillo Este centro (Cafetería P2)
+	Vector3(42.0, 9.2, -15.0),    # P2: Pasillo Este norte
+	Vector3(42.0, 9.2, -28.5),    # P2: Esquina Noreste
+	Vector3(20.0, 9.2, -28.5),    # P2: Pasillo Norte este (Aula 215)
+	Vector3(0.0, 9.2, -28.5),     # P2: Pasillo Norte centro (Aula 210)
+	Vector3(-20.0, 9.2, -28.5),   # P2: Pasillo Norte oeste (Aula 205)
+	Vector3(-42.0, 9.2, -28.5),   # P2: Esquina Noroeste (Aula 201)
+	Vector3(-42.0, 9.2, -15.0),   # P2: Pasillo Oeste norte
+	Vector3(-42.0, 9.2, 0.0),     # P2: Pasillo Oeste centro
+	Vector3(-42.0, 9.2, 15.0),    # P2: Pasillo Oeste sur
+	Vector3(-42.0, 9.2, 30.0),    # P2: Esquina Suroeste
+	Vector3(-20.0, 9.2, 30.0),    # P2: Pasillo Sur oeste
+	Vector3(0.0, 9.2, 30.0),      # P2: Pasillo Sur centro
+	Vector3(20.0, 9.2, 30.0),     # P2: Pasillo Sur este
+	# --- Caminar hacia Torre Norte para bajar a P1 ---
+	Vector3(39.5, 9.2, -28.5),    # P2: Acercarse a Torre Norte
+	Vector3(39.5, 9.2, -45.0),    # P2: Entrada escalera Torre Norte
+	# --- Bajar escalera Torre Norte P2 -> P1 ---
+	Vector3(39.5, 8.1, -48.5),    # Escalera: tramo superior bajando
+	Vector3(39.5, 6.95, -52.0),   # Escalera: descanso medio (Y = 9.2 - 2.25)
+	Vector3(42.0, 5.8, -48.5),    # Escalera: tramo inferior bajando
+	Vector3(44.5, 4.7, -45.0),    # P1: Salida escalera Torre Norte
+	# --- Breve pasillo P1 antes de seguir bajando ---
+	Vector3(42.0, 4.7, -28.5),    # P1: Esquina Noreste (reconectar)
+	Vector3(39.5, 4.7, -45.0),    # P1: Entrada escalera Torre Norte (para bajar a PB)
+	# --- Bajar escalera Torre Norte P1 -> PB ---
+	Vector3(39.5, 3.6, -48.5),    # Escalera: tramo superior bajando
+	Vector3(39.5, 2.45, -52.0),   # Escalera: descanso medio (Y = 4.7 - 2.25)
+	Vector3(42.0, 1.3, -48.5),    # Escalera: tramo inferior bajando
+	Vector3(44.5, 0.2, -45.0),    # PB: Salida escalera Torre Norte
+	# --- Volver al circuito PB ---
+	Vector3(42.0, 0.2, -28.5),    # PB: Esquina Noreste (reconectar al inicio)
+]
+var current_waypoint_idx: int = 0
+
+## Frases del profesor
+var phrases_patrol: Array[String] = [
+	"Mmm... ¿quién anda por los pasillos?",
+	"Horario de consulta finalizado...",
+	"El que no entregó el TP va a final...",
+	"Silencio absoluto en las aulas...",
+	"Tengo que corregir 80 parciales todavía..."
+]
+var phrases_chase: Array[String] = [
+	"¡¡DETÉNGASE AHÍ, ALUMNO!!",
+	"¡¡ENTREGUE ESE PARCIAL AHORA!!",
+	"¡¡A MARZO DIRECTO SIN DERECHO A RECUPERATORIO!!",
+	"¡¡PROHIBIDO CORRER POR EL PATIO!!"
+]
+var phrases_enraged: Array[String] = [
+	"¡¡DESAPROBADO!! ¡¡EL PARCIAL ESTÁ LLENO DE ERRORES!!",
+	"¡¡COPIARSE ES CAUSAL DE EXPULSIÓN INMEDIATA!!",
+	"¡¡NO TIENEN NIVEL PARA LA FACULTAD!!"
+]
+var phrase_timer: float = 0.0
+var step_audio: AudioStreamPlayer3D = null
+var step_phase: float = 0.0
+var last_chase_screamer_time: float = -999.0
+
+func _ready() -> void:
+	add_to_group("enemies")
+	
+	# Audio 3D espacial de pasos
+	_setup_step_audio()
+	
+	# Configuración de física para caminar suave y sin saltos
+	floor_snap_length = 0.4
+	floor_constant_speed = true
+	floor_max_angle = deg_to_rad(50.0)
+	floor_block_on_wall = false
+	
+	patrol_speed = base_patrol_speed
+	chase_speed = base_chase_speed
+	current_speed = patrol_speed
+	
+	prev_pos = global_position
+	
+	_find_player()
+	
+	var mic = get_tree().root.find_child("MicDetector", true, false)
+	if mic and mic.has_signal("noise_triggered"):
+		mic.noise_triggered.connect(_on_player_noise)
+	
+	phrase_timer = randf_range(3.0, 7.0)
+	_pick_closest_waypoint()
+
+func _pick_closest_waypoint() -> void:
+	var best_dist = 99999.0
+	for i in range(patrol_waypoints.size()):
+		var d = global_position.distance_to(patrol_waypoints[i])
+		if d < best_dist:
+			best_dist = d
+			current_waypoint_idx = i
+
+func _find_player() -> void:
+	var players = get_tree().get_nodes_in_group("player")
+	if players.size() > 0:
+		player = players[0]
+	else:
+		player = get_tree().root.find_child("Player", true, false) as CharacterBody3D
+
+func _physics_process(delta: float) -> void:
+	if not is_instance_valid(player):
+		_find_player()
+		if not is_instance_valid(player):
+			return
+
+	if not is_on_floor():
+		velocity.y -= gravity * delta
+
+	if attack_timer > 0.0:
+		attack_timer -= delta
+
+	# Comprobar visión hacia el jugador
+	var can_see = _can_see_player()
+	
+	match current_state:
+		State.PATROL:
+			_process_patrol_state(delta, can_see)
+		State.CHASE:
+			_process_chase_state(delta, can_see)
+		State.SEARCH:
+			_process_search_state(delta, can_see)
+		State.ATTACK:
+			_process_attack_state(delta)
+
+	_update_dialogue(delta)
+
+## =====================================================================
+## DETECCIÓN Y VISIÓN
+## =====================================================================
+func _can_see_player() -> bool:
+	if not is_instance_valid(player):
+		return false
+	
+	var eye_pos = global_position + Vector3(0, 1.5, 0)
+	var player_eye = player.global_position + Vector3(0, 1.3, 0)
+	var to_player = player_eye - eye_pos
+	var dist = to_player.length()
+
+	# Modificador si el jugador tiene la linterna encendida
+	var current_vision_range = vision_range
+	var flashlight = player.find_child("Flashlight", true, false) as SpotLight3D
+	if flashlight and flashlight.visible:
+		current_vision_range *= 1.45
+
+	# Proximidad inmediata (si está a menos de 3.2m detrás o a los lados)
+	if dist <= proximity_range:
+		return _has_line_of_sight(eye_pos, player_eye)
+
+	# Si está más lejos que el rango de visión, no lo ve
+	if dist > current_vision_range:
+		return false
+
+	# Cono de visión frontal:
+	# La cara del profesor está orientada hacia +Z del nodo
+	var forward = transform.basis.z.normalized()
+	var dir_to_player = to_player.normalized()
+	var angle_rad = forward.angle_to(dir_to_player)
+	var angle_deg = rad_to_deg(angle_rad)
+
+	if angle_deg > vision_angle_deg * 0.5:
+		return false
+
+	# Raycast para verificar si hay paredes intermedias
+	return _has_line_of_sight(eye_pos, player_eye)
+
+func _has_line_of_sight(from_pos: Vector3, to_pos: Vector3) -> bool:
+	var space_state = get_world_3d().direct_space_state
+	var query = PhysicsRayQueryParameters3D.create(from_pos, to_pos)
+	query.exclude = [self.get_rid()]
+	var result = space_state.intersect_ray(query)
+	
+	if result.is_empty():
+		return true
+	
+	if result.collider == player or (result.collider is Node and player.is_ancestor_of(result.collider)):
+		return true
+		
+	return false
+
+## =====================================================================
+## ESTADOS DE IA
+## =====================================================================
+func _process_patrol_state(delta: float, can_see_player: bool) -> void:
+	current_speed = patrol_speed
+	
+	if can_see_player:
+		_enter_chase_state()
+		return
+
+	var target_wp = patrol_waypoints[current_waypoint_idx]
+	var to_wp = target_wp - global_position
+	# Use full 3D distance so we can navigate stairs properly
+	var dist_wp = to_wp.length()
+
+	if dist_wp < 2.0:
+		current_waypoint_idx = (current_waypoint_idx + 1) % patrol_waypoints.size()
+		target_wp = patrol_waypoints[current_waypoint_idx]
+		to_wp = target_wp - global_position
+
+	# For horizontal movement direction, zero Y only on flat ground
+	# On stairs (large Y difference), keep Y so the professor walks upward
+	var move_dir: Vector3
+	if absf(to_wp.y) > 0.5:
+		# On stairs: use full 3D direction but normalize XZ plane movement
+		move_dir = to_wp.normalized()
+	else:
+		# On flat corridors: zero Y for stable horizontal movement
+		to_wp.y = 0.0
+		move_dir = to_wp.normalized()
+	_move_towards(delta, move_dir, current_speed, 4.0)
+
+func _process_chase_state(delta: float, can_see_player: bool) -> void:
+	if is_screamer_ambush:
+		velocity.x = 0.0
+		velocity.z = 0.0
+		move_and_slide()
+		return
+
+	if is_screamer_charging:
+		screamer_charge_timer -= delta
+		current_speed = 42.0
+		if screamer_charge_timer <= 0.0:
+			is_screamer_charging = false
+			_end_screamer_charge()
+	else:
+		current_speed = chase_speed
+	
+	var to_player = player.global_position - global_position
+	var dist_to_player = Vector2(to_player.x, to_player.z).length()
+
+	# Si estaba cargando a toda velocidad y ya alcanzo al jugador, volver a velocidad normal
+	if is_screamer_charging and dist_to_player <= attack_range + 0.6:
+		_end_screamer_charge()
+
+	if can_see_player:
+		last_known_player_pos = player.global_position
+		time_without_sight = 0.0
+	else:
+		time_without_sight += delta
+		if time_without_sight >= lost_sight_timeout:
+			_enter_search_state()
+			return
+
+	if dist_to_player <= attack_range and attack_timer <= 0.0:
+		_start_attack()
+		return
+
+	var target_dest = player.global_position if can_see_player else last_known_player_pos
+	var to_target = target_dest - global_position
+	to_target.y = 0.0
+	var move_dir = to_target.normalized()
+	
+	var rot_spd = 35.0 if is_screamer_charging else 7.0
+	_move_towards(delta, move_dir, current_speed, rot_spd)
+
+func _process_search_state(delta: float, can_see_player: bool) -> void:
+	if can_see_player:
+		_enter_chase_state()
+		return
+
+	search_timer -= delta
+	rotation.y += sin(search_timer * 3.0) * delta * 2.0
+	
+	velocity.x = move_toward(velocity.x, 0.0, 10.0 * delta)
+	velocity.z = move_toward(velocity.z, 0.0, 10.0 * delta)
+	move_and_slide()
+	_animate_walk(delta, false)
+
+	if search_timer <= 0.0:
+		current_state = State.PATROL
+		_pick_closest_waypoint()
+		_say("Debió ser el viento... Volvamos a la ronda.")
+
+func _process_attack_state(delta: float) -> void:
+	_process_attack(delta)
+	velocity.x = move_toward(velocity.x, 0.0, 12.0 * delta)
+	velocity.z = move_toward(velocity.z, 0.0, 12.0 * delta)
+	move_and_slide()
+
+## =====================================================================
+## MOVIMIENTO Y ORIENTACIÓN SUAVE
+## =====================================================================
+func _move_towards(delta: float, dir: Vector3, speed_to_use: float, rot_speed: float) -> void:
+	var move_vec = dir
+	
+	if dir.length() > 0.05:
+		# Si toca una pared, deslizarse suavemente a lo largo de ella
+		if is_on_wall():
+			var wall_n = get_wall_normal()
+			var slide = dir.slide(wall_n).normalized()
+			if slide.length() > 0.1:
+				move_vec = slide
+
+		var target_rot_y = atan2(move_vec.x, move_vec.z)
+		rotation.y = lerp_angle(rotation.y, target_rot_y, rot_speed * delta)
+		
+		var accel = 140.0 if is_screamer_charging else 12.0
+		velocity.x = move_toward(velocity.x, move_vec.x * speed_to_use, accel * delta)
+		velocity.z = move_toward(velocity.z, move_vec.z * speed_to_use, accel * delta)
+	else:
+		velocity.x = move_toward(velocity.x, 0.0, 10.0 * delta)
+		velocity.z = move_toward(velocity.z, 0.0, 10.0 * delta)
+
+	var pre_pos = global_position
+	var was_on_floor = is_on_floor()
+	move_and_slide()
+
+	# Subir pequeños desniveles (Step-up hasta 35cm)
+	if was_on_floor and is_on_wall() and dir != Vector3.ZERO:
+		var step_h: float = 0.35
+		var step_t: Transform3D = global_transform
+		step_t.origin.y += step_h
+		if not test_move(global_transform, Vector3(0, step_h, 0)):
+			var fwd: Vector3 = dir.normalized() * (speed_to_use * delta + 0.1)
+			if not test_move(step_t, fwd):
+				global_position = pre_pos + Vector3(0, step_h, 0)
+				move_and_slide()
+
+	# Detección y recuperación automática si se traba (Watchdog anti-stuck AGRESIVO)
+	pos_sample_timer += delta
+	if pos_sample_timer >= 0.4:
+		pos_sample_timer = 0.0
+		var moved_dist = global_position.distance_to(prev_pos)
+		prev_pos = global_position
+		if is_on_wall() and moved_dist < 0.2 and dir.length() > 0.1:
+			stuck_timer += 0.4
+		else:
+			stuck_timer = max(0.0, stuck_timer - 0.4)
+
+	# Si estuvo trabado contra una pared más de 0.8 segundos: empujar lejos
+	if stuck_timer >= 0.8:
+		var wall_n = get_wall_normal() if is_on_wall() else Vector3.ZERO
+		var push_away = wall_n * 2.0
+		velocity.x += push_away.x * speed_to_use
+		velocity.z += push_away.z * speed_to_use
+		global_position += push_away * 0.3  # Empuje inmediato lejos de la pared
+
+		if current_state == State.PATROL:
+			current_waypoint_idx = (current_waypoint_idx + 1) % patrol_waypoints.size()
+		elif current_state == State.CHASE and not _can_see_player():
+			# Perdió visión mientras estaba trabado: buscar
+			_enter_search_state()
+		elif current_state == State.SEARCH:
+			# Trabado buscando: volver a patrullar
+			current_state = State.PATROL
+			_pick_closest_waypoint()
+
+		# Si lleva más de 2.0 segundos acumulados trabado: TELETRANSPORTE
+		if stuck_timer >= 2.0:
+			stuck_timer = 0.0
+			# Buscar el waypoint más cercano que esté a al menos 3m de distancia
+			var best_idx: int = -1
+			var best_dist: float = 99999.0
+			for i in range(patrol_waypoints.size()):
+				var d = global_position.distance_to(patrol_waypoints[i])
+				if d >= 3.0 and d < best_dist:
+					best_dist = d
+					best_idx = i
+			if best_idx >= 0:
+				global_position = patrol_waypoints[best_idx]
+				prev_pos = global_position
+				current_waypoint_idx = (best_idx + 1) % patrol_waypoints.size()
+				velocity = Vector3.ZERO
+				if current_state != State.PATROL:
+					current_state = State.PATROL
+		else:
+			stuck_timer = max(stuck_timer, 0.0)  # Mantener el acumulado
+
+	_animate_walk(delta, dir.length() > 0.1)
+
+## =====================================================================
+## TRANSICIONES Y ACCIONES
+## =====================================================================
+func _enter_chase_state() -> void:
+	current_state = State.CHASE
+	time_without_sight = 0.0
+	last_known_player_pos = player.global_position
+	
+	if ojos_luz:
+		ojos_luz.light_color = Color(1.0, 0.1, 0.1)
+		ojos_luz.light_energy = 1.6
+		
+	_say(phrases_chase[randi() % phrases_chase.size()], Color(1.0, 0.2, 0.2))
+	
+	var now = Time.get_ticks_msec() / 1000.0
+	if now - last_chase_screamer_time > 15.0:
+		last_chase_screamer_time = now
+		if is_instance_valid(player) and player.has_method("play_jumpscare_screamer"):
+			player.play_jumpscare_screamer()
+
+func _enter_search_state() -> void:
+	current_state = State.SEARCH
+	search_timer = 4.0
+	
+	if ojos_luz:
+		ojos_luz.light_color = Color(1.0, 0.6, 0.1)
+		ojos_luz.light_energy = 0.8
+		
+	_say("¿Dónde se escondió ese alumno...?", Color(1.0, 0.8, 0.4))
+
+## LLAMADO CUANDO EL JUGADOR FALLA EL DESAFÍO MATEMÁTICO
+func boost_speed() -> void:
+	speed_boost_count += 1
+	chase_speed += 0.85
+	patrol_speed += 0.45
+	
+	_enter_chase_state()
+	
+	if ojos_luz:
+		ojos_luz.light_color = Color(1.0, 0.0, 0.0)
+		ojos_luz.light_energy = 2.5
+		
+	_say(phrases_enraged[randi() % phrases_enraged.size()], Color(1.0, 0.0, 0.0))
+
+func _setup_step_audio() -> void:
+	step_audio = AudioStreamPlayer3D.new()
+	step_audio.name = "ProfesorStepAudio3D"
+	step_audio.unit_size = 3.5
+	step_audio.max_distance = 35.0
+	step_audio.volume_db = -3.0
+	step_audio.bus = &"Master"
+	add_child(step_audio)
+
+func _play_prof_step() -> void:
+	if not step_audio:
+		return
+	step_audio.stream = HorrorAudio.get_profesor_footstep()
+	step_audio.pitch_scale = randf_range(0.96, 1.04)
+	step_audio.play()
+
+func _animate_walk(delta: float, is_moving: bool) -> void:
+	if is_moving and is_on_floor():
+		var step_mult = 2.8 if current_state == State.CHASE else 2.2
+		var anim_delta = delta * (current_speed * step_mult)
+		walk_anim_time += anim_delta
+		step_phase += anim_delta
+		
+		# Cada medio ciclo se apoya un zapato formal (izquierdo o derecho)
+		if step_phase >= PI:
+			step_phase -= PI
+			_play_prof_step()
+			
+		var swing_legs = sin(walk_anim_time) * deg_to_rad(28.0)
+		var swing_arms = cos(walk_anim_time) * deg_to_rad(25.0)
+		
+		if pierna_izq: pierna_izq.rotation.x = swing_legs
+		if pierna_der: pierna_der.rotation.x = -swing_legs
+		if brazo_izq: brazo_izq.rotation.x = -swing_arms
+		
+		if not is_attacking and brazo_der:
+			brazo_der.rotation.x = deg_to_rad(-35.0) + sin(walk_anim_time * 0.8) * deg_to_rad(15.0)
+			brazo_der.rotation.z = deg_to_rad(-10.0)
+			if regla:
+				regla.rotation.x = deg_to_rad(20.0) + cos(walk_anim_time * 1.5) * deg_to_rad(10.0)
+	else:
+		walk_anim_time = 0.0
+		step_phase = 1.0 # Pre-cargado para sonar apenas retome el paso
+		if pierna_izq: pierna_izq.rotation.x = lerpf(pierna_izq.rotation.x, 0.0, delta * 6.0)
+		if pierna_der: pierna_der.rotation.x = lerpf(pierna_der.rotation.x, 0.0, delta * 6.0)
+		if brazo_izq: brazo_izq.rotation.x = lerpf(brazo_izq.rotation.x, 0.0, delta * 6.0)
+		if not is_attacking and not is_screamer_ambush and brazo_der:
+			brazo_der.rotation.x = lerpf(brazo_der.rotation.x, deg_to_rad(-40.0), delta * 5.0)
+			brazo_der.rotation.z = lerpf(brazo_der.rotation.z, deg_to_rad(-10.0), delta * 5.0)
+
+## =====================================================================
+## CINEMÁTICA Y SCREAMER DEL LABORATORIO
+## =====================================================================
+func trigger_screamer_ambush(ambush_pos: Vector3, look_at_pos: Vector3) -> void:
+	is_screamer_ambush = true
+	global_position = ambush_pos
+	prev_pos = ambush_pos
+	velocity = Vector3.ZERO
+	stuck_timer = 0.0
+	attack_timer = 1.8
+	is_attacking = false
+	
+	# Mirar fijamente hacia el jugador y la pared del tablero
+	var to_target = look_at_pos - ambush_pos
+	to_target.y = 0.0
+	if to_target.length() > 0.1:
+		rotation.y = atan2(to_target.x, to_target.z)
+		
+	# Postura amenazante con la regla en alto
+	if brazo_der:
+		brazo_der.rotation.x = deg_to_rad(-125.0)
+		brazo_der.rotation.y = deg_to_rad(-15.0)
+		brazo_der.rotation.z = deg_to_rad(-10.0)
+	if regla:
+		regla.rotation.x = deg_to_rad(-45.0)
+		
+	# Ojos al rojo vivo con máxima intensidad
+	if ojos_luz:
+		ojos_luz.light_color = Color(1.0, 0.0, 0.0)
+		ojos_luz.light_energy = 4.0
+		ojos_luz.spot_range = 15.0
+		ojos_luz.visible = true
+		
+	# Entrar en persecución agresiva con incremento de velocidad
+	current_state = State.CHASE
+	chase_speed = base_chase_speed + 1.1
+	time_without_sight = 0.0
+	if is_instance_valid(player):
+		last_known_player_pos = player.global_position
+
+func play_ruler_slam_animation() -> void:
+	if not brazo_der or not regla:
+		return
+	var tw = create_tween()
+	# Azote rápido hacia abajo contra la mesada
+	tw.tween_property(brazo_der, "rotation:x", deg_to_rad(35.0), 0.09)
+	tw.parallel().tween_property(regla, "rotation:x", deg_to_rad(65.0), 0.09)
+	# Volver a levantar amenazante
+	tw.tween_property(brazo_der, "rotation:x", deg_to_rad(-120.0), 0.22)
+	tw.parallel().tween_property(regla, "rotation:x", deg_to_rad(-40.0), 0.22)
+
+func start_screamer_charge() -> void:
+	is_screamer_ambush = false
+	is_screamer_charging = true
+	screamer_charge_timer = 1.4
+	current_state = State.CHASE
+	current_speed = 40.0
+	stuck_timer = 0.0
+	attack_timer = 0.15
+	last_chase_screamer_time = Time.get_ticks_msec() / 1000.0
+	_say("¡¡NO HAY SALVACIÓN, DIRECTO A MARZO!!", Color(1.0, 0.0, 0.0))
+	if is_instance_valid(player) and player.has_method("play_jumpscare_screamer"):
+		player.play_jumpscare_screamer()
+	if is_instance_valid(player):
+		last_known_player_pos = player.global_position
+		var to_p = player.global_position - global_position
+		to_p.y = 0.0
+		if to_p.length() > 0.1:
+			var dir_p = to_p.normalized()
+			rotation.y = atan2(dir_p.x, dir_p.z)
+			velocity.x = dir_p.x * 42.0
+			velocity.z = dir_p.z * 42.0
+
+func _end_screamer_charge() -> void:
+	is_screamer_charging = false
+	screamer_charge_timer = 0.0
+	chase_speed = base_chase_speed + (speed_boost_count * 0.85)
+	current_speed = chase_speed
+	var horiz_vel = Vector2(velocity.x, velocity.z)
+	if horiz_vel.length() > chase_speed:
+		var clamped = horiz_vel.normalized() * chase_speed
+		velocity.x = clamped.x
+		velocity.z = clamped.y
+
+func release_screamer_ambush() -> void:
+	is_screamer_ambush = false
+	stuck_timer = 0.0
+	prev_pos = global_position
+	_pick_closest_waypoint()
+	# Asegurar que tiene un destino válido de movimiento
+	if current_state == State.CHASE and not _can_see_player():
+		_enter_search_state()
+
+func _start_attack() -> void:
+	_cut_screamer_audio()
+	if is_screamer_charging:
+		_end_screamer_charge()
+	current_state = State.ATTACK
+	is_attacking = true
+	attack_anim_time = 0.0
+	attack_timer = attack_cooldown
+	_say("¡¡¡CASTIGO POR COPIARSE!!!", Color(1.0, 0.1, 0.1))
+
+func _process_attack(delta: float) -> void:
+	attack_anim_time += delta
+	
+	if not brazo_der or not regla:
+		is_attacking = false
+		current_state = State.CHASE
+		return
+		
+	if attack_anim_time < 0.22:
+		var p = attack_anim_time / 0.22
+		brazo_der.rotation.x = lerpf(deg_to_rad(-40.0), deg_to_rad(-125.0), p)
+		brazo_der.rotation.y = lerpf(0.0, deg_to_rad(-20.0), p)
+		regla.rotation.x = lerpf(0.0, deg_to_rad(-45.0), p)
+	elif attack_anim_time < 0.38:
+		var p = (attack_anim_time - 0.22) / 0.16
+		brazo_der.rotation.x = lerpf(deg_to_rad(-125.0), deg_to_rad(45.0), p)
+		regla.rotation.x = lerpf(deg_to_rad(-45.0), deg_to_rad(70.0), p)
+		
+		if p > 0.6 and is_instance_valid(player):
+			var dist = global_position.distance_to(player.global_position)
+			if dist <= attack_range + 0.6:
+				_hit_player()
+	elif attack_anim_time < 0.65:
+		var p = (attack_anim_time - 0.38) / 0.27
+		brazo_der.rotation.x = lerpf(deg_to_rad(45.0), deg_to_rad(-40.0), p)
+		brazo_der.rotation.y = lerpf(deg_to_rad(-20.0), 0.0, p)
+		regla.rotation.x = lerpf(deg_to_rad(70.0), 0.0, p)
+	else:
+		is_attacking = false
+		current_state = State.CHASE
+
+func _hit_player() -> void:
+	_cut_screamer_audio()
+	if is_instance_valid(player):
+		var push_dir = (player.global_position - global_position).normalized()
+		player.velocity += push_dir * 9.0 + Vector3(0, 3.2, 0)
+		
+		var cam = player.find_child("Camera3D", true, false) as Camera3D
+		if cam:
+			var tw = create_tween()
+			tw.tween_property(cam, "rotation:z", deg_to_rad(randf_range(-14.0, 14.0)), 0.05)
+			tw.tween_property(cam, "rotation:z", 0.0, 0.18)
+
+func _update_dialogue(delta: float) -> void:
+	phrase_timer -= delta
+	if phrase_timer <= 0.0:
+		phrase_timer = randf_range(7.0, 15.0)
+		if current_state == State.PATROL:
+			_say(phrases_patrol[randi() % phrases_patrol.size()], Color(1.0, 0.85, 0.5))
+
+func _say(text_msg: String, color: Color = Color(1.0, 0.85, 0.5)) -> void:
+	if cartel_dialogo:
+		cartel_dialogo.text = text_msg
+		cartel_dialogo.modulate = color
+		
+		get_tree().create_timer(3.5).timeout.connect(func():
+			if is_instance_valid(cartel_dialogo) and not is_attacking and current_state == State.PATROL:
+				cartel_dialogo.text = ""
+		)
+
+func _on_player_noise(volume: float) -> void:
+	if not is_instance_valid(player):
+		return
+	var dist = global_position.distance_to(player.global_position)
+	if dist <= hearing_range:
+		_enter_chase_state()
+		_say("¡¿QUIÉN HACE RUIDO EN MI HORA?!", Color(1.0, 0.2, 0.2))
+		last_known_player_pos = player.global_position
+		var to_player = player.global_position - global_position
+		rotation.y = atan2(to_player.x, to_player.z)
+
+func _cut_screamer_audio() -> void:
+	if not is_inside_tree():
+		return
+	for node in get_tree().get_nodes_in_group("screamer_audio"):
+		if is_instance_valid(node) and node is AudioStreamPlayer:
+			node.stop()
+			node.queue_free()
+	var root_sc = get_tree().root.find_child("ScreamerJumpscareAudio", true, false)
+	if root_sc and is_instance_valid(root_sc) and root_sc is AudioStreamPlayer:
+		root_sc.stop()
+		root_sc.queue_free()
+	if is_instance_valid(player):
+		if player.has_method("fade_jumpscare_screamer"):
+			player.fade_jumpscare_screamer(1.0)
+		if player.has_method("trigger_post_screamer_heartbeat"):
+			player.trigger_post_screamer_heartbeat(25.0)

@@ -23,6 +23,7 @@ var ml: Material   # locker
 var mco: Material  # comedor
 var mu: Material   # UTN azul
 var mcr: Material  # silla roja
+var mwp: Material  # revestimiento madera pasillo UTN
 
 func _init():
 	print(">>> Generando UTN FRC con Piso 2 clonado de PB y Cafetería real...")
@@ -38,6 +39,7 @@ func _init():
 	mco = load("res://materials/mat_comedor.tres")
 	mu = load("res://materials/mat_utn_blue.tres")
 	mcr = load("res://materials/mat_chair_red.tres")
+	mwp = load("res://materials/mat_wall_wood_panel.tres")
 
 	var ed = Node3D.new()
 	ed.name = "EdificioCentral"
@@ -67,7 +69,7 @@ func _init():
 	ResourceSaver.save(pk, "res://scenes/edificio_central.tscn")
 	print(">>> res://scenes/edificio_central.tscn GUARDADO!")
 
-	_gen_main()
+	# _gen_main() -- Desactivado para no pisar main.gd ni main.tscn personalizados
 	print(">>> TODO GENERADO CON ÉXITO!")
 	quit()
 
@@ -85,29 +87,54 @@ func _lbl(p: Node, r: Node, n: String, txt: String, pos: Vector3, rot: Vector3):
 	l.font_size = 42; l.modulate = Color(1.0, 0.9, 0.45); l.outline_size = 10
 	p.add_child(l); l.owner = r
 
+func _es_pared_pasillo(n: String) -> bool:
+	# Divisorias internas de aulas, pizarrones o equipamiento son blancas
+	if "Div" in n or "Piz" in n or "Pup" in n or "Techo" in n or "Piso" in n or "Ventanal" in n or "ParedFondo" in n:
+		return false
+	# Fachadas exteriores de aulas hacia pasillos o paredes de pasillos perimetrales
+	if "Sur" in n or "Este" in n or "Oeste" in n or "Norte" in n or "Ext" in n or "Patio" in n or "Lab" in n or "Aud" in n or "Foto" in n or "Bedelia" in n or "Sistemas" in n or "Cetra" in n:
+		return true
+	return false
+
+func _muro_seccion(p: Node, r: Node, n: String, pos_x: float, y: float, pos_z: float, sz_x: float, h: float, sz_z: float, mat: Material, es_pasillo_manual: bool):
+	var es_pas = es_pasillo_manual or _es_pared_pasillo(n)
+	if es_pas and h > 2.0:
+		var hm = 1.35 # 1/3 madera en la parte inferior
+		var h_sup = h - hm
+		# 1/3 inferior de madera barnizada
+		_caja(p, r, n+"_Madera", Vector3(pos_x, y + hm/2.0, pos_z), Vector3(sz_x, hm, sz_z), mwp)
+		# 2/3 superior de pared blanca
+		_caja(p, r, n+"_Blanco", Vector3(pos_x, y + hm + h_sup/2.0, pos_z), Vector3(sz_x, h_sup, sz_z), mat)
+		# Moldura / listón oscuro divisor en la unión (como en la foto real)
+		var lx = sz_x if sz_x > sz_z else sz_x + 0.04
+		var lz = sz_z if sz_z > sz_x else sz_z + 0.04
+		_caja(p, r, n+"_Moldura", Vector3(pos_x, y + hm, pos_z), Vector3(lx, 0.04, lz), mwp)
+	else:
+		_caja(p, r, n, Vector3(pos_x, y + h/2.0, pos_z), Vector3(sz_x, h, sz_z), mat)
+
 # Pared E-W (corre a lo largo de X) con puerta opcional
-func _pew(p: Node, r: Node, n: String, z: float, x1: float, x2: float, y: float, h: float, dx: float, mat: Material):
+func _pew(p: Node, r: Node, n: String, z: float, x1: float, x2: float, y: float, h: float, dx: float, mat: Material, es_pasillo: bool = false):
 	if x1 > x2: var tmp = x1; x1 = x2; x2 = tmp
 	if dx < 90000:
 		var lw = (dx - PW/2.0) - x1
-		if lw > 0.3: _caja(p, r, n+"_L", Vector3(x1 + lw/2.0, y + h/2.0, z), Vector3(lw, h, G), mat)
+		if lw > 0.3: _muro_seccion(p, r, n+"_L", x1 + lw/2.0, y, z, lw, h, G, mat, es_pasillo)
 		var rw = x2 - (dx + PW/2.0)
-		if rw > 0.3: _caja(p, r, n+"_R", Vector3(x2 - rw/2.0, y + h/2.0, z), Vector3(rw, h, G), mat)
+		if rw > 0.3: _muro_seccion(p, r, n+"_R", x2 - rw/2.0, y, z, rw, h, G, mat, es_pasillo)
 		_caja(p, r, n+"_Dintel", Vector3(dx, y + h - 0.4, z), Vector3(PW + 0.1, 0.8, G), mat)
 	else:
-		_caja(p, r, n, Vector3((x1+x2)/2.0, y + h/2.0, z), Vector3(x2 - x1, h, G), mat)
+		_muro_seccion(p, r, n, (x1+x2)/2.0, y, z, x2 - x1, h, G, mat, es_pasillo)
 
 # Pared N-S (corre a lo largo de Z) con puerta opcional
-func _pns(p: Node, r: Node, n: String, x: float, z1: float, z2: float, y: float, h: float, dz: float, mat: Material):
+func _pns(p: Node, r: Node, n: String, x: float, z1: float, z2: float, y: float, h: float, dz: float, mat: Material, es_pasillo: bool = false):
 	if z1 > z2: var tmp = z1; z1 = z2; z2 = tmp
 	if dz < 90000:
 		var fw = (dz - PW/2.0) - z1
-		if fw > 0.3: _caja(p, r, n+"_F", Vector3(x, y + h/2.0, z1 + fw/2.0), Vector3(G, h, fw), mat)
+		if fw > 0.3: _muro_seccion(p, r, n+"_F", x, y, z1 + fw/2.0, G, h, fw, mat, es_pasillo)
 		var bw = z2 - (dz + PW/2.0)
-		if bw > 0.3: _caja(p, r, n+"_B", Vector3(x, y + h/2.0, z2 - bw/2.0), Vector3(G, h, bw), mat)
+		if bw > 0.3: _muro_seccion(p, r, n+"_B", x, y, z2 - bw/2.0, G, h, bw, mat, es_pasillo)
 		_caja(p, r, n+"_Dintel", Vector3(x, y + h - 0.4, dz), Vector3(G, 0.8, PW + 0.1), mat)
 	else:
-		_caja(p, r, n, Vector3(x, y + h/2.0, (z1+z2)/2.0), Vector3(G, h, z2 - z1), mat)
+		_muro_seccion(p, r, n, x, y, (z1+z2)/2.0, G, h, z2 - z1, mat, es_pasillo)
 
 func _pupitres(p: Node, r: Node, n: String, x1: float, z1: float, x2: float, z2: float, y: float):
 	var c = 0
@@ -440,10 +467,10 @@ func _patio_elementos(r: Node):
 	# Balcones / Galerías con baranda en pisos 1 y 2
 	for p_i in [1, 2]:
 		var ly = p_i * H
-		_caja(pt, r, "GaleriaOeste_%d" % p_i, Vector3(-18.5, ly, 0.5), Vector3(3.0, 0.2, 49.0), mc)
-		_caja(pt, r, "GaleriaEste_%d" % p_i, Vector3(18.5, ly, 0.5), Vector3(3.0, 0.2, 49.0), mc)
-		_caja(pt, r, "GaleriaNorte_%d" % p_i, Vector3(0.0, ly, -22.5), Vector3(34.0, 0.2, 3.0), mc)
-		_caja(pt, r, "GaleriaSur_%d" % p_i, Vector3(0.0, ly, 23.5), Vector3(34.0, 0.2, 3.0), mc)
+		_caja(pt, r, "GaleriaOeste_%d" % p_i, Vector3(-18.5, ly, 0.5), Vector3(3.0, 0.2, 49.0), mp)
+		_caja(pt, r, "GaleriaEste_%d" % p_i, Vector3(18.5, ly, 0.5), Vector3(3.0, 0.2, 49.0), mp)
+		_caja(pt, r, "GaleriaNorte_%d" % p_i, Vector3(0.0, ly, -22.5), Vector3(34.0, 0.2, 3.0), mp)
+		_caja(pt, r, "GaleriaSur_%d" % p_i, Vector3(0.0, ly, 23.5), Vector3(34.0, 0.2, 3.0), mp)
 
 		# Barandas de protección
 		_caja(pt, r, "BarandaO_%d" % p_i, Vector3(-17.1, ly + 0.5, 0.5), Vector3(0.1, 1.0, 49.0), mw)
@@ -661,10 +688,8 @@ func _cafeteria_segundo_piso(p: Node, r: Node, y: float):
 	cf.name = "CafeteriaP2"; p.add_child(cf); cf.owner = r
 
 	# Paredes perimetrales de la cafetería del 2do piso
-	# Entrada vidriada en Z = 35.0
-	_caja(cf, r, "CafeVidrioL", Vector3(-9.5, y + H/2.0, 35.0), Vector3(13.0, H, 0.08), mg)
-	_caja(cf, r, "CafeVidrioR", Vector3(9.5, y + H/2.0, 35.0), Vector3(13.0, H, 0.08), mg)
-	_caja(cf, r, "CafeDintel", Vector3(0.0, y + H - 0.4, 35.0), Vector3(6.2, 0.8, 0.15), mw)
+	# Entrada abierta y libre hacia el multiespacio en Z = 35.0 (sin vidrios)
+	_caja(cf, r, "CafeDintel", Vector3(0.0, y + H - 0.4, 35.0), Vector3(20.0, 0.8, 0.25), mw)
 	_lbl(cf, r, "CartelEntradaCafe", "CAFETERÍA Y COMEDOR\nPISO 2", Vector3(0.0, y + 3.5, 34.8), Vector3(0, 0, 0))
 
 	# Paredes laterales con grandes ventanales (como en las fotos)
@@ -764,10 +789,20 @@ func _mesa_cafeteria(p: Node, r: Node, y: float, tx: float, tz: float):
 
 # =====================================================================
 # TORRES DE ESCALERAS EN U (DE FRENTE Y POZO CONTINUO SIN TECHOS INTERMEDIOS)
+# Escalones individuales + pasamanos metálicos
 # =====================================================================
 func _escaleras_torres(r: Node):
 	var esc = Node3D.new()
 	esc.name = "TorresEscaleras"; r.add_child(esc); esc.owner = r
+
+	# Material metálico cepillado para pasamanos (con textura)
+	var m_metal = StandardMaterial3D.new()
+	m_metal.albedo_color = Color(0.85, 0.85, 0.88)
+	m_metal.albedo_texture = load("res://textures/tex_metal_brushed.png")
+	m_metal.metallic = 0.85
+	m_metal.roughness = 0.28
+	m_metal.uv1_scale = Vector3(2.0, 2.0, 2.0)
+	m_metal.uv1_triplanar = true
 
 	var torres = [
 		["TorreOeste", -69.5, 30.0],
@@ -776,10 +811,22 @@ func _escaleras_torres(r: Node):
 	]
 
 	var run_len = 6.5
-	var rise = H / 2.0 # 2.25m
+	var rise = H / 2.0       # 2.25m por tramo
 	var hyp = sqrt(run_len * run_len + rise * rise) # ~6.88m
 	var ang = atan2(rise, run_len)
-	var th = H * 3.0 # Altura total de la torre (3 pisos = 13.5m)
+	var th = H * 3.0          # Altura total de la torre (3 pisos = 13.5m)
+
+	# Parámetros de escalones individuales
+	var n_steps = 13                          # Escalones por tramo
+	var step_rise = rise / float(n_steps)     # ~0.173m altura por escalón
+	var step_going = run_len / float(n_steps) # ~0.5m profundidad por escalón
+	var step_h = 0.17                         # Grosor visible del escalón
+	var stair_w = 3.8                         # Ancho del tramo
+
+	# Parámetros de pasamanos
+	var rail_h = 0.9       # Altura del pasamanos sobre el escalón
+	var rail_diam = 0.05   # Diámetro del tubo
+	var divider_wall_h = 0.5  # Altura del muro bajo en el lado divisorio
 
 	for t in torres:
 		var tn = Node3D.new()
@@ -787,7 +834,9 @@ func _escaleras_torres(r: Node):
 		var cx = t[1]; var cz = t[2]
 
 		if t[0] != "TorreNorte":
-			# Torres Laterales (Oeste / Este)
+			# =========================================================
+			# Torres Laterales (Oeste / Este) - Escaleras en eje X
+			# =========================================================
 			var tw = 9.0; var td = 10.0
 			var ext_x = cx + (tw/2.0 if cx > 0 else -tw/2.0)
 
@@ -799,9 +848,6 @@ func _escaleras_torres(r: Node):
 			# Ventanal grande exterior en el descanso (como en la foto real)
 			_caja(tn, r, t[0]+"_Ventanal", Vector3(ext_x, th/2.0, cz), Vector3(0.08, th - 2.0, 7.0), mg)
 
-			# Muro divisorio central entre los dos tramos de la U
-			_caja(tn, r, t[0]+"_Divisorio", Vector3(cx + (0.5 if cx < 0 else -0.5), th/2.0, cz), Vector3(run_len, th, 0.3), mw)
-
 			# Suelo base abajo de todo (PB) y techo ÚNICAMENTE arriba de todo (13.5m)
 			_caja(tn, r, t[0]+"_PisoBase", Vector3(cx, -0.1, cz), Vector3(tw, 0.2, td), mp)
 			_caja(tn, r, t[0]+"_TechoFinal", Vector3(cx, th + 0.1, cz), Vector3(tw, 0.2, td), mc)
@@ -810,59 +856,133 @@ func _escaleras_torres(r: Node):
 			for p_i in range(2):
 				var yb = p_i * H
 				var ym = yb + rise
-				var yt = yb + H
 				var sfx = "%s_P%d" % [t[0], p_i]
 
 				if cx < 0:
-					# TORRE OESTE: Entrás caminando al Oeste (-X).
-					# Tramo 1 (Z = 27.5): Sube de frente hacia el Oeste (-X).
-					# Conecta exactamente desde Y = yb (X = -65.0) hasta Y = ym (X = -71.5)
-					var r1 = CSGBox3D.new()
-					r1.name = sfx + "_Tramo1"; r1.use_collision = true; r1.material = ms
-					r1.size = Vector3(hyp + 0.3, 0.15, 3.8)
-					r1.position = Vector3(-68.28, yb + 1.054, cz - 2.5)
-					r1.rotation.z = -ang
-					tn.add_child(r1); r1.owner = r
+					# --- TORRE OESTE ---
+					# Tramo 1 (Z=27.5): Sube hacia el Oeste (-X)
+					# Desde X=-65.0, Y=yb hasta X=-71.5, Y=ym
+					var t1_start_x = -65.0
+					var t1_z = cz - 2.5
+
+					# Escalones individuales Tramo 1
+					for si in range(n_steps):
+						var sx = t1_start_x - (si + 1) * step_going  # avanza en -X
+						var sy = yb + (si + 1) * step_rise - step_h / 2.0
+						_caja(tn, r, sfx+"_T1_S%d" % si,
+							Vector3(sx + step_going/2.0, sy, t1_z),
+							Vector3(step_going, step_h, stair_w), ms)
+
+					# Larguero/zanca estructural bajo los escalones (Tramo 1)
+					var str1 = CSGBox3D.new()
+					str1.name = sfx + "_T1_Zanca"; str1.use_collision = true; str1.material = ms
+					str1.size = Vector3(hyp, 0.3, stair_w)
+					str1.position = Vector3(
+						(t1_start_x + t1_start_x - run_len) / 2.0,
+						yb + rise / 2.0 - 0.22,
+						t1_z)
+					str1.rotation.z = -ang
+					tn.add_child(str1); str1.owner = r
 
 					# Franja amarilla al inicio del tramo
-					_caja(tn, r, sfx+"_Franja1", Vector3(-65.3, yb + 0.02, cz - 2.5), Vector3(0.4, 0.04, 3.8), my)
+					_caja(tn, r, sfx+"_Franja1", Vector3(-65.3, yb + 0.02, t1_z), Vector3(0.4, 0.04, stair_w), my)
+
+					# Pasamanos Tramo 1
+					_stair_handrails_x(tn, r, sfx+"_T1", t1_start_x, -1, t1_z, yb, n_steps, step_going, step_rise, stair_w, rail_h, rail_diam, divider_wall_h, hyp, ang, m_metal, true)
 
 					# Descanso al fondo oeste (a mitad de piso Y = ym)
 					_caja(tn, r, sfx+"_Descanso", Vector3(cx - 3.25, ym - 0.1, cz), Vector3(3.0, 0.2, 9.0), ms)
 
-					# Tramo 2 (Z = 32.5): Sube hacia el Este (+X) llegando al siguiente piso
-					# Conecta exactamente desde Y = ym (X = -71.5) hasta Y = yt (X = -65.0)
-					var r2 = CSGBox3D.new()
-					r2.name = sfx + "_Tramo2"; r2.use_collision = true; r2.material = ms
-					r2.size = Vector3(hyp + 0.3, 0.15, 3.8)
-					r2.position = Vector3(-68.22, yb + 3.304, cz + 2.5)
-					r2.rotation.z = ang
-					tn.add_child(r2); r2.owner = r
-				else:
-					# TORRE ESTE: Entrás caminando al Este (+X).
-					# Tramo 1 (Z = 27.5): Sube de frente hacia el Este (+X).
-					var r1 = CSGBox3D.new()
-					r1.name = sfx + "_Tramo1"; r1.use_collision = true; r1.material = ms
-					r1.size = Vector3(hyp + 0.3, 0.15, 3.8)
-					r1.position = Vector3(68.22, yb + 1.054, cz - 2.5)
-					r1.rotation.z = ang
-					tn.add_child(r1); r1.owner = r
+					# Tramo 2 (Z=32.5): Sube hacia el Este (+X)
+					# Desde X=-71.5, Y=ym hasta X=-65.0, Y=yt
+					var t2_start_x = -71.5
+					var t2_z = cz + 2.5
 
-					_caja(tn, r, sfx+"_Franja1", Vector3(65.3, yb + 0.02, cz - 2.5), Vector3(0.4, 0.04, 3.8), my)
+					# Escalones individuales Tramo 2
+					for si in range(n_steps):
+						var sx = t2_start_x + (si + 1) * step_going  # avanza en +X
+						var sy = ym + (si + 1) * step_rise - step_h / 2.0
+						_caja(tn, r, sfx+"_T2_S%d" % si,
+							Vector3(sx - step_going/2.0, sy, t2_z),
+							Vector3(step_going, step_h, stair_w), ms)
+
+					# Zanca Tramo 2
+					var str2 = CSGBox3D.new()
+					str2.name = sfx + "_T2_Zanca"; str2.use_collision = true; str2.material = ms
+					str2.size = Vector3(hyp, 0.3, stair_w)
+					str2.position = Vector3(
+						(t2_start_x + t2_start_x + run_len) / 2.0,
+						ym + rise / 2.0 - 0.22,
+						t2_z)
+					str2.rotation.z = ang
+					tn.add_child(str2); str2.owner = r
+
+					# Pasamanos Tramo 2
+					_stair_handrails_x(tn, r, sfx+"_T2", t2_start_x, 1, t2_z, ym, n_steps, step_going, step_rise, stair_w, rail_h, rail_diam, divider_wall_h, hyp, ang, m_metal, false)
+
+				else:
+					# --- TORRE ESTE ---
+					# Tramo 1 (Z=27.5): Sube hacia el Este (+X)
+					var t1_start_x = 65.0
+					var t1_z = cz - 2.5
+
+					# Escalones individuales Tramo 1
+					for si in range(n_steps):
+						var sx = t1_start_x + (si + 1) * step_going  # avanza en +X
+						var sy = yb + (si + 1) * step_rise - step_h / 2.0
+						_caja(tn, r, sfx+"_T1_S%d" % si,
+							Vector3(sx - step_going/2.0, sy, t1_z),
+							Vector3(step_going, step_h, stair_w), ms)
+
+					# Zanca Tramo 1
+					var str1 = CSGBox3D.new()
+					str1.name = sfx + "_T1_Zanca"; str1.use_collision = true; str1.material = ms
+					str1.size = Vector3(hyp, 0.3, stair_w)
+					str1.position = Vector3(
+						(t1_start_x + t1_start_x + run_len) / 2.0,
+						yb + rise / 2.0 - 0.22,
+						t1_z)
+					str1.rotation.z = ang
+					tn.add_child(str1); str1.owner = r
+
+					_caja(tn, r, sfx+"_Franja1", Vector3(65.3, yb + 0.02, t1_z), Vector3(0.4, 0.04, stair_w), my)
+
+					# Pasamanos Tramo 1
+					_stair_handrails_x(tn, r, sfx+"_T1", t1_start_x, 1, t1_z, yb, n_steps, step_going, step_rise, stair_w, rail_h, rail_diam, divider_wall_h, hyp, ang, m_metal, true)
 
 					# Descanso al fondo este
 					_caja(tn, r, sfx+"_Descanso", Vector3(cx + 3.25, ym - 0.1, cz), Vector3(3.0, 0.2, 9.0), ms)
 
-					# Tramo 2 (Z = 32.5): Sube hacia el Oeste (-X) llegando al siguiente piso
-					var r2 = CSGBox3D.new()
-					r2.name = sfx + "_Tramo2"; r2.use_collision = true; r2.material = ms
-					r2.size = Vector3(hyp + 0.3, 0.15, 3.8)
-					r2.position = Vector3(68.28, yb + 3.304, cz + 2.5)
-					r2.rotation.z = -ang
-					tn.add_child(r2); r2.owner = r
+					# Tramo 2 (Z=32.5): Sube hacia el Oeste (-X)
+					var t2_start_x = 71.5
+					var t2_z = cz + 2.5
+
+					# Escalones individuales Tramo 2
+					for si in range(n_steps):
+						var sx = t2_start_x - (si + 1) * step_going  # avanza en -X
+						var sy = ym + (si + 1) * step_rise - step_h / 2.0
+						_caja(tn, r, sfx+"_T2_S%d" % si,
+							Vector3(sx + step_going/2.0, sy, t2_z),
+							Vector3(step_going, step_h, stair_w), ms)
+
+					# Zanca Tramo 2
+					var str2 = CSGBox3D.new()
+					str2.name = sfx + "_T2_Zanca"; str2.use_collision = true; str2.material = ms
+					str2.size = Vector3(hyp, 0.3, stair_w)
+					str2.position = Vector3(
+						(t2_start_x + t2_start_x - run_len) / 2.0,
+						ym + rise / 2.0 - 0.22,
+						t2_z)
+					str2.rotation.z = -ang
+					tn.add_child(str2); str2.owner = r
+
+					# Pasamanos Tramo 2
+					_stair_handrails_x(tn, r, sfx+"_T2", t2_start_x, -1, t2_z, ym, n_steps, step_going, step_rise, stair_w, rail_h, rail_diam, divider_wall_h, hyp, ang, m_metal, false)
 
 		else:
-			# TORRE NORTE: Entrás caminando al Norte (-Z).
+			# =========================================================
+			# TORRE NORTE - Escaleras en eje Z
+			# =========================================================
 			var tw = 10.0; var td = 9.0
 			var ext_z = cz - td/2.0 # -54.0
 
@@ -871,37 +991,72 @@ func _escaleras_torres(r: Node):
 			_caja(tn, r, t[0]+"_ParedEste", Vector3(cx + tw/2.0, th/2.0, cz), Vector3(G, th, td), mw)
 			_caja(tn, r, t[0]+"_Ventanal", Vector3(cx, th/2.0, ext_z), Vector3(7.0, th - 2.0, 0.08), mg)
 
-			_caja(tn, r, t[0]+"_Divisorio", Vector3(cx, th/2.0, cz + 0.5), Vector3(0.3, th, run_len), mw)
-
 			_caja(tn, r, t[0]+"_PisoBase", Vector3(cx, -0.1, cz), Vector3(tw, 0.2, td), mp)
 			_caja(tn, r, t[0]+"_TechoFinal", Vector3(cx, th + 0.1, cz), Vector3(tw, 0.2, td), mc)
 
 			for p_i in range(2):
 				var yb = p_i * H
 				var ym = yb + rise
-				var yt = yb + H
 				var sfx = "%s_P%d" % [t[0], p_i]
 
-				# Tramo 1 (X = 39.5): Sube de frente hacia el Norte (-Z)
-				var r1 = CSGBox3D.new()
-				r1.name = sfx + "_Tramo1"; r1.use_collision = true; r1.material = ms
-				r1.size = Vector3(3.8, 0.15, hyp + 0.3)
-				r1.position = Vector3(cx - 2.5, yb + 1.054, -48.28)
-				r1.rotation.x = ang
-				tn.add_child(r1); r1.owner = r
+				# Tramo 1 (X=39.5): Sube hacia el Norte (-Z)
+				# Desde Z=-45.0, Y=yb hasta Z=-51.5, Y=ym
+				var t1_start_z = -45.0
+				var t1_x = cx - 2.5
 
-				_caja(tn, r, sfx+"_Franja1", Vector3(cx - 2.5, yb + 0.02, -45.3), Vector3(3.8, 0.04, 0.4), my)
+				# Escalones individuales Tramo 1
+				for si in range(n_steps):
+					var sz = t1_start_z - (si + 1) * step_going  # avanza en -Z
+					var sy = yb + (si + 1) * step_rise - step_h / 2.0
+					_caja(tn, r, sfx+"_T1_S%d" % si,
+						Vector3(t1_x, sy, sz + step_going/2.0),
+						Vector3(stair_w, step_h, step_going), ms)
+
+				# Zanca Tramo 1
+				var str1 = CSGBox3D.new()
+				str1.name = sfx + "_T1_Zanca"; str1.use_collision = true; str1.material = ms
+				str1.size = Vector3(stair_w, 0.3, hyp)
+				str1.position = Vector3(
+					t1_x,
+					yb + rise / 2.0 - 0.22,
+					(t1_start_z + t1_start_z - run_len) / 2.0)
+				str1.rotation.x = ang
+				tn.add_child(str1); str1.owner = r
+
+				_caja(tn, r, sfx+"_Franja1", Vector3(t1_x, yb + 0.02, -45.3), Vector3(stair_w, 0.04, 0.4), my)
+
+				# Pasamanos Tramo 1
+				_stair_handrails_z(tn, r, sfx+"_T1", t1_start_z, -1, t1_x, yb, n_steps, step_going, step_rise, stair_w, rail_h, rail_diam, divider_wall_h, hyp, ang, m_metal, true)
 
 				# Descanso al fondo norte
 				_caja(tn, r, sfx+"_Descanso", Vector3(cx, ym - 0.1, cz - 3.25), Vector3(9.0, 0.2, 3.0), ms)
 
-				# Tramo 2 (X = 44.5): Sube hacia el Sur (+Z) hacia el siguiente piso
-				var r2 = CSGBox3D.new()
-				r2.name = sfx + "_Tramo2"; r2.use_collision = true; r2.material = ms
-				r2.size = Vector3(3.8, 0.15, hyp + 0.3)
-				r2.position = Vector3(cx + 2.5, yb + 3.304, -48.22)
-				r2.rotation.x = -ang
-				tn.add_child(r2); r2.owner = r
+				# Tramo 2 (X=44.5): Sube hacia el Sur (+Z)
+				# Desde Z=-51.5, Y=ym hasta Z=-45.0, Y=yt
+				var t2_start_z = -51.5
+				var t2_x = cx + 2.5
+
+				# Escalones individuales Tramo 2
+				for si in range(n_steps):
+					var sz = t2_start_z + (si + 1) * step_going  # avanza en +Z
+					var sy = ym + (si + 1) * step_rise - step_h / 2.0
+					_caja(tn, r, sfx+"_T2_S%d" % si,
+						Vector3(t2_x, sy, sz - step_going/2.0),
+						Vector3(stair_w, step_h, step_going), ms)
+
+				# Zanca Tramo 2
+				var str2 = CSGBox3D.new()
+				str2.name = sfx + "_T2_Zanca"; str2.use_collision = true; str2.material = ms
+				str2.size = Vector3(stair_w, 0.3, hyp)
+				str2.position = Vector3(
+					t2_x,
+					ym + rise / 2.0 - 0.22,
+					(t2_start_z + t2_start_z + run_len) / 2.0)
+				str2.rotation.x = -ang
+				tn.add_child(str2); str2.owner = r
+
+				# Pasamanos Tramo 2
+				_stair_handrails_z(tn, r, sfx+"_T2", t2_start_z, 1, t2_x, ym, n_steps, step_going, step_rise, stair_w, rail_h, rail_diam, divider_wall_h, hyp, ang, m_metal, false)
 
 		# Luces en cada nivel de las escaleras
 		for p_i in range(3):
@@ -911,6 +1066,126 @@ func _escaleras_torres(r: Node):
 			l.light_color = Color(0.9, 0.95, 1.0)
 			l.light_energy = 0.8; l.omni_range = 10.0; l.shadow_enabled = true
 			tn.add_child(l); l.owner = r
+
+# Pasamanos para tramos en eje X (Torres Oeste/Este)
+# start_x: coordenada X de inicio, dir_x: +1 o -1 (dirección de avance),
+# z_center: coordenada Z del centro del tramo, y_base: Y del piso inferior,
+# is_tramo1: true para tramo 1 (lado divisorio en +Z), false para tramo 2 (divisorio en -Z)
+func _stair_handrails_x(p: Node, r: Node, prefix: String,
+		start_x: float, dir_x: int, z_center: float, y_base: float,
+		n_steps: int, step_going: float, step_rise: float, stair_w: float,
+		rail_h: float, rail_diam: float, div_wall_h: float,
+		hyp: float, ang: float, mat: Material, is_tramo1: bool):
+
+	# Longitud del pasamanos (siguiendo la pendiente)
+	var run_len = n_steps * step_going
+	var rise = n_steps * step_rise
+	var rail_len = sqrt(run_len * run_len + rise * rise)
+
+	# Centro del tramo
+	var mid_x = start_x + dir_x * run_len / 2.0
+	var mid_y = y_base + rise / 2.0
+
+	# Lado divisorio (entre los dos tramos) y lado exterior
+	var z_div = z_center + (stair_w / 2.0 if is_tramo1 else -stair_w / 2.0)
+	var z_out = z_center - (stair_w / 2.0 if is_tramo1 else -stair_w / 2.0)
+
+	# --- Pasamanos inclinado lado divisorio (tubo superior) ---
+	var rail_div = CSGBox3D.new()
+	rail_div.name = prefix + "_RailDiv"; rail_div.use_collision = true; rail_div.material = mat
+	rail_div.size = Vector3(rail_len, rail_diam, rail_diam)
+	rail_div.position = Vector3(mid_x, mid_y + rail_h, z_div)
+	rail_div.rotation.z = float(dir_x) * ang
+	p.add_child(rail_div); rail_div.owner = r
+
+	# Muro bajo inclinado en el lado divisorio
+	var wall_div = CSGBox3D.new()
+	wall_div.name = prefix + "_WallDiv"; wall_div.use_collision = true; wall_div.material = mat
+	wall_div.size = Vector3(rail_len, div_wall_h, 0.1)
+	wall_div.position = Vector3(mid_x, mid_y + div_wall_h / 2.0, z_div)
+	wall_div.rotation.z = float(dir_x) * ang
+	p.add_child(wall_div); wall_div.owner = r
+
+	# --- Pasamanos inclinado lado exterior (tubo superior) ---
+	var rail_out = CSGBox3D.new()
+	rail_out.name = prefix + "_RailOut"; rail_out.use_collision = true; rail_out.material = mat
+	rail_out.size = Vector3(rail_len, rail_diam, rail_diam)
+	rail_out.position = Vector3(mid_x, mid_y + rail_h, z_out)
+	rail_out.rotation.z = float(dir_x) * ang
+	p.add_child(rail_out); rail_out.owner = r
+
+	# Postes verticales al inicio y final del tramo (lado exterior)
+	var post_x_start = start_x + dir_x * step_going / 2.0
+	var post_y_start = y_base + step_rise
+	var post_x_end = start_x + dir_x * run_len - dir_x * step_going / 2.0
+	var post_y_end = y_base + rise
+
+	_caja(p, r, prefix + "_PostOut0",
+		Vector3(post_x_start, post_y_start + rail_h / 2.0, z_out),
+		Vector3(rail_diam, rail_h, rail_diam), mat)
+	_caja(p, r, prefix + "_PostOut1",
+		Vector3(post_x_end, post_y_end + rail_h / 2.0, z_out),
+		Vector3(rail_diam, rail_h, rail_diam), mat)
+
+# Pasamanos para tramos en eje Z (Torre Norte)
+# start_z: coordenada Z de inicio, dir_z: +1 o -1 (dirección de avance),
+# x_center: coordenada X del centro del tramo, y_base: Y del piso inferior,
+# is_tramo1: true para tramo 1 (lado divisorio en +Z), false para tramo 2 (divisorio en -Z)
+func _stair_handrails_z(p: Node, r: Node, prefix: String,
+		start_z: float, dir_z: int, x_center: float, y_base: float,
+		n_steps: int, step_going: float, step_rise: float, stair_w: float,
+		rail_h: float, rail_diam: float, div_wall_h: float,
+		hyp: float, ang: float, mat: Material, is_tramo1: bool):
+
+	var run_len = n_steps * step_going
+	var rise = n_steps * step_rise
+	var rail_len = sqrt(run_len * run_len + rise * rise)
+
+	# Centro del tramo
+	var mid_z = start_z + dir_z * run_len / 2.0
+	var mid_y = y_base + rise / 2.0
+
+	# Lado divisorio y lado exterior (en X para torre norte)
+	# Tramo 1: X=39.5, divisorio está en +X (hacia cx). Tramo 2: X=44.5, divisorio está en -X
+	var x_div = x_center + (stair_w / 2.0 if is_tramo1 else -stair_w / 2.0)
+	var x_out = x_center - (stair_w / 2.0 if is_tramo1 else -stair_w / 2.0)
+
+	# --- Pasamanos inclinado lado divisorio (tubo superior) ---
+	var rail_div = CSGBox3D.new()
+	rail_div.name = prefix + "_RailDiv"; rail_div.use_collision = true; rail_div.material = mat
+	rail_div.size = Vector3(rail_diam, rail_diam, rail_len)
+	rail_div.position = Vector3(x_div, mid_y + rail_h, mid_z)
+	rail_div.rotation.x = float(-dir_z) * ang
+	p.add_child(rail_div); rail_div.owner = r
+
+	# Muro bajo inclinado en el lado divisorio
+	var wall_div = CSGBox3D.new()
+	wall_div.name = prefix + "_WallDiv"; wall_div.use_collision = true; wall_div.material = mat
+	wall_div.size = Vector3(0.1, div_wall_h, rail_len)
+	wall_div.position = Vector3(x_div, mid_y + div_wall_h / 2.0, mid_z)
+	wall_div.rotation.x = float(-dir_z) * ang
+	p.add_child(wall_div); wall_div.owner = r
+
+	# --- Pasamanos inclinado lado exterior (tubo superior) ---
+	var rail_out = CSGBox3D.new()
+	rail_out.name = prefix + "_RailOut"; rail_out.use_collision = true; rail_out.material = mat
+	rail_out.size = Vector3(rail_diam, rail_diam, rail_len)
+	rail_out.position = Vector3(x_out, mid_y + rail_h, mid_z)
+	rail_out.rotation.x = float(-dir_z) * ang
+	p.add_child(rail_out); rail_out.owner = r
+
+	# Postes verticales al inicio y final del tramo (lado exterior)
+	var post_z_start = start_z + dir_z * step_going / 2.0
+	var post_y_start = y_base + step_rise
+	var post_z_end = start_z + dir_z * run_len - dir_z * step_going / 2.0
+	var post_y_end = y_base + rise
+
+	_caja(p, r, prefix + "_PostOut0",
+		Vector3(x_out, post_y_start + rail_h / 2.0, post_z_start),
+		Vector3(rail_diam, rail_h, rail_diam), mat)
+	_caja(p, r, prefix + "_PostOut1",
+		Vector3(x_out, post_y_end + rail_h / 2.0, post_z_end),
+		Vector3(rail_diam, rail_h, rail_diam), mat)
 
 # =====================================================================
 # ILUMINACIÓN GENERAL EN LOS PASILLOS
@@ -992,10 +1267,10 @@ func _gen_main():
 	pl.rotation_degrees = Vector3(0, 0, 0)
 	main.add_child(pl); pl.owner = main
 
-	var scr = GDScript.new()
-	scr.source_code = "extends Node3D\n\n@onready var mic_detector = $MicDetector\n@onready var hud = $HUD\n\nfunc _ready() -> void:\n\tif mic_detector and hud:\n\t\tmic_detector.volume_updated.connect(hud.on_mic_volume_updated)\n"
-	ResourceSaver.save(scr, "res://scripts/main.gd")
-	main.set_script(scr)
+	# var scr = GDScript.new()
+	# scr.source_code = "..."
+	# ResourceSaver.save(scr, "res://scripts/main.gd")
+	# main.set_script(scr)
 
 	var env_n = WorldEnvironment.new()
 	env_n.name = "WorldEnvironment"

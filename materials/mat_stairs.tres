@@ -1,7 +1,11 @@
-[gd_resource type="StandardMaterial3D" format=3]
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3]
+
+[ext_resource type="Texture2D" path="res://textures/tex_stairs_slate.png" id="1_stairs"]
 
 [resource]
 resource_name = "EscaleraNegra"
-albedo_color = Color(0.08, 0.08, 0.1, 1.0)
-roughness = 0.3
-metallic = 0.1
+albedo_color = Color(1.0, 1.0, 1.0, 1.0)
+albedo_texture = ExtResource("1_stairs")
+roughness = 0.65
+uv1_scale = Vector3(0.4, 0.4, 0.4)
+uv1_triplanar = true

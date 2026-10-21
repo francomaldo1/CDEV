@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[resource]
+resource_name = "Arbusto"
+albedo_color = Color(0.12, 0.20, 0.10, 1.0)
+roughness = 0.95
+uv1_scale = Vector3(0.3, 0.3, 0.3)
+uv1_triplanar = true
