@@ -2,7 +2,7 @@ extends CharacterBody3D
 class_name Player
 
 @export var walk_speed: float = 4.0
-@export var sprint_speed: float = 7.0
+@export var sprint_speed: float = 50.0
 @export var acceleration: float = 10.0
 @export var mouse_sensitivity: float = 0.003
 @export var bob_frequency: float = 2.4
@@ -28,8 +28,16 @@ var jumpscare_play_time: float = 0.0
 var heartbeat_timer: float = 0.0
 var post_screamer_heartbeat_timer: float = 0.0
 
+## La linterna empieza bloqueada y se habilita con el corte de luz (ver main.gd)
+var flashlight_enabled: bool = false
+
+func enable_flashlight() -> void:
+	flashlight_enabled = true
+
 func _ready() -> void:
 	add_to_group("player")
+	if flashlight:
+		flashlight.visible = false
 	_setup_audio_players()
 	# Capturar el ratón inmediatamente
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -144,7 +152,7 @@ func _input(event: InputEvent) -> void:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func toggle_flashlight() -> void:
-	if is_frozen:
+	if is_frozen or not flashlight_enabled:
 		return
 	if flashlight:
 		flashlight.visible = not flashlight.visible
@@ -306,7 +314,7 @@ func _update_heartbeat(delta: float) -> void:
 	var prof = get_tree().root.find_child("Profesor", true, false)
 	var dist: float = 999.0
 	var is_chasing: bool = false
-	if is_instance_valid(prof):
+	if is_instance_valid(prof) and prof.visible:
 		dist = global_position.distance_to(prof.global_position)
 		is_chasing = (prof.current_state == 1) # State.CHASE
 		
@@ -332,4 +340,3 @@ func _update_heartbeat(delta: float) -> void:
 			heartbeat_player.volume_db = lerpf(heartbeat_player.volume_db, -45.0, delta * 2.0)
 			if heartbeat_player.volume_db <= -40.0:
 				heartbeat_player.stop()
-

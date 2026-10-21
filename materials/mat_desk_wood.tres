@@ -1,12 +1,10 @@
-[gd_resource type="StandardMaterial3D" load_steps=2 format=3]
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://c1jpnyv7lwiaj"]
 
-[ext_resource type="Texture2D" path="res://textures/tex_wood_panel.png" id="1_wood"]
+[ext_resource type="Texture2D" uid="uid://3vxi0ade8e1t" path="res://textures/tex_wood_panel.png" id="1_wood"]
 
 [resource]
 resource_name = "MaderaPupitre"
-albedo_color = Color(0.95, 0.82, 0.65, 1.0)
+albedo_color = Color(0.95, 0.82, 0.65, 1)
 albedo_texture = ExtResource("1_wood")
-metallic = 0.0
 roughness = 0.35
 uv1_scale = Vector3(1.5, 1.5, 1.5)
-uv1_triplanar = false

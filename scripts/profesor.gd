@@ -203,6 +203,21 @@ func _ready() -> void:
 	phrase_timer = randf_range(3.0, 7.0)
 	_pick_closest_waypoint()
 
+## Activa o desactiva al profesor (invisible, sin moverse ni colisionar)
+var is_active: bool = true
+
+func set_active(active: bool) -> void:
+	is_active = active
+	visible = active
+	process_mode = Node.PROCESS_MODE_INHERIT if active else Node.PROCESS_MODE_DISABLED
+	if active:
+		velocity = Vector3.ZERO
+		current_state = State.PATROL
+		current_speed = patrol_speed
+		time_without_sight = 0.0
+		prev_pos = global_position
+		_pick_closest_waypoint()
+
 func _pick_closest_waypoint() -> void:
 	var best_dist = 99999.0
 	for i in range(patrol_waypoints.size()):
@@ -525,6 +540,10 @@ func boost_speed() -> void:
 	chase_speed += 0.85
 	patrol_speed += 0.45
 	
+	# Si todavía no apareció, solo acumula la velocidad
+	if not is_active:
+		return
+	
 	_enter_chase_state()
 	
 	if ojos_luz:
@@ -747,7 +766,7 @@ func _say(text_msg: String, color: Color = Color(1.0, 0.85, 0.5)) -> void:
 		)
 
 func _on_player_noise(volume: float) -> void:
-	if not is_instance_valid(player):
+	if not is_active or not is_instance_valid(player):
 		return
 	var dist = global_position.distance_to(player.global_position)
 	if dist <= hearing_range:
