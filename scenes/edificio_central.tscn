@@ -1,4 +1,4 @@
-[gd_scene format=4]
+[gd_scene format=4 uid="uid://d1eynjjox8ec"]
 
 [ext_resource type="Material" path="res://materials/mat_floor_granito.tres" id="1_2hdtu"]
 [ext_resource type="Material" path="res://materials/mat_patio.tres" id="2_pu2gp"]
@@ -21,10 +21,8 @@
 [ext_resource type="Material" path="res://materials/mat_palm_leaves.tres" id="19_pl001"]
 [ext_resource type="Material" path="res://materials/mat_ac_unit.tres" id="20_ac001"]
 [ext_resource type="Material" path="res://materials/mat_cantero_border.tres" id="21_cb001"]
-[ext_resource type="Material" path="res://materials/mat_fluorescent_frame.tres" id="22_jahmo"]
-[ext_resource type="Script" path="res://scripts/patio_estudiante.gd" id="22_pe001"]
+[ext_resource type="Script" uid="uid://bm64fj5ic1loc" path="res://scripts/patio_estudiante.gd" id="22_pe001"]
 [ext_resource type="Material" path="res://materials/mat_aluminum_white.tres" id="23_alum"]
-[ext_resource type="Material" path="res://materials/mat_fluorescent_light.tres" id="23_c2jul"]
 [ext_resource type="Material" path="res://materials/mat_frosted_film.tres" id="24_frost"]
 [ext_resource type="Material" path="res://materials/mat_utn_glass_logo.tres" id="25_logo"]
 [ext_resource type="Material" path="res://materials/mat_granite_black.tres" id="26_zocalo"]
@@ -32,7 +30,7 @@
 [ext_resource type="Material" path="res://materials/mat_asphalt.tres" id="28_asphalt"]
 [ext_resource type="ArrayMesh" path="res://models/mesh_peronachos.tres" id="30_mesh_peronachos"]
 [ext_resource type="PackedScene" path="res://scenes/aula_pupitre.tscn" id="31_pupitre"]
-[ext_resource type="ArrayMesh" path="res://objetos/Llave final.obj" id="32_ffn76"]
+[ext_resource type="ArrayMesh" uid="uid://cg8c5lu3hiiah" path="res://objetos/Llave final.obj" id="32_ffn76"]
 [ext_resource type="PackedScene" path="res://scenes/aula_pizarron.tscn" id="32_pizarron"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_nwxjt"]
@@ -370,136 +368,136 @@ use_collision = true
 size = Vector3(0.3, 4.5, 12)
 material = ExtResource("4_0kga5")
 
-[node name="PizN1" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1700916004 instance=ExtResource("32_pizarron")]
+[node name="PizN1" parent="PlantaBaja/HabitacionesPB" unique_id=1700916004 instance=ExtResource("32_pizarron")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 1.5, -44.55)
 
-[node name="PizN2" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=27975473 instance=ExtResource("32_pizarron")]
+[node name="PizN2" parent="PlantaBaja/HabitacionesPB" unique_id=27975473 instance=ExtResource("32_pizarron")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 1.5, -44.55)
 
-[node name="PizN3" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1021139977 instance=ExtResource("32_pizarron")]
+[node name="PizN3" parent="PlantaBaja/HabitacionesPB" unique_id=1021139977 instance=ExtResource("32_pizarron")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 1.5, -44.55)
 
-[node name="PizN4" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1777120460 instance=ExtResource("32_pizarron")]
+[node name="PizN4" parent="PlantaBaja/HabitacionesPB" unique_id=1777120460 instance=ExtResource("32_pizarron")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.5, 1.5, -44.55)
 
-[node name="PupN1_0" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=537038974 instance=ExtResource("31_pupitre")]
+[node name="PupN1_0" parent="PlantaBaja/HabitacionesPB" unique_id=537038974 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.5, 0, -41)
 
-[node name="PupN1_1" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=2016114477 instance=ExtResource("31_pupitre")]
+[node name="PupN1_1" parent="PlantaBaja/HabitacionesPB" unique_id=2016114477 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.5, 0, -37.8)
 
-[node name="PupN1_2" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=292713970 instance=ExtResource("31_pupitre")]
+[node name="PupN1_2" parent="PlantaBaja/HabitacionesPB" unique_id=292713970 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.5, 0, -41)
 
-[node name="PupN1_3" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1268580950 instance=ExtResource("31_pupitre")]
+[node name="PupN1_3" parent="PlantaBaja/HabitacionesPB" unique_id=1268580950 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.5, 0, -37.8)
 
-[node name="PupN1_4" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1908776127 instance=ExtResource("31_pupitre")]
+[node name="PupN1_4" parent="PlantaBaja/HabitacionesPB" unique_id=1908776127 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 0, -41)
 
-[node name="PupN1_5" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=797928210 instance=ExtResource("31_pupitre")]
+[node name="PupN1_5" parent="PlantaBaja/HabitacionesPB" unique_id=797928210 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 0, -37.8)
 
-[node name="PupN1_6" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=618018911 instance=ExtResource("31_pupitre")]
+[node name="PupN1_6" parent="PlantaBaja/HabitacionesPB" unique_id=618018911 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48.5, 0, -41)
 
-[node name="PupN1_7" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1220286410 instance=ExtResource("31_pupitre")]
+[node name="PupN1_7" parent="PlantaBaja/HabitacionesPB" unique_id=1220286410 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48.5, 0, -37.8)
 
-[node name="PupN1_8" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1911753264 instance=ExtResource("31_pupitre")]
+[node name="PupN1_8" parent="PlantaBaja/HabitacionesPB" unique_id=1911753264 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.5, 0, -41)
 
-[node name="PupN1_9" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=665748318 instance=ExtResource("31_pupitre")]
+[node name="PupN1_9" parent="PlantaBaja/HabitacionesPB" unique_id=665748318 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.5, 0, -37.8)
 
-[node name="PupN2_0" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=944140342 instance=ExtResource("31_pupitre")]
+[node name="PupN2_0" parent="PlantaBaja/HabitacionesPB" unique_id=944140342 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.5, 0, -41)
 
-[node name="PupN2_1" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=324687847 instance=ExtResource("31_pupitre")]
+[node name="PupN2_1" parent="PlantaBaja/HabitacionesPB" unique_id=324687847 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.5, 0, -37.8)
 
-[node name="PupN2_2" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=323144113 instance=ExtResource("31_pupitre")]
+[node name="PupN2_2" parent="PlantaBaja/HabitacionesPB" unique_id=323144113 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.5, 0, -41)
 
-[node name="PupN2_3" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=189331856 instance=ExtResource("31_pupitre")]
+[node name="PupN2_3" parent="PlantaBaja/HabitacionesPB" unique_id=189331856 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.5, 0, -37.8)
 
-[node name="PupN2_4" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=124489154 instance=ExtResource("31_pupitre")]
+[node name="PupN2_4" parent="PlantaBaja/HabitacionesPB" unique_id=124489154 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 0, -41)
 
-[node name="PupN2_5" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=545717630 instance=ExtResource("31_pupitre")]
+[node name="PupN2_5" parent="PlantaBaja/HabitacionesPB" unique_id=545717630 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 0, -37.8)
 
-[node name="PupN2_6" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=944060477 instance=ExtResource("31_pupitre")]
+[node name="PupN2_6" parent="PlantaBaja/HabitacionesPB" unique_id=944060477 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.5, 0, -41)
 
-[node name="PupN2_7" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=241243405 instance=ExtResource("31_pupitre")]
+[node name="PupN2_7" parent="PlantaBaja/HabitacionesPB" unique_id=241243405 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.5, 0, -37.8)
 
-[node name="PupN2_8" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1850521551 instance=ExtResource("31_pupitre")]
+[node name="PupN2_8" parent="PlantaBaja/HabitacionesPB" unique_id=1850521551 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.5, 0, -41)
 
-[node name="PupN2_9" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=669257168 instance=ExtResource("31_pupitre")]
+[node name="PupN2_9" parent="PlantaBaja/HabitacionesPB" unique_id=669257168 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.5, 0, -37.8)
 
-[node name="PupN3_0" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1266382324 instance=ExtResource("31_pupitre")]
+[node name="PupN3_0" parent="PlantaBaja/HabitacionesPB" unique_id=1266382324 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5, 0, -41)
 
-[node name="PupN3_1" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=116762081 instance=ExtResource("31_pupitre")]
+[node name="PupN3_1" parent="PlantaBaja/HabitacionesPB" unique_id=116762081 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5, 0, -37.8)
 
-[node name="PupN3_2" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1905508869 instance=ExtResource("31_pupitre")]
+[node name="PupN3_2" parent="PlantaBaja/HabitacionesPB" unique_id=1905508869 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, 0, -41)
 
-[node name="PupN3_3" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=761423509 instance=ExtResource("31_pupitre")]
+[node name="PupN3_3" parent="PlantaBaja/HabitacionesPB" unique_id=761423509 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, 0, -37.8)
 
-[node name="PupN3_4" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=625039968 instance=ExtResource("31_pupitre")]
+[node name="PupN3_4" parent="PlantaBaja/HabitacionesPB" unique_id=625039968 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, -41)
 
-[node name="PupN3_5" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1465432675 instance=ExtResource("31_pupitre")]
+[node name="PupN3_5" parent="PlantaBaja/HabitacionesPB" unique_id=1465432675 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, -37.8)
 
-[node name="PupN3_6" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1975633381 instance=ExtResource("31_pupitre")]
+[node name="PupN3_6" parent="PlantaBaja/HabitacionesPB" unique_id=1975633381 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, -41)
 
-[node name="PupN3_7" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1582198197 instance=ExtResource("31_pupitre")]
+[node name="PupN3_7" parent="PlantaBaja/HabitacionesPB" unique_id=1582198197 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, -37.8)
 
-[node name="PupN3_8" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=2110907090 instance=ExtResource("31_pupitre")]
+[node name="PupN3_8" parent="PlantaBaja/HabitacionesPB" unique_id=2110907090 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0, -41)
 
-[node name="PupN3_9" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=407327477 instance=ExtResource("31_pupitre")]
+[node name="PupN3_9" parent="PlantaBaja/HabitacionesPB" unique_id=407327477 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0, -37.8)
 
-[node name="PupN4_0" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=909958541 instance=ExtResource("31_pupitre")]
+[node name="PupN4_0" parent="PlantaBaja/HabitacionesPB" unique_id=909958541 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.5, 0, -41)
 
-[node name="PupN4_1" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=992530012 instance=ExtResource("31_pupitre")]
+[node name="PupN4_1" parent="PlantaBaja/HabitacionesPB" unique_id=992530012 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.5, 0, -37.8)
 
-[node name="PupN4_2" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=213585642 instance=ExtResource("31_pupitre")]
+[node name="PupN4_2" parent="PlantaBaja/HabitacionesPB" unique_id=213585642 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.5, 0, -41)
 
-[node name="PupN4_3" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=2087933399 instance=ExtResource("31_pupitre")]
+[node name="PupN4_3" parent="PlantaBaja/HabitacionesPB" unique_id=2087933399 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.5, 0, -37.8)
 
-[node name="PupN4_4" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1294078380 instance=ExtResource("31_pupitre")]
+[node name="PupN4_4" parent="PlantaBaja/HabitacionesPB" unique_id=1294078380 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.5, 0, -41)
 
-[node name="PupN4_5" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1992327765 instance=ExtResource("31_pupitre")]
+[node name="PupN4_5" parent="PlantaBaja/HabitacionesPB" unique_id=1992327765 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.5, 0, -37.8)
 
-[node name="PupN4_6" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1006996854 instance=ExtResource("31_pupitre")]
+[node name="PupN4_6" parent="PlantaBaja/HabitacionesPB" unique_id=1006996854 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.5, 0, -41)
 
-[node name="PupN4_7" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=204853988 instance=ExtResource("31_pupitre")]
+[node name="PupN4_7" parent="PlantaBaja/HabitacionesPB" unique_id=204853988 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.5, 0, -37.8)
 
-[node name="PupN4_8" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=19002802 instance=ExtResource("31_pupitre")]
+[node name="PupN4_8" parent="PlantaBaja/HabitacionesPB" unique_id=19002802 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.5, 0, -41)
 
-[node name="PupN4_9" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=7373547 instance=ExtResource("31_pupitre")]
+[node name="PupN4_9" parent="PlantaBaja/HabitacionesPB" unique_id=7373547 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.5, 0, -37.8)
 
 [node name="CartelN1" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=1364649239]
@@ -626,124 +624,124 @@ use_collision = true
 size = Vector3(18, 4.5, 0.3)
 material = ExtResource("4_0kga5")
 
-[node name="PizW1" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1756656980 instance=ExtResource("32_pizarron")]
+[node name="PizW1" parent="PlantaBaja/HabitacionesPB" unique_id=1756656980 instance=ExtResource("32_pizarron")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -64.55, 1.5, -26)
 
-[node name="PizW2" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=881310545 instance=ExtResource("32_pizarron")]
+[node name="PizW2" parent="PlantaBaja/HabitacionesPB" unique_id=881310545 instance=ExtResource("32_pizarron")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -64.55, 1.5, -12)
 
-[node name="PizW3" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1301530076 instance=ExtResource("32_pizarron")]
+[node name="PizW3" parent="PlantaBaja/HabitacionesPB" unique_id=1301530076 instance=ExtResource("32_pizarron")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -64.55, 1.5, 2.5)
 
-[node name="PizW4" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1157559345 instance=ExtResource("32_pizarron")]
+[node name="PizW4" parent="PlantaBaja/HabitacionesPB" unique_id=1157559345 instance=ExtResource("32_pizarron")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -64.55, 1.5, 17.5)
 
-[node name="PupW1_0" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=2051645214 instance=ExtResource("31_pupitre")]
+[node name="PupW1_0" parent="PlantaBaja/HabitacionesPB" unique_id=2051645214 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 0, -29)
 
-[node name="PupW1_1" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=523576126 instance=ExtResource("31_pupitre")]
+[node name="PupW1_1" parent="PlantaBaja/HabitacionesPB" unique_id=523576126 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 0, -25.8)
 
-[node name="PupW1_2" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1642246442 instance=ExtResource("31_pupitre")]
+[node name="PupW1_2" parent="PlantaBaja/HabitacionesPB" unique_id=1642246442 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 0, -22.6)
 
-[node name="PupW1_3" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1675751351 instance=ExtResource("31_pupitre")]
+[node name="PupW1_3" parent="PlantaBaja/HabitacionesPB" unique_id=1675751351 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 0, -29)
 
-[node name="PupW1_4" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=251985746 instance=ExtResource("31_pupitre")]
+[node name="PupW1_4" parent="PlantaBaja/HabitacionesPB" unique_id=251985746 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 0, -25.8)
 
-[node name="PupW1_5" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1183311073 instance=ExtResource("31_pupitre")]
+[node name="PupW1_5" parent="PlantaBaja/HabitacionesPB" unique_id=1183311073 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 0, -22.6)
 
-[node name="PupW1_6" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=33104026 instance=ExtResource("31_pupitre")]
+[node name="PupW1_6" parent="PlantaBaja/HabitacionesPB" unique_id=33104026 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 0, -29)
 
-[node name="PupW1_7" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=991857077 instance=ExtResource("31_pupitre")]
+[node name="PupW1_7" parent="PlantaBaja/HabitacionesPB" unique_id=991857077 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 0, -25.8)
 
-[node name="PupW1_8" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=286614025 instance=ExtResource("31_pupitre")]
+[node name="PupW1_8" parent="PlantaBaja/HabitacionesPB" unique_id=286614025 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 0, -22.6)
 
-[node name="PupW2_0" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1978117807 instance=ExtResource("31_pupitre")]
+[node name="PupW2_0" parent="PlantaBaja/HabitacionesPB" unique_id=1978117807 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 0, -15)
 
-[node name="PupW2_1" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=109612931 instance=ExtResource("31_pupitre")]
+[node name="PupW2_1" parent="PlantaBaja/HabitacionesPB" unique_id=109612931 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 0, -11.8)
 
-[node name="PupW2_2" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1842775396 instance=ExtResource("31_pupitre")]
+[node name="PupW2_2" parent="PlantaBaja/HabitacionesPB" unique_id=1842775396 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 0, -8.6)
 
-[node name="PupW2_3" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1729683968 instance=ExtResource("31_pupitre")]
+[node name="PupW2_3" parent="PlantaBaja/HabitacionesPB" unique_id=1729683968 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 0, -15)
 
-[node name="PupW2_4" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1433950206 instance=ExtResource("31_pupitre")]
+[node name="PupW2_4" parent="PlantaBaja/HabitacionesPB" unique_id=1433950206 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 0, -11.8)
 
-[node name="PupW2_5" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=100940508 instance=ExtResource("31_pupitre")]
+[node name="PupW2_5" parent="PlantaBaja/HabitacionesPB" unique_id=100940508 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 0, -8.6)
 
-[node name="PupW2_6" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=650534244 instance=ExtResource("31_pupitre")]
+[node name="PupW2_6" parent="PlantaBaja/HabitacionesPB" unique_id=650534244 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 0, -15)
 
-[node name="PupW2_7" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=482772512 instance=ExtResource("31_pupitre")]
+[node name="PupW2_7" parent="PlantaBaja/HabitacionesPB" unique_id=482772512 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 0, -11.8)
 
-[node name="PupW2_8" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1499994818 instance=ExtResource("31_pupitre")]
+[node name="PupW2_8" parent="PlantaBaja/HabitacionesPB" unique_id=1499994818 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 0, -8.6)
 
-[node name="PupW3_0" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=583649151 instance=ExtResource("31_pupitre")]
+[node name="PupW3_0" parent="PlantaBaja/HabitacionesPB" unique_id=583649151 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 0, -1)
 
-[node name="PupW3_1" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=777655797 instance=ExtResource("31_pupitre")]
+[node name="PupW3_1" parent="PlantaBaja/HabitacionesPB" unique_id=777655797 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 0, 2.2)
 
-[node name="PupW3_2" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1843572693 instance=ExtResource("31_pupitre")]
+[node name="PupW3_2" parent="PlantaBaja/HabitacionesPB" unique_id=1843572693 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 0, 5.4)
 
-[node name="PupW3_3" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=2856320 instance=ExtResource("31_pupitre")]
+[node name="PupW3_3" parent="PlantaBaja/HabitacionesPB" unique_id=2856320 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 0, -1)
 
-[node name="PupW3_4" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=882440928 instance=ExtResource("31_pupitre")]
+[node name="PupW3_4" parent="PlantaBaja/HabitacionesPB" unique_id=882440928 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 0, 2.2)
 
-[node name="PupW3_5" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=32931772 instance=ExtResource("31_pupitre")]
+[node name="PupW3_5" parent="PlantaBaja/HabitacionesPB" unique_id=32931772 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 0, 5.4)
 
-[node name="PupW3_6" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=154419859 instance=ExtResource("31_pupitre")]
+[node name="PupW3_6" parent="PlantaBaja/HabitacionesPB" unique_id=154419859 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 0, -1)
 
-[node name="PupW3_7" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1387018738 instance=ExtResource("31_pupitre")]
+[node name="PupW3_7" parent="PlantaBaja/HabitacionesPB" unique_id=1387018738 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 0, 2.2)
 
-[node name="PupW3_8" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=111850755 instance=ExtResource("31_pupitre")]
+[node name="PupW3_8" parent="PlantaBaja/HabitacionesPB" unique_id=111850755 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 0, 5.4)
 
-[node name="PupW4_0" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=703284495 instance=ExtResource("31_pupitre")]
+[node name="PupW4_0" parent="PlantaBaja/HabitacionesPB" unique_id=703284495 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 0, 14)
 
-[node name="PupW4_1" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=682622175 instance=ExtResource("31_pupitre")]
+[node name="PupW4_1" parent="PlantaBaja/HabitacionesPB" unique_id=682622175 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 0, 17.2)
 
-[node name="PupW4_2" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=184892991 instance=ExtResource("31_pupitre")]
+[node name="PupW4_2" parent="PlantaBaja/HabitacionesPB" unique_id=184892991 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 0, 20.4)
 
-[node name="PupW4_3" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1215698802 instance=ExtResource("31_pupitre")]
+[node name="PupW4_3" parent="PlantaBaja/HabitacionesPB" unique_id=1215698802 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 0, 14)
 
-[node name="PupW4_4" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=168925975 instance=ExtResource("31_pupitre")]
+[node name="PupW4_4" parent="PlantaBaja/HabitacionesPB" unique_id=168925975 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 0, 17.2)
 
-[node name="PupW4_5" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1123702557 instance=ExtResource("31_pupitre")]
+[node name="PupW4_5" parent="PlantaBaja/HabitacionesPB" unique_id=1123702557 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 0, 20.4)
 
-[node name="PupW4_6" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1575466862 instance=ExtResource("31_pupitre")]
+[node name="PupW4_6" parent="PlantaBaja/HabitacionesPB" unique_id=1575466862 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 0, 14)
 
-[node name="PupW4_7" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=573529438 instance=ExtResource("31_pupitre")]
+[node name="PupW4_7" parent="PlantaBaja/HabitacionesPB" unique_id=573529438 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 0, 17.2)
 
-[node name="PupW4_8" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=497680099 instance=ExtResource("31_pupitre")]
+[node name="PupW4_8" parent="PlantaBaja/HabitacionesPB" unique_id=497680099 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 0, 20.4)
 
 [node name="CartelW1" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=673107816]
@@ -816,31 +814,31 @@ use_collision = true
 size = Vector3(20, 4.5, 0.3)
 material = ExtResource("4_0kga5")
 
-[node name="PupWI1_0" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=2019246450 instance=ExtResource("31_pupitre")]
+[node name="PupWI1_0" parent="PlantaBaja/HabitacionesPB" unique_id=2019246450 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -32.5, 0, -20)
 
-[node name="PupWI1_1" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1131024924 instance=ExtResource("31_pupitre")]
+[node name="PupWI1_1" parent="PlantaBaja/HabitacionesPB" unique_id=1131024924 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -32.5, 0, -16.8)
 
-[node name="PupWI1_2" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1007818154 instance=ExtResource("31_pupitre")]
+[node name="PupWI1_2" parent="PlantaBaja/HabitacionesPB" unique_id=1007818154 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -32.5, 0, -13.6)
 
-[node name="PupWI1_3" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1517069793 instance=ExtResource("31_pupitre")]
+[node name="PupWI1_3" parent="PlantaBaja/HabitacionesPB" unique_id=1517069793 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -28.5, 0, -20)
 
-[node name="PupWI1_4" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=349680871 instance=ExtResource("31_pupitre")]
+[node name="PupWI1_4" parent="PlantaBaja/HabitacionesPB" unique_id=349680871 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -28.5, 0, -16.8)
 
-[node name="PupWI1_5" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1598800848 instance=ExtResource("31_pupitre")]
+[node name="PupWI1_5" parent="PlantaBaja/HabitacionesPB" unique_id=1598800848 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -28.5, 0, -13.6)
 
-[node name="PupWI1_6" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1924222657 instance=ExtResource("31_pupitre")]
+[node name="PupWI1_6" parent="PlantaBaja/HabitacionesPB" unique_id=1924222657 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 0, -20)
 
-[node name="PupWI1_7" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=469754324 instance=ExtResource("31_pupitre")]
+[node name="PupWI1_7" parent="PlantaBaja/HabitacionesPB" unique_id=469754324 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 0, -16.8)
 
-[node name="PupWI1_8" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1108107281 instance=ExtResource("31_pupitre")]
+[node name="PupWI1_8" parent="PlantaBaja/HabitacionesPB" unique_id=1108107281 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 0, -13.6)
 
 [node name="CartelWI1" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=1963864206]
@@ -964,31 +962,31 @@ use_collision = true
 size = Vector3(0.3, 0.8, 2.9)
 material = ExtResource("4_0kga5")
 
-[node name="PupWI2_0" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=103513796 instance=ExtResource("31_pupitre")]
+[node name="PupWI2_0" parent="PlantaBaja/HabitacionesPB" unique_id=103513796 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -32.5, 0, 15)
 
-[node name="PupWI2_1" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1969203392 instance=ExtResource("31_pupitre")]
+[node name="PupWI2_1" parent="PlantaBaja/HabitacionesPB" unique_id=1969203392 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -32.5, 0, 18.2)
 
-[node name="PupWI2_2" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1350144373 instance=ExtResource("31_pupitre")]
+[node name="PupWI2_2" parent="PlantaBaja/HabitacionesPB" unique_id=1350144373 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -32.5, 0, 21.4)
 
-[node name="PupWI2_3" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=939971508 instance=ExtResource("31_pupitre")]
+[node name="PupWI2_3" parent="PlantaBaja/HabitacionesPB" unique_id=939971508 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -28.5, 0, 15)
 
-[node name="PupWI2_4" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1847613287 instance=ExtResource("31_pupitre")]
+[node name="PupWI2_4" parent="PlantaBaja/HabitacionesPB" unique_id=1847613287 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -28.5, 0, 18.2)
 
-[node name="PupWI2_5" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=196455217 instance=ExtResource("31_pupitre")]
+[node name="PupWI2_5" parent="PlantaBaja/HabitacionesPB" unique_id=196455217 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -28.5, 0, 21.4)
 
-[node name="PupWI2_6" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1828138995 instance=ExtResource("31_pupitre")]
+[node name="PupWI2_6" parent="PlantaBaja/HabitacionesPB" unique_id=1828138995 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 0, 15)
 
-[node name="PupWI2_7" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=736636129 instance=ExtResource("31_pupitre")]
+[node name="PupWI2_7" parent="PlantaBaja/HabitacionesPB" unique_id=736636129 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 0, 18.2)
 
-[node name="PupWI2_8" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=22555288 instance=ExtResource("31_pupitre")]
+[node name="PupWI2_8" parent="PlantaBaja/HabitacionesPB" unique_id=22555288 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 0, 21.4)
 
 [node name="CartelWI2" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=737835908]
@@ -1040,31 +1038,31 @@ use_collision = true
 size = Vector3(20, 4.5, 0.3)
 material = ExtResource("4_0kga5")
 
-[node name="PupEI1_0" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=2058441760 instance=ExtResource("31_pupitre")]
+[node name="PupEI1_0" parent="PlantaBaja/HabitacionesPB" unique_id=2058441760 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 21.5, 0, -20)
 
-[node name="PupEI1_1" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=2048755639 instance=ExtResource("31_pupitre")]
+[node name="PupEI1_1" parent="PlantaBaja/HabitacionesPB" unique_id=2048755639 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 21.5, 0, -16.8)
 
-[node name="PupEI1_2" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=2036833617 instance=ExtResource("31_pupitre")]
+[node name="PupEI1_2" parent="PlantaBaja/HabitacionesPB" unique_id=2036833617 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 21.5, 0, -13.6)
 
-[node name="PupEI1_3" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=715041751 instance=ExtResource("31_pupitre")]
+[node name="PupEI1_3" parent="PlantaBaja/HabitacionesPB" unique_id=715041751 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 25.5, 0, -20)
 
-[node name="PupEI1_4" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1439075613 instance=ExtResource("31_pupitre")]
+[node name="PupEI1_4" parent="PlantaBaja/HabitacionesPB" unique_id=1439075613 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 25.5, 0, -16.8)
 
-[node name="PupEI1_5" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=217142472 instance=ExtResource("31_pupitre")]
+[node name="PupEI1_5" parent="PlantaBaja/HabitacionesPB" unique_id=217142472 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 25.5, 0, -13.6)
 
-[node name="PupEI1_6" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=254303414 instance=ExtResource("31_pupitre")]
+[node name="PupEI1_6" parent="PlantaBaja/HabitacionesPB" unique_id=254303414 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 0, -20)
 
-[node name="PupEI1_7" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1722382999 instance=ExtResource("31_pupitre")]
+[node name="PupEI1_7" parent="PlantaBaja/HabitacionesPB" unique_id=1722382999 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 0, -16.8)
 
-[node name="PupEI1_8" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1192955371 instance=ExtResource("31_pupitre")]
+[node name="PupEI1_8" parent="PlantaBaja/HabitacionesPB" unique_id=1192955371 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 0, -13.6)
 
 [node name="CartelEI1" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=311098536]
@@ -1098,31 +1096,31 @@ use_collision = true
 size = Vector3(20, 4.5, 0.3)
 material = ExtResource("4_0kga5")
 
-[node name="PupEI2_0" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=171954698 instance=ExtResource("31_pupitre")]
+[node name="PupEI2_0" parent="PlantaBaja/HabitacionesPB" unique_id=171954698 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 21.5, 0, -4)
 
-[node name="PupEI2_1" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=2016226960 instance=ExtResource("31_pupitre")]
+[node name="PupEI2_1" parent="PlantaBaja/HabitacionesPB" unique_id=2016226960 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 21.5, 0, -0.8)
 
-[node name="PupEI2_2" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=506282495 instance=ExtResource("31_pupitre")]
+[node name="PupEI2_2" parent="PlantaBaja/HabitacionesPB" unique_id=506282495 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 21.5, 0, 2.4)
 
-[node name="PupEI2_3" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1721711149 instance=ExtResource("31_pupitre")]
+[node name="PupEI2_3" parent="PlantaBaja/HabitacionesPB" unique_id=1721711149 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 25.5, 0, -4)
 
-[node name="PupEI2_4" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1487444498 instance=ExtResource("31_pupitre")]
+[node name="PupEI2_4" parent="PlantaBaja/HabitacionesPB" unique_id=1487444498 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 25.5, 0, -0.8)
 
-[node name="PupEI2_5" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1467625376 instance=ExtResource("31_pupitre")]
+[node name="PupEI2_5" parent="PlantaBaja/HabitacionesPB" unique_id=1467625376 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 25.5, 0, 2.4)
 
-[node name="PupEI2_6" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=588194886 instance=ExtResource("31_pupitre")]
+[node name="PupEI2_6" parent="PlantaBaja/HabitacionesPB" unique_id=588194886 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 0, -4)
 
-[node name="PupEI2_7" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1222664537 instance=ExtResource("31_pupitre")]
+[node name="PupEI2_7" parent="PlantaBaja/HabitacionesPB" unique_id=1222664537 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 0, -0.8)
 
-[node name="PupEI2_8" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=604835386 instance=ExtResource("31_pupitre")]
+[node name="PupEI2_8" parent="PlantaBaja/HabitacionesPB" unique_id=604835386 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 0, 2.4)
 
 [node name="CartelEI2" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=1980685760]
@@ -1150,31 +1148,31 @@ use_collision = true
 size = Vector3(0.3, 0.8, 2.9)
 material = ExtResource("4_0kga5")
 
-[node name="PupEI3_0" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=967653063 instance=ExtResource("31_pupitre")]
+[node name="PupEI3_0" parent="PlantaBaja/HabitacionesPB" unique_id=967653063 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 21.5, 0, 12)
 
-[node name="PupEI3_1" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=619443555 instance=ExtResource("31_pupitre")]
+[node name="PupEI3_1" parent="PlantaBaja/HabitacionesPB" unique_id=619443555 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 21.5, 0, 15.2)
 
-[node name="PupEI3_2" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1262338947 instance=ExtResource("31_pupitre")]
+[node name="PupEI3_2" parent="PlantaBaja/HabitacionesPB" unique_id=1262338947 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 21.5, 0, 18.4)
 
-[node name="PupEI3_3" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=181658924 instance=ExtResource("31_pupitre")]
+[node name="PupEI3_3" parent="PlantaBaja/HabitacionesPB" unique_id=181658924 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 25.5, 0, 12)
 
-[node name="PupEI3_4" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=122295242 instance=ExtResource("31_pupitre")]
+[node name="PupEI3_4" parent="PlantaBaja/HabitacionesPB" unique_id=122295242 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 25.5, 0, 15.2)
 
-[node name="PupEI3_5" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1060996526 instance=ExtResource("31_pupitre")]
+[node name="PupEI3_5" parent="PlantaBaja/HabitacionesPB" unique_id=1060996526 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 25.5, 0, 18.4)
 
-[node name="PupEI3_6" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1980873093 instance=ExtResource("31_pupitre")]
+[node name="PupEI3_6" parent="PlantaBaja/HabitacionesPB" unique_id=1980873093 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 0, 12)
 
-[node name="PupEI3_7" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=275070792 instance=ExtResource("31_pupitre")]
+[node name="PupEI3_7" parent="PlantaBaja/HabitacionesPB" unique_id=275070792 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 0, 15.2)
 
-[node name="PupEI3_8" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=152042569 instance=ExtResource("31_pupitre")]
+[node name="PupEI3_8" parent="PlantaBaja/HabitacionesPB" unique_id=152042569 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 0, 18.4)
 
 [node name="CartelEI3" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=1487175149]
@@ -1208,79 +1206,79 @@ use_collision = true
 size = Vector3(18, 4.5, 0.3)
 material = ExtResource("4_0kga5")
 
-[node name="PizE1" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=215936439 instance=ExtResource("32_pizarron")]
+[node name="PizE1" parent="PlantaBaja/HabitacionesPB" unique_id=215936439 instance=ExtResource("32_pizarron")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 64.55, 1.5, -30)
 
-[node name="PupE1_0" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1392822690 instance=ExtResource("31_pupitre")]
+[node name="PupE1_0" parent="PlantaBaja/HabitacionesPB" unique_id=1392822690 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 0, -41)
 
-[node name="PupE1_1" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=19982576 instance=ExtResource("31_pupitre")]
+[node name="PupE1_1" parent="PlantaBaja/HabitacionesPB" unique_id=19982576 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 0, -37.8)
 
-[node name="PupE1_2" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1671366089 instance=ExtResource("31_pupitre")]
+[node name="PupE1_2" parent="PlantaBaja/HabitacionesPB" unique_id=1671366089 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 0, -34.6)
 
-[node name="PupE1_3" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1225220775 instance=ExtResource("31_pupitre")]
+[node name="PupE1_3" parent="PlantaBaja/HabitacionesPB" unique_id=1225220775 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 0, -31.4)
 
-[node name="PupE1_4" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=294449298 instance=ExtResource("31_pupitre")]
+[node name="PupE1_4" parent="PlantaBaja/HabitacionesPB" unique_id=294449298 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 0, -28.2)
 
-[node name="PupE1_5" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=557851763 instance=ExtResource("31_pupitre")]
+[node name="PupE1_5" parent="PlantaBaja/HabitacionesPB" unique_id=557851763 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 0, -25)
 
-[node name="PupE1_6" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=2002266749 instance=ExtResource("31_pupitre")]
+[node name="PupE1_6" parent="PlantaBaja/HabitacionesPB" unique_id=2002266749 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 0, -21.8)
 
-[node name="PupE1_7" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1469352784 instance=ExtResource("31_pupitre")]
+[node name="PupE1_7" parent="PlantaBaja/HabitacionesPB" unique_id=1469352784 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 0, -18.6)
 
-[node name="PupE1_8" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1805456333 instance=ExtResource("31_pupitre")]
+[node name="PupE1_8" parent="PlantaBaja/HabitacionesPB" unique_id=1805456333 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 0, -41)
 
-[node name="PupE1_9" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1610753368 instance=ExtResource("31_pupitre")]
+[node name="PupE1_9" parent="PlantaBaja/HabitacionesPB" unique_id=1610753368 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 0, -37.8)
 
-[node name="PupE1_10" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1700240892 instance=ExtResource("31_pupitre")]
+[node name="PupE1_10" parent="PlantaBaja/HabitacionesPB" unique_id=1700240892 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 0, -34.6)
 
-[node name="PupE1_11" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1247625681 instance=ExtResource("31_pupitre")]
+[node name="PupE1_11" parent="PlantaBaja/HabitacionesPB" unique_id=1247625681 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 0, -31.4)
 
-[node name="PupE1_12" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=823876607 instance=ExtResource("31_pupitre")]
+[node name="PupE1_12" parent="PlantaBaja/HabitacionesPB" unique_id=823876607 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 0, -28.2)
 
-[node name="PupE1_13" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=992894014 instance=ExtResource("31_pupitre")]
+[node name="PupE1_13" parent="PlantaBaja/HabitacionesPB" unique_id=992894014 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 0, -25)
 
-[node name="PupE1_14" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1706123481 instance=ExtResource("31_pupitre")]
+[node name="PupE1_14" parent="PlantaBaja/HabitacionesPB" unique_id=1706123481 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 0, -21.8)
 
-[node name="PupE1_15" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=987599096 instance=ExtResource("31_pupitre")]
+[node name="PupE1_15" parent="PlantaBaja/HabitacionesPB" unique_id=987599096 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 0, -18.6)
 
-[node name="PupE1_16" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1332337726 instance=ExtResource("31_pupitre")]
+[node name="PupE1_16" parent="PlantaBaja/HabitacionesPB" unique_id=1332337726 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 0, -41)
 
-[node name="PupE1_17" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=92076362 instance=ExtResource("31_pupitre")]
+[node name="PupE1_17" parent="PlantaBaja/HabitacionesPB" unique_id=92076362 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 0, -37.8)
 
-[node name="PupE1_18" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1010506192 instance=ExtResource("31_pupitre")]
+[node name="PupE1_18" parent="PlantaBaja/HabitacionesPB" unique_id=1010506192 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 0, -34.6)
 
-[node name="PupE1_19" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=961932793 instance=ExtResource("31_pupitre")]
+[node name="PupE1_19" parent="PlantaBaja/HabitacionesPB" unique_id=961932793 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 0, -31.4)
 
-[node name="PupE1_20" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=885813273 instance=ExtResource("31_pupitre")]
+[node name="PupE1_20" parent="PlantaBaja/HabitacionesPB" unique_id=885813273 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 0, -28.2)
 
-[node name="PupE1_21" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1717623579 instance=ExtResource("31_pupitre")]
+[node name="PupE1_21" parent="PlantaBaja/HabitacionesPB" unique_id=1717623579 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 0, -25)
 
-[node name="PupE1_22" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1616919734 instance=ExtResource("31_pupitre")]
+[node name="PupE1_22" parent="PlantaBaja/HabitacionesPB" unique_id=1616919734 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 0, -21.8)
 
-[node name="PupE1_23" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=870970183 instance=ExtResource("31_pupitre")]
+[node name="PupE1_23" parent="PlantaBaja/HabitacionesPB" unique_id=870970183 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 0, -18.6)
 
 [node name="CartelE1" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=522957053]
@@ -2324,28 +2322,28 @@ material = ExtResource("11_g4jqe")
 [node name="LuzCafePB_N1" type="OmniLight3D" parent="PlantaBaja/HabitacionesPB" unique_id=554179628]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53, 3.8, -9)
 light_color = Color(1, 0.96, 0.88, 1)
-light_energy = 0.55
+light_energy = 0.28
 shadow_enabled = true
 omni_range = 12.0
 
 [node name="LuzCafePB_N2" type="OmniLight3D" parent="PlantaBaja/HabitacionesPB" unique_id=1548536911]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 3.8, -9)
 light_color = Color(1, 0.96, 0.88, 1)
-light_energy = 0.55
+light_energy = 0.28
 shadow_enabled = true
 omni_range = 12.0
 
 [node name="LuzCafePB_S1" type="OmniLight3D" parent="PlantaBaja/HabitacionesPB" unique_id=1965485496]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 52, 3.8, 6.5)
 light_color = Color(1, 0.96, 0.88, 1)
-light_energy = 0.55
+light_energy = 0.28
 shadow_enabled = true
 omni_range = 12.0
 
 [node name="LuzCafePB_S2" type="OmniLight3D" parent="PlantaBaja/HabitacionesPB" unique_id=2135417584]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 3.8, 6.5)
 light_color = Color(1, 0.96, 0.88, 1)
-light_energy = 0.55
+light_energy = 0.25
 shadow_enabled = true
 omni_range = 12.0
 
@@ -2380,31 +2378,31 @@ use_collision = true
 size = Vector3(18, 4.5, 0.3)
 material = ExtResource("4_0kga5")
 
-[node name="PupE2_0" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=2080266610 instance=ExtResource("31_pupitre")]
+[node name="PupE2_0" parent="PlantaBaja/HabitacionesPB" unique_id=2080266610 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 0, 14)
 
-[node name="PupE2_1" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1101715812 instance=ExtResource("31_pupitre")]
+[node name="PupE2_1" parent="PlantaBaja/HabitacionesPB" unique_id=1101715812 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 0, 17.2)
 
-[node name="PupE2_2" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1199396651 instance=ExtResource("31_pupitre")]
+[node name="PupE2_2" parent="PlantaBaja/HabitacionesPB" unique_id=1199396651 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 0, 20.4)
 
-[node name="PupE2_3" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1691277868 instance=ExtResource("31_pupitre")]
+[node name="PupE2_3" parent="PlantaBaja/HabitacionesPB" unique_id=1691277868 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 0, 14)
 
-[node name="PupE2_4" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1260052810 instance=ExtResource("31_pupitre")]
+[node name="PupE2_4" parent="PlantaBaja/HabitacionesPB" unique_id=1260052810 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 0, 17.2)
 
-[node name="PupE2_5" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1475962615 instance=ExtResource("31_pupitre")]
+[node name="PupE2_5" parent="PlantaBaja/HabitacionesPB" unique_id=1475962615 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 0, 20.4)
 
-[node name="PupE2_6" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1148410149 instance=ExtResource("31_pupitre")]
+[node name="PupE2_6" parent="PlantaBaja/HabitacionesPB" unique_id=1148410149 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 0, 14)
 
-[node name="PupE2_7" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=253150542 instance=ExtResource("31_pupitre")]
+[node name="PupE2_7" parent="PlantaBaja/HabitacionesPB" unique_id=253150542 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 0, 17.2)
 
-[node name="PupE2_8" type="StaticBody3D" parent="PlantaBaja/HabitacionesPB" unique_id=1959049966 instance=ExtResource("31_pupitre")]
+[node name="PupE2_8" parent="PlantaBaja/HabitacionesPB" unique_id=1959049966 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 0, 20.4)
 
 [node name="CartelE2" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=2011378913]
@@ -2860,169 +2858,6 @@ text = "AUDITORIO CENTRAL"
 font_size = 44
 outline_size = 10
 metadata/_edit_group_ = true
-
-[node name="IluminacionTechoCafePB" type="Node3D" parent="PlantaBaja/HabitacionesPB" unique_id=928692986]
-
-[node name="Plafon_LuzBarraOeste" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB/IluminacionTechoCafePB" unique_id=1766432523]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.5, 4.28, 3.9)
-size = Vector3(1.6, 0.05, 0.45)
-material = ExtResource("22_jahmo")
-
-[node name="Panel_LuzBarraOeste" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB/IluminacionTechoCafePB" unique_id=2068317922]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.5, 4.2580004, 3.9)
-size = Vector3(1.472, 0.02, 0.369)
-material = ExtResource("23_c2jul")
-
-[node name="Omni_LuzBarraOeste" type="OmniLight3D" parent="PlantaBaja/HabitacionesPB/IluminacionTechoCafePB" unique_id=1576288209]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.5, 4.1000004, 3.9)
-light_color = Color(1, 0.97, 0.91, 1)
-light_energy = 0.9
-shadow_enabled = true
-omni_range = 8.0
-
-[node name="Plafon_LuzPeronachos" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB/IluminacionTechoCafePB" unique_id=1853231155]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.1, 4.28, 3.9)
-size = Vector3(1.6, 0.05, 0.45)
-material = ExtResource("22_jahmo")
-
-[node name="Panel_LuzPeronachos" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB/IluminacionTechoCafePB" unique_id=1133753180]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.1, 4.2580004, 3.9)
-size = Vector3(1.472, 0.02, 0.369)
-material = ExtResource("23_c2jul")
-
-[node name="Omni_LuzPeronachos" type="OmniLight3D" parent="PlantaBaja/HabitacionesPB/IluminacionTechoCafePB" unique_id=617182780]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.1, 4.1000004, 3.9)
-light_color = Color(1, 0.97, 0.91, 1)
-light_energy = 1.35
-shadow_enabled = true
-omni_range = 8.5
-
-[node name="Spot_LuzPeronachos" type="SpotLight3D" parent="PlantaBaja/HabitacionesPB/IluminacionTechoCafePB" unique_id=361110640]
-transform = Transform3D(1, 0, 0, 0, 0.17364822, 0.9848077, 0, -0.9848077, 0.17364822, 51.1, 4.13, 3.9)
-light_color = Color(1, 0.98, 0.93, 1)
-light_energy = 1.2
-shadow_enabled = true
-spot_range = 5.5
-spot_angle = 42.0
-
-[node name="Plafon_LuzBarraEste" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB/IluminacionTechoCafePB" unique_id=1633778176]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 54, 4.28, 3.9)
-size = Vector3(1.6, 0.05, 0.45)
-material = ExtResource("22_jahmo")
-
-[node name="Panel_LuzBarraEste" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB/IluminacionTechoCafePB" unique_id=503063818]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 54, 4.2580004, 3.9)
-size = Vector3(1.472, 0.02, 0.369)
-material = ExtResource("23_c2jul")
-
-[node name="Omni_LuzBarraEste" type="OmniLight3D" parent="PlantaBaja/HabitacionesPB/IluminacionTechoCafePB" unique_id=1096388978]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 54, 4.1000004, 3.9)
-light_color = Color(1, 0.97, 0.91, 1)
-light_energy = 0.9
-shadow_enabled = true
-omni_range = 8.0
-
-[node name="Plafon_LuzCentral_1" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB/IluminacionTechoCafePB" unique_id=2097947980]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 49, 4.28, -0.7)
-size = Vector3(1.8, 0.05, 0.45)
-material = ExtResource("22_jahmo")
-
-[node name="Panel_LuzCentral_1" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB/IluminacionTechoCafePB" unique_id=1268257391]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 49, 4.2580004, -0.7)
-size = Vector3(1.6559999, 0.02, 0.369)
-material = ExtResource("23_c2jul")
-
-[node name="Omni_LuzCentral_1" type="OmniLight3D" parent="PlantaBaja/HabitacionesPB/IluminacionTechoCafePB" unique_id=440452692]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 49, 4.1000004, -0.7)
-light_color = Color(1, 0.97, 0.91, 1)
-light_energy = 0.9
-shadow_enabled = true
-omni_range = 9.5
-
-[node name="Plafon_LuzCentral_2" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB/IluminacionTechoCafePB" unique_id=952319610]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53, 4.28, -0.7)
-size = Vector3(1.8, 0.05, 0.45)
-material = ExtResource("22_jahmo")
-
-[node name="Panel_LuzCentral_2" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB/IluminacionTechoCafePB" unique_id=2105864318]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53, 4.2580004, -0.7)
-size = Vector3(1.6559999, 0.02, 0.369)
-material = ExtResource("23_c2jul")
-
-[node name="Omni_LuzCentral_2" type="OmniLight3D" parent="PlantaBaja/HabitacionesPB/IluminacionTechoCafePB" unique_id=1694498278]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53, 4.1000004, -0.7)
-light_color = Color(1, 0.97, 0.91, 1)
-light_energy = 0.9
-shadow_enabled = true
-omni_range = 9.5
-
-[node name="Plafon_LuzCentral_3" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB/IluminacionTechoCafePB" unique_id=518145569]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 57, 4.28, -0.7)
-size = Vector3(1.8, 0.05, 0.45)
-material = ExtResource("22_jahmo")
-
-[node name="Panel_LuzCentral_3" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB/IluminacionTechoCafePB" unique_id=120357162]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 57, 4.2580004, -0.7)
-size = Vector3(1.6559999, 0.02, 0.369)
-material = ExtResource("23_c2jul")
-
-[node name="Omni_LuzCentral_3" type="OmniLight3D" parent="PlantaBaja/HabitacionesPB/IluminacionTechoCafePB" unique_id=178161474]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 57, 4.1000004, -0.7)
-light_color = Color(1, 0.97, 0.91, 1)
-light_energy = 0.9
-shadow_enabled = true
-omni_range = 9.5
-
-[node name="Plafon_LuzCentral_4" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB/IluminacionTechoCafePB" unique_id=704269969]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 61, 4.28, -0.7)
-size = Vector3(1.8, 0.05, 0.45)
-material = ExtResource("22_jahmo")
-
-[node name="Panel_LuzCentral_4" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB/IluminacionTechoCafePB" unique_id=1362012669]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 61, 4.2580004, -0.7)
-size = Vector3(1.6559999, 0.02, 0.369)
-material = ExtResource("23_c2jul")
-
-[node name="Omni_LuzCentral_4" type="OmniLight3D" parent="PlantaBaja/HabitacionesPB/IluminacionTechoCafePB" unique_id=982194886]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 61, 4.1000004, -0.7)
-light_color = Color(1, 0.97, 0.91, 1)
-light_energy = 0.9
-shadow_enabled = true
-omni_range = 9.5
-
-[node name="Plafon_LuzNorte_1" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB/IluminacionTechoCafePB" unique_id=1689693346]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53, 4.28, -6.5)
-size = Vector3(1.8, 0.05, 0.45)
-material = ExtResource("22_jahmo")
-
-[node name="Panel_LuzNorte_1" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB/IluminacionTechoCafePB" unique_id=1378662547]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53, 4.2580004, -6.5)
-size = Vector3(1.6559999, 0.02, 0.369)
-material = ExtResource("23_c2jul")
-
-[node name="Omni_LuzNorte_1" type="OmniLight3D" parent="PlantaBaja/HabitacionesPB/IluminacionTechoCafePB" unique_id=1305813108]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53, 4.1000004, -6.5)
-light_color = Color(1, 0.97, 0.91, 1)
-light_energy = 0.8
-shadow_enabled = true
-omni_range = 9.0
-
-[node name="Plafon_LuzNorte_2" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB/IluminacionTechoCafePB" unique_id=1491762253]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58, 4.28, -6.5)
-size = Vector3(1.8, 0.05, 0.45)
-material = ExtResource("22_jahmo")
-
-[node name="Panel_LuzNorte_2" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB/IluminacionTechoCafePB" unique_id=1438167030]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58, 4.2580004, -6.5)
-size = Vector3(1.6559999, 0.02, 0.369)
-material = ExtResource("23_c2jul")
-
-[node name="Omni_LuzNorte_2" type="OmniLight3D" parent="PlantaBaja/HabitacionesPB/IluminacionTechoCafePB" unique_id=1357645171]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58, 4.1000004, -6.5)
-light_color = Color(1, 0.97, 0.91, 1)
-light_energy = 0.8
-shadow_enabled = true
-omni_range = 9.0
 
 [node name="PrimerPiso" type="Node3D" parent="." unique_id=1653019584]
 
@@ -3518,136 +3353,136 @@ use_collision = true
 size = Vector3(0.3, 4.5, 12)
 material = ExtResource("4_0kga5")
 
-[node name="P2_PizN1" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1904723722 instance=ExtResource("32_pizarron")]
+[node name="P2_PizN1" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1904723722 instance=ExtResource("32_pizarron")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 10.5, -44.55)
 
-[node name="P2_PizN2" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1912842974 instance=ExtResource("32_pizarron")]
+[node name="P2_PizN2" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1912842974 instance=ExtResource("32_pizarron")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 10.5, -44.55)
 
-[node name="P2_PizN3" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1392437630 instance=ExtResource("32_pizarron")]
+[node name="P2_PizN3" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1392437630 instance=ExtResource("32_pizarron")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 10.5, -44.55)
 
-[node name="P2_PizN4" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1120239478 instance=ExtResource("32_pizarron")]
+[node name="P2_PizN4" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1120239478 instance=ExtResource("32_pizarron")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.5, 10.5, -44.55)
 
-[node name="P2_PupN1_0" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1426347066 instance=ExtResource("31_pupitre")]
+[node name="P2_PupN1_0" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1426347066 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.5, 9, -41)
 
-[node name="P2_PupN1_1" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=789451492 instance=ExtResource("31_pupitre")]
+[node name="P2_PupN1_1" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=789451492 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.5, 9, -37.8)
 
-[node name="P2_PupN1_2" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=473316542 instance=ExtResource("31_pupitre")]
+[node name="P2_PupN1_2" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=473316542 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.5, 9, -41)
 
-[node name="P2_PupN1_3" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=833013299 instance=ExtResource("31_pupitre")]
+[node name="P2_PupN1_3" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=833013299 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.5, 9, -37.8)
 
-[node name="P2_PupN1_4" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2001200871 instance=ExtResource("31_pupitre")]
+[node name="P2_PupN1_4" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2001200871 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 9, -41)
 
-[node name="P2_PupN1_5" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1847206109 instance=ExtResource("31_pupitre")]
+[node name="P2_PupN1_5" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1847206109 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 9, -37.8)
 
-[node name="P2_PupN1_6" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1858617044 instance=ExtResource("31_pupitre")]
+[node name="P2_PupN1_6" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1858617044 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48.5, 9, -41)
 
-[node name="P2_PupN1_7" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1990387004 instance=ExtResource("31_pupitre")]
+[node name="P2_PupN1_7" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1990387004 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48.5, 9, -37.8)
 
-[node name="P2_PupN1_8" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=62166626 instance=ExtResource("31_pupitre")]
+[node name="P2_PupN1_8" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=62166626 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.5, 9, -41)
 
-[node name="P2_PupN1_9" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1353930381 instance=ExtResource("31_pupitre")]
+[node name="P2_PupN1_9" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1353930381 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.5, 9, -37.8)
 
-[node name="P2_PupN2_0" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1272041950 instance=ExtResource("31_pupitre")]
+[node name="P2_PupN2_0" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1272041950 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.5, 9, -41)
 
-[node name="P2_PupN2_1" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1344256635 instance=ExtResource("31_pupitre")]
+[node name="P2_PupN2_1" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1344256635 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.5, 9, -37.8)
 
-[node name="P2_PupN2_2" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2107853220 instance=ExtResource("31_pupitre")]
+[node name="P2_PupN2_2" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2107853220 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.5, 9, -41)
 
-[node name="P2_PupN2_3" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1367168287 instance=ExtResource("31_pupitre")]
+[node name="P2_PupN2_3" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1367168287 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.5, 9, -37.8)
 
-[node name="P2_PupN2_4" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=293320580 instance=ExtResource("31_pupitre")]
+[node name="P2_PupN2_4" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=293320580 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 9, -41)
 
-[node name="P2_PupN2_5" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=890601042 instance=ExtResource("31_pupitre")]
+[node name="P2_PupN2_5" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=890601042 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 9, -37.8)
 
-[node name="P2_PupN2_6" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=429319801 instance=ExtResource("31_pupitre")]
+[node name="P2_PupN2_6" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=429319801 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.5, 9, -41)
 
-[node name="P2_PupN2_7" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1231323428 instance=ExtResource("31_pupitre")]
+[node name="P2_PupN2_7" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1231323428 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.5, 9, -37.8)
 
-[node name="P2_PupN2_8" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=26373848 instance=ExtResource("31_pupitre")]
+[node name="P2_PupN2_8" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=26373848 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.5, 9, -41)
 
-[node name="P2_PupN2_9" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1867231047 instance=ExtResource("31_pupitre")]
+[node name="P2_PupN2_9" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1867231047 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.5, 9, -37.8)
 
-[node name="P2_PupN3_0" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=567273090 instance=ExtResource("31_pupitre")]
+[node name="P2_PupN3_0" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=567273090 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5, 9, -41)
 
-[node name="P2_PupN3_1" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=924678843 instance=ExtResource("31_pupitre")]
+[node name="P2_PupN3_1" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=924678843 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5, 9, -37.8)
 
-[node name="P2_PupN3_2" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2085002178 instance=ExtResource("31_pupitre")]
+[node name="P2_PupN3_2" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2085002178 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, 9, -41)
 
-[node name="P2_PupN3_3" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1855008463 instance=ExtResource("31_pupitre")]
+[node name="P2_PupN3_3" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1855008463 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, 9, -37.8)
 
-[node name="P2_PupN3_4" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=731127597 instance=ExtResource("31_pupitre")]
+[node name="P2_PupN3_4" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=731127597 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 9, -41)
 
-[node name="P2_PupN3_5" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1962335347 instance=ExtResource("31_pupitre")]
+[node name="P2_PupN3_5" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1962335347 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 9, -37.8)
 
-[node name="P2_PupN3_6" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2113017695 instance=ExtResource("31_pupitre")]
+[node name="P2_PupN3_6" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2113017695 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 9, -41)
 
-[node name="P2_PupN3_7" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1702414716 instance=ExtResource("31_pupitre")]
+[node name="P2_PupN3_7" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1702414716 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 9, -37.8)
 
-[node name="P2_PupN3_8" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=561292801 instance=ExtResource("31_pupitre")]
+[node name="P2_PupN3_8" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=561292801 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 9, -41)
 
-[node name="P2_PupN3_9" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1920142548 instance=ExtResource("31_pupitre")]
+[node name="P2_PupN3_9" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1920142548 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 9, -37.8)
 
-[node name="P2_PupN4_0" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=982575811 instance=ExtResource("31_pupitre")]
+[node name="P2_PupN4_0" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=982575811 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.5, 9, -41)
 
-[node name="P2_PupN4_1" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1775933541 instance=ExtResource("31_pupitre")]
+[node name="P2_PupN4_1" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1775933541 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.5, 9, -37.8)
 
-[node name="P2_PupN4_2" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1514525159 instance=ExtResource("31_pupitre")]
+[node name="P2_PupN4_2" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1514525159 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.5, 9, -41)
 
-[node name="P2_PupN4_3" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1383293081 instance=ExtResource("31_pupitre")]
+[node name="P2_PupN4_3" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1383293081 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.5, 9, -37.8)
 
-[node name="P2_PupN4_4" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1422403825 instance=ExtResource("31_pupitre")]
+[node name="P2_PupN4_4" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1422403825 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.5, 9, -41)
 
-[node name="P2_PupN4_5" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1128380470 instance=ExtResource("31_pupitre")]
+[node name="P2_PupN4_5" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1128380470 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.5, 9, -37.8)
 
-[node name="P2_PupN4_6" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1361956888 instance=ExtResource("31_pupitre")]
+[node name="P2_PupN4_6" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1361956888 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.5, 9, -41)
 
-[node name="P2_PupN4_7" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=376916333 instance=ExtResource("31_pupitre")]
+[node name="P2_PupN4_7" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=376916333 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.5, 9, -37.8)
 
-[node name="P2_PupN4_8" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2020840854 instance=ExtResource("31_pupitre")]
+[node name="P2_PupN4_8" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2020840854 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.5, 9, -41)
 
-[node name="P2_PupN4_9" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1437231562 instance=ExtResource("31_pupitre")]
+[node name="P2_PupN4_9" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1437231562 instance=ExtResource("31_pupitre")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.5, 9, -37.8)
 
 [node name="P2_CartelN1" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=930347462]
@@ -3774,124 +3609,124 @@ use_collision = true
 size = Vector3(18, 4.5, 0.3)
 material = ExtResource("4_0kga5")
 
-[node name="P2_PizW1" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1301478597 instance=ExtResource("32_pizarron")]
+[node name="P2_PizW1" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1301478597 instance=ExtResource("32_pizarron")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -64.55, 10.5, -26)
 
-[node name="P2_PizW2" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2093684709 instance=ExtResource("32_pizarron")]
+[node name="P2_PizW2" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2093684709 instance=ExtResource("32_pizarron")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -64.55, 10.5, -12)
 
-[node name="P2_PizW3" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2070359778 instance=ExtResource("32_pizarron")]
+[node name="P2_PizW3" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2070359778 instance=ExtResource("32_pizarron")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -64.55, 10.5, 2.5)
 
-[node name="P2_PizW4" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=11695031 instance=ExtResource("32_pizarron")]
+[node name="P2_PizW4" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=11695031 instance=ExtResource("32_pizarron")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -64.55, 10.5, 17.5)
 
-[node name="P2_PupW1_0" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1045195404 instance=ExtResource("31_pupitre")]
+[node name="P2_PupW1_0" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1045195404 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 9, -29)
 
-[node name="P2_PupW1_1" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1479038187 instance=ExtResource("31_pupitre")]
+[node name="P2_PupW1_1" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1479038187 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 9, -25.8)
 
-[node name="P2_PupW1_2" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1636817877 instance=ExtResource("31_pupitre")]
+[node name="P2_PupW1_2" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1636817877 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 9, -22.6)
 
-[node name="P2_PupW1_3" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=467236625 instance=ExtResource("31_pupitre")]
+[node name="P2_PupW1_3" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=467236625 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 9, -29)
 
-[node name="P2_PupW1_4" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=28545718 instance=ExtResource("31_pupitre")]
+[node name="P2_PupW1_4" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=28545718 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 9, -25.8)
 
-[node name="P2_PupW1_5" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1813368315 instance=ExtResource("31_pupitre")]
+[node name="P2_PupW1_5" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1813368315 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 9, -22.6)
 
-[node name="P2_PupW1_6" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=270213004 instance=ExtResource("31_pupitre")]
+[node name="P2_PupW1_6" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=270213004 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 9, -29)
 
-[node name="P2_PupW1_7" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=818053488 instance=ExtResource("31_pupitre")]
+[node name="P2_PupW1_7" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=818053488 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 9, -25.8)
 
-[node name="P2_PupW1_8" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=310214316 instance=ExtResource("31_pupitre")]
+[node name="P2_PupW1_8" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=310214316 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 9, -22.6)
 
-[node name="P2_PupW2_0" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1004464288 instance=ExtResource("31_pupitre")]
+[node name="P2_PupW2_0" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1004464288 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 9, -15)
 
-[node name="P2_PupW2_1" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2048863294 instance=ExtResource("31_pupitre")]
+[node name="P2_PupW2_1" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2048863294 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 9, -11.8)
 
-[node name="P2_PupW2_2" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=634483353 instance=ExtResource("31_pupitre")]
+[node name="P2_PupW2_2" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=634483353 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 9, -8.6)
 
-[node name="P2_PupW2_3" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1517126179 instance=ExtResource("31_pupitre")]
+[node name="P2_PupW2_3" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1517126179 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 9, -15)
 
-[node name="P2_PupW2_4" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1706212617 instance=ExtResource("31_pupitre")]
+[node name="P2_PupW2_4" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1706212617 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 9, -11.8)
 
-[node name="P2_PupW2_5" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1764698401 instance=ExtResource("31_pupitre")]
+[node name="P2_PupW2_5" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1764698401 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 9, -8.6)
 
-[node name="P2_PupW2_6" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1599635935 instance=ExtResource("31_pupitre")]
+[node name="P2_PupW2_6" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1599635935 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 9, -15)
 
-[node name="P2_PupW2_7" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=617539195 instance=ExtResource("31_pupitre")]
+[node name="P2_PupW2_7" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=617539195 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 9, -11.8)
 
-[node name="P2_PupW2_8" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=198336935 instance=ExtResource("31_pupitre")]
+[node name="P2_PupW2_8" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=198336935 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 9, -8.6)
 
-[node name="P2_PupW3_0" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=164001578 instance=ExtResource("31_pupitre")]
+[node name="P2_PupW3_0" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=164001578 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 9, -1)
 
-[node name="P2_PupW3_1" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1920900056 instance=ExtResource("31_pupitre")]
+[node name="P2_PupW3_1" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1920900056 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 9, 2.2)
 
-[node name="P2_PupW3_2" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1500065198 instance=ExtResource("31_pupitre")]
+[node name="P2_PupW3_2" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1500065198 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 9, 5.4)
 
-[node name="P2_PupW3_3" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1783426734 instance=ExtResource("31_pupitre")]
+[node name="P2_PupW3_3" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1783426734 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 9, -1)
 
-[node name="P2_PupW3_4" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=744273261 instance=ExtResource("31_pupitre")]
+[node name="P2_PupW3_4" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=744273261 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 9, 2.2)
 
-[node name="P2_PupW3_5" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1054764414 instance=ExtResource("31_pupitre")]
+[node name="P2_PupW3_5" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1054764414 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 9, 5.4)
 
-[node name="P2_PupW3_6" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1961442455 instance=ExtResource("31_pupitre")]
+[node name="P2_PupW3_6" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1961442455 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 9, -1)
 
-[node name="P2_PupW3_7" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=646164517 instance=ExtResource("31_pupitre")]
+[node name="P2_PupW3_7" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=646164517 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 9, 2.2)
 
-[node name="P2_PupW3_8" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=963331687 instance=ExtResource("31_pupitre")]
+[node name="P2_PupW3_8" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=963331687 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 9, 5.4)
 
-[node name="P2_PupW4_0" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=232605969 instance=ExtResource("31_pupitre")]
+[node name="P2_PupW4_0" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=232605969 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 9, 14)
 
-[node name="P2_PupW4_1" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=27662481 instance=ExtResource("31_pupitre")]
+[node name="P2_PupW4_1" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=27662481 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 9, 17.2)
 
-[node name="P2_PupW4_2" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=893785404 instance=ExtResource("31_pupitre")]
+[node name="P2_PupW4_2" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=893785404 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 9, 20.4)
 
-[node name="P2_PupW4_3" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1036616423 instance=ExtResource("31_pupitre")]
+[node name="P2_PupW4_3" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1036616423 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 9, 14)
 
-[node name="P2_PupW4_4" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=999167219 instance=ExtResource("31_pupitre")]
+[node name="P2_PupW4_4" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=999167219 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 9, 17.2)
 
-[node name="P2_PupW4_5" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2119792263 instance=ExtResource("31_pupitre")]
+[node name="P2_PupW4_5" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2119792263 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 9, 20.4)
 
-[node name="P2_PupW4_6" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=839641283 instance=ExtResource("31_pupitre")]
+[node name="P2_PupW4_6" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=839641283 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 9, 14)
 
-[node name="P2_PupW4_7" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1252916824 instance=ExtResource("31_pupitre")]
+[node name="P2_PupW4_7" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1252916824 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 9, 17.2)
 
-[node name="P2_PupW4_8" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=618195596 instance=ExtResource("31_pupitre")]
+[node name="P2_PupW4_8" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=618195596 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 9, 20.4)
 
 [node name="P2_CartelW1" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2141046590]
@@ -3964,31 +3799,31 @@ use_collision = true
 size = Vector3(20, 4.5, 0.3)
 material = ExtResource("4_0kga5")
 
-[node name="P2_PupWI1_0" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=197272989 instance=ExtResource("31_pupitre")]
+[node name="P2_PupWI1_0" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=197272989 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -32.5, 9, -20)
 
-[node name="P2_PupWI1_1" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=938163275 instance=ExtResource("31_pupitre")]
+[node name="P2_PupWI1_1" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=938163275 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -32.5, 9, -16.8)
 
-[node name="P2_PupWI1_2" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1197581874 instance=ExtResource("31_pupitre")]
+[node name="P2_PupWI1_2" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1197581874 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -32.5, 9, -13.6)
 
-[node name="P2_PupWI1_3" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1073202634 instance=ExtResource("31_pupitre")]
+[node name="P2_PupWI1_3" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1073202634 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -28.5, 9, -20)
 
-[node name="P2_PupWI1_4" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1192420470 instance=ExtResource("31_pupitre")]
+[node name="P2_PupWI1_4" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1192420470 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -28.5, 9, -16.8)
 
-[node name="P2_PupWI1_5" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=165659882 instance=ExtResource("31_pupitre")]
+[node name="P2_PupWI1_5" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=165659882 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -28.5, 9, -13.6)
 
-[node name="P2_PupWI1_6" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1310090419 instance=ExtResource("31_pupitre")]
+[node name="P2_PupWI1_6" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1310090419 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 9, -20)
 
-[node name="P2_PupWI1_7" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=293588277 instance=ExtResource("31_pupitre")]
+[node name="P2_PupWI1_7" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=293588277 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 9, -16.8)
 
-[node name="P2_PupWI1_8" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1131035482 instance=ExtResource("31_pupitre")]
+[node name="P2_PupWI1_8" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1131035482 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 9, -13.6)
 
 [node name="P2_CartelWI1" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1445370967]
@@ -4022,52 +3857,52 @@ use_collision = true
 size = Vector3(20, 4.5, 0.3)
 material = ExtResource("4_0kga5")
 
-[node name="P2_Piz210" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2122197669 instance=ExtResource("32_pizarron")]
+[node name="P2_Piz210" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2122197669 instance=ExtResource("32_pizarron")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -17.35, 10.5, 0.5)
 
-[node name="P2_Pup210_0" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1825967381 instance=ExtResource("31_pupitre")]
+[node name="P2_Pup210_0" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1825967381 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -32.5, 9, -6)
 
-[node name="P2_Pup210_1" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1703771171 instance=ExtResource("31_pupitre")]
+[node name="P2_Pup210_1" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1703771171 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -32.5, 9, -2.8)
 
-[node name="P2_Pup210_2" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1261863626 instance=ExtResource("31_pupitre")]
+[node name="P2_Pup210_2" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1261863626 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -32.5, 9, 0.4)
 
-[node name="P2_Pup210_3" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=604533819 instance=ExtResource("31_pupitre")]
+[node name="P2_Pup210_3" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=604533819 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -32.5, 9, 3.6)
 
-[node name="P2_Pup210_4" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1356483984 instance=ExtResource("31_pupitre")]
+[node name="P2_Pup210_4" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1356483984 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -32.5, 9, 6.8)
 
-[node name="P2_Pup210_5" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1376373732 instance=ExtResource("31_pupitre")]
+[node name="P2_Pup210_5" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1376373732 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -28.5, 9, -6)
 
-[node name="P2_Pup210_6" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=330897965 instance=ExtResource("31_pupitre")]
+[node name="P2_Pup210_6" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=330897965 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -28.5, 9, -2.8)
 
-[node name="P2_Pup210_7" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1749254385 instance=ExtResource("31_pupitre")]
+[node name="P2_Pup210_7" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1749254385 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -28.5, 9, 0.4)
 
-[node name="P2_Pup210_8" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=166179260 instance=ExtResource("31_pupitre")]
+[node name="P2_Pup210_8" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=166179260 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -28.5, 9, 3.6)
 
-[node name="P2_Pup210_9" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=214330182 instance=ExtResource("31_pupitre")]
+[node name="P2_Pup210_9" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=214330182 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -28.5, 9, 6.8)
 
-[node name="P2_Pup210_10" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=801403979 instance=ExtResource("31_pupitre")]
+[node name="P2_Pup210_10" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=801403979 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 9, -6)
 
-[node name="P2_Pup210_11" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=523956073 instance=ExtResource("31_pupitre")]
+[node name="P2_Pup210_11" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=523956073 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 9, -2.8)
 
-[node name="P2_Pup210_12" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=191063327 instance=ExtResource("31_pupitre")]
+[node name="P2_Pup210_12" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=191063327 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 9, 0.4)
 
-[node name="P2_Pup210_13" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1000486618 instance=ExtResource("31_pupitre")]
+[node name="P2_Pup210_13" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1000486618 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 9, 3.6)
 
-[node name="P2_Pup210_14" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=233472472 instance=ExtResource("31_pupitre")]
+[node name="P2_Pup210_14" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=233472472 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 9, 6.8)
 
 [node name="P2_Cartel210" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2000244830]
@@ -4095,31 +3930,31 @@ use_collision = true
 size = Vector3(0.3, 0.8, 2.9)
 material = ExtResource("4_0kga5")
 
-[node name="P2_PupWI2_0" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1016497880 instance=ExtResource("31_pupitre")]
+[node name="P2_PupWI2_0" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1016497880 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -32.5, 9, 15)
 
-[node name="P2_PupWI2_1" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=710191655 instance=ExtResource("31_pupitre")]
+[node name="P2_PupWI2_1" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=710191655 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -32.5, 9, 18.2)
 
-[node name="P2_PupWI2_2" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=676778137 instance=ExtResource("31_pupitre")]
+[node name="P2_PupWI2_2" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=676778137 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -32.5, 9, 21.4)
 
-[node name="P2_PupWI2_3" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=690133665 instance=ExtResource("31_pupitre")]
+[node name="P2_PupWI2_3" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=690133665 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -28.5, 9, 15)
 
-[node name="P2_PupWI2_4" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1683655760 instance=ExtResource("31_pupitre")]
+[node name="P2_PupWI2_4" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1683655760 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -28.5, 9, 18.2)
 
-[node name="P2_PupWI2_5" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1853793591 instance=ExtResource("31_pupitre")]
+[node name="P2_PupWI2_5" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1853793591 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -28.5, 9, 21.4)
 
-[node name="P2_PupWI2_6" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=174281652 instance=ExtResource("31_pupitre")]
+[node name="P2_PupWI2_6" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=174281652 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 9, 15)
 
-[node name="P2_PupWI2_7" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=575537323 instance=ExtResource("31_pupitre")]
+[node name="P2_PupWI2_7" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=575537323 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 9, 18.2)
 
-[node name="P2_PupWI2_8" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=733434689 instance=ExtResource("31_pupitre")]
+[node name="P2_PupWI2_8" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=733434689 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 9, 21.4)
 
 [node name="P2_CartelWI2" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1988506699]
@@ -4171,31 +4006,31 @@ use_collision = true
 size = Vector3(20, 4.5, 0.3)
 material = ExtResource("4_0kga5")
 
-[node name="P2_PupEI1_0" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1917825693 instance=ExtResource("31_pupitre")]
+[node name="P2_PupEI1_0" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1917825693 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 21.5, 9, -20)
 
-[node name="P2_PupEI1_1" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1760125655 instance=ExtResource("31_pupitre")]
+[node name="P2_PupEI1_1" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1760125655 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 21.5, 9, -16.8)
 
-[node name="P2_PupEI1_2" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=331911564 instance=ExtResource("31_pupitre")]
+[node name="P2_PupEI1_2" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=331911564 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 21.5, 9, -13.6)
 
-[node name="P2_PupEI1_3" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1532640606 instance=ExtResource("31_pupitre")]
+[node name="P2_PupEI1_3" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1532640606 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 25.5, 9, -20)
 
-[node name="P2_PupEI1_4" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1006011841 instance=ExtResource("31_pupitre")]
+[node name="P2_PupEI1_4" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1006011841 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 25.5, 9, -16.8)
 
-[node name="P2_PupEI1_5" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=799796950 instance=ExtResource("31_pupitre")]
+[node name="P2_PupEI1_5" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=799796950 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 25.5, 9, -13.6)
 
-[node name="P2_PupEI1_6" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=536188313 instance=ExtResource("31_pupitre")]
+[node name="P2_PupEI1_6" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=536188313 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 9, -20)
 
-[node name="P2_PupEI1_7" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1255351118 instance=ExtResource("31_pupitre")]
+[node name="P2_PupEI1_7" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1255351118 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 9, -16.8)
 
-[node name="P2_PupEI1_8" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1322721029 instance=ExtResource("31_pupitre")]
+[node name="P2_PupEI1_8" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1322721029 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 9, -13.6)
 
 [node name="P2_CartelEI1" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1359062122]
@@ -4229,31 +4064,31 @@ use_collision = true
 size = Vector3(20, 4.5, 0.3)
 material = ExtResource("4_0kga5")
 
-[node name="P2_PupEI2_0" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=523756806 instance=ExtResource("31_pupitre")]
+[node name="P2_PupEI2_0" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=523756806 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 21.5, 9, -4)
 
-[node name="P2_PupEI2_1" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=228172520 instance=ExtResource("31_pupitre")]
+[node name="P2_PupEI2_1" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=228172520 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 21.5, 9, -0.8)
 
-[node name="P2_PupEI2_2" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1147256506 instance=ExtResource("31_pupitre")]
+[node name="P2_PupEI2_2" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1147256506 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 21.5, 9, 2.4)
 
-[node name="P2_PupEI2_3" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1649448821 instance=ExtResource("31_pupitre")]
+[node name="P2_PupEI2_3" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1649448821 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 25.5, 9, -4)
 
-[node name="P2_PupEI2_4" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1462294958 instance=ExtResource("31_pupitre")]
+[node name="P2_PupEI2_4" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1462294958 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 25.5, 9, -0.8)
 
-[node name="P2_PupEI2_5" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=356482057 instance=ExtResource("31_pupitre")]
+[node name="P2_PupEI2_5" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=356482057 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 25.5, 9, 2.4)
 
-[node name="P2_PupEI2_6" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1646508624 instance=ExtResource("31_pupitre")]
+[node name="P2_PupEI2_6" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1646508624 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 9, -4)
 
-[node name="P2_PupEI2_7" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1685856848 instance=ExtResource("31_pupitre")]
+[node name="P2_PupEI2_7" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1685856848 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 9, -0.8)
 
-[node name="P2_PupEI2_8" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1944092611 instance=ExtResource("31_pupitre")]
+[node name="P2_PupEI2_8" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1944092611 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 9, 2.4)
 
 [node name="P2_CartelEI2" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=921895025]
@@ -4281,31 +4116,31 @@ use_collision = true
 size = Vector3(0.3, 0.8, 2.9)
 material = ExtResource("4_0kga5")
 
-[node name="P2_PupEI3_0" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1478839033 instance=ExtResource("31_pupitre")]
+[node name="P2_PupEI3_0" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1478839033 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 21.5, 9, 12)
 
-[node name="P2_PupEI3_1" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=557414970 instance=ExtResource("31_pupitre")]
+[node name="P2_PupEI3_1" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=557414970 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 21.5, 9, 15.2)
 
-[node name="P2_PupEI3_2" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2000133165 instance=ExtResource("31_pupitre")]
+[node name="P2_PupEI3_2" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2000133165 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 21.5, 9, 18.4)
 
-[node name="P2_PupEI3_3" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=557339705 instance=ExtResource("31_pupitre")]
+[node name="P2_PupEI3_3" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=557339705 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 25.5, 9, 12)
 
-[node name="P2_PupEI3_4" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1174204258 instance=ExtResource("31_pupitre")]
+[node name="P2_PupEI3_4" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1174204258 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 25.5, 9, 15.2)
 
-[node name="P2_PupEI3_5" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=443676677 instance=ExtResource("31_pupitre")]
+[node name="P2_PupEI3_5" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=443676677 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 25.5, 9, 18.4)
 
-[node name="P2_PupEI3_6" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1801106711 instance=ExtResource("31_pupitre")]
+[node name="P2_PupEI3_6" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1801106711 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 9, 12)
 
-[node name="P2_PupEI3_7" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1660158810 instance=ExtResource("31_pupitre")]
+[node name="P2_PupEI3_7" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1660158810 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 9, 15.2)
 
-[node name="P2_PupEI3_8" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=568097998 instance=ExtResource("31_pupitre")]
+[node name="P2_PupEI3_8" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=568097998 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 9, 18.4)
 
 [node name="P2_CartelEI3" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=491143860]
@@ -4339,79 +4174,79 @@ use_collision = true
 size = Vector3(18, 4.5, 0.3)
 material = ExtResource("4_0kga5")
 
-[node name="P2_PizE1" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1507447053 instance=ExtResource("32_pizarron")]
+[node name="P2_PizE1" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1507447053 instance=ExtResource("32_pizarron")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 64.55, 10.5, -30)
 
-[node name="P2_PupE1_0" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2000400276 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE1_0" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2000400276 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 9, -41)
 
-[node name="P2_PupE1_1" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2095329024 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE1_1" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2095329024 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 9, -37.8)
 
-[node name="P2_PupE1_2" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1324855873 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE1_2" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1324855873 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 9, -34.6)
 
-[node name="P2_PupE1_3" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=786064021 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE1_3" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=786064021 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 9, -31.4)
 
-[node name="P2_PupE1_4" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=20939795 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE1_4" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=20939795 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 9, -28.2)
 
-[node name="P2_PupE1_5" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2027093583 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE1_5" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2027093583 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 9, -25)
 
-[node name="P2_PupE1_6" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=131352567 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE1_6" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=131352567 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 9, -21.8)
 
-[node name="P2_PupE1_7" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1752966153 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE1_7" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1752966153 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 9, -18.6)
 
-[node name="P2_PupE1_8" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=782080639 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE1_8" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=782080639 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 9, -41)
 
-[node name="P2_PupE1_9" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=189869537 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE1_9" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=189869537 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 9, -37.8)
 
-[node name="P2_PupE1_10" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1852719727 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE1_10" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1852719727 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 9, -34.6)
 
-[node name="P2_PupE1_11" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1051101785 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE1_11" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1051101785 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 9, -31.4)
 
-[node name="P2_PupE1_12" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=207920717 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE1_12" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=207920717 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 9, -28.2)
 
-[node name="P2_PupE1_13" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1032023190 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE1_13" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1032023190 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 9, -25)
 
-[node name="P2_PupE1_14" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=928030191 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE1_14" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=928030191 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 9, -21.8)
 
-[node name="P2_PupE1_15" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1514832946 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE1_15" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1514832946 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 9, -18.6)
 
-[node name="P2_PupE1_16" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=247286324 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE1_16" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=247286324 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9, -41)
 
-[node name="P2_PupE1_17" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1320613650 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE1_17" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1320613650 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9, -37.8)
 
-[node name="P2_PupE1_18" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1721626797 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE1_18" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1721626797 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9, -34.6)
 
-[node name="P2_PupE1_19" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1647714665 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE1_19" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1647714665 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9, -31.4)
 
-[node name="P2_PupE1_20" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=170296553 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE1_20" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=170296553 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9, -28.2)
 
-[node name="P2_PupE1_21" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=154265126 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE1_21" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=154265126 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9, -25)
 
-[node name="P2_PupE1_22" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=942210089 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE1_22" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=942210089 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9, -21.8)
 
-[node name="P2_PupE1_23" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=373488637 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE1_23" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=373488637 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9, -18.6)
 
 [node name="P2_CartelE1" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1595651857]
@@ -4445,61 +4280,61 @@ use_collision = true
 size = Vector3(18, 4.5, 0.3)
 material = ExtResource("4_0kga5")
 
-[node name="P2_PizE2" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=73044622 instance=ExtResource("32_pizarron")]
+[node name="P2_PizE2" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=73044622 instance=ExtResource("32_pizarron")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 64.55, 10.5, -2.5)
 
-[node name="P2_PupE2_0" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1211658820 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE2_0" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1211658820 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 9, -11)
 
-[node name="P2_PupE2_1" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=370168916 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE2_1" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=370168916 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 9, -7.8)
 
-[node name="P2_PupE2_2" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1542669716 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE2_2" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1542669716 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 9, -4.6)
 
-[node name="P2_PupE2_3" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=495518967 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE2_3" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=495518967 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 9, -1.4)
 
-[node name="P2_PupE2_4" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1657882311 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE2_4" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1657882311 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 9, 1.8)
 
-[node name="P2_PupE2_5" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1571257172 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE2_5" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1571257172 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 9, 5)
 
-[node name="P2_PupE2_6" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=94187723 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE2_6" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=94187723 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 9, -11)
 
-[node name="P2_PupE2_7" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1028569910 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE2_7" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1028569910 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 9, -7.8)
 
-[node name="P2_PupE2_8" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1827672595 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE2_8" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1827672595 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 9, -4.6)
 
-[node name="P2_PupE2_9" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=786705914 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE2_9" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=786705914 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 9, -1.4)
 
-[node name="P2_PupE2_10" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1391896882 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE2_10" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1391896882 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 9, 1.8)
 
-[node name="P2_PupE2_11" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1197779618 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE2_11" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1197779618 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 9, 5)
 
-[node name="P2_PupE2_12" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=199204503 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE2_12" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=199204503 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9, -11)
 
-[node name="P2_PupE2_13" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1139413242 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE2_13" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1139413242 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9, -7.8)
 
-[node name="P2_PupE2_14" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1742736395 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE2_14" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1742736395 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9, -4.6)
 
-[node name="P2_PupE2_15" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=691645012 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE2_15" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=691645012 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9, -1.4)
 
-[node name="P2_PupE2_16" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1871083521 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE2_16" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1871083521 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9, 1.8)
 
-[node name="P2_PupE2_17" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=907626305 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE2_17" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=907626305 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9, 5)
 
 [node name="P2_CartelE2" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1654052261]
@@ -4533,34 +4368,34 @@ use_collision = true
 size = Vector3(18, 4.5, 0.3)
 material = ExtResource("4_0kga5")
 
-[node name="P2_PizE3" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=883328010 instance=ExtResource("32_pizarron")]
+[node name="P2_PizE3" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=883328010 instance=ExtResource("32_pizarron")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 64.55, 10.5, 17.5)
 
-[node name="P2_PupE3_0" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1201598799 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE3_0" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1201598799 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 9, 14)
 
-[node name="P2_PupE3_1" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=574056930 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE3_1" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=574056930 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 9, 17.2)
 
-[node name="P2_PupE3_2" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2107658871 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE3_2" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2107658871 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 9, 20.4)
 
-[node name="P2_PupE3_3" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=559616618 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE3_3" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=559616618 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 9, 14)
 
-[node name="P2_PupE3_4" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=457511150 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE3_4" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=457511150 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 9, 17.2)
 
-[node name="P2_PupE3_5" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1893508476 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE3_5" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1893508476 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 9, 20.4)
 
-[node name="P2_PupE3_6" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1884848 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE3_6" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1884848 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9, 14)
 
-[node name="P2_PupE3_7" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=607909636 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE3_7" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=607909636 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9, 17.2)
 
-[node name="P2_PupE3_8" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1412939323 instance=ExtResource("31_pupitre")]
+[node name="P2_PupE3_8" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1412939323 instance=ExtResource("31_pupitre")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9, 20.4)
 
 [node name="P2_CartelE3" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1165130565]
@@ -4600,28 +4435,28 @@ use_collision = true
 size = Vector3(0.3, 4.5, 10)
 material = ExtResource("4_0kga5")
 
-[node name="P2_PupSO_0" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1367391712 instance=ExtResource("31_pupitre")]
+[node name="P2_PupSO_0" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1367391712 instance=ExtResource("31_pupitre")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -50.5, 9, 39)
 
-[node name="P2_PupSO_1" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1558480119 instance=ExtResource("31_pupitre")]
+[node name="P2_PupSO_1" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1558480119 instance=ExtResource("31_pupitre")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -46.5, 9, 39)
 
-[node name="P2_PupSO_2" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1041902249 instance=ExtResource("31_pupitre")]
+[node name="P2_PupSO_2" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1041902249 instance=ExtResource("31_pupitre")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -42.5, 9, 39)
 
-[node name="P2_PupSO_3" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=263732181 instance=ExtResource("31_pupitre")]
+[node name="P2_PupSO_3" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=263732181 instance=ExtResource("31_pupitre")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -38.5, 9, 39)
 
-[node name="P2_PupSO_4" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=375478647 instance=ExtResource("31_pupitre")]
+[node name="P2_PupSO_4" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=375478647 instance=ExtResource("31_pupitre")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -34.5, 9, 39)
 
-[node name="P2_PupSO_5" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1960661391 instance=ExtResource("31_pupitre")]
+[node name="P2_PupSO_5" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1960661391 instance=ExtResource("31_pupitre")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -30.5, 9, 39)
 
-[node name="P2_PupSO_6" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1164835393 instance=ExtResource("31_pupitre")]
+[node name="P2_PupSO_6" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1164835393 instance=ExtResource("31_pupitre")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -26.5, 9, 39)
 
-[node name="P2_PupSO_7" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=431421643 instance=ExtResource("31_pupitre")]
+[node name="P2_PupSO_7" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=431421643 instance=ExtResource("31_pupitre")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -22.5, 9, 39)
 
 [node name="P2_CartelSO" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=893475807]
@@ -4661,19 +4496,19 @@ use_collision = true
 size = Vector3(0.3, 4.5, 10)
 material = ExtResource("4_0kga5")
 
-[node name="P2_PupSE_8" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=390280663 instance=ExtResource("31_pupitre")]
+[node name="P2_PupSE_8" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=390280663 instance=ExtResource("31_pupitre")]
 transform = Transform3D(-0.0055542793, 0, -1.9999923, 0, 2, 0, 1.9999923, 0, -0.0055542793, 38.0096, 9.115855, 22.508242)
 
-[node name="P2_PupSE_9" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=479428568 instance=ExtResource("31_pupitre")]
+[node name="P2_PupSE_9" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=479428568 instance=ExtResource("31_pupitre")]
 transform = Transform3D(-2.0000002, 0, -1.7484557e-07, 0, 2, 0, 1.7484557e-07, 0, -2.0000002, 25.249296, 9.115855, 39.3736)
 
-[node name="P2_PupSE_10" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=77419973 instance=ExtResource("31_pupitre")]
+[node name="P2_PupSE_10" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=77419973 instance=ExtResource("31_pupitre")]
 transform = Transform3D(-2.0000002, 0, -1.7484557e-07, 0, 2, 0, 1.7484557e-07, 0, -2.0000002, 30.878445, 9.115855, 39.3736)
 
-[node name="P2_PupSE_11" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1518277798 instance=ExtResource("31_pupitre")]
+[node name="P2_PupSE_11" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1518277798 instance=ExtResource("31_pupitre")]
 transform = Transform3D(-2.0000002, 0, -1.7484557e-07, 0, 2, 0, 1.7484557e-07, 0, -2.0000002, 41.829197, 9.115855, 39.3736)
 
-[node name="P2_PupSE_12" type="StaticBody3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=776166041 instance=ExtResource("31_pupitre")]
+[node name="P2_PupSE_12" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=776166041 instance=ExtResource("31_pupitre")]
 transform = Transform3D(-2.0000002, 0, -1.7484557e-07, 0, 2, 0, 1.7484557e-07, 0, -2.0000002, 47.40239, 9.115855, 39.3736)
 
 [node name="P2_CartelSE" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=641378739]
