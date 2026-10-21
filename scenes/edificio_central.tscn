@@ -30,6 +30,8 @@
 [ext_resource type="Material" path="res://materials/mat_asphalt.tres" id="28_asphalt"]
 [ext_resource type="Material" path="res://materials/mat_peronachos.tres" id="29_peronachos"]
 [ext_resource type="ArrayMesh" path="res://models/mesh_peronachos.tres" id="30_mesh_peronachos"]
+[ext_resource type="PackedScene" path="res://scenes/aula_pupitre.tscn" id="31_pupitre"]
+[ext_resource type="PackedScene" path="res://scenes/aula_pizarron.tscn" id="32_pizarron"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ramp_x"]
 size = Vector3(6.878408, 0.3, 3.8)
@@ -354,269 +356,181 @@ use_collision = true
 size = Vector3(0.3, 4.5, 12)
 material = ExtResource("4_0kga5")
 
-[node name="PizN1" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=2001171565]
+[node name="PizN1" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("32_pizarron")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 1.5, -44.6)
-use_collision = true
-size = Vector3(5, 1.5, 0.08)
-material = ExtResource("2_pu2gp")
 
-[node name="PizN2" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1457904097]
+
+[node name="PizN2" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("32_pizarron")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 1.5, -44.6)
-use_collision = true
-size = Vector3(5, 1.5, 0.08)
-material = ExtResource("2_pu2gp")
 
-[node name="PizN3" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=211075038]
+
+[node name="PizN3" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("32_pizarron")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 1.5, -44.6)
-use_collision = true
-size = Vector3(5, 1.5, 0.08)
-material = ExtResource("2_pu2gp")
 
-[node name="PizN4" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1719687069]
+
+[node name="PizN4" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("32_pizarron")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.5, 1.5, -44.6)
-use_collision = true
-size = Vector3(5, 1.5, 0.08)
-material = ExtResource("2_pu2gp")
 
-[node name="PupN1_0" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1681543826]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.5, 0.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupN1_1" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=859600182]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.5, 0.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupN1_0" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.5, 0.0, -41.0)
 
-[node name="PupN1_2" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=2059050542]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.5, 0.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupN1_3" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1639694765]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.5, 0.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupN1_1" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.5, 0.0, -37.8)
 
-[node name="PupN1_4" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=539260275]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 0.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupN1_5" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=334059615]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 0.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupN1_2" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.5, 0.0, -41.0)
 
-[node name="PupN1_6" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1306293296]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48.5, 0.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupN1_7" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1405865579]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48.5, 0.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupN1_3" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.5, 0.0, -37.8)
 
-[node name="PupN1_8" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1079211964]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.5, 0.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupN1_9" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=890492124]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.5, 0.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupN1_4" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 0.0, -41.0)
 
-[node name="PupN2_0" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=92790873]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.5, 0.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupN2_1" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1167894030]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.5, 0.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupN1_5" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 0.0, -37.8)
 
-[node name="PupN2_2" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=735989455]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.5, 0.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupN2_3" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=939170447]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.5, 0.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupN1_6" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48.5, 0.0, -41.0)
 
-[node name="PupN2_4" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=751320378]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 0.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupN2_5" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1389170462]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 0.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupN1_7" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48.5, 0.0, -37.8)
 
-[node name="PupN2_6" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=928119808]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.5, 0.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupN2_7" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1740766532]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.5, 0.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupN1_8" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.5, 0.0, -41.0)
 
-[node name="PupN2_8" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=2098612625]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.5, 0.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupN2_9" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1829353543]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.5, 0.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupN1_9" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.5, 0.0, -37.8)
 
-[node name="PupN3_0" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1083914888]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5, 0.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupN3_1" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=24071544]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5, 0.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupN2_0" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.5, 0.0, -41.0)
 
-[node name="PupN3_2" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=588679016]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, 0.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupN3_3" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=942580262]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, 0.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupN2_1" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.5, 0.0, -37.8)
 
-[node name="PupN3_4" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1023180495]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupN3_5" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=783275594]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupN2_2" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.5, 0.0, -41.0)
 
-[node name="PupN3_6" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1226504667]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupN3_7" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=342253946]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupN2_3" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.5, 0.0, -37.8)
 
-[node name="PupN3_8" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=35800117]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupN3_9" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=845100301]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupN2_4" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 0.0, -41.0)
 
-[node name="PupN4_0" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=599520937]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.5, 0.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupN4_1" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=116108169]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.5, 0.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupN2_5" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 0.0, -37.8)
 
-[node name="PupN4_2" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=293792486]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.5, 0.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupN4_3" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1299896092]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.5, 0.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupN2_6" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.5, 0.0, -41.0)
 
-[node name="PupN4_4" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1452423172]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.5, 0.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupN4_5" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1605030362]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.5, 0.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupN2_7" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.5, 0.0, -37.8)
 
-[node name="PupN4_6" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=910663456]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.5, 0.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupN4_7" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=733111284]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.5, 0.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupN2_8" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.5, 0.0, -41.0)
 
-[node name="PupN4_8" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=486042714]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.5, 0.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupN4_9" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1643832349]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.5, 0.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupN2_9" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.5, 0.0, -37.8)
+
+
+[node name="PupN3_0" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5, 0.0, -41.0)
+
+
+[node name="PupN3_1" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5, 0.0, -37.8)
+
+
+[node name="PupN3_2" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, 0.0, -41.0)
+
+
+[node name="PupN3_3" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, 0.0, -37.8)
+
+
+[node name="PupN3_4" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0.0, -41.0)
+
+
+[node name="PupN3_5" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0.0, -37.8)
+
+
+[node name="PupN3_6" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0.0, -41.0)
+
+
+[node name="PupN3_7" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0.0, -37.8)
+
+
+[node name="PupN3_8" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0.0, -41.0)
+
+
+[node name="PupN3_9" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0.0, -37.8)
+
+
+[node name="PupN4_0" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.5, 0.0, -41.0)
+
+
+[node name="PupN4_1" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.5, 0.0, -37.8)
+
+
+[node name="PupN4_2" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.5, 0.0, -41.0)
+
+
+[node name="PupN4_3" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.5, 0.0, -37.8)
+
+
+[node name="PupN4_4" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.5, 0.0, -41.0)
+
+
+[node name="PupN4_5" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.5, 0.0, -37.8)
+
+
+[node name="PupN4_6" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.5, 0.0, -41.0)
+
+
+[node name="PupN4_7" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.5, 0.0, -37.8)
+
+
+[node name="PupN4_8" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.5, 0.0, -41.0)
+
+
+[node name="PupN4_9" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.5, 0.0, -37.8)
+
 
 [node name="CartelN1" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=1364649239]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -52.5, 3.2, -32.7)
@@ -742,245 +656,165 @@ use_collision = true
 size = Vector3(18, 4.5, 0.3)
 material = ExtResource("4_0kga5")
 
-[node name="PizW1" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1040650374]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -64.6, 1.5, -26)
-use_collision = true
-size = Vector3(0.08, 1.5, 5)
-material = ExtResource("2_pu2gp")
+[node name="PizW1" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("32_pizarron")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -64.6, 1.5, -26.0)
 
-[node name="PizW2" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1279130694]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -64.6, 1.5, -12)
-use_collision = true
-size = Vector3(0.08, 1.5, 5)
-material = ExtResource("2_pu2gp")
 
-[node name="PizW3" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=881640922]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -64.6, 1.5, 2.5)
-use_collision = true
-size = Vector3(0.08, 1.5, 5)
-material = ExtResource("2_pu2gp")
+[node name="PizW2" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("32_pizarron")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -64.6, 1.5, -12.0)
 
-[node name="PizW4" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=2085709471]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -64.6, 1.5, 17.5)
-use_collision = true
-size = Vector3(0.08, 1.5, 5)
-material = ExtResource("2_pu2gp")
 
-[node name="PupW1_0" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1920355886]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.5, 0.4, -29)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PizW3" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("32_pizarron")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -64.6, 1.5, 2.5)
 
-[node name="PupW1_1" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1274963496]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.5, 0.4, -25.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupW1_2" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=448177301]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.5, 0.4, -22.6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PizW4" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("32_pizarron")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -64.6, 1.5, 17.5)
 
-[node name="PupW1_3" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1039439273]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.5, 0.4, -29)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupW1_4" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1402889934]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.5, 0.4, -25.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupW1_0" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 0.0, -29.0)
 
-[node name="PupW1_5" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=762781462]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.5, 0.4, -22.6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupW1_6" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=341242608]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 0.4, -29)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupW1_1" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 0.0, -25.8)
 
-[node name="PupW1_7" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=593754683]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 0.4, -25.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupW1_8" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1249544538]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 0.4, -22.6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupW1_2" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 0.0, -22.6)
 
-[node name="PupW2_0" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=142656400]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.5, 0.4, -15)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupW2_1" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1600185222]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.5, 0.4, -11.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupW1_3" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 0.0, -29.0)
 
-[node name="PupW2_2" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=116942532]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.5, 0.4, -8.6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupW2_3" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=664932309]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.5, 0.4, -15)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupW1_4" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 0.0, -25.8)
 
-[node name="PupW2_4" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1820937862]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.5, 0.4, -11.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupW2_5" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1119002839]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.5, 0.4, -8.6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupW1_5" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 0.0, -22.6)
 
-[node name="PupW2_6" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1315175086]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 0.4, -15)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupW2_7" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=355385312]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 0.4, -11.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupW1_6" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 0.0, -29.0)
 
-[node name="PupW2_8" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=119078588]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 0.4, -8.6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupW3_0" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1307655670]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.5, 0.4, -1)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupW1_7" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 0.0, -25.8)
 
-[node name="PupW3_1" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=527076563]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.5, 0.4, 2.2)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupW3_2" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=335146707]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.5, 0.4, 5.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupW1_8" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 0.0, -22.6)
 
-[node name="PupW3_3" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=777285718]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.5, 0.4, -1)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupW3_4" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=980093067]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.5, 0.4, 2.2)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupW2_0" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 0.0, -15.0)
 
-[node name="PupW3_5" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=646782220]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.5, 0.4, 5.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupW3_6" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1438959]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 0.4, -1)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupW2_1" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 0.0, -11.8)
 
-[node name="PupW3_7" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1291487566]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 0.4, 2.2)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupW3_8" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=127890428]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 0.4, 5.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupW2_2" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 0.0, -8.6)
 
-[node name="PupW4_0" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1243629481]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.5, 0.4, 14)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupW4_1" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=888154646]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.5, 0.4, 17.2)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupW2_3" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 0.0, -15.0)
 
-[node name="PupW4_2" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1214026294]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.5, 0.4, 20.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupW4_3" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1567243399]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.5, 0.4, 14)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupW2_4" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 0.0, -11.8)
 
-[node name="PupW4_4" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=31459752]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.5, 0.4, 17.2)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupW4_5" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1255920320]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.5, 0.4, 20.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupW2_5" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 0.0, -8.6)
 
-[node name="PupW4_6" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=549916677]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 0.4, 14)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupW4_7" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1687330542]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 0.4, 17.2)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupW2_6" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 0.0, -15.0)
 
-[node name="PupW4_8" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=162428147]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 0.4, 20.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+
+[node name="PupW2_7" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 0.0, -11.8)
+
+
+[node name="PupW2_8" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 0.0, -8.6)
+
+
+[node name="PupW3_0" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 0.0, -1.0)
+
+
+[node name="PupW3_1" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 0.0, 2.2)
+
+
+[node name="PupW3_2" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 0.0, 5.4)
+
+
+[node name="PupW3_3" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 0.0, -1.0)
+
+
+[node name="PupW3_4" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 0.0, 2.2)
+
+
+[node name="PupW3_5" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 0.0, 5.4)
+
+
+[node name="PupW3_6" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 0.0, -1.0)
+
+
+[node name="PupW3_7" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 0.0, 2.2)
+
+
+[node name="PupW3_8" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 0.0, 5.4)
+
+
+[node name="PupW4_0" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 0.0, 14.0)
+
+
+[node name="PupW4_1" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 0.0, 17.2)
+
+
+[node name="PupW4_2" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 0.0, 20.4)
+
+
+[node name="PupW4_3" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 0.0, 14.0)
+
+
+[node name="PupW4_4" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 0.0, 17.2)
+
+
+[node name="PupW4_5" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 0.0, 20.4)
+
+
+[node name="PupW4_6" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 0.0, 14.0)
+
+
+[node name="PupW4_7" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 0.0, 17.2)
+
+
+[node name="PupW4_8" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 0.0, 20.4)
+
 
 [node name="CartelW1" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=673107816]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.7, 3.2, -26)
@@ -1052,59 +886,41 @@ use_collision = true
 size = Vector3(20, 4.5, 0.3)
 material = ExtResource("4_0kga5")
 
-[node name="PupWI1_0" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1758985630]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.5, 0.4, -20)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupWI1_0" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -32.5, 0.0, -20.0)
 
-[node name="PupWI1_1" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=143455839]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.5, 0.4, -16.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupWI1_2" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1050671825]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.5, 0.4, -13.6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupWI1_1" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -32.5, 0.0, -16.8)
 
-[node name="PupWI1_3" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=724114264]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.5, 0.4, -20)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupWI1_4" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1633196341]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.5, 0.4, -16.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupWI1_2" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -32.5, 0.0, -13.6)
 
-[node name="PupWI1_5" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1963170761]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.5, 0.4, -13.6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupWI1_6" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1690221368]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.5, 0.4, -20)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupWI1_3" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -28.5, 0.0, -20.0)
 
-[node name="PupWI1_7" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1233146843]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.5, 0.4, -16.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupWI1_8" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1560451680]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.5, 0.4, -13.6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupWI1_4" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -28.5, 0.0, -16.8)
+
+
+[node name="PupWI1_5" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -28.5, 0.0, -13.6)
+
+
+[node name="PupWI1_6" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 0.0, -20.0)
+
+
+[node name="PupWI1_7" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 0.0, -16.8)
+
+
+[node name="PupWI1_8" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 0.0, -13.6)
+
 
 [node name="CartelWI1" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=1963864206]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -37.3, 3.2, -17)
@@ -1191,59 +1007,41 @@ use_collision = true
 size = Vector3(0.3, 0.8, 2.9)
 material = ExtResource("4_0kga5")
 
-[node name="PupWI2_0" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=726583741]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.5, 0.4, 15)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupWI2_0" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -32.5, 0.0, 15.0)
 
-[node name="PupWI2_1" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=595144427]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.5, 0.4, 18.2)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupWI2_2" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1602275117]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.5, 0.4, 21.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupWI2_1" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -32.5, 0.0, 18.2)
 
-[node name="PupWI2_3" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1895182013]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.5, 0.4, 15)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupWI2_4" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=953764979]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.5, 0.4, 18.2)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupWI2_2" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -32.5, 0.0, 21.4)
 
-[node name="PupWI2_5" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=797223081]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.5, 0.4, 21.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupWI2_6" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=577765655]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.5, 0.4, 15)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupWI2_3" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -28.5, 0.0, 15.0)
 
-[node name="PupWI2_7" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=225315459]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.5, 0.4, 18.2)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupWI2_8" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1470963885]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.5, 0.4, 21.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupWI2_4" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -28.5, 0.0, 18.2)
+
+
+[node name="PupWI2_5" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -28.5, 0.0, 21.4)
+
+
+[node name="PupWI2_6" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 0.0, 15.0)
+
+
+[node name="PupWI2_7" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 0.0, 18.2)
+
+
+[node name="PupWI2_8" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 0.0, 21.4)
+
 
 [node name="CartelWI2" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=737835908]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -37.3, 3.2, 18)
@@ -1294,59 +1092,41 @@ use_collision = true
 size = Vector3(20, 4.5, 0.3)
 material = ExtResource("4_0kga5")
 
-[node name="PupEI1_0" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=45473985]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.5, 0.4, -20)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupEI1_0" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 21.5, 0.0, -20.0)
 
-[node name="PupEI1_1" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=664386279]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.5, 0.4, -16.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupEI1_2" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=705543003]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.5, 0.4, -13.6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupEI1_1" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 21.5, 0.0, -16.8)
 
-[node name="PupEI1_3" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=661880207]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5, 0.4, -20)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupEI1_4" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1340744594]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5, 0.4, -16.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupEI1_2" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 21.5, 0.0, -13.6)
 
-[node name="PupEI1_5" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1473868752]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5, 0.4, -13.6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupEI1_6" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=799158844]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.5, 0.4, -20)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupEI1_3" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 25.5, 0.0, -20.0)
 
-[node name="PupEI1_7" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=898531002]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.5, 0.4, -16.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupEI1_8" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=609936608]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.5, 0.4, -13.6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupEI1_4" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 25.5, 0.0, -16.8)
+
+
+[node name="PupEI1_5" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 25.5, 0.0, -13.6)
+
+
+[node name="PupEI1_6" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 0.0, -20.0)
+
+
+[node name="PupEI1_7" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 0.0, -16.8)
+
+
+[node name="PupEI1_8" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 0.0, -13.6)
+
 
 [node name="CartelEI1" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=311098536]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 37.3, 3.2, -16)
@@ -1379,59 +1159,41 @@ use_collision = true
 size = Vector3(20, 4.5, 0.3)
 material = ExtResource("4_0kga5")
 
-[node name="PupEI2_0" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1396571425]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.5, 0.4, -4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupEI2_0" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 21.5, 0.0, -4.0)
 
-[node name="PupEI2_1" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1042224371]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.5, 0.4, -0.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupEI2_2" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=439721022]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.5, 0.4, 2.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupEI2_1" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 21.5, 0.0, -0.8)
 
-[node name="PupEI2_3" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=2140073983]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5, 0.4, -4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupEI2_4" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=289796730]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5, 0.4, -0.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupEI2_2" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 21.5, 0.0, 2.4)
 
-[node name="PupEI2_5" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=825402516]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5, 0.4, 2.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupEI2_6" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=2077334373]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.5, 0.4, -4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupEI2_3" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 25.5, 0.0, -4.0)
 
-[node name="PupEI2_7" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=495689969]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.5, 0.4, -0.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupEI2_8" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=688174453]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.5, 0.4, 2.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupEI2_4" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 25.5, 0.0, -0.8)
+
+
+[node name="PupEI2_5" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 25.5, 0.0, 2.4)
+
+
+[node name="PupEI2_6" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 0.0, -4.0)
+
+
+[node name="PupEI2_7" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 0.0, -0.8)
+
+
+[node name="PupEI2_8" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 0.0, 2.4)
+
 
 [node name="CartelEI2" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=1980685760]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 37.3, 3.2, 0)
@@ -1458,59 +1220,41 @@ use_collision = true
 size = Vector3(0.3, 0.8, 2.9)
 material = ExtResource("4_0kga5")
 
-[node name="PupEI3_0" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=319522260]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.5, 0.4, 12)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupEI3_0" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 21.5, 0.0, 12.0)
 
-[node name="PupEI3_1" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1019633880]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.5, 0.4, 15.2)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupEI3_2" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1470411317]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.5, 0.4, 18.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupEI3_1" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 21.5, 0.0, 15.2)
 
-[node name="PupEI3_3" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1255559438]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5, 0.4, 12)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupEI3_4" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=749175857]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5, 0.4, 15.2)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupEI3_2" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 21.5, 0.0, 18.4)
 
-[node name="PupEI3_5" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1851515643]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5, 0.4, 18.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupEI3_6" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=820353916]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.5, 0.4, 12)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupEI3_3" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 25.5, 0.0, 12.0)
 
-[node name="PupEI3_7" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=2133522662]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.5, 0.4, 15.2)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupEI3_8" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1783545523]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.5, 0.4, 18.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupEI3_4" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 25.5, 0.0, 15.2)
+
+
+[node name="PupEI3_5" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 25.5, 0.0, 18.4)
+
+
+[node name="PupEI3_6" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 0.0, 12.0)
+
+
+[node name="PupEI3_7" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 0.0, 15.2)
+
+
+[node name="PupEI3_8" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 0.0, 18.4)
+
 
 [node name="CartelEI3" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=1487175149]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 37.3, 3.2, 16.5)
@@ -1543,155 +1287,105 @@ use_collision = true
 size = Vector3(18, 4.5, 0.3)
 material = ExtResource("4_0kga5")
 
-[node name="PizE1" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=147925736]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64.6, 1.5, -30)
-use_collision = true
-size = Vector3(0.08, 1.5, 5)
-material = ExtResource("2_pu2gp")
+[node name="PizE1" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("32_pizarron")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 64.6, 1.5, -30.0)
 
-[node name="PupE1_0" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=722961380]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.5, 0.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupE1_1" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=507761787]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.5, 0.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupE1_0" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 0.0, -41.0)
 
-[node name="PupE1_2" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1580717415]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.5, 0.4, -34.6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupE1_3" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=656939033]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.5, 0.4, -31.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupE1_1" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 0.0, -37.8)
 
-[node name="PupE1_4" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=376325323]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.5, 0.4, -28.2)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupE1_5" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=2062295827]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.5, 0.4, -25)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupE1_2" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 0.0, -34.6)
 
-[node name="PupE1_6" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=595402251]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.5, 0.4, -21.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupE1_7" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1470302797]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.5, 0.4, -18.6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupE1_3" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 0.0, -31.4)
 
-[node name="PupE1_8" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=26922583]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.5, 0.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupE1_9" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=21477148]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.5, 0.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupE1_4" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 0.0, -28.2)
 
-[node name="PupE1_10" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1044859850]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.5, 0.4, -34.6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupE1_11" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1141412453]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.5, 0.4, -31.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupE1_5" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 0.0, -25.0)
 
-[node name="PupE1_12" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=256145808]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.5, 0.4, -28.2)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupE1_13" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1002638573]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.5, 0.4, -25)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupE1_6" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 0.0, -21.8)
 
-[node name="PupE1_14" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=298891865]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.5, 0.4, -21.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupE1_15" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=2078550269]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.5, 0.4, -18.6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupE1_7" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 0.0, -18.6)
 
-[node name="PupE1_16" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1709241751]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.5, 0.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupE1_17" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=271963030]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.5, 0.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupE1_8" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 0.0, -41.0)
 
-[node name="PupE1_18" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=167490215]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.5, 0.4, -34.6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupE1_19" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=534801747]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.5, 0.4, -31.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupE1_9" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 0.0, -37.8)
 
-[node name="PupE1_20" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1119807105]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.5, 0.4, -28.2)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupE1_21" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=266208395]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.5, 0.4, -25)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupE1_10" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 0.0, -34.6)
 
-[node name="PupE1_22" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1612683747]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.5, 0.4, -21.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupE1_23" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1019155388]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.5, 0.4, -18.6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupE1_11" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 0.0, -31.4)
+
+
+[node name="PupE1_12" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 0.0, -28.2)
+
+
+[node name="PupE1_13" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 0.0, -25.0)
+
+
+[node name="PupE1_14" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 0.0, -21.8)
+
+
+[node name="PupE1_15" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 0.0, -18.6)
+
+
+[node name="PupE1_16" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 0.0, -41.0)
+
+
+[node name="PupE1_17" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 0.0, -37.8)
+
+
+[node name="PupE1_18" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 0.0, -34.6)
+
+
+[node name="PupE1_19" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 0.0, -31.4)
+
+
+[node name="PupE1_20" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 0.0, -28.2)
+
+
+[node name="PupE1_21" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 0.0, -25.0)
+
+
+[node name="PupE1_22" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 0.0, -21.8)
+
+
+[node name="PupE1_23" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 0.0, -18.6)
+
 
 [node name="CartelE1" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=522957053]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 46.7, 3.2, -30)
@@ -2790,59 +2484,41 @@ use_collision = true
 size = Vector3(18, 4.5, 0.3)
 material = ExtResource("4_0kga5")
 
-[node name="PupE2_0" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=2074948900]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.5, 0.4, 14)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupE2_0" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 0.0, 14.0)
 
-[node name="PupE2_1" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1406366642]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.5, 0.4, 17.2)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupE2_2" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=798215405]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.5, 0.4, 20.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupE2_1" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 0.0, 17.2)
 
-[node name="PupE2_3" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1641205698]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.5, 0.4, 14)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupE2_4" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=342873049]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.5, 0.4, 17.2)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupE2_2" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 0.0, 20.4)
 
-[node name="PupE2_5" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=840144420]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.5, 0.4, 20.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupE2_6" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1985738727]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.5, 0.4, 14)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupE2_3" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 0.0, 14.0)
 
-[node name="PupE2_7" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1067361054]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.5, 0.4, 17.2)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="PupE2_8" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1104340645]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.5, 0.4, 20.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="PupE2_4" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 0.0, 17.2)
+
+
+[node name="PupE2_5" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 0.0, 20.4)
+
+
+[node name="PupE2_6" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 0.0, 14.0)
+
+
+[node name="PupE2_7" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 0.0, 17.2)
+
+
+[node name="PupE2_8" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 0.0, 20.4)
+
 
 [node name="CartelE2" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=2011378913]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 46.7, 3.2, 17.5)
@@ -3791,269 +3467,181 @@ use_collision = true
 size = Vector3(0.3, 4.5, 12)
 material = ExtResource("4_0kga5")
 
-[node name="P2_PizN1" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1565725947]
+[node name="P2_PizN1" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("32_pizarron")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 10.5, -44.6)
-use_collision = true
-size = Vector3(5, 1.5, 0.08)
-material = ExtResource("2_pu2gp")
 
-[node name="P2_PizN2" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=264974572]
+
+[node name="P2_PizN2" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("32_pizarron")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 10.5, -44.6)
-use_collision = true
-size = Vector3(5, 1.5, 0.08)
-material = ExtResource("2_pu2gp")
 
-[node name="P2_PizN3" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1759598762]
+
+[node name="P2_PizN3" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("32_pizarron")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 10.5, -44.6)
-use_collision = true
-size = Vector3(5, 1.5, 0.08)
-material = ExtResource("2_pu2gp")
 
-[node name="P2_PizN4" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=499262846]
+
+[node name="P2_PizN4" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("32_pizarron")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.5, 10.5, -44.6)
-use_collision = true
-size = Vector3(5, 1.5, 0.08)
-material = ExtResource("2_pu2gp")
 
-[node name="P2_PupN1_0" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1764885153]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.5, 9.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupN1_1" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1852609877]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.5, 9.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupN1_0" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.5, 9.0, -41.0)
 
-[node name="P2_PupN1_2" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=434520414]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.5, 9.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupN1_3" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1153176320]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.5, 9.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupN1_1" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.5, 9.0, -37.8)
 
-[node name="P2_PupN1_4" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=379281727]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 9.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupN1_5" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1271484110]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 9.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupN1_2" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.5, 9.0, -41.0)
 
-[node name="P2_PupN1_6" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1579147976]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48.5, 9.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupN1_7" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=232239284]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48.5, 9.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupN1_3" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.5, 9.0, -37.8)
 
-[node name="P2_PupN1_8" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=557387740]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.5, 9.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupN1_9" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1950580316]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.5, 9.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupN1_4" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 9.0, -41.0)
 
-[node name="P2_PupN2_0" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=284068416]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.5, 9.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupN2_1" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=359452901]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.5, 9.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupN1_5" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 9.0, -37.8)
 
-[node name="P2_PupN2_2" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=794033276]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.5, 9.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupN2_3" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1707876322]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.5, 9.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupN1_6" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48.5, 9.0, -41.0)
 
-[node name="P2_PupN2_4" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=32015849]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 9.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupN2_5" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1681349537]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 9.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupN1_7" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48.5, 9.0, -37.8)
 
-[node name="P2_PupN2_6" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=477986438]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.5, 9.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupN2_7" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=943048458]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.5, 9.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupN1_8" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.5, 9.0, -41.0)
 
-[node name="P2_PupN2_8" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1251315892]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.5, 9.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupN2_9" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1437361853]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.5, 9.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupN1_9" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.5, 9.0, -37.8)
 
-[node name="P2_PupN3_0" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1017703603]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5, 9.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupN3_1" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2086547379]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5, 9.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupN2_0" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.5, 9.0, -41.0)
 
-[node name="P2_PupN3_2" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2144859863]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, 9.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupN3_3" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=975371896]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, 9.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupN2_1" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.5, 9.0, -37.8)
 
-[node name="P2_PupN3_4" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=870687368]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 9.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupN3_5" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=917425880]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 9.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupN2_2" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.5, 9.0, -41.0)
 
-[node name="P2_PupN3_6" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=180500758]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 9.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupN3_7" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=971904663]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 9.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupN2_3" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.5, 9.0, -37.8)
 
-[node name="P2_PupN3_8" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=850741873]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 9.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupN3_9" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=984058931]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 9.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupN2_4" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 9.0, -41.0)
 
-[node name="P2_PupN4_0" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1045255051]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.5, 9.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupN4_1" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=580376055]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.5, 9.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupN2_5" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 9.0, -37.8)
 
-[node name="P2_PupN4_2" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=846684629]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.5, 9.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupN4_3" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1282223528]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.5, 9.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupN2_6" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.5, 9.0, -41.0)
 
-[node name="P2_PupN4_4" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2101030366]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.5, 9.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupN4_5" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=76224337]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.5, 9.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupN2_7" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.5, 9.0, -37.8)
 
-[node name="P2_PupN4_6" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1061394175]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.5, 9.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupN4_7" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=599273853]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.5, 9.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupN2_8" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.5, 9.0, -41.0)
 
-[node name="P2_PupN4_8" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=169955903]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.5, 9.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupN4_9" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1342289356]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.5, 9.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupN2_9" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.5, 9.0, -37.8)
+
+
+[node name="P2_PupN3_0" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5, 9.0, -41.0)
+
+
+[node name="P2_PupN3_1" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5, 9.0, -37.8)
+
+
+[node name="P2_PupN3_2" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, 9.0, -41.0)
+
+
+[node name="P2_PupN3_3" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, 9.0, -37.8)
+
+
+[node name="P2_PupN3_4" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 9.0, -41.0)
+
+
+[node name="P2_PupN3_5" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 9.0, -37.8)
+
+
+[node name="P2_PupN3_6" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 9.0, -41.0)
+
+
+[node name="P2_PupN3_7" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 9.0, -37.8)
+
+
+[node name="P2_PupN3_8" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 9.0, -41.0)
+
+
+[node name="P2_PupN3_9" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 9.0, -37.8)
+
+
+[node name="P2_PupN4_0" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.5, 9.0, -41.0)
+
+
+[node name="P2_PupN4_1" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.5, 9.0, -37.8)
+
+
+[node name="P2_PupN4_2" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.5, 9.0, -41.0)
+
+
+[node name="P2_PupN4_3" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.5, 9.0, -37.8)
+
+
+[node name="P2_PupN4_4" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.5, 9.0, -41.0)
+
+
+[node name="P2_PupN4_5" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.5, 9.0, -37.8)
+
+
+[node name="P2_PupN4_6" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.5, 9.0, -41.0)
+
+
+[node name="P2_PupN4_7" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.5, 9.0, -37.8)
+
+
+[node name="P2_PupN4_8" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.5, 9.0, -41.0)
+
+
+[node name="P2_PupN4_9" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.5, 9.0, -37.8)
+
 
 [node name="P2_CartelN1" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=930347462]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -52.5, 12.2, -32.7)
@@ -4179,245 +3767,165 @@ use_collision = true
 size = Vector3(18, 4.5, 0.3)
 material = ExtResource("4_0kga5")
 
-[node name="P2_PizW1" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=855680003]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -64.6, 10.5, -26)
-use_collision = true
-size = Vector3(0.08, 1.5, 5)
-material = ExtResource("2_pu2gp")
+[node name="P2_PizW1" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("32_pizarron")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -64.6, 10.5, -26.0)
 
-[node name="P2_PizW2" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=833415251]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -64.6, 10.5, -12)
-use_collision = true
-size = Vector3(0.08, 1.5, 5)
-material = ExtResource("2_pu2gp")
 
-[node name="P2_PizW3" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1683069427]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -64.6, 10.5, 2.5)
-use_collision = true
-size = Vector3(0.08, 1.5, 5)
-material = ExtResource("2_pu2gp")
+[node name="P2_PizW2" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("32_pizarron")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -64.6, 10.5, -12.0)
 
-[node name="P2_PizW4" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1246533520]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -64.6, 10.5, 17.5)
-use_collision = true
-size = Vector3(0.08, 1.5, 5)
-material = ExtResource("2_pu2gp")
 
-[node name="P2_PupW1_0" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=43348013]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.5, 9.4, -29)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PizW3" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("32_pizarron")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -64.6, 10.5, 2.5)
 
-[node name="P2_PupW1_1" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=60391105]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.5, 9.4, -25.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupW1_2" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=381005106]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.5, 9.4, -22.6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PizW4" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("32_pizarron")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -64.6, 10.5, 17.5)
 
-[node name="P2_PupW1_3" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1704050738]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.5, 9.4, -29)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupW1_4" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1735200680]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.5, 9.4, -25.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupW1_0" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 9.0, -29.0)
 
-[node name="P2_PupW1_5" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=899889917]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.5, 9.4, -22.6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupW1_6" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=874213877]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 9.4, -29)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupW1_1" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 9.0, -25.8)
 
-[node name="P2_PupW1_7" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=632140350]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 9.4, -25.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupW1_8" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=959055242]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 9.4, -22.6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupW1_2" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 9.0, -22.6)
 
-[node name="P2_PupW2_0" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=689133606]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.5, 9.4, -15)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupW2_1" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=511111623]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.5, 9.4, -11.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupW1_3" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 9.0, -29.0)
 
-[node name="P2_PupW2_2" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=352234656]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.5, 9.4, -8.6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupW2_3" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=470928578]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.5, 9.4, -15)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupW1_4" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 9.0, -25.8)
 
-[node name="P2_PupW2_4" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=882993044]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.5, 9.4, -11.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupW2_5" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=253941517]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.5, 9.4, -8.6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupW1_5" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 9.0, -22.6)
 
-[node name="P2_PupW2_6" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1708582052]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 9.4, -15)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupW2_7" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1808778477]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 9.4, -11.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupW1_6" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 9.0, -29.0)
 
-[node name="P2_PupW2_8" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=700556357]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 9.4, -8.6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupW3_0" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2132704390]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.5, 9.4, -1)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupW1_7" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 9.0, -25.8)
 
-[node name="P2_PupW3_1" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1388901774]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.5, 9.4, 2.2)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupW3_2" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2136206636]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.5, 9.4, 5.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupW1_8" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 9.0, -22.6)
 
-[node name="P2_PupW3_3" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=36112772]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.5, 9.4, -1)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupW3_4" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1207077793]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.5, 9.4, 2.2)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupW2_0" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 9.0, -15.0)
 
-[node name="P2_PupW3_5" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1239321923]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.5, 9.4, 5.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupW3_6" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1017776988]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 9.4, -1)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupW2_1" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 9.0, -11.8)
 
-[node name="P2_PupW3_7" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1331001922]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 9.4, 2.2)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupW3_8" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=753753257]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 9.4, 5.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupW2_2" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 9.0, -8.6)
 
-[node name="P2_PupW4_0" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1061831452]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.5, 9.4, 14)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupW4_1" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1526555312]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.5, 9.4, 17.2)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupW2_3" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 9.0, -15.0)
 
-[node name="P2_PupW4_2" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=598672528]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.5, 9.4, 20.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupW4_3" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1062826207]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.5, 9.4, 14)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupW2_4" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 9.0, -11.8)
 
-[node name="P2_PupW4_4" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=88703782]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.5, 9.4, 17.2)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupW4_5" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=490121753]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.5, 9.4, 20.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupW2_5" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 9.0, -8.6)
 
-[node name="P2_PupW4_6" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1186168087]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 9.4, 14)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupW4_7" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2142762331]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 9.4, 17.2)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupW2_6" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 9.0, -15.0)
 
-[node name="P2_PupW4_8" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=627575654]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 9.4, 20.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+
+[node name="P2_PupW2_7" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 9.0, -11.8)
+
+
+[node name="P2_PupW2_8" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 9.0, -8.6)
+
+
+[node name="P2_PupW3_0" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 9.0, -1.0)
+
+
+[node name="P2_PupW3_1" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 9.0, 2.2)
+
+
+[node name="P2_PupW3_2" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 9.0, 5.4)
+
+
+[node name="P2_PupW3_3" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 9.0, -1.0)
+
+
+[node name="P2_PupW3_4" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 9.0, 2.2)
+
+
+[node name="P2_PupW3_5" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 9.0, 5.4)
+
+
+[node name="P2_PupW3_6" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 9.0, -1.0)
+
+
+[node name="P2_PupW3_7" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 9.0, 2.2)
+
+
+[node name="P2_PupW3_8" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 9.0, 5.4)
+
+
+[node name="P2_PupW4_0" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 9.0, 14.0)
+
+
+[node name="P2_PupW4_1" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 9.0, 17.2)
+
+
+[node name="P2_PupW4_2" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -60.5, 9.0, 20.4)
+
+
+[node name="P2_PupW4_3" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 9.0, 14.0)
+
+
+[node name="P2_PupW4_4" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 9.0, 17.2)
+
+
+[node name="P2_PupW4_5" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -56.5, 9.0, 20.4)
+
+
+[node name="P2_PupW4_6" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 9.0, 14.0)
+
+
+[node name="P2_PupW4_7" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 9.0, 17.2)
+
+
+[node name="P2_PupW4_8" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 9.0, 20.4)
+
 
 [node name="P2_CartelW1" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2141046590]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.7, 12.2, -26)
@@ -4489,59 +3997,41 @@ use_collision = true
 size = Vector3(20, 4.5, 0.3)
 material = ExtResource("4_0kga5")
 
-[node name="P2_PupWI1_0" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=105317420]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.5, 9.4, -20)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupWI1_0" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -32.5, 9.0, -20.0)
 
-[node name="P2_PupWI1_1" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=700233973]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.5, 9.4, -16.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupWI1_2" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1094611429]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.5, 9.4, -13.6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupWI1_1" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -32.5, 9.0, -16.8)
 
-[node name="P2_PupWI1_3" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=876776109]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.5, 9.4, -20)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupWI1_4" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2117559541]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.5, 9.4, -16.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupWI1_2" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -32.5, 9.0, -13.6)
 
-[node name="P2_PupWI1_5" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1351196662]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.5, 9.4, -13.6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupWI1_6" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=454190983]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.5, 9.4, -20)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupWI1_3" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -28.5, 9.0, -20.0)
 
-[node name="P2_PupWI1_7" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1928280315]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.5, 9.4, -16.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupWI1_8" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=900808767]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.5, 9.4, -13.6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupWI1_4" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -28.5, 9.0, -16.8)
+
+
+[node name="P2_PupWI1_5" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -28.5, 9.0, -13.6)
+
+
+[node name="P2_PupWI1_6" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 9.0, -20.0)
+
+
+[node name="P2_PupWI1_7" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 9.0, -16.8)
+
+
+[node name="P2_PupWI1_8" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 9.0, -13.6)
+
 
 [node name="P2_CartelWI1" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1445370967]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -37.3, 12.2, -17)
@@ -4574,101 +4064,69 @@ use_collision = true
 size = Vector3(20, 4.5, 0.3)
 material = ExtResource("4_0kga5")
 
-[node name="P2_Piz210" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=633362936]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.4, 10.5, 0.5)
-use_collision = true
-size = Vector3(0.08, 1.5, 5)
-material = ExtResource("2_pu2gp")
+[node name="P2_Piz210" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("32_pizarron")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -17.4, 10.5, 0.5)
 
-[node name="P2_Pup210_0" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=103650663]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.5, 9.4, -6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_Pup210_1" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2145036226]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.5, 9.4, -2.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_Pup210_0" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -32.5, 9.0, -6.0)
 
-[node name="P2_Pup210_2" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1241619138]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.5, 9.4, 0.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_Pup210_3" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1608554836]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.5, 9.4, 3.6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_Pup210_1" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -32.5, 9.0, -2.8)
 
-[node name="P2_Pup210_4" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=816525075]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.5, 9.4, 6.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_Pup210_5" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1608496830]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.5, 9.4, -6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_Pup210_2" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -32.5, 9.0, 0.4)
 
-[node name="P2_Pup210_6" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1498009183]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.5, 9.4, -2.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_Pup210_7" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1850759007]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.5, 9.4, 0.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_Pup210_3" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -32.5, 9.0, 3.6)
 
-[node name="P2_Pup210_8" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1195808111]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.5, 9.4, 3.6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_Pup210_9" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=434807428]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.5, 9.4, 6.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_Pup210_4" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -32.5, 9.0, 6.8)
 
-[node name="P2_Pup210_10" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2060287810]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.5, 9.4, -6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_Pup210_11" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1550194068]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.5, 9.4, -2.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_Pup210_5" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -28.5, 9.0, -6.0)
 
-[node name="P2_Pup210_12" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1748126182]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.5, 9.4, 0.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_Pup210_13" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1609291275]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.5, 9.4, 3.6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_Pup210_6" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -28.5, 9.0, -2.8)
 
-[node name="P2_Pup210_14" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1679600774]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.5, 9.4, 6.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+
+[node name="P2_Pup210_7" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -28.5, 9.0, 0.4)
+
+
+[node name="P2_Pup210_8" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -28.5, 9.0, 3.6)
+
+
+[node name="P2_Pup210_9" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -28.5, 9.0, 6.8)
+
+
+[node name="P2_Pup210_10" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 9.0, -6.0)
+
+
+[node name="P2_Pup210_11" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 9.0, -2.8)
+
+
+[node name="P2_Pup210_12" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 9.0, 0.4)
+
+
+[node name="P2_Pup210_13" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 9.0, 3.6)
+
+
+[node name="P2_Pup210_14" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 9.0, 6.8)
+
 
 [node name="P2_Cartel210" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2000244830]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -37.3, 12.2, 0.5)
@@ -4695,59 +4153,41 @@ use_collision = true
 size = Vector3(0.3, 0.8, 2.9)
 material = ExtResource("4_0kga5")
 
-[node name="P2_PupWI2_0" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1082578275]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.5, 9.4, 15)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupWI2_0" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -32.5, 9.0, 15.0)
 
-[node name="P2_PupWI2_1" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1036687107]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.5, 9.4, 18.2)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupWI2_2" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=900995183]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.5, 9.4, 21.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupWI2_1" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -32.5, 9.0, 18.2)
 
-[node name="P2_PupWI2_3" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1051783467]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.5, 9.4, 15)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupWI2_4" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=593106774]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.5, 9.4, 18.2)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupWI2_2" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -32.5, 9.0, 21.4)
 
-[node name="P2_PupWI2_5" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1034441449]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.5, 9.4, 21.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupWI2_6" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=938324244]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.5, 9.4, 15)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupWI2_3" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -28.5, 9.0, 15.0)
 
-[node name="P2_PupWI2_7" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2078256239]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.5, 9.4, 18.2)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupWI2_8" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=859103346]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.5, 9.4, 21.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupWI2_4" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -28.5, 9.0, 18.2)
+
+
+[node name="P2_PupWI2_5" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -28.5, 9.0, 21.4)
+
+
+[node name="P2_PupWI2_6" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 9.0, 15.0)
+
+
+[node name="P2_PupWI2_7" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 9.0, 18.2)
+
+
+[node name="P2_PupWI2_8" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 9.0, 21.4)
+
 
 [node name="P2_CartelWI2" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1988506699]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -37.3, 12.2, 18)
@@ -4798,59 +4238,41 @@ use_collision = true
 size = Vector3(20, 4.5, 0.3)
 material = ExtResource("4_0kga5")
 
-[node name="P2_PupEI1_0" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=792799897]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.5, 9.4, -20)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupEI1_0" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 21.5, 9.0, -20.0)
 
-[node name="P2_PupEI1_1" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1797835878]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.5, 9.4, -16.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupEI1_2" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=438589783]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.5, 9.4, -13.6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupEI1_1" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 21.5, 9.0, -16.8)
 
-[node name="P2_PupEI1_3" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=447354177]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5, 9.4, -20)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupEI1_4" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1754531691]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5, 9.4, -16.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupEI1_2" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 21.5, 9.0, -13.6)
 
-[node name="P2_PupEI1_5" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=491802974]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5, 9.4, -13.6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupEI1_6" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=845373122]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.5, 9.4, -20)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupEI1_3" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 25.5, 9.0, -20.0)
 
-[node name="P2_PupEI1_7" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1317443130]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.5, 9.4, -16.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupEI1_8" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=135095462]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.5, 9.4, -13.6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupEI1_4" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 25.5, 9.0, -16.8)
+
+
+[node name="P2_PupEI1_5" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 25.5, 9.0, -13.6)
+
+
+[node name="P2_PupEI1_6" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 9.0, -20.0)
+
+
+[node name="P2_PupEI1_7" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 9.0, -16.8)
+
+
+[node name="P2_PupEI1_8" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 9.0, -13.6)
+
 
 [node name="P2_CartelEI1" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1359062122]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 37.3, 12.2, -16)
@@ -4883,59 +4305,41 @@ use_collision = true
 size = Vector3(20, 4.5, 0.3)
 material = ExtResource("4_0kga5")
 
-[node name="P2_PupEI2_0" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1320295416]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.5, 9.4, -4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupEI2_0" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 21.5, 9.0, -4.0)
 
-[node name="P2_PupEI2_1" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=695424294]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.5, 9.4, -0.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupEI2_2" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1831992561]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.5, 9.4, 2.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupEI2_1" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 21.5, 9.0, -0.8)
 
-[node name="P2_PupEI2_3" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=873007578]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5, 9.4, -4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupEI2_4" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=854107988]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5, 9.4, -0.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupEI2_2" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 21.5, 9.0, 2.4)
 
-[node name="P2_PupEI2_5" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=691444582]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5, 9.4, 2.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupEI2_6" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1557180081]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.5, 9.4, -4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupEI2_3" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 25.5, 9.0, -4.0)
 
-[node name="P2_PupEI2_7" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1439281883]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.5, 9.4, -0.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupEI2_8" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=162434444]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.5, 9.4, 2.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupEI2_4" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 25.5, 9.0, -0.8)
+
+
+[node name="P2_PupEI2_5" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 25.5, 9.0, 2.4)
+
+
+[node name="P2_PupEI2_6" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 9.0, -4.0)
+
+
+[node name="P2_PupEI2_7" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 9.0, -0.8)
+
+
+[node name="P2_PupEI2_8" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 9.0, 2.4)
+
 
 [node name="P2_CartelEI2" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=921895025]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 37.3, 12.2, 0)
@@ -4962,59 +4366,41 @@ use_collision = true
 size = Vector3(0.3, 0.8, 2.9)
 material = ExtResource("4_0kga5")
 
-[node name="P2_PupEI3_0" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1742957884]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.5, 9.4, 12)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupEI3_0" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 21.5, 9.0, 12.0)
 
-[node name="P2_PupEI3_1" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1096328458]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.5, 9.4, 15.2)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupEI3_2" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1869047864]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.5, 9.4, 18.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupEI3_1" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 21.5, 9.0, 15.2)
 
-[node name="P2_PupEI3_3" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1715280484]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5, 9.4, 12)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupEI3_4" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=439348703]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5, 9.4, 15.2)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupEI3_2" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 21.5, 9.0, 18.4)
 
-[node name="P2_PupEI3_5" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=410656213]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5, 9.4, 18.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupEI3_6" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=217929765]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.5, 9.4, 12)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupEI3_3" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 25.5, 9.0, 12.0)
 
-[node name="P2_PupEI3_7" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2053932368]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.5, 9.4, 15.2)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupEI3_8" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=320029661]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.5, 9.4, 18.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupEI3_4" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 25.5, 9.0, 15.2)
+
+
+[node name="P2_PupEI3_5" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 25.5, 9.0, 18.4)
+
+
+[node name="P2_PupEI3_6" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 9.0, 12.0)
+
+
+[node name="P2_PupEI3_7" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 9.0, 15.2)
+
+
+[node name="P2_PupEI3_8" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 9.0, 18.4)
+
 
 [node name="P2_CartelEI3" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=491143860]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 37.3, 12.2, 16.5)
@@ -5047,155 +4433,105 @@ use_collision = true
 size = Vector3(18, 4.5, 0.3)
 material = ExtResource("4_0kga5")
 
-[node name="P2_PizE1" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1310134149]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64.6, 10.5, -30)
-use_collision = true
-size = Vector3(0.08, 1.5, 5)
-material = ExtResource("2_pu2gp")
+[node name="P2_PizE1" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("32_pizarron")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 64.6, 10.5, -30.0)
 
-[node name="P2_PupE1_0" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1461931590]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.5, 9.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupE1_1" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=546018914]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.5, 9.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupE1_0" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 9.0, -41.0)
 
-[node name="P2_PupE1_2" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=499974689]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.5, 9.4, -34.6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupE1_3" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2033371533]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.5, 9.4, -31.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupE1_1" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 9.0, -37.8)
 
-[node name="P2_PupE1_4" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=457039812]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.5, 9.4, -28.2)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupE1_5" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=464301583]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.5, 9.4, -25)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupE1_2" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 9.0, -34.6)
 
-[node name="P2_PupE1_6" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=443848256]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.5, 9.4, -21.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupE1_7" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1939882409]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.5, 9.4, -18.6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupE1_3" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 9.0, -31.4)
 
-[node name="P2_PupE1_8" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=836723696]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.5, 9.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupE1_9" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1389219218]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.5, 9.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupE1_4" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 9.0, -28.2)
 
-[node name="P2_PupE1_10" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1362774676]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.5, 9.4, -34.6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupE1_11" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=455824202]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.5, 9.4, -31.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupE1_5" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 9.0, -25.0)
 
-[node name="P2_PupE1_12" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=75054646]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.5, 9.4, -28.2)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupE1_13" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=428133438]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.5, 9.4, -25)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupE1_6" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 9.0, -21.8)
 
-[node name="P2_PupE1_14" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1669387656]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.5, 9.4, -21.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupE1_15" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1396289921]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.5, 9.4, -18.6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupE1_7" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 9.0, -18.6)
 
-[node name="P2_PupE1_16" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1890204272]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.5, 9.4, -41)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupE1_17" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=712705629]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.5, 9.4, -37.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupE1_8" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 9.0, -41.0)
 
-[node name="P2_PupE1_18" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=946820806]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.5, 9.4, -34.6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupE1_19" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2029566060]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.5, 9.4, -31.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupE1_9" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 9.0, -37.8)
 
-[node name="P2_PupE1_20" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1384308489]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.5, 9.4, -28.2)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupE1_21" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=898156462]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.5, 9.4, -25)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupE1_10" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 9.0, -34.6)
 
-[node name="P2_PupE1_22" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=501531699]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.5, 9.4, -21.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupE1_23" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1666229743]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.5, 9.4, -18.6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupE1_11" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 9.0, -31.4)
+
+
+[node name="P2_PupE1_12" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 9.0, -28.2)
+
+
+[node name="P2_PupE1_13" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 9.0, -25.0)
+
+
+[node name="P2_PupE1_14" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 9.0, -21.8)
+
+
+[node name="P2_PupE1_15" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 9.0, -18.6)
+
+
+[node name="P2_PupE1_16" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9.0, -41.0)
+
+
+[node name="P2_PupE1_17" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9.0, -37.8)
+
+
+[node name="P2_PupE1_18" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9.0, -34.6)
+
+
+[node name="P2_PupE1_19" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9.0, -31.4)
+
+
+[node name="P2_PupE1_20" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9.0, -28.2)
+
+
+[node name="P2_PupE1_21" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9.0, -25.0)
+
+
+[node name="P2_PupE1_22" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9.0, -21.8)
+
+
+[node name="P2_PupE1_23" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9.0, -18.6)
+
 
 [node name="P2_CartelE1" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1595651857]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 46.7, 12.2, -30)
@@ -5228,119 +4564,81 @@ use_collision = true
 size = Vector3(18, 4.5, 0.3)
 material = ExtResource("4_0kga5")
 
-[node name="P2_PizE2" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=262502611]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64.6, 10.5, -2.5)
-use_collision = true
-size = Vector3(0.08, 1.5, 5)
-material = ExtResource("2_pu2gp")
+[node name="P2_PizE2" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("32_pizarron")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 64.6, 10.5, -2.5)
 
-[node name="P2_PupE2_0" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1209174817]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.5, 9.4, -11)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupE2_1" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=248576017]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.5, 9.4, -7.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupE2_0" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 9.0, -11.0)
 
-[node name="P2_PupE2_2" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=915329022]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.5, 9.4, -4.6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupE2_3" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=905825656]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.5, 9.4, -1.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupE2_1" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 9.0, -7.8)
 
-[node name="P2_PupE2_4" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=486026040]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.5, 9.4, 1.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupE2_5" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1685171079]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.5, 9.4, 5)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupE2_2" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 9.0, -4.6)
 
-[node name="P2_PupE2_6" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=39233780]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.5, 9.4, -11)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupE2_7" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=334813704]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.5, 9.4, -7.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupE2_3" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 9.0, -1.4)
 
-[node name="P2_PupE2_8" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1538536465]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.5, 9.4, -4.6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupE2_9" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1226151239]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.5, 9.4, -1.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupE2_4" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 9.0, 1.8)
 
-[node name="P2_PupE2_10" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=869413356]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.5, 9.4, 1.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupE2_11" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1730903589]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.5, 9.4, 5)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupE2_5" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 9.0, 5.0)
 
-[node name="P2_PupE2_12" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1641765004]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.5, 9.4, -11)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupE2_13" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1513752364]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.5, 9.4, -7.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupE2_6" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 9.0, -11.0)
 
-[node name="P2_PupE2_14" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=382163330]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.5, 9.4, -4.6)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupE2_15" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=411778470]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.5, 9.4, -1.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupE2_7" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 9.0, -7.8)
 
-[node name="P2_PupE2_16" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=994899535]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.5, 9.4, 1.8)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupE2_17" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1137960053]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.5, 9.4, 5)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupE2_8" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 9.0, -4.6)
+
+
+[node name="P2_PupE2_9" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 9.0, -1.4)
+
+
+[node name="P2_PupE2_10" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 9.0, 1.8)
+
+
+[node name="P2_PupE2_11" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 9.0, 5.0)
+
+
+[node name="P2_PupE2_12" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9.0, -11.0)
+
+
+[node name="P2_PupE2_13" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9.0, -7.8)
+
+
+[node name="P2_PupE2_14" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9.0, -4.6)
+
+
+[node name="P2_PupE2_15" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9.0, -1.4)
+
+
+[node name="P2_PupE2_16" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9.0, 1.8)
+
+
+[node name="P2_PupE2_17" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9.0, 5.0)
+
 
 [node name="P2_CartelE2" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1654052261]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 46.7, 12.2, -2.5)
@@ -5373,65 +4671,45 @@ use_collision = true
 size = Vector3(18, 4.5, 0.3)
 material = ExtResource("4_0kga5")
 
-[node name="P2_PizE3" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1074281937]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64.6, 10.5, 17.5)
-use_collision = true
-size = Vector3(0.08, 1.5, 5)
-material = ExtResource("2_pu2gp")
+[node name="P2_PizE3" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("32_pizarron")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 64.6, 10.5, 17.5)
 
-[node name="P2_PupE3_0" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=747954115]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.5, 9.4, 14)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupE3_1" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1375772287]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.5, 9.4, 17.2)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupE3_0" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 9.0, 14.0)
 
-[node name="P2_PupE3_2" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=663655832]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.5, 9.4, 20.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupE3_3" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1194545259]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.5, 9.4, 14)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupE3_1" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 9.0, 17.2)
 
-[node name="P2_PupE3_4" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1333920758]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.5, 9.4, 17.2)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupE3_5" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1283312376]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.5, 9.4, 20.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupE3_2" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 51.5, 9.0, 20.4)
 
-[node name="P2_PupE3_6" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=791731130]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.5, 9.4, 14)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupE3_7" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=307963858]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.5, 9.4, 17.2)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupE3_3" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 9.0, 14.0)
 
-[node name="P2_PupE3_8" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=107427535]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.5, 9.4, 20.4)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+
+[node name="P2_PupE3_4" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 9.0, 17.2)
+
+
+[node name="P2_PupE3_5" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 55.5, 9.0, 20.4)
+
+
+[node name="P2_PupE3_6" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9.0, 14.0)
+
+
+[node name="P2_PupE3_7" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9.0, 17.2)
+
+
+[node name="P2_PupE3_8" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9.0, 20.4)
+
 
 [node name="P2_CartelE3" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1165130565]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 46.7, 12.2, 17.5)
@@ -5470,53 +4748,37 @@ use_collision = true
 size = Vector3(0.3, 4.5, 10)
 material = ExtResource("4_0kga5")
 
-[node name="P2_PupSO_0" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=355319266]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50.5, 9.4, 39)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupSO_0" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -50.5, 9.0, 39.0)
 
-[node name="P2_PupSO_1" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=12836232]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46.5, 9.4, 39)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupSO_2" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1503375354]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42.5, 9.4, 39)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupSO_1" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -46.5, 9.0, 39.0)
 
-[node name="P2_PupSO_3" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=923447288]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.5, 9.4, 39)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupSO_4" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=860938257]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.5, 9.4, 39)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupSO_2" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -42.5, 9.0, 39.0)
 
-[node name="P2_PupSO_5" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=948948233]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.5, 9.4, 39)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupSO_6" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=174670999]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.5, 9.4, 39)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupSO_3" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -38.5, 9.0, 39.0)
 
-[node name="P2_PupSO_7" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1620687871]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.5, 9.4, 39)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+
+[node name="P2_PupSO_4" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -34.5, 9.0, 39.0)
+
+
+[node name="P2_PupSO_5" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -30.5, 9.0, 39.0)
+
+
+[node name="P2_PupSO_6" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -26.5, 9.0, 39.0)
+
+
+[node name="P2_PupSO_7" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -22.5, 9.0, 39.0)
+
 
 [node name="P2_CartelSO" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=893475807]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 12.2, 34.7)
@@ -5555,53 +4817,37 @@ use_collision = true
 size = Vector3(0.3, 4.5, 10)
 material = ExtResource("4_0kga5")
 
-[node name="P2_PupSE_0" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1316330086]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.5, 9.4, 39)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupSE_0" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 20.5, 9.0, 39.0)
 
-[node name="P2_PupSE_1" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1182956943]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.5, 9.4, 39)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupSE_2" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=896118820]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.5, 9.4, 39)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupSE_1" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 24.5, 9.0, 39.0)
 
-[node name="P2_PupSE_3" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1285406122]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.5, 9.4, 39)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupSE_4" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=697850760]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.5, 9.4, 39)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupSE_2" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 28.5, 9.0, 39.0)
 
-[node name="P2_PupSE_5" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=635401274]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.5, 9.4, 39)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
 
-[node name="P2_PupSE_6" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1693982784]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.5, 9.4, 39)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+[node name="P2_PupSE_3" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 32.5, 9.0, 39.0)
 
-[node name="P2_PupSE_7" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=110564199]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.5, 9.4, 39)
-use_collision = true
-size = Vector3(2, 0.8, 1)
-material = ExtResource("1_2hdtu")
+
+[node name="P2_PupSE_4" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 36.5, 9.0, 39.0)
+
+
+[node name="P2_PupSE_5" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 40.5, 9.0, 39.0)
+
+
+[node name="P2_PupSE_6" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 44.5, 9.0, 39.0)
+
+
+[node name="P2_PupSE_7" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 48.5, 9.0, 39.0)
+
 
 [node name="P2_CartelSE" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=641378739]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 12.2, 34.7)

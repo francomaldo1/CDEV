@@ -1,0 +1,15 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://models/mesh_chalkboard.tres" id="1_bhkbl"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_y5l2a"]
+size = Vector3(4.28, 1.26, 0.12)
+
+[node name="PizarronAula" type="StaticBody3D" unique_id=980541301]
+
+[node name="Mesh" type="MeshInstance3D" parent="." unique_id=1309765148]
+mesh = ExtResource("1_bhkbl")
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=712741721]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.06)
+shape = SubResource("BoxShape3D_y5l2a")
