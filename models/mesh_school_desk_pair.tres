@@ -1,6 +1,6 @@
-[gd_resource type="ArrayMesh" format=4]
+[gd_resource type="ArrayMesh" format=4 uid="uid://bhjc85brgg0o5"]
 
-[ext_resource type="Material" path="res://materials/mat_desk_wood.tres" id="1_uvgrp"]
+[ext_resource type="Material" uid="uid://c1jpnyv7lwiaj" path="res://materials/mat_desk_wood.tres" id="1_uvgrp"]
 [ext_resource type="Material" path="res://materials/mat_desk_metal.tres" id="2_wxrtc"]
 [ext_resource type="Material" path="res://materials/mat_desk_plastic.tres" id="3_ahcem"]
 

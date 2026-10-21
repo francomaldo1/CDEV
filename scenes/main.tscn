@@ -1,17 +1,13 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://bl0y6fxpw371j"]
 
-[ext_resource type="Script" path="res://scripts/mic_detector.gd" id="1_tefeu"]
+[ext_resource type="Script" uid="uid://oxrwi6tfdr2v" path="res://scripts/mic_detector.gd" id="1_tefeu"]
 [ext_resource type="PackedScene" path="res://scenes/hud.tscn" id="2_o6xl0"]
-[ext_resource type="Script" path="res://scripts/hud.gd" id="3_tipki"]
-[ext_resource type="PackedScene" path="res://scenes/edificio_central.tscn" id="4_85g3d"]
+[ext_resource type="PackedScene" uid="uid://d1eynjjox8ec" path="res://scenes/edificio_central.tscn" id="4_85g3d"]
 [ext_resource type="PackedScene" path="res://scenes/player.tscn" id="5_choun"]
-[ext_resource type="Script" path="res://scripts/player.gd" id="6_ya4ey"]
-[ext_resource type="Script" path="res://scripts/main.gd" id="7_main0"]
-[ext_resource type="PackedScene" path="res://scenes/profesor.tscn" id="8_prof0"]
+[ext_resource type="Script" uid="uid://4mepc0cpop3" path="res://scripts/main.gd" id="7_main0"]
+[ext_resource type="PackedScene" uid="uid://21t23mc5bmpn" path="res://scenes/profesor.tscn" id="8_prof0"]
 
 [sub_resource type="Environment" id="Environment_eb6dy"]
-background_mode = 1
-background_color = Color(0.01, 0.01, 0.025, 1)
 ambient_light_source = 2
 ambient_light_color = Color(0.04, 0.04, 0.06, 1)
 ambient_light_energy = 0.12
@@ -24,14 +20,13 @@ script = ExtResource("7_main0")
 [node name="MicDetector" type="Node" parent="." unique_id=630287283]
 script = ExtResource("1_tefeu")
 
-[node name="HUD" type="CanvasLayer" parent="." unique_id=862552845 instance=ExtResource("2_o6xl0")]
-script = ExtResource("3_tipki")
+[node name="HUD" parent="." unique_id=862552845 instance=ExtResource("2_o6xl0")]
 
-[node name="EdificioCentral" type="Node3D" parent="." unique_id=397447900 instance=ExtResource("4_85g3d")]
+[node name="EdificioCentral" parent="." unique_id=397447900 instance=ExtResource("4_85g3d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.68800545, -1.7588606, 1.8319588)
 
-[node name="Player" type="CharacterBody3D" parent="." unique_id=491679396 instance=ExtResource("5_choun")]
+[node name="Player" parent="." unique_id=491679396 instance=ExtResource("5_choun")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 30)
-script = ExtResource("6_ya4ey")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1151777975]
 environment = SubResource("Environment_eb6dy")
@@ -42,6 +37,5 @@ light_color = Color(0.35, 0.45, 0.65, 1)
 light_energy = 0.12
 shadow_enabled = true
 
-[node name="Profesor" type="CharacterBody3D" parent="." instance=ExtResource("8_prof0")]
+[node name="Profesor" parent="." unique_id=1380220076 instance=ExtResource("8_prof0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, -22)
-

@@ -55,7 +55,7 @@ func _ready() -> void:
 		
 	if instruction_label:
 		instruction_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		instruction_label.text = "[W,A,S,D] Mover | [Shift] Correr | [F] Linterna | [E] Usar | [F3] Coords | [F2] Copiar"
+		instruction_label.text = "[W,A,S,D] Mover | [Shift] Correr | [F] Linterna | [E] Usar | [F3] Coords | [F2] Copiar | [M] Guia"
 
 	option_buttons = [btn_opt0, btn_opt1, btn_opt2, btn_opt3]
 	for i in range(option_buttons.size()):
@@ -202,9 +202,7 @@ func _on_option_selected(btn_index: int) -> void:
 	_close_math_exam()
 	
 	if is_correct:
-		has_exit_key = true
-		update_inventory_display()
-		show_temporary_alert("✅ ¡PARCIAL APROBADO! Obtuviste la LLAVE DE SALIDA. Corre a la puerta principal.", Color(0.2, 1.0, 0.4))
+		show_temporary_alert("✅ ¡PARCIAL APROBADO!", Color(0.2, 1.0, 0.4))
 		
 		if active_cuaderno and active_cuaderno.has_method("on_exam_result"):
 			active_cuaderno.on_exam_result(true)

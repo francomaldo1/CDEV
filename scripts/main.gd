@@ -11,8 +11,19 @@ var puerta_salida_scene = preload("res://scenes/puerta_salida.tscn")
 var tablero_scene = preload("res://scenes/tablero_electrico.tscn")
 var fusible_scene = preload("res://scenes/fusible.tscn")
 
-## Retraso en segundos hasta que se corte la luz
-@export var blackout_delay: float = 45.0
+## Cantidad total de exámenes (cuadernos) que aparecen en las aulas
+@export var total_exams: int = 4
+## Exámenes aprobados necesarios para el corte de luz (y la aparición del profesor)
+@export var exams_for_blackout: int = 2
+## Exámenes aprobados necesarios para habilitar el piso de arriba
+@export var exams_for_upper_floor: int = 4
+
+## Cuadernos aprobados (cada uno cuenta una sola vez)
+var exams_approved: Array = []
+## Posición original del profesor (la que tiene en main.tscn)
+var profesor_spawn_transform: Transform3D
+## Barreras que bloquean las escaleras hasta aprobar todos los exámenes
+var upper_floor_blockers: Array[Node3D] = []
 
 var tablero_electrico: Area3D = null
 var is_blackout: bool = false
@@ -24,22 +35,22 @@ var spook_audio_3d: AudioStreamPlayer3D = null
 var spook_interval_timer: float = 0.0
 var next_spook_delay: float = 12.0
 
-## Ubicaciones de pupitres en todas las aulas de Planta Baja
+## Ubicaciones de cuadernos en todas las aulas de Planta Baja
 var classroom_spots = [
-	{"pos": Vector3(-52.5, 0.82, -39.0), "name": "Aula 101 (Norte)"},
-	{"pos": Vector3(-27.5, 0.82, -39.0), "name": "Aula 102 (Norte)"},
-	{"pos": Vector3(-2.5, 0.82, -39.0),  "name": "Aula 103 (Norte)"},
-	{"pos": Vector3(23.5, 0.82, -39.0),  "name": "Aula 104 (Norte)"},
-	{"pos": Vector3(-56.5, 0.82, -25.8), "name": "Laboratorio W1 (Oeste)"},
-	{"pos": Vector3(-56.5, 0.82, -11.8), "name": "Aula W2 (Oeste)"},
-	{"pos": Vector3(-56.5, 0.82, 2.2),   "name": "Aula W3 (Oeste)"},
-	{"pos": Vector3(-56.5, 0.82, 17.2),  "name": "Aula W4 (Oeste)"}
+	{"pos": Vector3(-17.8, -1.7, 41.3), "name": "Examen #1"},
+	{"pos": Vector3(-56.5, -1.7, -11), "name": "Examen #4"},
+	{"pos": Vector3(-13.5, -1.7, 12.3),  "name": "Examen #3"},
+	{"pos": Vector3(52.2, -1.7, -8.8),  "name": "Examen #2"},
 ]
 
 func _ready() -> void:
 	randomize()
 	
 	_setup_ambient_audio()
+	
+	if mic_detector and hud:
+		mic_detector.volume_updated.connect(hud.on_mic_volume_updated)
+	add_child(preload("res://scripts/hoja_pisos.gd").new())
 	
 	if mic_detector and hud:
 		mic_detector.volume_updated.connect(hud.on_mic_volume_updated)
@@ -53,9 +64,14 @@ func _ready() -> void:
 	_spawn_tablero_electronica()
 	_spawn_fusible()
 	_spawn_multiple_cuadernos()
+	_spawn_upper_floor_blockers()
 	
-	# Programar el corte de luz
-	_start_blackout_timer()
+	# El profesor no está al principio: aparece con el corte de luz
+	if profesor:
+		profesor_spawn_transform = profesor.global_transform
+		profesor.set_active(false)
+	
+	# El corte de luz ahora se dispara al realizar exams_for_blackout exámenes (ver _on_exam_solved)
 	_init_building_lights()
 
 func _setup_ambient_audio() -> void:
@@ -86,14 +102,14 @@ var light_flicker_timer: float = 0.0
 
 func _spawn_exit_door() -> void:
 	var puerta = puerta_salida_scene.instantiate()
-	puerta.position = Vector3(-60.0, 0.0, 45.0)
+	puerta.position = Vector3(-59.3, -1.7, 47)
 	puerta.rotation_degrees = Vector3.ZERO
 	add_child(puerta)
 
 func _spawn_tablero_electronica() -> void:
 	# Ubicado en el Departamento de Ingeniería Electrónica (Planta Baja Oeste), montado en la pared este bajo la luz
 	tablero_electrico = tablero_scene.instantiate() as Area3D
-	tablero_electrico.position = Vector3(-17.22, 0.0, 0.0)
+	tablero_electrico.position = Vector3(-16.5, -1, 0.0)
 	tablero_electrico.rotation_degrees = Vector3(0, -90, 0)
 	tablero_electrico.power_restored.connect(_on_power_restored)
 	add_child(tablero_electrico)
@@ -125,25 +141,108 @@ func _spawn_tablero_electronica() -> void:
 func _spawn_fusible() -> void:
 	# El fusible está guardado en la Cafetería o Bedelía (ala este)
 	var fusible = fusible_scene.instantiate()
-	fusible.position = Vector3(45.0, 0.85, 28.0)
+	fusible.position = Vector3(-12.8, 2.9, -42.3)
 	add_child(fusible)
 	print(">>> Fusible de alta tensión colocado en Cafetería (45, 0.85, 28)")
 
 func _spawn_multiple_cuadernos() -> void:
 	classroom_spots.shuffle()
 	
-	# Colocar exámenes en 6 de las 8 aulas disponibles para que sea fácil encontrarlos
-	var count = min(6, classroom_spots.size())
+	# Colocar los exámenes en aulas al azar
+	var count = min(total_exams, classroom_spots.size())
 	for i in range(count):
 		var spot = classroom_spots[i]
 		var cuaderno = cuaderno_scene.instantiate()
 		cuaderno.position = spot["pos"]
 		cuaderno.classroom_name = spot["name"]
+		cuaderno.exam_solved.connect(_on_exam_solved.bind(cuaderno))
 		add_child(cuaderno)
 		print(">>> Cuaderno matemático colocado en: %s" % spot["name"])
 
-func _start_blackout_timer() -> void:
-	get_tree().create_timer(blackout_delay).timeout.connect(_trigger_blackout)
+func _on_exam_solved(success: bool, cuaderno: Node) -> void:
+	# Solo cuentan los exámenes aprobados, y cada cuaderno una sola vez
+	if not success or exams_approved.has(cuaderno):
+		return
+	exams_approved.append(cuaderno)
+	var n = exams_approved.size()
+	print(">>> Exámenes aprobados: %d / %d" % [n, total_exams])
+	
+	if hud and hud.has_method("show_temporary_alert"):
+		hud.show_temporary_alert("✅ ¡PARCIAL APROBADO! (%d/%d)" % [n, total_exams], Color(0.2, 1.0, 0.4))
+	
+	# 2do examen aprobado: aparece el profesor y se corta la luz
+	if n == exams_for_blackout:
+		_spawn_profesor()
+		_trigger_blackout()
+	
+	# Todos los exámenes aprobados: se habilita el piso de arriba
+	if n == exams_for_upper_floor:
+		_unlock_upper_floor()
+
+func _spawn_profesor() -> void:
+	if not profesor:
+		return
+	profesor.global_transform = profesor_spawn_transform
+	profesor.set_active(true)
+	print(">>> ¡El profesor apareció!")
+
+func _spawn_upper_floor_blockers() -> void:
+	# Bloquea la entrada de planta baja a las 3 torres de escaleras
+	var bloqueos = [
+		{"name": "BloqueoEscaleraOeste", "pos": Vector3(-64.25, 0, 32), "size": Vector3(0.4, 4.5, 10.0)},
+		{"name": "BloqueoEscaleraEste",  "pos": Vector3(65.0, 0, 32),  "size": Vector3(0.4, 4.5, 10.0)},
+		{"name": "BloqueoEscaleraNorte", "pos": Vector3(42.0, 0, -40.0), "size": Vector3(10.0, 4.5, 0.4)}
+	]
+	
+	var mat = StandardMaterial3D.new()
+	mat.albedo_color = Color(1.0, 0.75, 0.0, 0.35)
+	mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	mat.cull_mode = BaseMaterial3D.CULL_DISABLED
+	
+	for b in bloqueos:
+		var body = StaticBody3D.new()
+		body.name = b["name"]
+		body.position = b["pos"]
+		
+		var shape = CollisionShape3D.new()
+		var box = BoxShape3D.new()
+		box.size = b["size"]
+		shape.shape = box
+		body.add_child(shape)
+		
+		var mesh_inst = MeshInstance3D.new()
+		var mesh = BoxMesh.new()
+		mesh.size = b["size"]
+		mesh_inst.mesh = mesh
+		mesh_inst.material_override = mat
+		body.add_child(mesh_inst)
+		
+		var label = Label3D.new()
+		label.text = "PISO SUPERIOR CERRADO\nAprobá los %d parciales" % exams_for_upper_floor
+		label.billboard = BaseMaterial3D.BILLBOARD_FIXED_Y
+		label.font_size = 48
+		label.outline_size = 10
+		label.modulate = Color(1.0, 0.8, 0.2)
+		label.position = Vector3(0, 0.3, 0)
+		body.add_child(label)
+		
+		add_child(body)
+		upper_floor_blockers.append(body)
+		
+		# El profesor puede atravesar las barreras (para que no se trabe)
+		if profesor:
+			profesor.add_collision_exception_with(body)
+
+func _unlock_upper_floor() -> void:
+	for b in upper_floor_blockers:
+		if is_instance_valid(b):
+			b.queue_free()
+	upper_floor_blockers.clear()
+	
+	if hud and hud.has_method("show_temporary_alert"):
+		hud.show_temporary_alert("🔓 ¡Aprobaste todos los parciales! Se habilitó el PISO DE ARRIBA.", Color(0.3, 0.8, 1.0))
+	print(">>> ¡PISO SUPERIOR HABILITADO!")
 
 func _collect_all_building_lights() -> Array[Light3D]:
 	var result: Array[Light3D] = []
@@ -196,6 +295,11 @@ func _trigger_blackout() -> void:
 			if is_instance_valid(l): l.visible = true
 		await get_tree().create_timer(0.06).timeout
 		
+	# A partir del corte de luz se puede usar la linterna
+	var player_node = find_child("Player", true, false)
+	if player_node and player_node.has_method("enable_flashlight"):
+		player_node.enable_flashlight()
+	
 	# Apagón total en toda la facultad
 	for l in turned_off_lights:
 		if is_instance_valid(l):
@@ -217,7 +321,7 @@ func _trigger_blackout() -> void:
 		tablero_electrico.trigger_blackout()
 		
 	if hud and hud.has_method("show_temporary_alert"):
-		hud.show_temporary_alert("⚡ ¡CORTE GENERAL DE LUZ! Los disyuntores saltaron. Busca el FUSIBLE y llévalo al Depto. de Electrónica.", Color(1.0, 0.25, 0.25))
+		hud.show_temporary_alert("⚡ ¡CORTE GENERAL DE LUZ! Los disyuntores saltaron. Busca el FUSIBLE y llévalo al Depto. de Electrónica. [F] Linterna", Color(1.0, 0.25, 0.25))
 		
 	if profesor and profesor.has_method("_say"):
 		profesor._say("¡¿Quién tocó los disyuntores?! ¡Quedaron todos a oscuras!", Color(1.0, 0.3, 0.3))
