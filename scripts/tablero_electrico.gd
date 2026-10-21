@@ -120,14 +120,6 @@ func _execute_fuse_screamer_sequence(hud: Node) -> void:
 	spark_light.shadow_enabled = false
 	add_child(spark_light)
 	
-	var spark_player = AudioStreamPlayer3D.new()
-	spark_player.stream = HorrorAudio.get_spark_sound()
-	spark_player.position = Vector3(0.0, 1.2, 0.0)
-	spark_player.volume_db = 4.0
-	spark_player.unit_size = 9.0
-	add_child(spark_player)
-	spark_player.play()
-	
 	if is_instance_valid(player) and player.has_method("shake_camera"):
 		player.shake_camera(0.75, 0.45)
 		
@@ -136,7 +128,6 @@ func _execute_fuse_screamer_sequence(hud: Node) -> void:
 	spark_tw.tween_property(spark_light, "light_energy", 5.0, 0.05)
 	spark_tw.tween_property(spark_light, "light_energy", 0.0, 0.08)
 	spark_tw.tween_callback(spark_light.queue_free)
-	spark_player.finished.connect(spark_player.queue_free)
 	
 	# 3. CORTE DE LINTERNA Y OSCURIDAD TOTAL (T = 0.18s)
 	await get_tree().create_timer(0.18).timeout
@@ -198,10 +189,6 @@ func _execute_fuse_screamer_sequence(hud: Node) -> void:
 	
 	# Bloqueo de cámara fijo en el profesor durante 1.4 segundos de tensión pura
 	await get_tree().create_timer(1.4).timeout
-	
-	# Sonido screamer mp3 cuando el profesor se acerca corriendo a nosotros
-	if is_instance_valid(player) and player.has_method("play_jumpscare_screamer"):
-		player.play_jumpscare_screamer()
 	
 	if is_instance_valid(player) and player.has_method("shake_camera"):
 		player.shake_camera(1.3, 0.9)

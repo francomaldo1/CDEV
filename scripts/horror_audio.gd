@@ -37,13 +37,7 @@ static func get_screamer_stinger() -> AudioStreamWAV:
 	return _cached_stinger
 
 static func get_screamer_jumpscare_sound() -> AudioStream:
-	if _cached_screamer_mp3 == null:
-		var mp3_path = "res://audio/sfx/jumpscare_sound_effect.mp3"
-		if ResourceLoader.exists(mp3_path):
-			_cached_screamer_mp3 = load(mp3_path)
-	if _cached_screamer_mp3 != null:
-		return _cached_screamer_mp3
-	return get_screamer_stinger()
+	return preload("res://audio/sfx/jumpscare_sound_effect.mp3")
 
 static func get_ambient_drone(is_blackout: bool = false) -> AudioStreamWAV:
 	if _cached_ambient_file == null:
