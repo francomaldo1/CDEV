@@ -357,19 +357,19 @@ size = Vector3(0.3, 4.5, 12)
 material = ExtResource("4_0kga5")
 
 [node name="PizN1" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("32_pizarron")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 1.5, -44.6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 1.5, -44.55)
 
 
 [node name="PizN2" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("32_pizarron")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 1.5, -44.6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 1.5, -44.55)
 
 
 [node name="PizN3" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("32_pizarron")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 1.5, -44.6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 1.5, -44.55)
 
 
 [node name="PizN4" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("32_pizarron")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.5, 1.5, -44.6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.5, 1.5, -44.55)
 
 
 [node name="PupN1_0" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
@@ -657,19 +657,19 @@ size = Vector3(18, 4.5, 0.3)
 material = ExtResource("4_0kga5")
 
 [node name="PizW1" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("32_pizarron")]
-transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -64.6, 1.5, -26.0)
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -64.55, 1.5, -26.0)
 
 
 [node name="PizW2" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("32_pizarron")]
-transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -64.6, 1.5, -12.0)
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -64.55, 1.5, -12.0)
 
 
 [node name="PizW3" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("32_pizarron")]
-transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -64.6, 1.5, 2.5)
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -64.55, 1.5, 2.5)
 
 
 [node name="PizW4" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("32_pizarron")]
-transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -64.6, 1.5, 17.5)
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -64.55, 1.5, 17.5)
 
 
 [node name="PupW1_0" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
@@ -1288,7 +1288,7 @@ size = Vector3(18, 4.5, 0.3)
 material = ExtResource("4_0kga5")
 
 [node name="PizE1" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("32_pizarron")]
-transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 64.6, 1.5, -30.0)
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 64.55, 1.5, -30.0)
 
 
 [node name="PupE1_0" parent="PlantaBaja/HabitacionesPB" instance=ExtResource("31_pupitre")]
@@ -3468,19 +3468,19 @@ size = Vector3(0.3, 4.5, 12)
 material = ExtResource("4_0kga5")
 
 [node name="P2_PizN1" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("32_pizarron")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 10.5, -44.6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 10.5, -44.55)
 
 
 [node name="P2_PizN2" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("32_pizarron")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 10.5, -44.6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 10.5, -44.55)
 
 
 [node name="P2_PizN3" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("32_pizarron")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 10.5, -44.6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 10.5, -44.55)
 
 
 [node name="P2_PizN4" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("32_pizarron")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.5, 10.5, -44.6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.5, 10.5, -44.55)
 
 
 [node name="P2_PupN1_0" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
@@ -3768,19 +3768,19 @@ size = Vector3(18, 4.5, 0.3)
 material = ExtResource("4_0kga5")
 
 [node name="P2_PizW1" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("32_pizarron")]
-transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -64.6, 10.5, -26.0)
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -64.55, 10.5, -26.0)
 
 
 [node name="P2_PizW2" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("32_pizarron")]
-transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -64.6, 10.5, -12.0)
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -64.55, 10.5, -12.0)
 
 
 [node name="P2_PizW3" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("32_pizarron")]
-transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -64.6, 10.5, 2.5)
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -64.55, 10.5, 2.5)
 
 
 [node name="P2_PizW4" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("32_pizarron")]
-transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -64.6, 10.5, 17.5)
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -64.55, 10.5, 17.5)
 
 
 [node name="P2_PupW1_0" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
@@ -4065,7 +4065,7 @@ size = Vector3(20, 4.5, 0.3)
 material = ExtResource("4_0kga5")
 
 [node name="P2_Piz210" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("32_pizarron")]
-transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -17.4, 10.5, 0.5)
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -17.35, 10.5, 0.5)
 
 
 [node name="P2_Pup210_0" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
@@ -4434,7 +4434,7 @@ size = Vector3(18, 4.5, 0.3)
 material = ExtResource("4_0kga5")
 
 [node name="P2_PizE1" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("32_pizarron")]
-transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 64.6, 10.5, -30.0)
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 64.55, 10.5, -30.0)
 
 
 [node name="P2_PupE1_0" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
@@ -4565,7 +4565,7 @@ size = Vector3(18, 4.5, 0.3)
 material = ExtResource("4_0kga5")
 
 [node name="P2_PizE2" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("32_pizarron")]
-transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 64.6, 10.5, -2.5)
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 64.55, 10.5, -2.5)
 
 
 [node name="P2_PupE2_0" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]
@@ -4672,7 +4672,7 @@ size = Vector3(18, 4.5, 0.3)
 material = ExtResource("4_0kga5")
 
 [node name="P2_PizE3" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("32_pizarron")]
-transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 64.6, 10.5, 17.5)
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 64.55, 10.5, 17.5)
 
 
 [node name="P2_PupE3_0" parent="SegundoPiso/Piso2_AulasYCafeteria" instance=ExtResource("31_pupitre")]

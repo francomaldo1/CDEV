@@ -232,9 +232,10 @@ func _setup_audio_players() -> void:
 	jumpscare_player = AudioStreamPlayer.new()
 	jumpscare_player.name = "JumpscarePlayer"
 	jumpscare_player.stream = HorrorAudio.get_screamer_jumpscare_sound()
-	jumpscare_player.volume_db = 8.0
+	jumpscare_player.volume_db = 10.0
 	jumpscare_player.bus = &"Master"
 	add_child(jumpscare_player)
+	jumpscare_player.finished.connect(_on_jumpscare_finished)
 
 func _apply_head_bob_and_footsteps(delta: float, is_sprinting: bool) -> void:
 	if not camera:
@@ -269,26 +270,24 @@ func _play_footstep(is_sprint: bool) -> void:
 	footstep_player.pitch_scale = randf_range(0.97, 1.03)
 	footstep_player.play()
 
+func _on_jumpscare_finished() -> void:
+	trigger_post_screamer_heartbeat(25.0)
+
 func play_jumpscare_screamer() -> void:
 	jumpscare_play_time = 0.0
 	if jumpscare_player:
 		jumpscare_player.stop()
-		jumpscare_player.volume_db = 8.0
+		jumpscare_player.volume_db = 10.0
 		jumpscare_player.play()
 
-func fade_jumpscare_screamer(fade_time: float = 1.0) -> void:
-	if jumpscare_play_time < 3.0:
-		var wait_time = 3.0 - jumpscare_play_time
+func stop_jumpscare_screamer(fade_time: float = 0.3) -> void:
+	if jumpscare_player and jumpscare_player.playing:
 		var tw = create_tween()
-		tw.tween_interval(wait_time)
-		if jumpscare_player:
-			tw.tween_property(jumpscare_player, "volume_db", -40.0, fade_time)
-			tw.tween_callback(jumpscare_player.stop)
-	else:
-		if jumpscare_player and jumpscare_player.playing:
-			var tw = create_tween()
-			tw.tween_property(jumpscare_player, "volume_db", -40.0, fade_time)
-			tw.tween_callback(jumpscare_player.stop)
+		tw.tween_property(jumpscare_player, "volume_db", -40.0, fade_time)
+		tw.tween_callback(jumpscare_player.stop)
+
+func fade_jumpscare_screamer(fade_time: float = 0.3) -> void:
+	stop_jumpscare_screamer(fade_time)
 
 func trigger_post_screamer_heartbeat(duration: float = 25.0) -> void:
 	post_screamer_heartbeat_timer = maxf(post_screamer_heartbeat_timer, duration)

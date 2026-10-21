@@ -1,9 +1,9 @@
 [gd_resource type="StandardMaterial3D" load_steps=5 format=3]
 
 [ext_resource type="Texture2D" uid="uid://byg65bfxmppcw" path="res://textures/tex_peronachos_3d.png" id="1_peronachos"]
-[ext_resource type="Texture2D" uid="uid://bnvby1cvkxofx" path="res://rancheritos-chips/textures/charrones_Metallic.png" id="2_metallic"]
-[ext_resource type="Texture2D" uid="uid://du17v5nb4vgob" path="res://rancheritos-chips/textures/charrones_Normal.png" id="3_normal"]
-[ext_resource type="Texture2D" uid="uid://bt82uyiylxbtp" path="res://rancheritos-chips/textures/charrones_Roughness.png" id="4_roughness"]
+[ext_resource type="Texture2D" uid="uid://bnvby1cvkxofx" path="res://models/rancheritos-chips/textures/charrones_Metallic.png" id="2_metallic"]
+[ext_resource type="Texture2D" uid="uid://du17v5nb4vgob" path="res://models/rancheritos-chips/textures/charrones_Normal.png" id="3_normal"]
+[ext_resource type="Texture2D" uid="uid://bt82uyiylxbtp" path="res://models/rancheritos-chips/textures/charrones_Roughness.png" id="4_roughness"]
 
 [resource]
 resource_name = "Peronachos"

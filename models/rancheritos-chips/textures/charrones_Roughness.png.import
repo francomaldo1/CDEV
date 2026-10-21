@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bnvby1cvkxofx"
-path="res://.godot/imported/charrones_Metallic.png-52332179ceefdbf754499d6fb376f3c6.ctex"
+uid="uid://bt82uyiylxbtp"
+path="res://.godot/imported/charrones_Roughness.png-a54fe35fad1f843afdb5e25191b80a99.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://rancheritos-chips/textures/charrones_Metallic.png"
-dest_files=["res://.godot/imported/charrones_Metallic.png-52332179ceefdbf754499d6fb376f3c6.ctex"]
+source_file="res://models/rancheritos-chips/textures/charrones_Roughness.png"
+dest_files=["res://.godot/imported/charrones_Roughness.png-a54fe35fad1f843afdb5e25191b80a99.ctex"]
 
 [params]
 

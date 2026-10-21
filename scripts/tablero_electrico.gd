@@ -213,9 +213,6 @@ func _execute_fuse_screamer_sequence(hud: Node) -> void:
 		else:
 			prof.release_screamer_ambush()
 			
-	if is_instance_valid(player) and player.has_method("trigger_post_screamer_heartbeat"):
-		player.trigger_post_screamer_heartbeat(25.0)
-		
 	hud.show_temporary_alert("⚡ ¡¡CORRE!! ¡¡ESQUÍVALO POR LAS MESADAS!!", Color(1.0, 0.1, 0.1))
 	
 	# Liberar el movimiento del jugador justo en el instante que arranca la embestida

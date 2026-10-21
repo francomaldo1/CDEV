@@ -2,16 +2,19 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://du17v5nb4vgob"
-path="res://.godot/imported/charrones_Normal.png-7429418b229e79ec776fdc1c351fbc94.ctex"
+uid="uid://dth7lwjnlsg4p"
+path="res://.godot/imported/horror_mask_1.png-efa3a5986ace8a0169d7dced271474b7.ctex"
 metadata={
 "vram_texture": false
+}
+generator_parameters={
+"md5": "0b267c25cf79395dc55ebee600685c25"
 }
 
 [deps]
 
-source_file="res://rancheritos-chips/textures/charrones_Normal.png"
-dest_files=["res://.godot/imported/charrones_Normal.png-7429418b229e79ec776fdc1c351fbc94.ctex"]
+source_file="res://models/mask/horror_mask_1.png"
+dest_files=["res://.godot/imported/horror_mask_1.png-efa3a5986ace8a0169d7dced271474b7.ctex"]
 
 [params]
 
@@ -23,7 +26,7 @@ compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=false
+mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""

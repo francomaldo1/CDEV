@@ -349,8 +349,6 @@ func _process_chase_state(delta: float, can_see_player: bool) -> void:
 	var dist_to_player = Vector2(to_player.x, to_player.z).length()
 
 	# Si estaba cargando a toda velocidad y ya alcanzo al jugador, volver a velocidad normal
-	if dist_to_player <= attack_range + 0.6:
-		_cut_screamer_audio()
 	if is_screamer_charging and dist_to_player <= attack_range + 0.6:
 		_end_screamer_charge()
 
@@ -634,12 +632,14 @@ func play_ruler_slam_animation() -> void:
 func start_screamer_charge() -> void:
 	is_screamer_ambush = false
 	is_screamer_charging = true
-	screamer_charge_timer = 1.2
+	screamer_charge_timer = 1.4
 	current_state = State.CHASE
-	current_speed = 42.0
+	current_speed = 40.0
 	stuck_timer = 0.0
-	attack_timer = 0.1
+	attack_timer = 0.15
 	_say("¡¡NO HAY SALVACIÓN, DIRECTO A MARZO!!", Color(1.0, 0.0, 0.0))
+	if is_instance_valid(player) and player.has_method("play_jumpscare_screamer"):
+		player.play_jumpscare_screamer()
 	if is_instance_valid(player):
 		last_known_player_pos = player.global_position
 		var to_p = player.global_position - global_position
@@ -651,7 +651,6 @@ func start_screamer_charge() -> void:
 			velocity.z = dir_p.z * 42.0
 
 func _end_screamer_charge() -> void:
-	_cut_screamer_audio()
 	is_screamer_charging = false
 	screamer_charge_timer = 0.0
 	chase_speed = base_chase_speed + (speed_boost_count * 0.85)

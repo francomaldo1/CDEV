@@ -9,6 +9,7 @@
 [ext_resource type="Material" path="res://materials/mat_prof_hair.tres" id="7_hair0"]
 [ext_resource type="Material" path="res://materials/mat_prof_glasses.tres" id="8_glas0"]
 [ext_resource type="Material" path="res://materials/mat_prof_ruler.tres" id="9_rule0"]
+[ext_resource type="PackedScene" path="res://models/mask/horror_mask.glb" id="10_mask0"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_prof"]
 radius = 0.4
@@ -74,30 +75,35 @@ radius = 0.19
 material = ExtResource("7_hair0")
 
 [node name="LentesPuente" type="CSGBox3D" parent="Visuals/Torso/Cabeza"]
+visible = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0.18)
 use_collision = false
 size = Vector3(0.26, 0.04, 0.03)
 material = ExtResource("8_glas0")
 
 [node name="LenteIzq" type="CSGBox3D" parent="Visuals/Torso/Cabeza"]
+visible = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08, 0.02, 0.19)
 use_collision = false
 size = Vector3(0.08, 0.07, 0.02)
 material = ExtResource("8_glas0")
 
 [node name="LenteDer" type="CSGBox3D" parent="Visuals/Torso/Cabeza"]
+visible = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08, 0.02, 0.19)
 use_collision = false
 size = Vector3(0.08, 0.07, 0.02)
 material = ExtResource("8_glas0")
 
 [node name="Nariz" type="CSGBox3D" parent="Visuals/Torso/Cabeza"]
+visible = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.01, 0.19)
 use_collision = false
 size = Vector3(0.04, 0.06, 0.05)
 material = ExtResource("6_skin0")
 
 [node name="Bigote" type="CSGBox3D" parent="Visuals/Torso/Cabeza"]
+visible = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.06, 0.18)
 use_collision = false
 size = Vector3(0.12, 0.03, 0.03)
@@ -109,6 +115,9 @@ light_color = Color(1, 0.35, 0.15, 1)
 light_energy = 0.8
 spot_range = 6.0
 spot_angle = 28.0
+
+[node name="HorrorMask" parent="Visuals/Torso/Cabeza" instance=ExtResource("10_mask0")]
+transform = Transform3D(2.25, 0, 0, 0, 2.05, 0, 0, 0, 2.35, 0, -0.22, 0.09)
 
 [node name="PiernaIzq" type="Node3D" parent="Visuals"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.16, 0.85, 0)
