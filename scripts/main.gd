@@ -39,7 +39,7 @@ var next_spook_delay: float = 12.0
 var classroom_spots = [
 	{"pos": Vector3(-17.8, 0.15, 41.3), "name": "Fotocopiadora 1 (Examen #1)"},
 	{"pos": Vector3(-56.5, 0.82, -11.8), "name": "Aula 106 (Examen #4)"},
-	{"pos": Vector3(-13.5, 0.15, 12.3), "name": "Patio del Estudiante (Examen #3)"},
+	{"pos": Vector3(0.0, 0.62, 1.6), "name": "Patio del Estudiante (Examen #3)"},
 	{"pos": Vector3(50.5, 0.78, -8.5), "name": "Cafeteria PB (Examen #2)"},
 ]
 

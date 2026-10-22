@@ -31,6 +31,7 @@
 [ext_resource type="ArrayMesh" path="res://models/mesh_peronachos.tres" id="30_mesh_peronachos"]
 [ext_resource type="PackedScene" path="res://scenes/aula_pupitre.tscn" id="31_pupitre"]
 [ext_resource type="PackedScene" path="res://scenes/aula_pizarron.tscn" id="32_pizarron"]
+[ext_resource type="PackedScene" path="res://scenes/commercial_drink_fridge.tscn" id="33_drink_fridge"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_nwxjt"]
 _surfaces = [{
@@ -1359,29 +1360,11 @@ use_collision = true
 size = Vector3(4.5, 0.3, 0.4)
 material = ExtResource("15_bw001")
 
-[node name="CafePB_Heladera_CocaCola" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1668240514]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 1.15, 9.4)
-use_collision = true
-size = Vector3(1.1, 2.3, 0.75)
-material = ExtResource("10_teuvw")
+[node name="CafePB_Heladera_1" parent="PlantaBaja/HabitacionesPB" unique_id=1668240514 instance=ExtResource("33_drink_fridge")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 48.1, 1.08, 9.39)
 
-[node name="CafePB_Heladera_CocaCola_Vidrio" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1260163248]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 1.15, 9)
-use_collision = true
-size = Vector3(0.95, 2, 0.05)
-material = ExtResource("5_68yaw")
-
-[node name="CafePB_Heladera_Bebidas" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=250752880]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 49.4, 1.15, 9.4)
-use_collision = true
-size = Vector3(1.1, 2.3, 0.75)
-material = ExtResource("9_t4cw7")
-
-[node name="CafePB_Heladera_Bebidas_Vidrio" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=416992238]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 49.4, 1.15, 9)
-use_collision = true
-size = Vector3(0.95, 2, 0.05)
-material = ExtResource("5_68yaw")
+[node name="CafePB_Heladera_2" parent="PlantaBaja/HabitacionesPB" unique_id=250752880 instance=ExtResource("33_drink_fridge")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 49.4, 1.08, 9.39)
 
 [node name="CafePB_Estanteria_PosteIzq" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1252760980]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50.89, 0.7, 4.05)
@@ -6097,97 +6080,97 @@ text = "PATIO DEL ESTUDIANTE"
 outline_size = 8
 
 [node name="BancoPatio_NO_Asiento" type="CSGBox3D" parent="PatioEstudiante" unique_id=1794454957]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.087011, 0.5, -16)
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -16.5, 0.5, -16)
 use_collision = true
 size = Vector3(3, 0.1, 0.7)
 material = ExtResource("15_bw001")
 
 [node name="BancoPatio_NO_Respaldo" type="CSGBox3D" parent="PatioEstudiante" unique_id=911583875]
-transform = Transform3D(1, 0, 0, 0, 0.999173, 0.040769115, 0, -0.040769115, 0.999173, -11.076068, 0.9, -16.35)
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -16.85, 0.9, -16)
 use_collision = true
 size = Vector3(3, 0.7, 0.08)
 material = ExtResource("15_bw001")
 
 [node name="BancoPatio_NO_PataL" type="CSGBox3D" parent="PatioEstudiante" unique_id=101389180]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.536665, 0.25, -16)
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -16.5, 0.25, -14.55)
 use_collision = true
 size = Vector3(0.08, 0.5, 0.7)
 material = ExtResource("16_bm001")
 
 [node name="BancoPatio_NO_PataR" type="CSGBox3D" parent="PatioEstudiante" unique_id=1833211083]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.632067, 0.25, -16)
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -16.5, 0.25, -17.45)
 use_collision = true
 size = Vector3(0.08, 0.5, 0.7)
 material = ExtResource("16_bm001")
 
 [node name="BancoPatio_NE_Asiento" type="CSGBox3D" parent="PatioEstudiante" unique_id=775634950]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.827929, 0.5, -16)
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 16.5, 0.5, -16)
 use_collision = true
 size = Vector3(3, 0.1, 0.7)
 material = ExtResource("15_bw001")
 
 [node name="BancoPatio_NE_Respaldo" type="CSGBox3D" parent="PatioEstudiante" unique_id=944380457]
-transform = Transform3D(1, 0, 0, 0, 0.99565303, 0.09318718, 0, -0.09318718, 0.99565303, 10.821872, 0.9, -16.36858)
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 16.85, 0.9, -16)
 use_collision = true
 size = Vector3(3, 0.7, 0.08)
 material = ExtResource("15_bw001")
 
 [node name="BancoPatio_NE_PataL" type="CSGBox3D" parent="PatioEstudiante" unique_id=830528046]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.375848, 0.25, -16)
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 16.5, 0.25, -17.45)
 use_collision = true
 size = Vector3(0.08, 0.5, 0.7)
 material = ExtResource("16_bm001")
 
 [node name="BancoPatio_NE_PataR" type="CSGBox3D" parent="PatioEstudiante" unique_id=1400135875]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.266328, 0.25, -16)
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 16.5, 0.25, -14.55)
 use_collision = true
 size = Vector3(0.08, 0.5, 0.7)
 material = ExtResource("16_bm001")
 
 [node name="BancoPatio_SO_Asiento" type="CSGBox3D" parent="PatioEstudiante" unique_id=278586407]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.118239, 0.5, 16)
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -16.5, 0.5, 16)
 use_collision = true
 size = Vector3(3, 0.1, 0.7)
 material = ExtResource("15_bw001")
 
 [node name="BancoPatio_SO_Respaldo" type="CSGBox3D" parent="PatioEstudiante" unique_id=1843462568]
-transform = Transform3D(1, 0, 0, 0, 0.99990296, -0.014247552, 0, 0.014247552, 0.99990296, -11.167665, 0.9, 16.35)
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -16.85, 0.9, 16)
 use_collision = true
 size = Vector3(3, 0.7, 0.08)
 material = ExtResource("15_bw001")
 
 [node name="BancoPatio_SO_PataL" type="CSGBox3D" parent="PatioEstudiante" unique_id=1561925594]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5696335, 0.25, 16)
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -16.5, 0.25, 17.45)
 use_collision = true
 size = Vector3(0.08, 0.5, 0.7)
 material = ExtResource("16_bm001")
 
 [node name="BancoPatio_SO_PataR" type="CSGBox3D" parent="PatioEstudiante" unique_id=271800141]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.706028, 0.25, 16)
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -16.5, 0.25, 14.55)
 use_collision = true
 size = Vector3(0.08, 0.5, 0.7)
 material = ExtResource("16_bm001")
 
 [node name="BancoPatio_SE_Asiento" type="CSGBox3D" parent="PatioEstudiante" unique_id=1755850402]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.909678, 0.5, 16)
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 16.5, 0.5, 16)
 use_collision = true
 size = Vector3(3, 0.1, 0.7)
 material = ExtResource("15_bw001")
 
 [node name="BancoPatio_SE_Respaldo" type="CSGBox3D" parent="PatioEstudiante" unique_id=1317861557]
-transform = Transform3D(0.99992883, -0.0009332322, -0.011891978, 0.0008722189, 0.9999909, -0.0051335134, 0.011896539, 0.005122789, 0.99992037, 10.947991, 0.91133916, 16.277254)
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 16.85, 0.9, 16)
 use_collision = true
-size = Vector3(3, 0.6596924, 0.08)
+size = Vector3(3, 0.7, 0.08)
 material = ExtResource("15_bw001")
 
 [node name="BancoPatio_SE_PataL" type="CSGBox3D" parent="PatioEstudiante" unique_id=760512806]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.473023, 0.25, 16)
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 16.5, 0.25, 14.55)
 use_collision = true
 size = Vector3(0.08, 0.5, 0.7)
 material = ExtResource("16_bm001")
 
 [node name="BancoPatio_SE_PataR" type="CSGBox3D" parent="PatioEstudiante" unique_id=148997243]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.397731, 0.25, 16)
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 16.5, 0.25, 17.45)
 use_collision = true
 size = Vector3(0.08, 0.5, 0.7)
 material = ExtResource("16_bm001")
