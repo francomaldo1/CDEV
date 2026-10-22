@@ -51,9 +51,6 @@ func _ready() -> void:
 	if mic_detector and hud:
 		mic_detector.volume_updated.connect(hud.on_mic_volume_updated)
 	add_child(preload("res://scripts/hoja_pisos.gd").new())
-	
-	if mic_detector and hud:
-		mic_detector.volume_updated.connect(hud.on_mic_volume_updated)
 		
 	if world_env and world_env.environment:
 		original_ambient_energy = world_env.environment.ambient_light_energy
