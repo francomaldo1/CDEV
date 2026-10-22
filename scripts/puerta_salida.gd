@@ -77,11 +77,11 @@ func _try_open_door() -> void:
 			audio_player.play()
 			
 		if prompt_label:
-			prompt_label.text = "¡BLOQUEADA! Necesitas la Llave de Salida"
+			prompt_label.text = "¡BLOQUEADA! Necesitás tu Título"
 			prompt_label.modulate = Color(1.0, 0.2, 0.2)
 			
 		if hud.has_method("show_temporary_alert"):
-			hud.show_temporary_alert("🔒 ¡PUERTA BLOQUEADA! Busca el parcial en las aulas para conseguir la llave.", Color(1.0, 0.3, 0.3))
+			hud.show_temporary_alert("🔒 ¡PUERTA BLOQUEADA! Sin el TÍTULO no salís. Buscalo en el atril del AUDITORIO.", Color(1.0, 0.3, 0.3))
 
 func _on_body_entered(body: Node3D) -> void:
 	if body is Player or body.is_in_group("player") or body.name == "Player":
@@ -91,14 +91,14 @@ func _on_body_entered(body: Node3D) -> void:
 		var hud = get_tree().root.find_child("HUD", true, false)
 		if hud:
 			if hud.has_exit_key:
-				hud.set_interact_prompt("[E] Usar Llave para Escapar de la UTN")
+				hud.set_interact_prompt("[E] Mostrar tu Título y Escapar de la UTN")
 				if prompt_label:
-					prompt_label.text = "[E] Usar Llave para Escapar"
+					prompt_label.text = "[E] Escapar con tu Título"
 					prompt_label.modulate = Color(0.2, 1.0, 0.4)
 			else:
-				hud.set_interact_prompt("[E] Puerta Bloqueada (Requiere Llave)")
+				hud.set_interact_prompt("[E] Puerta Bloqueada (Requiere Título)")
 				if prompt_label:
-					prompt_label.text = "[E] Puerta Bloqueada (Requiere Llave)"
+					prompt_label.text = "[E] Puerta Bloqueada (Requiere Título)"
 					prompt_label.modulate = Color(1.0, 0.4, 0.4)
 
 func _on_body_exited(body: Node3D) -> void:
