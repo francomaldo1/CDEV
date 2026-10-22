@@ -9,8 +9,8 @@ enum State {
 }
 
 ## Velocidades ajustables
-@export var base_patrol_speed: float = 2.4
-@export var base_chase_speed: float = 3.3 ## Ligeramente menor que el jugador (walk_speed = 4.0)
+@export var base_patrol_speed: float = 2.0 ## Velocidad de patrullaje calmada y metódica
+@export var base_chase_speed: float = 2.8 ## Velocidad de persecución aterradora pero controlada
 @export var vision_range: float = 18.0 ## Metros de visión en cono
 @export var vision_angle_deg: float = 80.0 ## Apertura del cono de visión
 @export var proximity_range: float = 3.2 ## Detecta si el jugador está muy cerca en la espalda
@@ -21,9 +21,9 @@ enum State {
 
 ## Estado actual
 var current_state: State = State.PATROL
-var current_speed: float = 2.4
-var chase_speed: float = 3.3
-var patrol_speed: float = 2.4
+var current_speed: float = 2.0
+var chase_speed: float = 2.8
+var patrol_speed: float = 2.0
 var speed_boost_count: int = 0
 
 ## Referencias al modelo
@@ -121,49 +121,72 @@ const WAYPOINTS_P2: Array[Vector3] = [
 ]
 
 ## Nodos secuenciales de escaleras para no trabarse con la pared divisoria (WallDiv)
+## Cada descanso tiene dos puntos: entrada (despeja WallDiv) y salida (alineado al siguiente tramo)
 const STAIR_WEST_PATH: Array[Vector3] = [
-	Vector3(-64.5, 0.2, 27.5),   # 0: PB Entrada pasillo
-	Vector3(-68.0, 1.2, 27.5),   # 1: PB-P1 Tramo 1 (subiendo)
-	Vector3(-72.5, 2.3, 30.0),   # 2: PB-P1 Descanso medio
-	Vector3(-68.0, 3.5, 32.5),   # 3: PB-P1 Tramo 2 (subiendo)
-	Vector3(-64.5, 4.7, 32.5),   # 4: P1 Salida/Hall
-	Vector3(-64.5, 4.7, 27.5),   # 5: P1 Entrada a P2
-	Vector3(-68.0, 5.7, 27.5),   # 6: P1-P2 Tramo 1 (subiendo)
-	Vector3(-72.5, 6.8, 30.0),   # 7: P1-P2 Descanso medio
-	Vector3(-68.0, 8.0, 32.5),   # 8: P1-P2 Tramo 2 (subiendo)
-	Vector3(-64.5, 9.2, 32.5)    # 9: P2 Salida/Hall
+	Vector3(-64.5, 0.2, 27.5),    # 0: PB Entrada pasillo
+	Vector3(-66.0, 0.4, 27.5),    # 1: PB-P1 Tramo 1 inicio
+	Vector3(-71.0, 2.1, 27.5),    # 2: PB-P1 Tramo 1 fin
+	Vector3(-72.8, 2.25, 27.5),   # 3: PB-P1 Descanso Entrada (despeja WallDiv)
+	Vector3(-72.8, 2.25, 32.5),   # 4: PB-P1 Descanso Salida (alineado con Tramo 2)
+	Vector3(-71.0, 2.4, 32.5),    # 5: PB-P1 Tramo 2 inicio
+	Vector3(-66.0, 4.3, 32.5),    # 6: PB-P1 Tramo 2 fin
+	Vector3(-64.5, 4.7, 32.5),    # 7: P1 Salida/Hall
+	Vector3(-64.5, 4.7, 27.5),    # 8: P1 Entrada a P2
+	Vector3(-66.0, 4.9, 27.5),    # 9: P1-P2 Tramo 1 inicio
+	Vector3(-71.0, 6.6, 27.5),    # 10: P1-P2 Tramo 1 fin
+	Vector3(-72.8, 6.75, 27.5),   # 11: P1-P2 Descanso Entrada
+	Vector3(-72.8, 6.75, 32.5),   # 12: P1-P2 Descanso Salida
+	Vector3(-71.0, 6.9, 32.5),    # 13: P1-P2 Tramo 2 inicio
+	Vector3(-66.0, 8.8, 32.5),    # 14: P1-P2 Tramo 2 fin
+	Vector3(-64.5, 9.2, 32.5)     # 15: P2 Salida/Hall
 ]
 
 const STAIR_EAST_PATH: Array[Vector3] = [
-	Vector3(64.5, 0.2, 27.5),    # 0: PB Entrada pasillo
-	Vector3(68.0, 1.2, 27.5),    # 1: PB-P1 Tramo 1 (subiendo)
-	Vector3(72.5, 2.3, 30.0),    # 2: PB-P1 Descanso medio
-	Vector3(68.0, 3.5, 32.5),    # 3: PB-P1 Tramo 2 (subiendo)
-	Vector3(64.5, 4.7, 32.5),    # 4: P1 Salida/Hall
-	Vector3(64.5, 4.7, 27.5),    # 5: P1 Entrada a P2
-	Vector3(68.0, 5.7, 27.5),    # 6: P1-P2 Tramo 1 (subiendo)
-	Vector3(72.5, 6.8, 30.0),    # 7: P1-P2 Descanso medio
-	Vector3(68.0, 8.0, 32.5),    # 8: P1-P2 Tramo 2 (subiendo)
-	Vector3(64.5, 9.2, 32.5)     # 9: P2 Salida/Hall
+	Vector3(64.5, 0.2, 27.5),     # 0: PB Entrada pasillo
+	Vector3(66.0, 0.4, 27.5),     # 1: PB-P1 Tramo 1 inicio
+	Vector3(71.0, 2.1, 27.5),     # 2: PB-P1 Tramo 1 fin
+	Vector3(72.8, 2.25, 27.5),    # 3: PB-P1 Descanso Entrada (despeja WallDiv)
+	Vector3(72.8, 2.25, 32.5),    # 4: PB-P1 Descanso Salida (alineado con Tramo 2)
+	Vector3(71.0, 2.4, 32.5),     # 5: PB-P1 Tramo 2 inicio
+	Vector3(66.0, 4.3, 32.5),     # 6: PB-P1 Tramo 2 fin
+	Vector3(64.5, 4.7, 32.5),     # 7: P1 Salida/Hall
+	Vector3(64.5, 4.7, 27.5),     # 8: P1 Entrada a P2
+	Vector3(66.0, 4.9, 27.5),     # 9: P1-P2 Tramo 1 inicio
+	Vector3(71.0, 6.6, 27.5),     # 10: P1-P2 Tramo 1 fin
+	Vector3(72.8, 6.75, 27.5),    # 11: P1-P2 Descanso Entrada
+	Vector3(72.8, 6.75, 32.5),    # 12: P1-P2 Descanso Salida
+	Vector3(71.0, 6.9, 32.5),     # 13: P1-P2 Tramo 2 inicio
+	Vector3(66.0, 8.8, 32.5),     # 14: P1-P2 Tramo 2 fin
+	Vector3(64.5, 9.2, 32.5)      # 15: P2 Salida/Hall
 ]
 
 const STAIR_NORTH_PATH: Array[Vector3] = [
-	Vector3(39.5, 0.2, -44.0),   # 0: PB Entrada pasillo (T1)
-	Vector3(39.5, 1.2, -48.5),   # 1: PB-P1 Tramo 1 (subiendo)
-	Vector3(42.0, 2.3, -52.5),   # 2: PB-P1 Descanso medio
-	Vector3(44.5, 3.5, -48.5),   # 3: PB-P1 Tramo 2 (subiendo)
-	Vector3(44.5, 4.7, -44.0),   # 4: P1 Salida/Hall
-	Vector3(39.5, 4.7, -44.0),   # 5: P1 Entrada a P2
-	Vector3(39.5, 5.7, -48.5),   # 6: P1-P2 Tramo 1 (subiendo)
-	Vector3(42.0, 6.8, -52.5),   # 7: P1-P2 Descanso medio
-	Vector3(44.5, 8.0, -48.5),   # 8: P1-P2 Tramo 2 (subiendo)
-	Vector3(44.5, 9.2, -44.0)    # 9: P2 Salida/Hall
+	Vector3(39.5, 0.2, -44.0),    # 0: PB Entrada pasillo (T1)
+	Vector3(39.5, 0.4, -45.5),    # 1: PB-P1 Tramo 1 inicio
+	Vector3(39.5, 2.1, -51.0),    # 2: PB-P1 Tramo 1 fin
+	Vector3(39.5, 2.25, -52.8),   # 3: PB-P1 Descanso Entrada
+	Vector3(44.5, 2.25, -52.8),   # 4: PB-P1 Descanso Salida
+	Vector3(44.5, 2.4, -51.0),    # 5: PB-P1 Tramo 2 inicio
+	Vector3(44.5, 4.3, -45.5),    # 6: PB-P1 Tramo 2 fin
+	Vector3(44.5, 4.7, -44.0),    # 7: P1 Salida/Hall
+	Vector3(39.5, 4.7, -44.0),    # 8: P1 Entrada a P2
+	Vector3(39.5, 4.9, -45.5),    # 9: P1-P2 Tramo 1 inicio
+	Vector3(39.5, 6.6, -51.0),    # 10: P1-P2 Tramo 1 fin
+	Vector3(39.5, 6.75, -52.8),   # 11: P1-P2 Descanso Entrada
+	Vector3(44.5, 6.75, -52.8),   # 12: P1-P2 Descanso Salida
+	Vector3(44.5, 6.9, -51.0),    # 13: P1-P2 Tramo 2 inicio
+	Vector3(44.5, 8.8, -45.5),    # 14: P1-P2 Tramo 2 fin
+	Vector3(44.5, 9.2, -44.0)     # 15: P2 Salida/Hall
 ]
 
 var current_patrol_floor: int = 0
 var current_floor_waypoints: Array[Vector3] = WAYPOINTS_PB
 var patrol_waypoints: Array[Vector3] = WAYPOINTS_PB
 var current_waypoint_idx: int = 0
+
+## Seguimiento secuencial en escaleras
+var active_stair_idx: int = -1
+var active_stair_tower: String = ""
 
 ## Investigación entre pisos
 var floor_investigate_timer: float = 50.0
@@ -218,6 +241,8 @@ func _get_nav_target_to(destination_pos: Vector3) -> Vector3:
 
 	# Si ambos están en el mismo piso y ninguno dentro de una caja de escalera: línea directa
 	if my_floor == tgt_floor and my_tower == "" and tgt_tower == "":
+		active_stair_idx = -1
+		active_stair_tower = ""
 		return destination_pos
 
 	# Elegir la torre de escaleras adecuada
@@ -231,29 +256,10 @@ func _get_nav_target_to(destination_pos: Vector3) -> Vector3:
 
 	var path = get_stair_path(chosen_tower)
 
-	# Si el profesor aún está fuera de la torre: dirigirse a la entrada del piso actual
-	if my_tower == "":
-		var entry_idx = 0
-		if my_floor == 0:
-			entry_idx = 0
-		elif my_floor == 1:
-			entry_idx = 5 if tgt_floor > 1 else 4
-		else:
-			entry_idx = 9
-		return path[entry_idx]
-
-	# El profesor está dentro de la torre: buscar el punto más cercano en la ruta
-	var closest_idx = 0
-	var min_d = 99999.0
-	for i in range(path.size()):
-		var d = global_position.distance_to(path[i])
-		if d < min_d:
-			min_d = d
-			closest_idx = i
-
-	# Determinar el punto objetivo en la ruta de escaleras
+	# Determinar el nodo objetivo final en la escalera (goal_idx)
 	var goal_idx = 0
-	if tgt_tower != "":
+	if tgt_tower == chosen_tower:
+		# El jugador está dentro de esta misma escalera: buscar el nodo más cercano al jugador
 		var min_td = 99999.0
 		for i in range(path.size()):
 			var td = destination_pos.distance_to(path[i])
@@ -261,25 +267,61 @@ func _get_nav_target_to(destination_pos: Vector3) -> Vector3:
 				min_td = td
 				goal_idx = i
 	else:
+		# Jugador en otro piso fuera de la torre: salir en el piso objetivo
 		if tgt_floor == 0:
 			goal_idx = 0
 		elif tgt_floor == 1:
-			goal_idx = 4 if my_floor == 0 else 5
+			goal_idx = 7 if my_floor == 0 else 8
 		else:
-			goal_idx = 9
+			goal_idx = 15
 
-	# Si ya llegó al punto objetivo de la escalera
-	if closest_idx == goal_idx:
+	# Si el profesor aún está fuera de la torre: dirigirse a la entrada del piso actual
+	if my_tower == "":
+		var entry_idx = 0
+		if my_floor == 0:
+			entry_idx = 0
+		elif my_floor == 1:
+			entry_idx = 8 if tgt_floor > 1 else 7
+		else:
+			entry_idx = 15
+		active_stair_idx = entry_idx
+		active_stair_tower = chosen_tower
+		return path[entry_idx]
+
+	# El profesor está dentro de la torre: actualizar el seguimiento secuencial
+	if active_stair_idx < 0 or active_stair_idx >= path.size() or active_stair_tower != chosen_tower or global_position.distance_to(path[active_stair_idx]) > 3.0:
+		active_stair_tower = chosen_tower
+		var best_idx = 0
+		var best_d = 99999.0
+		for i in range(path.size()):
+			var d = global_position.distance_to(path[i])
+			if d < best_d:
+				best_d = d
+				best_idx = i
+		if best_idx < goal_idx:
+			active_stair_idx = best_idx + 1
+		elif best_idx > goal_idx:
+			active_stair_idx = best_idx - 1
+		else:
+			active_stair_idx = goal_idx
+
+	# Si ya llegó cerca del nodo objetivo activo (< 0.85m), avanzar al siguiente nodo
+	var cur_target = path[active_stair_idx]
+	var d_to_cur = global_position.distance_to(cur_target)
+	if d_to_cur < 0.85:
+		if active_stair_idx < goal_idx:
+			active_stair_idx += 1
+		elif active_stair_idx > goal_idx:
+			active_stair_idx -= 1
+
+	# Si ya llegó al nodo meta
+	if active_stair_idx == goal_idx:
 		var d_goal = global_position.distance_to(path[goal_idx])
-		if d_goal < 1.5 or (my_floor == tgt_floor and tgt_tower == ""):
+		if d_goal < 1.4 or (my_floor == tgt_floor and tgt_tower == ""):
 			return destination_pos
 		return path[goal_idx]
 
-	# Avanzar secuencialmente paso a paso sin saltear nodos
-	if closest_idx < goal_idx:
-		return path[closest_idx + 1]
-	else:
-		return path[closest_idx - 1]
+	return path[active_stair_idx]
 
 func are_upper_floors_unlocked() -> bool:
 	var main = get_tree().root.find_child("Main", true, false)
@@ -354,11 +396,13 @@ func _ready() -> void:
 	# Audio 3D espacial de pasos
 	_setup_step_audio()
 	
-	# Configuración de física para caminar suave y sin saltos
-	floor_snap_length = 0.4
+	# Configuración de física para caminar suave y sin saltos ni flotar
+	floor_snap_length = 0.5
 	floor_constant_speed = true
 	floor_max_angle = deg_to_rad(50.0)
 	floor_block_on_wall = false
+	active_stair_idx = -1
+	active_stair_tower = ""
 	
 	patrol_speed = base_patrol_speed
 	chase_speed = base_chase_speed
@@ -396,6 +440,8 @@ func set_active(active: bool) -> void:
 		current_floor_waypoints = get_floor_waypoints(current_patrol_floor)
 		patrol_waypoints = current_floor_waypoints
 		is_investigating_floor = false
+		active_stair_idx = -1
+		active_stair_tower = ""
 		_pick_closest_waypoint()
 
 func _pick_closest_waypoint() -> void:
@@ -423,6 +469,8 @@ func _physics_process(delta: float) -> void:
 
 	if not is_on_floor():
 		velocity.y -= gravity * delta
+	else:
+		velocity.y = -0.5
 
 	if attack_timer > 0.0:
 		attack_timer -= delta
@@ -589,10 +637,13 @@ func _process_chase_state(delta: float, can_see_player: bool) -> void:
 			_enter_search_state()
 			return
 
-	# Solo atacar si está a rango horizontal Y a la misma altura (no a través de techos o escaleras)
-	if horiz_dist <= attack_range and absf(to_player.y) <= 1.8 and attack_timer <= 0.0:
-		_start_attack()
-		return
+	# Solo atacar si el jugador está a alcance cuerpo a cuerpo real (3D <= attack_range y desnivel vertical <= 0.85m)
+	# Esto evita que se quede trabado atacando al aire/techo si el jugador está en el tramo superior de la escalera
+	var vert_diff = absf(to_player.y)
+	if dist_to_player <= attack_range and vert_diff <= 0.85 and attack_timer <= 0.0:
+		if _has_line_of_sight(global_position + Vector3(0, 1.4, 0), player.global_position + Vector3(0, 1.2, 0)):
+			_start_attack()
+			return
 
 	var target_dest = player.global_position if can_see_player else last_known_player_pos
 	var nav_dest = _get_nav_target_to(target_dest)
@@ -658,6 +709,11 @@ func _process_attack_state(delta: float) -> void:
 ## =====================================================================
 func _move_towards(delta: float, dir: Vector3, speed_to_use: float, rot_speed: float) -> void:
 	var move_vec = dir
+	var tower_name = get_stair_tower_name(global_position)
+
+	# En escaleras, velocidad máxima controlada para no chocar paredes ni pasarse de largo
+	if tower_name != "":
+		speed_to_use = min(speed_to_use, 1.9)
 	
 	if dir.length() > 0.05:
 		# Si toca una pared, deslizarse suavemente a lo largo de ella
@@ -673,10 +729,6 @@ func _move_towards(delta: float, dir: Vector3, speed_to_use: float, rot_speed: f
 		var accel = 140.0 if is_screamer_charging else 14.0
 		velocity.x = move_toward(velocity.x, move_vec.x * speed_to_use, accel * delta)
 		velocity.z = move_toward(velocity.z, move_vec.z * speed_to_use, accel * delta)
-
-		# Ayuda vertical en escaleras para subir escalones fluidamente
-		if dir.y > 0.08:
-			velocity.y = max(velocity.y, dir.y * speed_to_use * 1.35)
 	else:
 		velocity.x = move_toward(velocity.x, 0.0, 10.0 * delta)
 		velocity.z = move_toward(velocity.z, 0.0, 10.0 * delta)
@@ -685,9 +737,9 @@ func _move_towards(delta: float, dir: Vector3, speed_to_use: float, rot_speed: f
 	var was_on_floor = is_on_floor()
 	move_and_slide()
 
-	# Subir pequeños desniveles (Step-up hasta 35cm)
-	if was_on_floor and is_on_wall() and dir != Vector3.ZERO:
-		var step_h: float = 0.35
+	# Subir pequeños desniveles (Step-up hasta 25cm solo en pasillos, nunca en escaleras para no flotar)
+	if tower_name == "" and was_on_floor and is_on_wall() and dir != Vector3.ZERO:
+		var step_h: float = 0.25
 		var step_t: Transform3D = global_transform
 		step_t.origin.y += step_h
 		if not test_move(global_transform, Vector3(0, step_h, 0)):
@@ -717,7 +769,7 @@ func _move_towards(delta: float, dir: Vector3, speed_to_use: float, rot_speed: f
 
 		var tower = get_stair_tower_name(global_position)
 		if tower != "":
-			# En escaleras: recolocar suavemente en el punto más cercano de la ruta de escaleras
+			# En escaleras: recolocar exactamente sobre el nodo más cercano (sin sumarle altura artificial)
 			var path = get_stair_path(tower)
 			var best_idx = 0
 			var best_d = 99999.0
@@ -726,7 +778,7 @@ func _move_towards(delta: float, dir: Vector3, speed_to_use: float, rot_speed: f
 				if d < best_d:
 					best_d = d
 					best_idx = i
-			global_position = path[best_idx] + Vector3(0, 0.15, 0)
+			global_position = path[best_idx]
 			stuck_timer = 0.0
 		else:
 			if current_state == State.PATROL:
@@ -794,8 +846,8 @@ func _enter_search_state() -> void:
 ## LLAMADO CUANDO EL JUGADOR FALLA EL DESAFÍO MATEMÁTICO
 func boost_speed() -> void:
 	speed_boost_count += 1
-	chase_speed += 0.85
-	patrol_speed += 0.45
+	chase_speed = min(base_chase_speed + (speed_boost_count * 0.25), 3.4)
+	patrol_speed = min(base_patrol_speed + (speed_boost_count * 0.15), 2.4)
 	
 	# Si todavía no apareció, solo acumula la velocidad
 	if not is_active:
