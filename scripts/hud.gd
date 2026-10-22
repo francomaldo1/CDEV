@@ -21,6 +21,7 @@ extends CanvasLayer
 
 var has_exit_key: bool = false
 var has_fuse: bool = false
+var has_auditorium_key: bool = false
 
 var active_cuaderno: Node = null
 var current_correct_answer: int = 0
@@ -85,7 +86,8 @@ func update_inventory_display() -> void:
 	if key_status_label:
 		var key_str = "CONSEGUIDA ✓" if has_exit_key else "Buscando..."
 		var fuse_str = "EN MOCHILA ✓" if has_fuse else "No"
-		key_status_label.text = "🔑 LLAVE: %s   |   ⚡ FUSIBLE: %s" % [key_str, fuse_str]
+		var aud_str = "EN MOCHILA ✓" if has_auditorium_key else "No"
+		key_status_label.text = "🔑 LLAVE: %s   |   ⚡ FUSIBLE: %s   |   🏛 LLAVE AUDITORIO: %s" % [key_str, fuse_str, aud_str]
 		if has_exit_key:
 			key_status_label.modulate = Color(0.3, 1.0, 0.5)
 		else:

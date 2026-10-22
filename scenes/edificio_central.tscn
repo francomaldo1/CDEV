@@ -30,7 +30,6 @@
 [ext_resource type="Material" path="res://materials/mat_asphalt.tres" id="28_asphalt"]
 [ext_resource type="ArrayMesh" path="res://models/mesh_peronachos.tres" id="30_mesh_peronachos"]
 [ext_resource type="PackedScene" path="res://scenes/aula_pupitre.tscn" id="31_pupitre"]
-[ext_resource type="ArrayMesh" uid="uid://cg8c5lu3hiiah" path="res://objetos/Llave final.obj" id="32_ffn76"]
 [ext_resource type="PackedScene" path="res://scenes/aula_pizarron.tscn" id="32_pizarron"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_nwxjt"]
@@ -11033,7 +11032,3 @@ material = ExtResource("12_uwdqk")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 2.21)
 size = Vector3(1.6, 0.16, 0.05)
 material = ExtResource("10_teuvw")
-
-[node name="LlaveFinal" type="MeshInstance3D" parent="." unique_id=1986873087]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.3026295, 9.635245, 82.6502)
-mesh = ExtResource("32_ffn76")
