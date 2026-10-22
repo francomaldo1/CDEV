@@ -11,6 +11,10 @@
 [ext_resource type="PackedScene" path="res://scenes/titulo_universitario.tscn" id="11_titulo"]
 
 [sub_resource type="Environment" id="Environment_eb6dy"]
+background_mode = 1
+background_color = Color(0.01, 0.01, 0.025, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.04, 0.04, 0.06, 1)
 ambient_light_energy = 0.12
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.008
@@ -24,7 +28,6 @@ script = ExtResource("1_tefeu")
 [node name="HUD" parent="." unique_id=862552845 instance=ExtResource("2_o6xl0")]
 
 [node name="EdificioCentral" parent="." unique_id=397447900 instance=ExtResource("4_85g3d")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.68462944, -1.6911592, 1.8313713)
 
 [node name="Player" parent="." unique_id=491679396 instance=ExtResource("5_choun")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 30)
@@ -42,10 +45,10 @@ shadow_enabled = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, -22)
 
 [node name="LlaveAuditorio" parent="." unique_id=540969483 instance=ExtResource("9_llave")]
-transform = Transform3D(0.9063078, 0, -0.42261827, 0, 1, 0, 0.42261827, 0, 0.9063078, 2.5283906, 8.452254, 83.63451)
+transform = Transform3D(0.9063078, 0, -0.42261827, 0, 1, 0, 0.42261827, 0, 0.9063078, 2.152, 10.10374, 81.54505)
 
 [node name="PuertaAuditorio" parent="." unique_id=1125841302 instance=ExtResource("10_paud")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.67789793, -0.18032861, 35.3523)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 34)
 
 [node name="TituloUniversitario" parent="." unique_id=1037980237 instance=ExtResource("11_titulo")]
-transform = Transform3D(-0.99831235, -0.04994778, 0.029628899, -0.022239406, 0.80009806, 0.599457, -0.05364757, 0.59778637, -0.79985845, 0.76085, 0.27267, 77.15044)
+transform = Transform3D(-0.99831235, -0.04994778, 0.029628899, -0.022239406, 0.80009806, 0.599457, -0.05364757, 0.59778637, -0.79985845, 0.07622, 1.96383, 75.24)

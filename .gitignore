@@ -1,0 +1,17 @@
+# Godot 4 ignore
+.godot/
+*.translation
+
+# Mono/C# ignores
+.mono/
+data_*/
+mono_crash.*
+
+# System / temporary files
+.import/
+*.tmp
+*.log
+Thumbs.db
+.DS_Store
+
+SUBIR_A_GITHUB.bat
