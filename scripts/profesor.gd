@@ -59,7 +59,9 @@ var screamer_charge_timer: float = 0.0
 ## Sistema de flanqueo inteligente de obstáculos (mesas, bancos, esquinas)
 var is_flanking: bool = false
 var flank_dir: Vector3 = Vector3.ZERO
+var flank_pass_dir: Vector3 = Vector3.ZERO
 var flank_timer: float = 0.0
+var flank_phase: int = 0
 
 ## Puntos de patrullaje por toda la facultad organizados por piso
 ## PB = Y ~0.2 | P1 = Y ~4.7 | P2 = Y ~9.2
@@ -728,6 +730,7 @@ func _check_flanking(target_dir: Vector3, speed_to_use: float, delta: float) -> 
 	var tower_name = get_stair_tower_name(global_position)
 	if tower_name != "":
 		is_flanking = false
+		flank_phase = 0
 		flank_timer = 0.0
 		return target_dir
 
@@ -738,31 +741,53 @@ func _check_flanking(target_dir: Vector3, speed_to_use: float, delta: float) -> 
 		flank_timer -= delta
 		if flank_timer <= 0.0:
 			is_flanking = false
-		else:
-			# Probar si el frente hacia el objetivo (target_dir) ya quedó despejado de obstáculos
-			var my_hip = global_position + Vector3(0, 0.55, 0)
-			var probe_dir = target_dir.normalized()
-			probe_dir.y = 0.0
-			var fwd_probe_q = PhysicsRayQueryParameters3D.create(my_hip, my_hip + probe_dir * 1.6)
+			flank_phase = 0
+			return target_dir
+
+		var my_hip = global_position + Vector3(0, 0.55, 0)
+
+		if flank_phase == 0:
+			# FASE 0: Deslizarse lateralmente por la mesa hasta llegar al borde
+			# Comprobar si en la dirección de paso (hacia el otro lado del obstáculo) ya quedó libre
+			var fwd_probe_q = PhysicsRayQueryParameters3D.create(my_hip, my_hip + flank_pass_dir * 1.5)
 			fwd_probe_q.exclude = [get_rid()]
 			if is_instance_valid(player):
 				fwd_probe_q.exclude.append(player.get_rid())
 			var fwd_hit = space_state.intersect_ray(fwd_probe_q)
-			
+
 			if fwd_hit.is_empty():
-				# ¡El obstáculo al frente terminó! Puede avanzar directo hacia el objetivo
+				# ¡Superó el borde de la mesa! Pasar a FASE 1 para doblar la esquina y entrar al pasillo
+				flank_phase = 1
+				flank_timer = 3.0
+				return (flank_pass_dir * 0.75 + flank_dir * 0.25).normalized()
+
+			# Si choca contra una pared transversal (ej: pared exterior del edificio), invertir sentido
+			if test_move(global_transform, flank_dir * 0.25):
+				flank_dir = -flank_dir
+
+			return flank_dir
+
+		elif flank_phase == 1:
+			# FASE 1: Doblar la esquina y avanzar superando el ancho/profundidad de la mesa
+			var dest_pos = player.global_position if (current_state == State.CHASE and is_instance_valid(player)) else last_known_player_pos
+			if dest_pos != Vector3.ZERO and _is_walk_path_clear(global_position, dest_pos):
+				# ¡Mesa completamente rodeada! El camino directo hacia el jugador en su pasillo está 100% libre
 				is_flanking = false
+				flank_phase = 0
 				flank_timer = 0.0
 				return target_dir
 
-			# Solo invertir si el camino de flanqueo choca físicamente contra un obstáculo transversal sólido
-			if test_move(global_transform, flank_dir * 0.25):
-				flank_dir = -flank_dir
-			
-			return flank_dir
+			# Si choca de frente al avanzar en pass_dir:
+			if test_move(global_transform, flank_pass_dir * 0.25):
+				# Ya superó el obstáculo o tocó la pared opuesta: salir de flanqueo
+				is_flanking = false
+				flank_phase = 0
+				return target_dir
+
+			return (flank_pass_dir * 0.85 + flank_dir * 0.15).normalized()
 
 	# Si NO estamos flanqueando aún:
-	# Detectar si estamos chocando contra una pared/mueble O si hay un obstáculo bajo bloqueando el paso directo
+	# Detectar si estamos chocando contra una mesa/mueble O si hay un obstáculo bajo bloqueando el paso directo
 	var should_start_flank = false
 	var obstacle_normal = Vector3.ZERO
 
@@ -780,7 +805,7 @@ func _check_flanking(target_dir: Vector3, speed_to_use: float, delta: float) -> 
 			var hit = space_state.intersect_ray(ray_q)
 			if not hit.is_empty():
 				# Hay una mesa o mueble intermedio entre el profesor y el jugador
-				if my_hip.distance_to(hit.position) < 2.0:
+				if my_hip.distance_to(hit.position) < 2.2:
 					obstacle_normal = hit.normal
 					should_start_flank = true
 
@@ -788,18 +813,18 @@ func _check_flanking(target_dir: Vector3, speed_to_use: float, delta: float) -> 
 		obstacle_normal.y = 0.0
 		if obstacle_normal.length() > 0.1:
 			obstacle_normal = obstacle_normal.normalized()
+			flank_pass_dir = -obstacle_normal
 			
 			# Las dos tangentes para rodear el obstáculo
 			var tan_l = Vector3(-obstacle_normal.z, 0, obstacle_normal.x)
 			var tan_r = -tan_l
 			
-			# Elegir la dirección hacia donde está el jugador o la más despejada
 			var to_target = target_dir
 			if current_state == State.CHASE and is_instance_valid(player):
 				to_target = (player.global_position - global_position).normalized()
 			to_target.y = 0.0
 			
-			# Testear con rayos si alguna de las tangentes choca contra una pared a 1.5m
+			# Testear con rayos si alguna de las tangentes choca contra una pared a 1.2m
 			var hip = global_position + Vector3(0, 0.55, 0)
 			var q_l = PhysicsRayQueryParameters3D.create(hip, hip + tan_l * 1.5)
 			q_l.exclude = [get_rid()]
@@ -815,15 +840,15 @@ func _check_flanking(target_dir: Vector3, speed_to_use: float, delta: float) -> 
 			elif hit_r and not hit_l:
 				chosen_dir = tan_l
 			else:
-				# Si ambas están libres o ambas tocan algo, elegir la que tenga mejor proyección al objetivo
 				if tan_r.dot(to_target) > tan_l.dot(to_target):
 					chosen_dir = tan_r
 				else:
 					chosen_dir = tan_l
 			
 			is_flanking = true
+			flank_phase = 0
 			flank_dir = chosen_dir
-			flank_timer = 2.2 # Hasta 2.2 segundos de flanqueo antes de re-evaluar
+			flank_timer = 6.0 # Tiempo suficiente para recorrer mesas largas completas
 			return flank_dir
 
 	return target_dir
@@ -908,8 +933,12 @@ func _move_towards(delta: float, dir: Vector3, speed_to_use: float, rot_speed: f
 
 		# Si está en modo flanqueo pero no avanza (ej: pared transversal inesperada):
 		if is_flanking and moved_dist < 0.1:
-			flank_dir = -flank_dir
-			flank_timer = 1.8
+			if flank_phase == 0:
+				flank_dir = -flank_dir
+				flank_timer = 4.0
+			elif flank_phase == 1:
+				is_flanking = false
+				flank_phase = 0
 
 		if not is_flanking and is_on_wall() and moved_dist < 0.15 and dir.length() > 0.1:
 			stuck_timer += 0.3
