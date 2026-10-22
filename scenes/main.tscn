@@ -44,10 +44,10 @@ shadow_enabled = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, -22)
 
 [node name="LlaveAuditorio" parent="." unique_id=540969483 instance=ExtResource("9_llave")]
-transform = Transform3D(0.9063078, 0, -0.42261827, 0, 1, 0, 0.42261827, 0, 0.9063078, 2.84, 8.444502, 83.30273)
+transform = Transform3D(0.9063078, 0, -0.42261827, 0, 1, 0, 0.42261827, 0, 0.9063078, 2.84, 8.344882, 83.37701)
 
 [node name="PuertaAuditorio" parent="." unique_id=1125841302 instance=ExtResource("10_paud")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 34)
 
 [node name="TituloUniversitario" parent="." unique_id=1863305368 instance=ExtResource("11_titulo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.85, 74.5)
+transform = Transform3D(-0.99831235, -0.04994778, 0.029628899, -0.022239406, 0.80009806, 0.599457, -0.05364757, 0.59778637, -0.79985845, 0.7642286, 0.20497173, 76.38749)
