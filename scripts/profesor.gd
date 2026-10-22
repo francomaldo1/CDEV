@@ -12,12 +12,12 @@ enum State {
 @export var base_patrol_speed: float = 2.0 ## Velocidad de patrullaje calmada y metódica
 @export var base_chase_speed: float = 2.8 ## Velocidad de persecución aterradora pero controlada
 @export var vision_range: float = 18.0 ## Metros de visión en cono
-@export var vision_angle_deg: float = 80.0 ## Apertura del cono de visión
-@export var proximity_range: float = 3.2 ## Detecta si el jugador está muy cerca en la espalda
+@export var vision_angle_deg: float = 105.0 ## Apertura del cono de visión (ampliada de 80 a 105 para no perder al jugador)
+@export var proximity_range: float = 3.5 ## Detecta si el jugador está muy cerca en la espalda o costados
 @export var hearing_range: float = 35.0 ## Rango para escuchar ruidos del micrófono
 @export var attack_range: float = 1.6
 @export var attack_cooldown: float = 1.3
-@export var lost_sight_timeout: float = 3.5
+@export var lost_sight_timeout: float = 5.5 ## Tiempo de memoria tras perder de vista (ampliado de 3.5 a 5.5s)
 
 ## Estado actual
 var current_state: State = State.PATROL
@@ -55,6 +55,11 @@ var pos_sample_timer: float = 0.0
 var is_screamer_ambush: bool = false
 var is_screamer_charging: bool = false
 var screamer_charge_timer: float = 0.0
+
+## Sistema de flanqueo inteligente de obstáculos (mesas, bancos, esquinas)
+var is_flanking: bool = false
+var flank_dir: Vector3 = Vector3.ZERO
+var flank_timer: float = 0.0
 
 ## Puntos de patrullaje por toda la facultad organizados por piso
 ## PB = Y ~0.2 | P1 = Y ~4.7 | P2 = Y ~9.2
@@ -499,6 +504,7 @@ func _can_see_player() -> bool:
 	
 	var eye_pos = global_position + Vector3(0, 1.5, 0)
 	var player_eye = player.global_position + Vector3(0, 1.3, 0)
+	var player_chest = player.global_position + Vector3(0, 0.75, 0)
 	var to_player = player_eye - eye_pos
 	var dist = to_player.length()
 
@@ -508,9 +514,9 @@ func _can_see_player() -> bool:
 	if flashlight and flashlight.visible:
 		current_vision_range *= 1.45
 
-	# Proximidad inmediata (si está a menos de 3.2m detrás o a los lados)
+	# Proximidad inmediata (si está a menos del rango de proximidad detrás o a los lados)
 	if dist <= proximity_range:
-		return _has_line_of_sight(eye_pos, player_eye)
+		return _has_line_of_sight(eye_pos, player_eye) or _has_line_of_sight(eye_pos, player_chest)
 
 	# Si está más lejos que el rango de visión, no lo ve
 	if dist > current_vision_range:
@@ -530,8 +536,8 @@ func _can_see_player() -> bool:
 	if absf(to_player.y) > 3.8:
 		return false
 
-	# Raycast para verificar si hay paredes intermedias
-	return _has_line_of_sight(eye_pos, player_eye)
+	# Raycast para verificar si hay paredes intermedias (prueba a ojos y a torso)
+	return _has_line_of_sight(eye_pos, player_eye) or _has_line_of_sight(eye_pos, player_chest)
 
 func _has_line_of_sight(from_pos: Vector3, to_pos: Vector3) -> bool:
 	var space_state = get_world_3d().direct_space_state
@@ -705,8 +711,123 @@ func _process_attack_state(delta: float) -> void:
 	move_and_slide()
 
 ## =====================================================================
-## MOVIMIENTO Y ORIENTACIÓN SUAVE
+## MOVIMIENTO Y ORIENTACIÓN SUAVE CON FLANQUEO INTELIGENTE
 ## =====================================================================
+func _is_walk_path_clear(from_pos: Vector3, to_pos: Vector3) -> bool:
+	var space_state = get_world_3d().direct_space_state
+	var start_p = from_pos + Vector3(0, 0.55, 0)
+	var end_p = to_pos + Vector3(0, 0.55, 0)
+	var query = PhysicsRayQueryParameters3D.create(start_p, end_p)
+	query.exclude = [get_rid()]
+	if is_instance_valid(player):
+		query.exclude.append(player.get_rid())
+	var result = space_state.intersect_ray(query)
+	return result.is_empty()
+
+func _check_flanking(target_dir: Vector3, speed_to_use: float, delta: float) -> Vector3:
+	var tower_name = get_stair_tower_name(global_position)
+	if tower_name != "":
+		is_flanking = false
+		flank_timer = 0.0
+		return target_dir
+
+	var space_state = get_world_3d().direct_space_state
+
+	# Si ya estamos en modo flanqueo activo:
+	if is_flanking:
+		flank_timer -= delta
+		if flank_timer <= 0.0:
+			is_flanking = false
+		else:
+			# Probar si el frente hacia el objetivo (target_dir) ya quedó despejado de obstáculos
+			var my_hip = global_position + Vector3(0, 0.55, 0)
+			var probe_dir = target_dir.normalized()
+			probe_dir.y = 0.0
+			var fwd_probe_q = PhysicsRayQueryParameters3D.create(my_hip, my_hip + probe_dir * 1.6)
+			fwd_probe_q.exclude = [get_rid()]
+			if is_instance_valid(player):
+				fwd_probe_q.exclude.append(player.get_rid())
+			var fwd_hit = space_state.intersect_ray(fwd_probe_q)
+			
+			if fwd_hit.is_empty():
+				# ¡El obstáculo al frente terminó! Puede avanzar directo hacia el objetivo
+				is_flanking = false
+				flank_timer = 0.0
+				return target_dir
+
+			# Solo invertir si el camino de flanqueo choca físicamente contra un obstáculo transversal sólido
+			if test_move(global_transform, flank_dir * 0.25):
+				flank_dir = -flank_dir
+			
+			return flank_dir
+
+	# Si NO estamos flanqueando aún:
+	# Detectar si estamos chocando contra una pared/mueble O si hay un obstáculo bajo bloqueando el paso directo
+	var should_start_flank = false
+	var obstacle_normal = Vector3.ZERO
+
+	if is_on_wall():
+		obstacle_normal = get_wall_normal()
+		should_start_flank = true
+	elif current_state == State.CHASE and is_instance_valid(player):
+		# Chequear con raycast a la altura de la cadera (0.55m) si hay un obstáculo intermedio
+		var my_hip = global_position + Vector3(0, 0.55, 0)
+		var tgt_hip = player.global_position + Vector3(0, 0.55, 0)
+		var dist_to_tgt = my_hip.distance_to(tgt_hip)
+		if dist_to_tgt < 12.0:
+			var ray_q = PhysicsRayQueryParameters3D.create(my_hip, tgt_hip)
+			ray_q.exclude = [get_rid(), player.get_rid()]
+			var hit = space_state.intersect_ray(ray_q)
+			if not hit.is_empty():
+				# Hay una mesa o mueble intermedio entre el profesor y el jugador
+				if my_hip.distance_to(hit.position) < 2.0:
+					obstacle_normal = hit.normal
+					should_start_flank = true
+
+	if should_start_flank:
+		obstacle_normal.y = 0.0
+		if obstacle_normal.length() > 0.1:
+			obstacle_normal = obstacle_normal.normalized()
+			
+			# Las dos tangentes para rodear el obstáculo
+			var tan_l = Vector3(-obstacle_normal.z, 0, obstacle_normal.x)
+			var tan_r = -tan_l
+			
+			# Elegir la dirección hacia donde está el jugador o la más despejada
+			var to_target = target_dir
+			if current_state == State.CHASE and is_instance_valid(player):
+				to_target = (player.global_position - global_position).normalized()
+			to_target.y = 0.0
+			
+			# Testear con rayos si alguna de las tangentes choca contra una pared a 1.5m
+			var hip = global_position + Vector3(0, 0.55, 0)
+			var q_l = PhysicsRayQueryParameters3D.create(hip, hip + tan_l * 1.5)
+			q_l.exclude = [get_rid()]
+			var hit_l = not space_state.intersect_ray(q_l).is_empty()
+			
+			var q_r = PhysicsRayQueryParameters3D.create(hip, hip + tan_r * 1.5)
+			q_r.exclude = [get_rid()]
+			var hit_r = not space_state.intersect_ray(q_r).is_empty()
+			
+			var chosen_dir = tan_l
+			if hit_l and not hit_r:
+				chosen_dir = tan_r
+			elif hit_r and not hit_l:
+				chosen_dir = tan_l
+			else:
+				# Si ambas están libres o ambas tocan algo, elegir la que tenga mejor proyección al objetivo
+				if tan_r.dot(to_target) > tan_l.dot(to_target):
+					chosen_dir = tan_r
+				else:
+					chosen_dir = tan_l
+			
+			is_flanking = true
+			flank_dir = chosen_dir
+			flank_timer = 2.2 # Hasta 2.2 segundos de flanqueo antes de re-evaluar
+			return flank_dir
+
+	return target_dir
+
 func _move_towards(delta: float, dir: Vector3, speed_to_use: float, rot_speed: float) -> void:
 	var move_vec = dir
 	var tower_name = get_stair_tower_name(global_position)
@@ -714,14 +835,44 @@ func _move_towards(delta: float, dir: Vector3, speed_to_use: float, rot_speed: f
 	# En escaleras, velocidad máxima controlada para no chocar paredes ni pasarse de largo
 	if tower_name != "":
 		speed_to_use = min(speed_to_use, 1.9)
+		is_flanking = false
+		flank_timer = 0.0
+	else:
+		# Flanqueo inteligente para rodear mesas, muebles y obstáculos bajos
+		if dir.length() > 0.05:
+			move_vec = _check_flanking(dir, speed_to_use, delta)
 	
-	if dir.length() > 0.05:
-		# Si toca una pared, deslizarse suavemente a lo largo de ella
-		if is_on_wall():
-			var wall_n = get_wall_normal()
-			var slide = dir.slide(wall_n).normalized()
-			if slide.length() > 0.1:
-				move_vec = slide
+	if move_vec.length() > 0.05:
+		# Si toca una pared y no está flanqueando activamente, resolver deslizamiento o escape de esquinas
+		if not is_flanking and is_on_wall():
+			var col_count = get_slide_collision_count()
+			if col_count >= 2:
+				# Esquina interior: combinar normales para salir en diagonal hacia el espacio abierto
+				var combined_normal = Vector3.ZERO
+				for i in range(col_count):
+					var col = get_slide_collision(i)
+					combined_normal += col.get_normal()
+				combined_normal.y = 0.0
+				if combined_normal.length() > 0.15:
+					combined_normal = combined_normal.normalized()
+					var corner_escape = move_vec.slide(combined_normal).normalized()
+					if corner_escape.length() > 0.15:
+						move_vec = (corner_escape * 0.7 + combined_normal * 0.3).normalized()
+					else:
+						move_vec = combined_normal
+			else:
+				var wall_n = get_wall_normal()
+				wall_n.y = 0.0
+				if wall_n.length() > 0.1:
+					wall_n = wall_n.normalized()
+					var slide = move_vec.slide(wall_n).normalized()
+					if slide.length() > 0.15:
+						move_vec = slide
+					else:
+						# Choque frontal: deslizar hacia la tangente
+						var tan_a = Vector3(-wall_n.z, 0, wall_n.x)
+						var tan_b = -tan_a
+						move_vec = tan_a if move_vec.dot(tan_a) >= move_vec.dot(tan_b) else tan_b
 
 		var target_rot_y = atan2(move_vec.x, move_vec.z)
 		rotation.y = lerp_angle(rotation.y, target_rot_y, rot_speed * delta)
@@ -750,22 +901,31 @@ func _move_towards(delta: float, dir: Vector3, speed_to_use: float, rot_speed: f
 
 	# Detección y recuperación automática si se traba (Watchdog anti-stuck)
 	pos_sample_timer += delta
-	if pos_sample_timer >= 0.4:
+	if pos_sample_timer >= 0.3:
 		pos_sample_timer = 0.0
 		var moved_dist = global_position.distance_to(prev_pos)
 		prev_pos = global_position
-		if is_on_wall() and moved_dist < 0.2 and dir.length() > 0.1:
-			stuck_timer += 0.4
-		else:
-			stuck_timer = max(0.0, stuck_timer - 0.4)
 
-	# Si estuvo trabado contra una pared más de 0.8 segundos:
-	if stuck_timer >= 0.8:
+		# Si está en modo flanqueo pero no avanza (ej: pared transversal inesperada):
+		if is_flanking and moved_dist < 0.1:
+			flank_dir = -flank_dir
+			flank_timer = 1.8
+
+		if not is_flanking and is_on_wall() and moved_dist < 0.15 and dir.length() > 0.1:
+			stuck_timer += 0.3
+		else:
+			stuck_timer = max(0.0, stuck_timer - 0.3)
+
+	# Si estuvo trabado contra una pared más de 0.6 segundos:
+	if stuck_timer >= 0.6:
 		var wall_n = get_wall_normal() if is_on_wall() else Vector3.ZERO
+		wall_n.y = 0.0
+		if wall_n.length() > 0.1:
+			wall_n = wall_n.normalized()
 		var push_away = wall_n * 2.0
 		velocity.x += push_away.x * speed_to_use
 		velocity.z += push_away.z * speed_to_use
-		global_position += push_away * 0.25
+		global_position += wall_n * 0.45
 
 		var tower = get_stair_tower_name(global_position)
 		if tower != "":
@@ -781,6 +941,15 @@ func _move_towards(delta: float, dir: Vector3, speed_to_use: float, rot_speed: f
 			global_position = path[best_idx]
 			stuck_timer = 0.0
 		else:
+			# Forzar flanqueo lateral inmediato para zafar de la esquina o mueble
+			if wall_n.length() > 0.1:
+				var tan_esc = Vector3(-wall_n.z, 0, wall_n.x)
+				if randf() > 0.5:
+					tan_esc = -tan_esc
+				is_flanking = true
+				flank_dir = tan_esc
+				flank_timer = 1.5
+
 			if current_state == State.PATROL:
 				if not is_investigating_floor and current_floor_waypoints.size() > 0:
 					current_waypoint_idx = (current_waypoint_idx + 1) % current_floor_waypoints.size()
@@ -790,9 +959,10 @@ func _move_towards(delta: float, dir: Vector3, speed_to_use: float, rot_speed: f
 				current_state = State.PATROL
 				_pick_closest_waypoint()
 
-			# Si lleva más de 2.0 segundos acumulados trabado en pasillo: TELETRANSPORTE AL WAYPOINT MÁS CERCANO DEL PISO
-			if stuck_timer >= 2.0:
+			# Si lleva más de 3.0 segundos acumulados trabado en pasillo: TELETRANSPORTE AL WAYPOINT MÁS CERCANO DEL PISO
+			if stuck_timer >= 3.0:
 				stuck_timer = 0.0
+				is_flanking = false
 				var wps = current_floor_waypoints if current_floor_waypoints.size() > 0 else WAYPOINTS_PB
 				var best_idx: int = -1
 				var best_dist: float = 99999.0
