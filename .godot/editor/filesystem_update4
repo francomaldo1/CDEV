@@ -1,1 +1,6 @@
 res://default_bus_layout.tres
+res://scenes/edificio_central.tscn
+res://scenes/main.tscn
+res://scenes/puerta_salida.tscn
+res://scenes/tablero_electrico.tscn
+res://scripts/main.gd

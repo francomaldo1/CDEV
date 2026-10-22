@@ -37,7 +37,7 @@ var next_spook_delay: float = 12.0
 
 ## Ubicaciones de cuadernos en todas las aulas de Planta Baja
 var classroom_spots = [
-	{"pos": Vector3(-17.8, -1.7, 41.3), "name": "Examen #1"},
+	{"pos": Vector3(-17.8, -1.6, 41.3), "name": "Examen #1"},
 	{"pos": Vector3(-56.5, -1.7, -11), "name": "Examen #4"},
 	{"pos": Vector3(-13.5, -1.7, 12.3),  "name": "Examen #3"},
 	{"pos": Vector3(52.2, -1.7, -8.8),  "name": "Examen #2"},
@@ -109,8 +109,8 @@ func _spawn_exit_door() -> void:
 func _spawn_tablero_electronica() -> void:
 	# Ubicado en el Departamento de Ingeniería Electrónica (Planta Baja Oeste), montado en la pared este bajo la luz
 	tablero_electrico = tablero_scene.instantiate() as Area3D
-	tablero_electrico.position = Vector3(-16.5, -1, 0.0)
-	tablero_electrico.rotation_degrees = Vector3(0, -90, 0)
+	tablero_electrico.position = Vector3(-17.5, -1.7, -8.0)
+	tablero_electrico.rotation_degrees = Vector3(0, 0, 0)
 	tablero_electrico.power_restored.connect(_on_power_restored)
 	add_child(tablero_electrico)
 	

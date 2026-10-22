@@ -1,6 +1,6 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://b7k414jojd1xy"]
 
-[ext_resource type="Script" path="res://scripts/puerta_salida.gd" id="1_door0"]
+[ext_resource type="Script" uid="uid://cex0mvwy05ou4" path="res://scripts/puerta_salida.gd" id="1_door0"]
 [ext_resource type="Material" path="res://materials/mat_aluminum_white.tres" id="2_alum"]
 [ext_resource type="Material" path="res://materials/mat_glass.tres" id="3_glass"]
 [ext_resource type="Material" path="res://materials/mat_frosted_film.tres" id="4_frost"]
@@ -14,202 +14,201 @@ size = Vector3(3.6, 2.8, 2.6)
 [sub_resource type="BoxShape3D" id="BoxShape3D_blocker"]
 size = Vector3(3.2, 3.5, 0.35)
 
-[node name="PuertaSalida" type="Area3D"]
+[node name="PuertaSalida" type="Area3D" unique_id=1052851708]
 script = ExtResource("1_door0")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1141850974]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, -0.6)
 shape = SubResource("BoxShape3D_trigger")
 
-[node name="BloqueoFisico" type="StaticBody3D" parent="."]
+[node name="BloqueoFisico" type="StaticBody3D" parent="." unique_id=1175089866]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="BloqueoFisico"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BloqueoFisico" unique_id=1218192198]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
 shape = SubResource("BoxShape3D_blocker")
 
-[node name="Visuals" type="Node3D" parent="."]
+[node name="Visuals" type="Node3D" parent="." unique_id=249610341]
 
-[node name="MarcoIzq" type="CSGBox3D" parent="Visuals"]
+[node name="MarcoIzq" type="CSGBox3D" parent="Visuals" unique_id=798008875]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.55, 1.75, 0)
 size = Vector3(0.1, 3.5, 0.12)
 material = ExtResource("2_alum")
 
-[node name="MarcoDer" type="CSGBox3D" parent="Visuals"]
+[node name="MarcoDer" type="CSGBox3D" parent="Visuals" unique_id=68416944]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55, 1.75, 0)
 size = Vector3(0.1, 3.5, 0.12)
 material = ExtResource("2_alum")
 
-[node name="DintelSuperior" type="CSGBox3D" parent="Visuals"]
+[node name="DintelSuperior" type="CSGBox3D" parent="Visuals" unique_id=1632592390]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.45, 0)
 size = Vector3(3.2, 0.1, 0.12)
 material = ExtResource("2_alum")
 
-[node name="DintelMedio" type="CSGBox3D" parent="Visuals"]
+[node name="DintelMedio" type="CSGBox3D" parent="Visuals" unique_id=1464054793]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.49, 0)
 size = Vector3(3, 0.08, 0.12)
 material = ExtResource("2_alum")
 
-[node name="MullionTransom" type="CSGBox3D" parent="Visuals"]
+[node name="MullionTransom" type="CSGBox3D" parent="Visuals" unique_id=1399599597]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.97, 0)
 size = Vector3(0.08, 0.88, 0.1)
 material = ExtResource("2_alum")
 
-[node name="TransomVidrioIzq" type="CSGBox3D" parent="Visuals"]
+[node name="TransomVidrioIzq" type="CSGBox3D" parent="Visuals" unique_id=2119759264]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.75, 2.97, 0)
 size = Vector3(1.42, 0.86, 0.03)
 material = ExtResource("3_glass")
 
-[node name="TransomVidrioDer" type="CSGBox3D" parent="Visuals"]
+[node name="TransomVidrioDer" type="CSGBox3D" parent="Visuals" unique_id=1778201208]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, 2.97, 0)
 size = Vector3(1.42, 0.86, 0.03)
 material = ExtResource("3_glass")
 
-[node name="CartelSalida" type="CSGBox3D" parent="Visuals"]
+[node name="CartelSalida" type="CSGBox3D" parent="Visuals" unique_id=648990829]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.97, -0.06)
 size = Vector3(0.7, 0.28, 0.08)
 material = ExtResource("7_exitsign")
 
-[node name="CartelTexto" type="Label3D" parent="Visuals/CartelSalida"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.045)
+[node name="CartelTexto" type="Label3D" parent="Visuals/CartelSalida" unique_id=542504171]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, -0.045)
+modulate = Color(0.85, 1, 0.9, 1)
 text = "SALIDA"
 font_size = 36
 outline_size = 8
-modulate = Color(0.85, 1, 0.9, 1)
 
-[node name="LuzVerde" type="OmniLight3D" parent="Visuals/CartelSalida"]
+[node name="LuzVerde" type="OmniLight3D" parent="Visuals/CartelSalida" unique_id=861599178]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.25)
 light_color = Color(0.15, 1, 0.35, 1)
-light_energy = 0.8
-omni_range = 3.5
+light_energy = 0.4
+omni_range = 0.5360478
 
-[node name="HojaIzq" type="Node3D" parent="Visuals"]
+[node name="HojaIzq" type="Node3D" parent="Visuals" unique_id=209648223]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, 0)
 
-[node name="MontanteHinge" type="CSGBox3D" parent="Visuals/HojaIzq"]
+[node name="MontanteHinge" type="CSGBox3D" parent="Visuals/HojaIzq" unique_id=1545941390]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 1.25, 0)
 size = Vector3(0.1, 2.4, 0.06)
 material = ExtResource("2_alum")
 
-[node name="MontanteMeeting" type="CSGBox3D" parent="Visuals/HojaIzq"]
+[node name="MontanteMeeting" type="CSGBox3D" parent="Visuals/HojaIzq" unique_id=904669303]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.43, 1.25, 0)
 size = Vector3(0.1, 2.4, 0.06)
 material = ExtResource("2_alum")
 
-[node name="TravesanoInf" type="CSGBox3D" parent="Visuals/HojaIzq"]
+[node name="TravesanoInf" type="CSGBox3D" parent="Visuals/HojaIzq" unique_id=827188929]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.74, 0.1, 0)
 size = Vector3(1.48, 0.16, 0.06)
 material = ExtResource("2_alum")
 
-[node name="TravesanoSup" type="CSGBox3D" parent="Visuals/HojaIzq"]
+[node name="TravesanoSup" type="CSGBox3D" parent="Visuals/HojaIzq" unique_id=436460716]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.74, 2.4, 0)
 size = Vector3(1.48, 0.1, 0.06)
 material = ExtResource("2_alum")
 
-[node name="Vidrio" type="CSGBox3D" parent="Visuals/HojaIzq"]
+[node name="Vidrio" type="CSGBox3D" parent="Visuals/HojaIzq" unique_id=298780020]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.74, 1.25, 0)
 size = Vector3(1.3, 2.22, 0.02)
 material = ExtResource("3_glass")
 
-[node name="FranjaEsmerilada" type="CSGBox3D" parent="Visuals/HojaIzq"]
+[node name="FranjaEsmerilada" type="CSGBox3D" parent="Visuals/HojaIzq" unique_id=1558573938]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.74, 1.35, 0)
 size = Vector3(1.3, 0.15, 0.025)
 material = ExtResource("4_frost")
 
-[node name="ManijonBarra" type="CSGBox3D" parent="Visuals/HojaIzq"]
+[node name="ManijonBarra" type="CSGBox3D" parent="Visuals/HojaIzq" unique_id=1844647426]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.34, 1.35, -0.06)
 size = Vector3(0.04, 0.85, 0.04)
 material = ExtResource("2_alum")
 
-[node name="ManijonSoporteSup" type="CSGBox3D" parent="Visuals/HojaIzq"]
+[node name="ManijonSoporteSup" type="CSGBox3D" parent="Visuals/HojaIzq" unique_id=1937858510]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.34, 1.7, -0.03)
 size = Vector3(0.04, 0.04, 0.05)
 material = ExtResource("2_alum")
 
-[node name="ManijonSoporteInf" type="CSGBox3D" parent="Visuals/HojaIzq"]
+[node name="ManijonSoporteInf" type="CSGBox3D" parent="Visuals/HojaIzq" unique_id=789604405]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.34, 1, -0.03)
 size = Vector3(0.04, 0.04, 0.05)
 material = ExtResource("2_alum")
 
-[node name="CerraduraPlaca" type="CSGBox3D" parent="Visuals/HojaIzq"]
+[node name="CerraduraPlaca" type="CSGBox3D" parent="Visuals/HojaIzq" unique_id=568781668]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.45, 1.3, 0)
 size = Vector3(0.04, 0.12, 0.07)
 material = ExtResource("5_metal")
 
-[node name="HojaDer" type="Node3D" parent="Visuals"]
+[node name="HojaDer" type="Node3D" parent="Visuals" unique_id=1222588534]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 0)
 
-[node name="MontanteHinge" type="CSGBox3D" parent="Visuals/HojaDer"]
+[node name="MontanteHinge" type="CSGBox3D" parent="Visuals/HojaDer" unique_id=1643590045]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.05, 1.25, 0)
 size = Vector3(0.1, 2.4, 0.06)
 material = ExtResource("2_alum")
 
-[node name="MontanteMeeting" type="CSGBox3D" parent="Visuals/HojaDer"]
+[node name="MontanteMeeting" type="CSGBox3D" parent="Visuals/HojaDer" unique_id=11677319]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.43, 1.25, 0)
 size = Vector3(0.1, 2.4, 0.06)
 material = ExtResource("2_alum")
 
-[node name="TravesanoInf" type="CSGBox3D" parent="Visuals/HojaDer"]
+[node name="TravesanoInf" type="CSGBox3D" parent="Visuals/HojaDer" unique_id=753068116]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.74, 0.1, 0)
 size = Vector3(1.48, 0.16, 0.06)
 material = ExtResource("2_alum")
 
-[node name="TravesanoSup" type="CSGBox3D" parent="Visuals/HojaDer"]
+[node name="TravesanoSup" type="CSGBox3D" parent="Visuals/HojaDer" unique_id=1317387190]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.74, 2.4, 0)
 size = Vector3(1.48, 0.1, 0.06)
 material = ExtResource("2_alum")
 
-[node name="Vidrio" type="CSGBox3D" parent="Visuals/HojaDer"]
+[node name="Vidrio" type="CSGBox3D" parent="Visuals/HojaDer" unique_id=1263347178]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.74, 1.25, 0)
 size = Vector3(1.3, 2.22, 0.02)
 material = ExtResource("3_glass")
 
-[node name="FranjaEsmerilada" type="CSGBox3D" parent="Visuals/HojaDer"]
+[node name="FranjaEsmerilada" type="CSGBox3D" parent="Visuals/HojaDer" unique_id=403465562]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.74, 1.35, 0)
 size = Vector3(1.3, 0.15, 0.025)
 material = ExtResource("4_frost")
 
-[node name="ManijonBarra" type="CSGBox3D" parent="Visuals/HojaDer"]
+[node name="ManijonBarra" type="CSGBox3D" parent="Visuals/HojaDer" unique_id=181624501]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.34, 1.35, -0.06)
 size = Vector3(0.04, 0.85, 0.04)
 material = ExtResource("2_alum")
 
-[node name="ManijonSoporteSup" type="CSGBox3D" parent="Visuals/HojaDer"]
+[node name="ManijonSoporteSup" type="CSGBox3D" parent="Visuals/HojaDer" unique_id=233966249]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.34, 1.7, -0.03)
 size = Vector3(0.04, 0.04, 0.05)
 material = ExtResource("2_alum")
 
-[node name="ManijonSoporteInf" type="CSGBox3D" parent="Visuals/HojaDer"]
+[node name="ManijonSoporteInf" type="CSGBox3D" parent="Visuals/HojaDer" unique_id=2134590489]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.34, 1, -0.03)
 size = Vector3(0.04, 0.04, 0.05)
 material = ExtResource("2_alum")
 
-[node name="CerraduraPlaca" type="CSGBox3D" parent="Visuals/HojaDer"]
+[node name="CerraduraPlaca" type="CSGBox3D" parent="Visuals/HojaDer" unique_id=810416126]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.45, 1.3, 0)
 size = Vector3(0.04, 0.12, 0.07)
 material = ExtResource("5_metal")
 
-[node name="Candado" type="Node3D" parent="."]
+[node name="Candado" type="Node3D" parent="." unique_id=1367679415]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35, -0.09)
 
-[node name="Cadena" type="CSGBox3D" parent="Candado"]
+[node name="Cadena" type="CSGBox3D" parent="Candado" unique_id=641053406]
 size = Vector3(0.45, 0.08, 0.06)
 material = ExtResource("5_metal")
 
-[node name="CuerpoCandado" type="CSGBox3D" parent="Candado"]
+[node name="CuerpoCandado" type="CSGBox3D" parent="Candado" unique_id=152672831]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.08, 0.02)
 size = Vector3(0.18, 0.16, 0.07)
 material = ExtResource("6_gold")
 
-[node name="ArcoCandado" type="CSGBox3D" parent="Candado"]
+[node name="ArcoCandado" type="CSGBox3D" parent="Candado" unique_id=1148487411]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0.02)
 size = Vector3(0.12, 0.1, 0.03)
 material = ExtResource("5_metal")
 
-[node name="PromptLabel" type="Label3D" parent="."]
+[node name="PromptLabel" type="Label3D" parent="." unique_id=1129266043]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.1, -0.2)
 billboard = 1
 double_sided = false
-text = "[E] Puerta Principal (Cerrada)"
-font_size = 32
-outline_size = 8
 modulate = Color(1, 0.8, 0.4, 1)
+text = "[E] Puerta Principal (Cerrada)"
+outline_size = 8
