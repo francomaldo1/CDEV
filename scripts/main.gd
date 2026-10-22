@@ -37,10 +37,10 @@ var next_spook_delay: float = 12.0
 
 ## Ubicaciones de cuadernos en todas las aulas de Planta Baja
 var classroom_spots = [
-	{"pos": Vector3(-17.8, -1.7, 41.3), "name": "Examen #1"},
-	{"pos": Vector3(-56.5, -1.7, -11), "name": "Examen #4"},
-	{"pos": Vector3(-13.5, -1.7, 12.3),  "name": "Examen #3"},
-	{"pos": Vector3(52.2, -1.7, -8.8),  "name": "Examen #2"},
+	{"pos": Vector3(-17.8, 0.15, 41.3), "name": "Fotocopiadora 1 (Examen #1)"},
+	{"pos": Vector3(-56.5, 0.82, -11.8), "name": "Aula 106 (Examen #4)"},
+	{"pos": Vector3(-13.5, 0.15, 12.3), "name": "Patio del Estudiante (Examen #3)"},
+	{"pos": Vector3(50.5, 0.78, -8.5), "name": "Cafeteria PB (Examen #2)"},
 ]
 
 func _ready() -> void:
@@ -99,14 +99,14 @@ var light_flicker_timer: float = 0.0
 
 func _spawn_exit_door() -> void:
 	var puerta = puerta_salida_scene.instantiate()
-	puerta.position = Vector3(-59.3, -1.7, 47)
+	puerta.position = Vector3(-60.0, 0.0, 45.0)
 	puerta.rotation_degrees = Vector3.ZERO
 	add_child(puerta)
 
 func _spawn_tablero_electronica() -> void:
 	# Ubicado en el Departamento de Ingeniería Electrónica (Planta Baja Oeste), montado en la pared este bajo la luz
 	tablero_electrico = tablero_scene.instantiate() as Area3D
-	tablero_electrico.position = Vector3(-16.5, -1, 0.0)
+	tablero_electrico.position = Vector3(-17.22, 0.0, 0.0)
 	tablero_electrico.rotation_degrees = Vector3(0, -90, 0)
 	tablero_electrico.power_restored.connect(_on_power_restored)
 	add_child(tablero_electrico)
@@ -138,9 +138,9 @@ func _spawn_tablero_electronica() -> void:
 func _spawn_fusible() -> void:
 	# El fusible está guardado en la Cafetería o Bedelía (ala este)
 	var fusible = fusible_scene.instantiate()
-	fusible.position = Vector3(-12.8, 2.9, -42.3)
+	fusible.position = Vector3(-12.8, 4.65, -42.3)
 	add_child(fusible)
-	print(">>> Fusible de alta tensión colocado en Cafetería (45, 0.85, 28)")
+	print(">>> Fusible de alta tensión colocado en Bedelía Primer Piso (-12.8, 4.65, -42.3)")
 
 func _spawn_multiple_cuadernos() -> void:
 	classroom_spots.shuffle()
@@ -186,9 +186,9 @@ func _spawn_profesor() -> void:
 func _spawn_upper_floor_blockers() -> void:
 	# Bloquea la entrada de planta baja a las 3 torres de escaleras
 	var bloqueos = [
-		{"name": "BloqueoEscaleraOeste", "pos": Vector3(-64.25, 0, 32), "size": Vector3(0.4, 4.5, 10.0)},
-		{"name": "BloqueoEscaleraEste",  "pos": Vector3(65.0, 0, 32),  "size": Vector3(0.4, 4.5, 10.0)},
-		{"name": "BloqueoEscaleraNorte", "pos": Vector3(42.0, 0, -40.0), "size": Vector3(10.0, 4.5, 0.4)}
+		{"name": "BloqueoEscaleraOeste", "pos": Vector3(-64.25, 2.25, 32), "size": Vector3(0.4, 4.5, 10.0)},
+		{"name": "BloqueoEscaleraEste",  "pos": Vector3(65.0, 2.25, 32),  "size": Vector3(0.4, 4.5, 10.0)},
+		{"name": "BloqueoEscaleraNorte", "pos": Vector3(42.0, 2.25, -40.0), "size": Vector3(10.0, 4.5, 0.4)}
 	]
 	
 	var mat = StandardMaterial3D.new()
