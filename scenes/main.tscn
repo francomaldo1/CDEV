@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://21t23mc5bmpn" path="res://scenes/profesor.tscn" id="8_prof0"]
 [ext_resource type="PackedScene" path="res://scenes/llave_auditorio.tscn" id="9_llave"]
 [ext_resource type="PackedScene" path="res://scenes/puerta_auditorio.tscn" id="10_paud"]
+[ext_resource type="PackedScene" path="res://scenes/titulo_universitario.tscn" id="11_titulo"]
 
 [sub_resource type="Environment" id="Environment_eb6dy"]
 ambient_light_energy = 0.12
@@ -41,7 +42,10 @@ shadow_enabled = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, -22)
 
 [node name="LlaveAuditorio" parent="." unique_id=540969483 instance=ExtResource("9_llave")]
-transform = Transform3D(0.9063078, 0, -0.42261827, 0, 1, 0, 0.42261827, 0, 0.9063078, 2.84, 8.347583, 83.63451)
+transform = Transform3D(0.9063078, 0, -0.42261827, 0, 1, 0, 0.42261827, 0, 0.9063078, 2.5283906, 8.452254, 83.63451)
 
 [node name="PuertaAuditorio" parent="." unique_id=1125841302 instance=ExtResource("10_paud")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.67789793, -0.18032861, 35.3523)
+
+[node name="TituloUniversitario" parent="." unique_id=1037980237 instance=ExtResource("11_titulo")]
+transform = Transform3D(-0.99831235, -0.04994778, 0.029628899, -0.022239406, 0.80009806, 0.599457, -0.05364757, 0.59778637, -0.79985845, 0.76085, 0.27267, 77.15044)

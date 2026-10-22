@@ -37,9 +37,9 @@ var next_spook_delay: float = 12.0
 
 ## Ubicaciones de cuadernos en todas las aulas de Planta Baja
 var classroom_spots = [
-	{"pos": Vector3(-17.8, -1.6, 41.3), "name": "Examen #1"},
+	{"pos": Vector3(-17.8, -1.5, 41.3), "name": "Examen #1"},
 	{"pos": Vector3(-56.5, -1.7, -11), "name": "Examen #4"},
-	{"pos": Vector3(-13.5, -1.7, 12.3),  "name": "Examen #3"},
+	{"pos": Vector3(-14.5, -1.5, 12.3),  "name": "Examen #3"},
 	{"pos": Vector3(52.2, -1.7, -8.8),  "name": "Examen #2"},
 ]
 

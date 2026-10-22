@@ -39,7 +39,7 @@ func _try_open() -> void:
 		hud.show_temporary_alert("🔒 El auditorio está cerrado. Necesitás la LLAVE DEL AUDITORIO.", Color(1.0, 0.3, 0.3))
 		return
 	_open()
-	hud.show_temporary_alert("🚪 ¡Abriste el AUDITORIO!", Color(0.3, 1.0, 0.5))
+	hud.show_temporary_alert("🚪 ¡Abriste el AUDITORIO! Tu TÍTULO te espera en el atril del escenario.", Color(0.3, 1.0, 0.5))
 	hud.set_interact_prompt("")
 
 func _open() -> void:
