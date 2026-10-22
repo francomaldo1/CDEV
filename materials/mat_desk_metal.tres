@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[resource]
+resource_name = "MetalPupitre"
+albedo_color = Color(0.25, 0.27, 0.30, 1.0)
+metallic = 0.85
+roughness = 0.32

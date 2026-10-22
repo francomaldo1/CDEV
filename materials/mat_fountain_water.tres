@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[resource]
+resource_name = "AguaFuente"
+albedo_color = Color(0.15, 0.25, 0.35, 0.6)
+roughness = 0.05
+metallic = 0.4
+transparency = 1
+emission_enabled = true
+emission = Color(0.05, 0.08, 0.12, 1)
+emission_energy_multiplier = 0.3
