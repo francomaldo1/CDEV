@@ -56,10 +56,9 @@ var is_screamer_ambush: bool = false
 var is_screamer_charging: bool = false
 var screamer_charge_timer: float = 0.0
 
-## Puntos de patrullaje por toda la facultad (3 pisos con transiciones de escalera)
-## PB = Y 0.2 | P1 = Y 4.7 | P2 = Y 9.2
-var patrol_waypoints: Array[Vector3] = [
-	# ========== PLANTA BAJA (Y=0.2) ==========
+## Puntos de patrullaje por toda la facultad organizados por piso
+## PB = Y ~0.2 | P1 = Y ~4.7 | P2 = Y ~9.2
+const WAYPOINTS_PB: Array[Vector3] = [
 	Vector3(0.0, 0.2, -18.0),     # PB: Patio Norte
 	Vector3(0.0, 0.2, -28.5),     # PB: Pasillo Norte centro
 	Vector3(-25.0, 0.2, -28.5),   # PB: Pasillo Norte frente a Aula 102
@@ -80,16 +79,10 @@ var patrol_waypoints: Array[Vector3] = [
 	Vector3(42.0, 0.2, 0.0),      # PB: Pasillo Este centro (Cafetería PB)
 	Vector3(42.0, 0.2, -15.0),    # PB: Pasillo Este norte (frente a Aula 114)
 	Vector3(42.0, 0.2, -28.5),    # PB: Esquina Noreste
-	Vector3(25.0, 0.2, -28.5),    # PB: Pasillo Norte este (frente a Aula 104)
-	# --- Caminar hacia Torre Oeste para subir a P1 ---
-	Vector3(-42.0, 0.2, 27.5),    # PB: Acercarse a Torre Oeste
-	Vector3(-65.0, 0.2, 27.5),    # PB: Entrada escalera Torre Oeste
-	# --- Subir escalera Torre Oeste PB -> P1 ---
-	Vector3(-67.5, 1.3, 27.5),    # Escalera: tramo inferior
-	Vector3(-70.0, 2.45, 27.5),   # Escalera: descanso medio (Y = 0.2 + 2.25)
-	Vector3(-67.5, 3.6, 30.0),    # Escalera: tramo superior
-	Vector3(-65.0, 4.7, 32.5),    # P1: Salida escalera Torre Oeste
-	# ========== PISO 1 (Y=4.7) ==========
+	Vector3(25.0, 0.2, -28.5)     # PB: Pasillo Norte este (frente a Aula 104)
+]
+
+const WAYPOINTS_P1: Array[Vector3] = [
 	Vector3(-42.0, 4.7, 30.0),    # P1: Pasillo Oeste sur
 	Vector3(-42.0, 4.7, 15.0),    # P1: Pasillo Oeste centro
 	Vector3(-42.0, 4.7, 0.0),     # P1: Pasillo Oeste norte
@@ -105,16 +98,10 @@ var patrol_waypoints: Array[Vector3] = [
 	Vector3(42.0, 4.7, 30.0),     # P1: Esquina Sureste
 	Vector3(20.0, 4.7, 30.0),     # P1: Pasillo Sur este
 	Vector3(0.0, 4.7, 30.0),      # P1: Pasillo Sur centro
-	Vector3(-20.0, 4.7, 30.0),    # P1: Pasillo Sur oeste
-	# --- Caminar hacia Torre Este para subir a P2 ---
-	Vector3(42.0, 4.7, 27.5),     # P1: Acercarse a Torre Este
-	Vector3(65.0, 4.7, 27.5),     # P1: Entrada escalera Torre Este
-	# --- Subir escalera Torre Este P1 -> P2 ---
-	Vector3(67.5, 5.8, 27.5),     # Escalera: tramo inferior
-	Vector3(70.0, 6.95, 27.5),    # Escalera: descanso medio (Y = 4.7 + 2.25)
-	Vector3(67.5, 8.1, 30.0),     # Escalera: tramo superior
-	Vector3(65.0, 9.2, 32.5),     # P2: Salida escalera Torre Este
-	# ========== PISO 2 (Y=9.2) ==========
+	Vector3(-20.0, 4.7, 30.0)     # P1: Pasillo Sur oeste
+]
+
+const WAYPOINTS_P2: Array[Vector3] = [
 	Vector3(42.0, 9.2, 30.0),     # P2: Esquina Sureste
 	Vector3(42.0, 9.2, 15.0),     # P2: Pasillo Este sur
 	Vector3(42.0, 9.2, 0.0),      # P2: Pasillo Este centro (Cafetería P2)
@@ -130,27 +117,212 @@ var patrol_waypoints: Array[Vector3] = [
 	Vector3(-42.0, 9.2, 30.0),    # P2: Esquina Suroeste
 	Vector3(-20.0, 9.2, 30.0),    # P2: Pasillo Sur oeste
 	Vector3(0.0, 9.2, 30.0),      # P2: Pasillo Sur centro
-	Vector3(20.0, 9.2, 30.0),     # P2: Pasillo Sur este
-	# --- Caminar hacia Torre Norte para bajar a P1 ---
-	Vector3(39.5, 9.2, -28.5),    # P2: Acercarse a Torre Norte
-	Vector3(39.5, 9.2, -45.0),    # P2: Entrada escalera Torre Norte
-	# --- Bajar escalera Torre Norte P2 -> P1 ---
-	Vector3(39.5, 8.1, -48.5),    # Escalera: tramo superior bajando
-	Vector3(39.5, 6.95, -52.0),   # Escalera: descanso medio (Y = 9.2 - 2.25)
-	Vector3(42.0, 5.8, -48.5),    # Escalera: tramo inferior bajando
-	Vector3(44.5, 4.7, -45.0),    # P1: Salida escalera Torre Norte
-	# --- Breve pasillo P1 antes de seguir bajando ---
-	Vector3(42.0, 4.7, -28.5),    # P1: Esquina Noreste (reconectar)
-	Vector3(39.5, 4.7, -45.0),    # P1: Entrada escalera Torre Norte (para bajar a PB)
-	# --- Bajar escalera Torre Norte P1 -> PB ---
-	Vector3(39.5, 3.6, -48.5),    # Escalera: tramo superior bajando
-	Vector3(39.5, 2.45, -52.0),   # Escalera: descanso medio (Y = 4.7 - 2.25)
-	Vector3(42.0, 1.3, -48.5),    # Escalera: tramo inferior bajando
-	Vector3(44.5, 0.2, -45.0),    # PB: Salida escalera Torre Norte
-	# --- Volver al circuito PB ---
-	Vector3(42.0, 0.2, -28.5),    # PB: Esquina Noreste (reconectar al inicio)
+	Vector3(20.0, 9.2, 30.0)      # P2: Pasillo Sur este
 ]
+
+## Nodos secuenciales de escaleras para no trabarse con la pared divisoria (WallDiv)
+const STAIR_WEST_PATH: Array[Vector3] = [
+	Vector3(-64.5, 0.2, 27.5),   # 0: PB Entrada pasillo
+	Vector3(-68.0, 1.2, 27.5),   # 1: PB-P1 Tramo 1 (subiendo)
+	Vector3(-72.5, 2.3, 30.0),   # 2: PB-P1 Descanso medio
+	Vector3(-68.0, 3.5, 32.5),   # 3: PB-P1 Tramo 2 (subiendo)
+	Vector3(-64.5, 4.7, 32.5),   # 4: P1 Salida/Hall
+	Vector3(-64.5, 4.7, 27.5),   # 5: P1 Entrada a P2
+	Vector3(-68.0, 5.7, 27.5),   # 6: P1-P2 Tramo 1 (subiendo)
+	Vector3(-72.5, 6.8, 30.0),   # 7: P1-P2 Descanso medio
+	Vector3(-68.0, 8.0, 32.5),   # 8: P1-P2 Tramo 2 (subiendo)
+	Vector3(-64.5, 9.2, 32.5)    # 9: P2 Salida/Hall
+]
+
+const STAIR_EAST_PATH: Array[Vector3] = [
+	Vector3(64.5, 0.2, 27.5),    # 0: PB Entrada pasillo
+	Vector3(68.0, 1.2, 27.5),    # 1: PB-P1 Tramo 1 (subiendo)
+	Vector3(72.5, 2.3, 30.0),    # 2: PB-P1 Descanso medio
+	Vector3(68.0, 3.5, 32.5),    # 3: PB-P1 Tramo 2 (subiendo)
+	Vector3(64.5, 4.7, 32.5),    # 4: P1 Salida/Hall
+	Vector3(64.5, 4.7, 27.5),    # 5: P1 Entrada a P2
+	Vector3(68.0, 5.7, 27.5),    # 6: P1-P2 Tramo 1 (subiendo)
+	Vector3(72.5, 6.8, 30.0),    # 7: P1-P2 Descanso medio
+	Vector3(68.0, 8.0, 32.5),    # 8: P1-P2 Tramo 2 (subiendo)
+	Vector3(64.5, 9.2, 32.5)     # 9: P2 Salida/Hall
+]
+
+const STAIR_NORTH_PATH: Array[Vector3] = [
+	Vector3(39.5, 0.2, -44.0),   # 0: PB Entrada pasillo (T1)
+	Vector3(39.5, 1.2, -48.5),   # 1: PB-P1 Tramo 1 (subiendo)
+	Vector3(42.0, 2.3, -52.5),   # 2: PB-P1 Descanso medio
+	Vector3(44.5, 3.5, -48.5),   # 3: PB-P1 Tramo 2 (subiendo)
+	Vector3(44.5, 4.7, -44.0),   # 4: P1 Salida/Hall
+	Vector3(39.5, 4.7, -44.0),   # 5: P1 Entrada a P2
+	Vector3(39.5, 5.7, -48.5),   # 6: P1-P2 Tramo 1 (subiendo)
+	Vector3(42.0, 6.8, -52.5),   # 7: P1-P2 Descanso medio
+	Vector3(44.5, 8.0, -48.5),   # 8: P1-P2 Tramo 2 (subiendo)
+	Vector3(44.5, 9.2, -44.0)    # 9: P2 Salida/Hall
+]
+
+var current_patrol_floor: int = 0
+var current_floor_waypoints: Array[Vector3] = WAYPOINTS_PB
+var patrol_waypoints: Array[Vector3] = WAYPOINTS_PB
 var current_waypoint_idx: int = 0
+
+## Investigación entre pisos
+var floor_investigate_timer: float = 50.0
+var is_investigating_floor: bool = false
+var target_investigate_floor: int = 0
+var target_floor_entry_pos: Vector3 = Vector3.ZERO
+
+func get_floor(y: float) -> int:
+	if y < 2.5: return 0
+	elif y < 7.0: return 1
+	else: return 2
+
+func get_floor_waypoints(floor_idx: int) -> Array[Vector3]:
+	match floor_idx:
+		0: return WAYPOINTS_PB
+		1: return WAYPOINTS_P1
+		2: return WAYPOINTS_P2
+		_: return WAYPOINTS_PB
+
+func get_stair_tower_name(pos: Vector3) -> String:
+	if pos.x <= -63.0 and pos.x >= -75.0 and pos.z >= 24.0 and pos.z <= 36.0:
+		return "Oeste"
+	if pos.x >= 63.0 and pos.x <= 75.0 and pos.z >= 24.0 and pos.z <= 36.0:
+		return "Este"
+	if pos.x >= 37.0 and pos.x <= 47.0 and pos.z >= -55.0 and pos.z <= -43.0:
+		return "Norte"
+	return ""
+
+func get_stair_path(tower_name: String) -> Array[Vector3]:
+	match tower_name:
+		"Oeste": return STAIR_WEST_PATH
+		"Este": return STAIR_EAST_PATH
+		"Norte": return STAIR_NORTH_PATH
+		_: return STAIR_WEST_PATH
+
+func get_closest_stair_tower(pos: Vector3) -> String:
+	var d_west = Vector2(pos.x - (-64.5), pos.z - 27.5).length_squared()
+	var d_east = Vector2(pos.x - 64.5, pos.z - 27.5).length_squared()
+	var d_north = Vector2(pos.x - 39.5, pos.z - (-44.0)).length_squared()
+	if d_west <= d_east and d_west <= d_north:
+		return "Oeste"
+	elif d_east <= d_north:
+		return "Este"
+	else:
+		return "Norte"
+
+func _get_nav_target_to(destination_pos: Vector3) -> Vector3:
+	var my_floor = get_floor(global_position.y)
+	var tgt_floor = get_floor(destination_pos.y)
+	var my_tower = get_stair_tower_name(global_position)
+	var tgt_tower = get_stair_tower_name(destination_pos)
+
+	# Si ambos están en el mismo piso y ninguno dentro de una caja de escalera: línea directa
+	if my_floor == tgt_floor and my_tower == "" and tgt_tower == "":
+		return destination_pos
+
+	# Elegir la torre de escaleras adecuada
+	var chosen_tower = ""
+	if my_tower != "":
+		chosen_tower = my_tower
+	elif tgt_tower != "":
+		chosen_tower = tgt_tower
+	else:
+		chosen_tower = get_closest_stair_tower(global_position)
+
+	var path = get_stair_path(chosen_tower)
+
+	# Si el profesor aún está fuera de la torre: dirigirse a la entrada del piso actual
+	if my_tower == "":
+		var entry_idx = 0
+		if my_floor == 0:
+			entry_idx = 0
+		elif my_floor == 1:
+			entry_idx = 5 if tgt_floor > 1 else 4
+		else:
+			entry_idx = 9
+		return path[entry_idx]
+
+	# El profesor está dentro de la torre: buscar el punto más cercano en la ruta
+	var closest_idx = 0
+	var min_d = 99999.0
+	for i in range(path.size()):
+		var d = global_position.distance_to(path[i])
+		if d < min_d:
+			min_d = d
+			closest_idx = i
+
+	# Determinar el punto objetivo en la ruta de escaleras
+	var goal_idx = 0
+	if tgt_tower != "":
+		var min_td = 99999.0
+		for i in range(path.size()):
+			var td = destination_pos.distance_to(path[i])
+			if td < min_td:
+				min_td = td
+				goal_idx = i
+	else:
+		if tgt_floor == 0:
+			goal_idx = 0
+		elif tgt_floor == 1:
+			goal_idx = 4 if my_floor == 0 else 5
+		else:
+			goal_idx = 9
+
+	# Si ya llegó al punto objetivo de la escalera
+	if closest_idx == goal_idx:
+		var d_goal = global_position.distance_to(path[goal_idx])
+		if d_goal < 1.5 or (my_floor == tgt_floor and tgt_tower == ""):
+			return destination_pos
+		return path[goal_idx]
+
+	# Avanzar secuencialmente paso a paso sin saltear nodos
+	if closest_idx < goal_idx:
+		return path[closest_idx + 1]
+	else:
+		return path[closest_idx - 1]
+
+func are_upper_floors_unlocked() -> bool:
+	var main = get_tree().root.find_child("Main", true, false)
+	if main and "upper_floor_blockers" in main:
+		return main.upper_floor_blockers.size() == 0
+	var blocker = get_tree().root.find_child("BloqueoEscaleraOeste", true, false)
+	if blocker and is_instance_valid(blocker):
+		return false
+	return true
+
+func _start_floor_investigation() -> void:
+	var my_floor = get_floor(global_position.y)
+	var available_floors: Array[int] = []
+	for f in [0, 1, 2]:
+		if f != my_floor:
+			available_floors.append(f)
+	
+	if available_floors.is_empty():
+		floor_investigate_timer = randf_range(40.0, 60.0)
+		return
+
+	target_investigate_floor = available_floors[randi() % available_floors.size()]
+	is_investigating_floor = true
+
+	var wps = get_floor_waypoints(target_investigate_floor)
+	if wps.size() > 0:
+		target_floor_entry_pos = wps[0]
+
+	if target_investigate_floor > my_floor:
+		var up_phrases = [
+			"Voy a subir a revisar el piso " + str(target_investigate_floor) + "...",
+			"Me pareció escuchar pasos arriba...",
+			"Tengo que ir a buscar unos exámenes arriba...",
+			"A ver si hay alumnos en las aulas de arriba..."
+		]
+		_say(up_phrases[randi() % up_phrases.size()], Color(1.0, 0.85, 0.5))
+	else:
+		var down_phrases = [
+			"Todo en orden por aquí. Voy a bajar a revisar la planta baja...",
+			"Voy a pegar una vuelta por planta baja...",
+			"Volvamos a la ronda de abajo..."
+		]
+		_say(down_phrases[randi() % down_phrases.size()], Color(1.0, 0.85, 0.5))
 
 ## Frases del profesor
 var phrases_patrol: Array[String] = [
@@ -193,6 +365,9 @@ func _ready() -> void:
 	current_speed = patrol_speed
 	
 	prev_pos = global_position
+	current_patrol_floor = get_floor(global_position.y)
+	current_floor_waypoints = get_floor_waypoints(current_patrol_floor)
+	patrol_waypoints = current_floor_waypoints
 	
 	_find_player()
 	
@@ -201,6 +376,7 @@ func _ready() -> void:
 		mic.noise_triggered.connect(_on_player_noise)
 	
 	phrase_timer = randf_range(3.0, 7.0)
+	floor_investigate_timer = randf_range(40.0, 65.0)
 	_pick_closest_waypoint()
 
 ## Activa o desactiva al profesor (invisible, sin moverse ni colisionar)
@@ -216,12 +392,18 @@ func set_active(active: bool) -> void:
 		current_speed = patrol_speed
 		time_without_sight = 0.0
 		prev_pos = global_position
+		current_patrol_floor = get_floor(global_position.y)
+		current_floor_waypoints = get_floor_waypoints(current_patrol_floor)
+		patrol_waypoints = current_floor_waypoints
+		is_investigating_floor = false
 		_pick_closest_waypoint()
 
 func _pick_closest_waypoint() -> void:
+	current_floor_waypoints = get_floor_waypoints(current_patrol_floor)
+	patrol_waypoints = current_floor_waypoints
 	var best_dist = 99999.0
-	for i in range(patrol_waypoints.size()):
-		var d = global_position.distance_to(patrol_waypoints[i])
+	for i in range(current_floor_waypoints.size()):
+		var d = global_position.distance_to(current_floor_waypoints[i])
 		if d < best_dist:
 			best_dist = d
 			current_waypoint_idx = i
@@ -287,13 +469,17 @@ func _can_see_player() -> bool:
 		return false
 
 	# Cono de visión frontal:
-	# La cara del profesor está orientada hacia +Z del nodo
-	var forward = transform.basis.z.normalized()
-	var dir_to_player = to_player.normalized()
-	var angle_rad = forward.angle_to(dir_to_player)
-	var angle_deg = rad_to_deg(angle_rad)
+	# En escaleras o desniveles, proyectar horizontalmente para no perder de vista por inclinación vertical
+	var forward_h = Vector2(transform.basis.z.x, transform.basis.z.z).normalized()
+	var dir_to_player_h = Vector2(to_player.x, to_player.z).normalized()
+	if forward_h.length() > 0.1 and dir_to_player_h.length() > 0.1:
+		var angle_rad = forward_h.angle_to(dir_to_player_h)
+		var angle_deg = rad_to_deg(angle_rad)
+		if absf(angle_deg) > vision_angle_deg * 0.5:
+			return false
 
-	if angle_deg > vision_angle_deg * 0.5:
+	# Desnivel vertical máximo de visión (no ver a través de múltiples pisos)
+	if absf(to_player.y) > 3.8:
 		return false
 
 	# Raycast para verificar si hay paredes intermedias
@@ -323,27 +509,52 @@ func _process_patrol_state(delta: float, can_see_player: bool) -> void:
 		_enter_chase_state()
 		return
 
-	var target_wp = patrol_waypoints[current_waypoint_idx]
-	var to_wp = target_wp - global_position
-	# Use full 3D distance so we can navigate stairs properly
-	var dist_wp = to_wp.length()
+	# Si los pisos superiores están desbloqueados, chequear si es momento de investigar otro piso
+	if are_upper_floors_unlocked() and not is_investigating_floor:
+		floor_investigate_timer -= delta
+		if floor_investigate_timer <= 0.0:
+			_start_floor_investigation()
 
-	if dist_wp < 2.0:
-		current_waypoint_idx = (current_waypoint_idx + 1) % patrol_waypoints.size()
-		target_wp = patrol_waypoints[current_waypoint_idx]
-		to_wp = target_wp - global_position
-
-	# For horizontal movement direction, zero Y only on flat ground
-	# On stairs (large Y difference), keep Y so the professor walks upward
-	var move_dir: Vector3
-	if absf(to_wp.y) > 0.5:
-		# On stairs: use full 3D direction but normalize XZ plane movement
-		move_dir = to_wp.normalized()
+	var target_wp = Vector3.ZERO
+	if is_investigating_floor:
+		target_wp = target_floor_entry_pos
 	else:
-		# On flat corridors: zero Y for stable horizontal movement
-		to_wp.y = 0.0
-		move_dir = to_wp.normalized()
-	_move_towards(delta, move_dir, current_speed, 4.0)
+		if current_floor_waypoints.is_empty():
+			current_floor_waypoints = get_floor_waypoints(current_patrol_floor)
+			patrol_waypoints = current_floor_waypoints
+		target_wp = current_floor_waypoints[current_waypoint_idx]
+
+	var nav_dest = _get_nav_target_to(target_wp)
+	var to_dest = nav_dest - global_position
+	var dist_dest = to_dest.length()
+
+	# Si estábamos investigando y llegamos al piso destino (fuera de la escalera):
+	if is_investigating_floor:
+		var my_floor = get_floor(global_position.y)
+		var my_tower = get_stair_tower_name(global_position)
+		if my_floor == target_investigate_floor and my_tower == "":
+			is_investigating_floor = false
+			current_patrol_floor = target_investigate_floor
+			current_floor_waypoints = get_floor_waypoints(current_patrol_floor)
+			patrol_waypoints = current_floor_waypoints
+			_pick_closest_waypoint()
+			floor_investigate_timer = randf_range(50.0, 85.0)
+			_say("A ver qué alumnos andan por este piso...", Color(1.0, 0.85, 0.5))
+	else:
+		if dist_dest < 2.0:
+			current_waypoint_idx = (current_waypoint_idx + 1) % current_floor_waypoints.size()
+			target_wp = current_floor_waypoints[current_waypoint_idx]
+			nav_dest = _get_nav_target_to(target_wp)
+			to_dest = nav_dest - global_position
+
+	var move_dir: Vector3
+	if absf(to_dest.y) > 0.4:
+		move_dir = to_dest.normalized()
+	else:
+		to_dest.y = 0.0
+		move_dir = to_dest.normalized()
+
+	_move_towards(delta, move_dir, current_speed, 4.5)
 
 func _process_chase_state(delta: float, can_see_player: bool) -> void:
 	if is_screamer_ambush:
@@ -362,9 +573,10 @@ func _process_chase_state(delta: float, can_see_player: bool) -> void:
 		current_speed = chase_speed
 	
 	var to_player = player.global_position - global_position
-	var dist_to_player = Vector2(to_player.x, to_player.z).length()
+	var dist_to_player = to_player.length()
+	var horiz_dist = Vector2(to_player.x, to_player.z).length()
 
-	# Si estaba cargando a toda velocidad y ya alcanzo al jugador, volver a velocidad normal
+	# Si estaba cargando a toda velocidad y ya alcanzó al jugador, volver a velocidad normal
 	if is_screamer_charging and dist_to_player <= attack_range + 0.6:
 		_end_screamer_charge()
 
@@ -377,16 +589,23 @@ func _process_chase_state(delta: float, can_see_player: bool) -> void:
 			_enter_search_state()
 			return
 
-	if dist_to_player <= attack_range and attack_timer <= 0.0:
+	# Solo atacar si está a rango horizontal Y a la misma altura (no a través de techos o escaleras)
+	if horiz_dist <= attack_range and absf(to_player.y) <= 1.8 and attack_timer <= 0.0:
 		_start_attack()
 		return
 
 	var target_dest = player.global_position if can_see_player else last_known_player_pos
-	var to_target = target_dest - global_position
-	to_target.y = 0.0
-	var move_dir = to_target.normalized()
+	var nav_dest = _get_nav_target_to(target_dest)
+	var to_target = nav_dest - global_position
+
+	var move_dir: Vector3
+	if absf(to_target.y) > 0.4:
+		move_dir = to_target.normalized()
+	else:
+		to_target.y = 0.0
+		move_dir = to_target.normalized()
 	
-	var rot_spd = 35.0 if is_screamer_charging else 7.0
+	var rot_spd = 35.0 if is_screamer_charging else 8.0
 	_move_towards(delta, move_dir, current_speed, rot_spd)
 
 func _process_search_state(delta: float, can_see_player: bool) -> void:
@@ -395,15 +614,36 @@ func _process_search_state(delta: float, can_see_player: bool) -> void:
 		return
 
 	search_timer -= delta
-	rotation.y += sin(search_timer * 3.0) * delta * 2.0
-	
-	velocity.x = move_toward(velocity.x, 0.0, 10.0 * delta)
-	velocity.z = move_toward(velocity.z, 0.0, 10.0 * delta)
-	move_and_slide()
-	_animate_walk(delta, false)
+
+	# Si la última posición conocida está a más de 2.5m, caminar hacia ella para investigar
+	var to_last = last_known_player_pos - global_position
+	var dist_last = to_last.length()
+	var my_floor = get_floor(global_position.y)
+	var last_floor = get_floor(last_known_player_pos.y)
+
+	if dist_last > 2.5 or my_floor != last_floor:
+		var nav_dest = _get_nav_target_to(last_known_player_pos)
+		var to_nav = nav_dest - global_position
+		var move_dir: Vector3
+		if absf(to_nav.y) > 0.4:
+			move_dir = to_nav.normalized()
+		else:
+			to_nav.y = 0.0
+			move_dir = to_nav.normalized()
+		_move_towards(delta, move_dir, patrol_speed * 1.15, 6.0)
+	else:
+		# Ya está cerca del lugar: detenerse y girar mirando alrededor
+		rotation.y += sin(search_timer * 3.0) * delta * 2.0
+		velocity.x = move_toward(velocity.x, 0.0, 10.0 * delta)
+		velocity.z = move_toward(velocity.z, 0.0, 10.0 * delta)
+		move_and_slide()
+		_animate_walk(delta, false)
 
 	if search_timer <= 0.0:
 		current_state = State.PATROL
+		current_patrol_floor = get_floor(global_position.y)
+		current_floor_waypoints = get_floor_waypoints(current_patrol_floor)
+		patrol_waypoints = current_floor_waypoints
 		_pick_closest_waypoint()
 		_say("Debió ser el viento... Volvamos a la ronda.")
 
@@ -430,9 +670,13 @@ func _move_towards(delta: float, dir: Vector3, speed_to_use: float, rot_speed: f
 		var target_rot_y = atan2(move_vec.x, move_vec.z)
 		rotation.y = lerp_angle(rotation.y, target_rot_y, rot_speed * delta)
 		
-		var accel = 140.0 if is_screamer_charging else 12.0
+		var accel = 140.0 if is_screamer_charging else 14.0
 		velocity.x = move_toward(velocity.x, move_vec.x * speed_to_use, accel * delta)
 		velocity.z = move_toward(velocity.z, move_vec.z * speed_to_use, accel * delta)
+
+		# Ayuda vertical en escaleras para subir escalones fluidamente
+		if dir.y > 0.08:
+			velocity.y = max(velocity.y, dir.y * speed_to_use * 1.35)
 	else:
 		velocity.x = move_toward(velocity.x, 0.0, 10.0 * delta)
 		velocity.z = move_toward(velocity.z, 0.0, 10.0 * delta)
@@ -452,7 +696,7 @@ func _move_towards(delta: float, dir: Vector3, speed_to_use: float, rot_speed: f
 				global_position = pre_pos + Vector3(0, step_h, 0)
 				move_and_slide()
 
-	# Detección y recuperación automática si se traba (Watchdog anti-stuck AGRESIVO)
+	# Detección y recuperación automática si se traba (Watchdog anti-stuck)
 	pos_sample_timer += delta
 	if pos_sample_timer >= 0.4:
 		pos_sample_timer = 0.0
@@ -463,44 +707,56 @@ func _move_towards(delta: float, dir: Vector3, speed_to_use: float, rot_speed: f
 		else:
 			stuck_timer = max(0.0, stuck_timer - 0.4)
 
-	# Si estuvo trabado contra una pared más de 0.8 segundos: empujar lejos
+	# Si estuvo trabado contra una pared más de 0.8 segundos:
 	if stuck_timer >= 0.8:
 		var wall_n = get_wall_normal() if is_on_wall() else Vector3.ZERO
 		var push_away = wall_n * 2.0
 		velocity.x += push_away.x * speed_to_use
 		velocity.z += push_away.z * speed_to_use
-		global_position += push_away * 0.3  # Empuje inmediato lejos de la pared
+		global_position += push_away * 0.25
 
-		if current_state == State.PATROL:
-			current_waypoint_idx = (current_waypoint_idx + 1) % patrol_waypoints.size()
-		elif current_state == State.CHASE and not _can_see_player():
-			# Perdió visión mientras estaba trabado: buscar
-			_enter_search_state()
-		elif current_state == State.SEARCH:
-			# Trabado buscando: volver a patrullar
-			current_state = State.PATROL
-			_pick_closest_waypoint()
-
-		# Si lleva más de 2.0 segundos acumulados trabado: TELETRANSPORTE
-		if stuck_timer >= 2.0:
-			stuck_timer = 0.0
-			# Buscar el waypoint más cercano que esté a al menos 3m de distancia
-			var best_idx: int = -1
-			var best_dist: float = 99999.0
-			for i in range(patrol_waypoints.size()):
-				var d = global_position.distance_to(patrol_waypoints[i])
-				if d >= 3.0 and d < best_dist:
-					best_dist = d
+		var tower = get_stair_tower_name(global_position)
+		if tower != "":
+			# En escaleras: recolocar suavemente en el punto más cercano de la ruta de escaleras
+			var path = get_stair_path(tower)
+			var best_idx = 0
+			var best_d = 99999.0
+			for i in range(path.size()):
+				var d = global_position.distance_to(path[i])
+				if d < best_d:
+					best_d = d
 					best_idx = i
-			if best_idx >= 0:
-				global_position = patrol_waypoints[best_idx]
-				prev_pos = global_position
-				current_waypoint_idx = (best_idx + 1) % patrol_waypoints.size()
-				velocity = Vector3.ZERO
-				if current_state != State.PATROL:
-					current_state = State.PATROL
+			global_position = path[best_idx] + Vector3(0, 0.15, 0)
+			stuck_timer = 0.0
 		else:
-			stuck_timer = max(stuck_timer, 0.0)  # Mantener el acumulado
+			if current_state == State.PATROL:
+				if not is_investigating_floor and current_floor_waypoints.size() > 0:
+					current_waypoint_idx = (current_waypoint_idx + 1) % current_floor_waypoints.size()
+			elif current_state == State.CHASE and not _can_see_player():
+				_enter_search_state()
+			elif current_state == State.SEARCH:
+				current_state = State.PATROL
+				_pick_closest_waypoint()
+
+			# Si lleva más de 2.0 segundos acumulados trabado en pasillo: TELETRANSPORTE AL WAYPOINT MÁS CERCANO DEL PISO
+			if stuck_timer >= 2.0:
+				stuck_timer = 0.0
+				var wps = current_floor_waypoints if current_floor_waypoints.size() > 0 else WAYPOINTS_PB
+				var best_idx: int = -1
+				var best_dist: float = 99999.0
+				for i in range(wps.size()):
+					var d = global_position.distance_to(wps[i])
+					if d >= 3.0 and d < best_dist:
+						best_dist = d
+						best_idx = i
+				if best_idx >= 0:
+					global_position = wps[best_idx]
+					prev_pos = global_position
+					current_waypoint_idx = (best_idx + 1) % wps.size()
+					velocity = Vector3.ZERO
+					if current_state != State.PATROL:
+						current_state = State.PATROL
+		stuck_timer = max(stuck_timer, 0.0)
 
 	_animate_walk(delta, dir.length() > 0.1)
 
@@ -510,6 +766,7 @@ func _move_towards(delta: float, dir: Vector3, speed_to_use: float, rot_speed: f
 func _enter_chase_state() -> void:
 	current_state = State.CHASE
 	time_without_sight = 0.0
+	is_investigating_floor = false
 	last_known_player_pos = player.global_position
 	
 	if ojos_luz:
@@ -771,10 +1028,19 @@ func _on_player_noise(volume: float) -> void:
 	var dist = global_position.distance_to(player.global_position)
 	if dist <= hearing_range:
 		_enter_chase_state()
-		_say("¡¿QUIÉN HACE RUIDO EN MI HORA?!", Color(1.0, 0.2, 0.2))
 		last_known_player_pos = player.global_position
+		
+		var my_floor = get_floor(global_position.y)
+		var p_floor = get_floor(player.global_position.y)
+		if my_floor != p_floor:
+			_say("¡¡¿QUIÉN ANDA HACIENDO RUIDO EN EL OTRO PISO?!!", Color(1.0, 0.2, 0.2))
+		else:
+			_say("¡¡¿QUIÉN HACE RUIDO EN MI HORA?!!", Color(1.0, 0.2, 0.2))
+			
 		var to_player = player.global_position - global_position
-		rotation.y = atan2(to_player.x, to_player.z)
+		to_player.y = 0.0
+		if to_player.length() > 0.1:
+			rotation.y = atan2(to_player.x, to_player.z)
 
 func _cut_screamer_audio() -> void:
 	if not is_inside_tree():
