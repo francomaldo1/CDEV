@@ -252,8 +252,11 @@ func _spawn_tachos_basura() -> void:
 		{"pos": Vector3(-46.05, 0.0, 10.0),  "rot": Vector3(0, 90, 0),   "desc": "Pasillo Oeste Sur PB"},
 		{"pos": Vector3(46.05, 0.0, -23.0),  "rot": Vector3(0, -90, 0),  "desc": "Pasillo Este Norte PB"},
 		{"pos": Vector3(46.05, 0.0, 8.0),    "rot": Vector3(0, -90, 0),  "desc": "Pasillo Este Sur PB"},
-		{"pos": Vector3(10.0, 0.0, -26.65),  "rot": Vector3(0, 0, 0),    "desc": "Pasillo Norte Este PB"},
-		{"pos": Vector3(-15.0, 0.0, -26.65), "rot": Vector3(0, 0, 0),    "desc": "Pasillo Norte Oeste PB"},
+		# Pasillo Norte PB: ubicados al ras de la pared norte (Z = -32.45), reemplazando los lockers anteriores
+		{"pos": Vector3(12.04, 0.0, -32.45), "rot": Vector3(0, 0, 0),    "desc": "Pasillo Norte Este PB"},
+		{"pos": Vector3(-14.95, 0.0, -32.45), "rot": Vector3(0, 0, 0),   "desc": "Pasillo Norte Centro PB"},
+		{"pos": Vector3(-37.6, 0.0, -32.45), "rot": Vector3(0, 0, 0),    "desc": "Pasillo Norte Extremo Oeste PB"},
+		{"pos": Vector3(-37.55, 0.0, -8.0),  "rot": Vector3(0, -90, 0),  "desc": "Lab Electronica Entrada PB"},
 		{"pos": Vector3(-18.0, 0.0, 21.85),  "rot": Vector3(0, 180, 0),  "desc": "Galeria Patio Oeste PB"},
 		{"pos": Vector3(18.0, 0.0, 21.85),   "rot": Vector3(0, 180, 0),  "desc": "Galeria Patio Este PB"},
 		{"pos": Vector3(-20.0, 0.0, 33.85),  "rot": Vector3(0, 180, 0),  "desc": "Pasillo Fotocopiadora PB"},
@@ -261,14 +264,17 @@ func _spawn_tachos_basura() -> void:
 		# PRIMER PISO (P1)
 		{"pos": Vector3(-46.05, 4.5, -9.0),  "rot": Vector3(0, 90, 0),   "desc": "Pasillo Sistemas P1"},
 		{"pos": Vector3(-46.05, 4.5, 20.0),  "rot": Vector3(0, 90, 0),   "desc": "Pasillo Electronica P1"},
-		{"pos": Vector3(-22.0, 4.5, -26.65), "rot": Vector3(0, 0, 0),    "desc": "Pasillo Bedelia P1"},
+		{"pos": Vector3(-22.0, 4.5, -32.45), "rot": Vector3(0, 0, 0),    "desc": "Pasillo Bedelia P1"},
 		{"pos": Vector3(46.05, 4.5, -18.0),  "rot": Vector3(0, -90, 0),  "desc": "Pasillo CETRA P1"},
 		{"pos": Vector3(46.05, 4.5, 18.0),   "rot": Vector3(0, -90, 0),  "desc": "Pasillo Biblioteca P1"},
 
 		# SEGUNDO PISO (P2)
 		{"pos": Vector3(-46.05, 9.0, -5.0),  "rot": Vector3(0, 90, 0),   "desc": "Pasillo Aulas Oeste P2"},
 		{"pos": Vector3(46.05, 9.0, -8.0),   "rot": Vector3(0, -90, 0),  "desc": "Pasillo Aulas Este P2"},
-		{"pos": Vector3(0.0, 9.0, -26.65),   "rot": Vector3(0, 0, 0),    "desc": "Pasillo Norte Aula Magna P2"},
+		{"pos": Vector3(0.0, 9.0, -32.45),   "rot": Vector3(0, 0, 0),    "desc": "Pasillo Norte Aula Magna P2"},
+		{"pos": Vector3(12.04, 9.0, -32.45), "rot": Vector3(0, 0, 0),    "desc": "Pasillo Norte Este P2"},
+		{"pos": Vector3(-12.31, 9.0, -32.45), "rot": Vector3(0, 0, 0),   "desc": "Pasillo Norte Centro P2"},
+		{"pos": Vector3(-36.66, 9.0, -32.45), "rot": Vector3(0, 0, 0),   "desc": "Pasillo Norte Oeste P2"},
 		{"pos": Vector3(-14.0, 9.0, 33.85),  "rot": Vector3(0, 180, 0),  "desc": "Cafeteria Entrada Oeste P2"},
 		{"pos": Vector3(14.0, 9.0, 33.85),   "rot": Vector3(0, 180, 0),  "desc": "Cafeteria Entrada Este P2"}
 	]
