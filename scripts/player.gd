@@ -142,16 +142,16 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		if not is_frozen:
 			if is_hidden:
-				# Rotación limitada adentro del tacho (rango fijo hacia la ranura frontal: +/- 45 grados)
+				# Rotación adentro del tacho: puede mirar al frente y a los costados por las 3 grandes rendijas (+/- 105 grados)
 				var yaw_delta = -event.relative.x * mouse_sensitivity
 				var target_yaw = rotation.y + yaw_delta
 				var diff = wrapf(target_yaw - hiding_base_yaw, -PI, PI)
-				var max_yaw = deg_to_rad(45.0)
+				var max_yaw = deg_to_rad(105.0)
 				rotation.y = hiding_base_yaw + clampf(diff, -max_yaw, max_yaw)
 				
 				if camera_pivot:
 					camera_pivot.rotate_x(-event.relative.y * mouse_sensitivity)
-					camera_pivot.rotation.x = clampf(camera_pivot.rotation.x, deg_to_rad(-14.0), deg_to_rad(14.0))
+					camera_pivot.rotation.x = clampf(camera_pivot.rotation.x, deg_to_rad(-22.0), deg_to_rad(22.0))
 			else:
 				rotate_y(-event.relative.x * mouse_sensitivity)
 				if camera_pivot:
@@ -186,14 +186,6 @@ func _physics_process(delta: float) -> void:
 	if is_hidden:
 		velocity.x = 0.0
 		velocity.z = 0.0
-		
-		# Actualizar parallax del tacho de basura en tiempo real
-		var yaw_diff = wrapf(rotation.y - hiding_base_yaw, -PI, PI)
-		var yaw_ratio = clampf(yaw_diff / deg_to_rad(45.0), -1.0, 1.0)
-		var pitch_ratio = clampf(camera_pivot.rotation.x / deg_to_rad(14.0), -1.0, 1.0) if camera_pivot else 0.0
-		var hud = get_tree().root.find_child("HUD", true, false)
-		if hud and hud.has_method("update_trash_overlay_parallax"):
-			hud.update_trash_overlay_parallax(yaw_ratio, pitch_ratio)
 		return
 	if _is_ui_active() or is_frozen:
 		velocity.x = 0.0
@@ -393,22 +385,19 @@ func enter_hiding(spot: Node, hide_global_pos: Vector3, face_dir: Vector3) -> vo
 	if col:
 		col.disabled = true
 		
-	# Bajar la altura del pivote de cámara para quedar adentro del tacho a nivel de las 4 rendijas (Y = 0.92m)
+	# Bajar la altura del pivote de cámara para quedar adentro del tacho a nivel de las aberturas (Y = 1.07m)
 	if camera_pivot:
-		camera_pivot.position.y = 0.92
+		camera_pivot.position.y = 1.07
 		camera_pivot.rotation.x = 0.0
 	if camera:
 		camera.position.y = 0.0
 		
+	# Asegurar que el cuerpo esté perfectamente vertical
+	rotation.x = 0.0
+	rotation.z = 0.0
 	if face_dir != Vector3.ZERO:
 		rotation.y = atan2(-face_dir.x, -face_dir.z)
 	hiding_base_yaw = rotation.y
-			
-	var hud = get_tree().root.find_child("HUD", true, false)
-	if hud and hud.has_method("set_trash_overlay_visible"):
-		hud.set_trash_overlay_visible(true)
-	if hud and hud.has_method("update_trash_overlay_parallax"):
-		hud.update_trash_overlay_parallax(0.0, 0.0)
 
 func exit_hiding(exit_global_pos: Vector3) -> void:
 	is_hidden = false

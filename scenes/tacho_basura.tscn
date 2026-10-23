@@ -36,49 +36,27 @@ operation = 2
 size = Vector3(0.49, 1.21, 0.38)
 material = ExtResource("3_mat_interior")
 
-[node name="BocaSuperior" type="CSGBox3D" parent="ModeloCSG"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.10, 0.20)
+[node name="BocaFrontal" type="CSGBox3D" parent="ModeloCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 0.20)
 operation = 2
-size = Vector3(0.28, 0.14, 0.16)
+size = Vector3(0.40, 0.26, 0.16)
 material = ExtResource("3_mat_interior")
 
-[node name="Rendija_0" type="CSGBox3D" parent="ModeloCSG"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.98, 0.20)
+[node name="BocaLateralIzq" type="CSGBox3D" parent="ModeloCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25, 1.06, 0)
 operation = 2
-size = Vector3(0.34, 0.03, 0.16)
+size = Vector3(0.16, 0.26, 0.30)
 material = ExtResource("3_mat_interior")
 
-[node name="Rendija_1" type="CSGBox3D" parent="ModeloCSG"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.92, 0.20)
+[node name="BocaLateralDer" type="CSGBox3D" parent="ModeloCSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 1.06, 0)
 operation = 2
-size = Vector3(0.34, 0.03, 0.16)
-material = ExtResource("3_mat_interior")
-
-[node name="Rendija_2" type="CSGBox3D" parent="ModeloCSG"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.86, 0.20)
-operation = 2
-size = Vector3(0.34, 0.03, 0.16)
-material = ExtResource("3_mat_interior")
-
-[node name="Rendija_3" type="CSGBox3D" parent="ModeloCSG"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.80, 0.20)
-operation = 2
-size = Vector3(0.34, 0.03, 0.16)
+size = Vector3(0.16, 0.26, 0.30)
 material = ExtResource("3_mat_interior")
 
 [node name="TapaSuperior" type="CSGBox3D" parent="ModeloCSG"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
-size = Vector3(0.57, 0.04, 0.46)
-material = ExtResource("2_mat_metal")
-
-[node name="MarcoFrontalIzq" type="CSGBox3D" parent="ModeloCSG"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.245, 0.61, 0.222)
-size = Vector3(0.06, 1.22, 0.015)
-material = ExtResource("2_mat_metal")
-
-[node name="MarcoFrontalDer" type="CSGBox3D" parent="ModeloCSG"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.245, 0.61, 0.222)
-size = Vector3(0.06, 1.22, 0.015)
+size = Vector3(0.58, 0.05, 0.48)
 material = ExtResource("2_mat_metal")
 
 [node name="ZocaloBase" type="CSGBox3D" parent="ModeloCSG"]
@@ -87,7 +65,7 @@ size = Vector3(0.53, 0.04, 0.42)
 material = ExtResource("2_mat_metal")
 
 [node name="HidePoint" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="ExitPoint" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.85)

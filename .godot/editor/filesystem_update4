@@ -1,7 +1,0 @@
-res://default_bus_layout.tres
-res://scripts/hud.gd
-res://scripts/puerta_auditorio.gd
-res://scripts/puerta_salida.gd
-res://scenes/main.tscn
-res://scripts/main.gd
-res://scenes/edificio_central.tscn
