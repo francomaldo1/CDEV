@@ -12,7 +12,7 @@ signal noise_triggered(volume: float)
 var bus_index: int = -1
 var capture_effect: AudioEffectCapture
 var smoothed_level: float = 0.0
-var is_active: bool = true
+var is_active: bool = false
 
 func _ready() -> void:
 	bus_index = AudioServer.get_bus_index(bus_name)

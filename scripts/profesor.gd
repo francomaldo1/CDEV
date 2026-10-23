@@ -518,7 +518,7 @@ func _physics_process(delta: float) -> void:
 ## DETECCIÓN Y VISIÓN
 ## =====================================================================
 func _can_see_player() -> bool:
-	if not is_instance_valid(player):
+	if not is_instance_valid(player) or player.get("is_hidden"):
 		return false
 	
 	var eye_pos = global_position + Vector3(0, 1.5, 0)
@@ -661,6 +661,14 @@ func _process_chase_state(delta: float, can_see_player: bool) -> void:
 		if time_without_sight >= lost_sight_timeout:
 			_enter_search_state()
 			return
+
+	# Si el jugador está escondido en un tacho y el profesor lo alcanzó persiguiendo el ruido:
+	if player.get("is_hidden") and dist_to_player <= attack_range + 0.6:
+		_say("¡¡TE ENCONTRÉ! ¡SALÍ DE ESE TACHO!!", Color(1.0, 0.1, 0.1))
+		if player.get("current_hiding_spot") and player.current_hiding_spot.has_method("force_eject"):
+			player.current_hiding_spot.force_eject()
+		_start_attack()
+		return
 
 	# Solo atacar si el jugador está a alcance cuerpo a cuerpo real (3D <= attack_range y desnivel vertical <= 0.85m)
 	# Esto evita que se quede trabado atacando al aire/techo si el jugador está en el tramo superior de la escalera
@@ -1303,7 +1311,9 @@ func _on_player_noise(volume: float) -> void:
 		
 		var my_floor = get_floor(global_position.y)
 		var p_floor = get_floor(player.global_position.y)
-		if my_floor != p_floor:
+		if player.get("is_hidden"):
+			_say("¡¡¿QUÉ ES ESE RUIDO DENTRO DEL TACHO?!!", Color(1.0, 0.2, 0.2))
+		elif my_floor != p_floor:
 			_say("¡¡¿QUIÉN ANDA HACIENDO RUIDO EN EL OTRO PISO?!!", Color(1.0, 0.2, 0.2))
 		else:
 			_say("¡¡¿QUIÉN HACE RUIDO EN MI HORA?!!", Color(1.0, 0.2, 0.2))

@@ -10,6 +10,7 @@ var cuaderno_scene = preload("res://scenes/cuaderno_matematica.tscn")
 var puerta_salida_scene = preload("res://scenes/puerta_salida.tscn")
 var tablero_scene = preload("res://scenes/tablero_electrico.tscn")
 var fusible_scene = preload("res://scenes/fusible.tscn")
+var tacho_scene = preload("res://scenes/tacho_basura.tscn")
 
 ## Cantidad total de exámenes (cuadernos) que aparecen en las aulas
 @export var total_exams: int = 4
@@ -50,6 +51,7 @@ func _ready() -> void:
 	
 	if mic_detector and hud:
 		mic_detector.volume_updated.connect(hud.on_mic_volume_updated)
+		mic_detector.set_mic_active(false)
 	add_child(preload("res://scripts/hoja_pisos.gd").new())
 		
 	if world_env and world_env.environment:
@@ -62,6 +64,7 @@ func _ready() -> void:
 	_spawn_fusible()
 	_spawn_multiple_cuadernos()
 	_spawn_upper_floor_blockers()
+	_spawn_tachos_basura()
 	
 	# El profesor no está al principio: aparece con el corte de luz
 	if profesor:
@@ -240,6 +243,26 @@ func _unlock_upper_floor() -> void:
 	if hud and hud.has_method("show_temporary_alert"):
 		hud.show_temporary_alert("🔓 ¡Aprobaste todos los parciales! Se habilitó el PISO DE ARRIBA.", Color(0.3, 0.8, 1.0))
 	print(">>> ¡PISO SUPERIOR HABILITADO!")
+
+func _spawn_tachos_basura() -> void:
+	var spots = [
+		{"pos": Vector3(-46.0, 0.0, -15.0), "rot": Vector3(0, 90, 0), "desc": "Pasillo Oeste Norte (PB)"},
+		{"pos": Vector3(-46.0, 0.0, 18.0),  "rot": Vector3(0, 90, 0), "desc": "Pasillo Oeste Lab (PB)"},
+		{"pos": Vector3(15.0, 0.0, -32.2),  "rot": Vector3(0, 0, 0),  "desc": "Pasillo Norte Este (PB)"},
+		{"pos": Vector3(-25.0, 0.0, -32.2), "rot": Vector3(0, 0, 0),  "desc": "Pasillo Norte Oeste (PB)"},
+		{"pos": Vector3(-18.0, 0.0, 22.0),  "rot": Vector3(0, 180, 0),"desc": "Galeria Patio PB"},
+		{"pos": Vector3(46.0, 0.0, 18.0),   "rot": Vector3(0, -90, 0),"desc": "Pasillo Cafeteria PB"},
+		{"pos": Vector3(46.0, 0.0, -18.0),  "rot": Vector3(0, -90, 0),"desc": "Pasillo Auditorio PB"},
+		{"pos": Vector3(-46.0, 4.5, -20.0), "rot": Vector3(0, 90, 0), "desc": "Pasillo Sistemas P1"},
+		{"pos": Vector3(46.0, 4.5, -5.0),   "rot": Vector3(0, -90, 0),"desc": "Pasillo Biblioteca P1"}
+	]
+	for s in spots:
+		var tacho = tacho_scene.instantiate()
+		tacho.position = s["pos"]
+		tacho.rotation_degrees = s["rot"]
+		tacho.name = "Tacho_" + s["desc"].replace(" ", "_").replace("(", "").replace(")", "")
+		add_child(tacho)
+		print(">>> Tacho de basura instalado en: %s %s" % [s["desc"], s["pos"]])
 
 func _collect_all_building_lights() -> Array[Light3D]:
 	var result: Array[Light3D] = []

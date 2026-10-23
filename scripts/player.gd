@@ -18,6 +18,9 @@ var step_distance_accum: float = 0.0
 var time_stopped: float = 0.0
 var original_cam_y: float = 0.0
 var is_frozen: bool = false
+var is_hidden: bool = false
+var current_hiding_spot: Node = null
+var was_flashlight_on_before_hiding: bool = false
 var shake_tween: Tween = null
 var look_tween: Tween = null
 
@@ -152,6 +155,11 @@ func _input(event: InputEvent) -> void:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func toggle_flashlight() -> void:
+	if is_hidden:
+		var hud = get_tree().root.find_child("HUD", true, false)
+		if hud and hud.has_method("show_temporary_alert"):
+			hud.show_temporary_alert("🤫 No podés encender la linterna mientras estás escondido.", Color(1.0, 0.8, 0.2))
+		return
 	if is_frozen or not flashlight_enabled:
 		return
 	if flashlight:
@@ -159,7 +167,7 @@ func toggle_flashlight() -> void:
 
 func _physics_process(delta: float) -> void:
 	# Si hay un menú/examen abierto o el jugador está congelado en una cinemática de terror
-	if _is_ui_active() or is_frozen:
+	if _is_ui_active() or is_frozen or is_hidden:
 		velocity.x = 0.0
 		velocity.z = 0.0
 		move_and_slide()
@@ -340,3 +348,25 @@ func _update_heartbeat(delta: float) -> void:
 			heartbeat_player.volume_db = lerpf(heartbeat_player.volume_db, -45.0, delta * 2.0)
 			if heartbeat_player.volume_db <= -40.0:
 				heartbeat_player.stop()
+
+
+func enter_hiding(spot: Node, hide_global_pos: Vector3, face_dir: Vector3) -> void:
+	is_hidden = true
+	current_hiding_spot = spot
+	velocity = Vector3.ZERO
+	was_flashlight_on_before_hiding = flashlight and flashlight.visible
+	if flashlight:
+		flashlight.visible = false
+	global_position = hide_global_pos
+	if face_dir != Vector3.ZERO:
+		rotation.y = atan2(-face_dir.x, -face_dir.z)
+		if camera_pivot:
+			camera_pivot.rotation.x = 0.0
+
+func exit_hiding(exit_global_pos: Vector3) -> void:
+	is_hidden = false
+	current_hiding_spot = null
+	global_position = exit_global_pos
+	if was_flashlight_on_before_hiding and flashlight:
+		flashlight.visible = true
+	was_flashlight_on_before_hiding = false

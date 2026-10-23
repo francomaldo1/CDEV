@@ -56,7 +56,10 @@ func _ready() -> void:
 		
 	if instruction_label:
 		instruction_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		instruction_label.text = "[W,A,S,D] Mover | [Shift] Correr | [F] Linterna | [E] Usar | [F3] Coords | [F2] Copiar | [M] Guia"
+		instruction_label.text = "[W,A,S,D] Mover | [Shift] Correr | [F] Linterna | [E] Usar/Esconderse | [F3] Coords | [F2] Copiar | [M] Guia"
+	var mic_cont = find_child("MicContainer", true, false) as Control
+	if mic_cont:
+		mic_cont.visible = false
 
 	option_buttons = [btn_opt0, btn_opt1, btn_opt2, btn_opt3]
 	for i in range(option_buttons.size()):
@@ -122,6 +125,13 @@ func show_temporary_alert(text_msg: String, color: Color = Color(1.0, 0.3, 0.3))
 			if is_instance_valid(notification_banner) and notification_banner.text == text_msg:
 				notification_banner.text = ""
 		)
+
+func set_mic_visible(vis: bool) -> void:
+	var mic_cont = find_child("MicContainer", true, false) as Control
+	if mic_cont:
+		mic_cont.visible = vis
+	if mic_label:
+		mic_label.text = "🎤 RUIDO DEL MICRÓFONO (¡MANTENÉ SILENCIO!)" if vis else "🎤 RUIDO DEL MICRÓFONO"
 
 func on_mic_volume_updated(volume: float, is_alert: bool) -> void:
 	if mic_progress_bar:

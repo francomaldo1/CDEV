@@ -473,3 +473,38 @@ static func get_door_rattle_sound() -> AudioStreamWAV:
 		data.encode_s16(i * 2, pcm)
 	wav.data = data
 	return wav
+
+
+static var _cached_trash_enter: AudioStreamWAV = null
+static var _cached_trash_exit: AudioStreamWAV = null
+
+static func get_trashcan_sound(enter: bool = true) -> AudioStreamWAV:
+	if enter:
+		if _cached_trash_enter == null:
+			_cached_trash_enter = _generate_trashcan_sound(true)
+		return _cached_trash_enter
+	else:
+		if _cached_trash_exit == null:
+			_cached_trash_exit = _generate_trashcan_sound(false)
+		return _cached_trash_exit
+
+static func _generate_trashcan_sound(enter: bool) -> AudioStreamWAV:
+	var wav = AudioStreamWAV.new()
+	wav.format = AudioStreamWAV.FORMAT_16_BITS
+	wav.mix_rate = 22050
+	wav.stereo = false
+	var length_sec = 0.6 if enter else 0.45
+	var samples_count = int(22050 * length_sec)
+	var data = PackedByteArray()
+	data.resize(samples_count * 2)
+	for i in range(samples_count):
+		var t = float(i) / 22050.0
+		var freq1 = 120.0 if enter else 180.0
+		var thud = sin(t * freq1 * TAU) * exp(-t * 9.0)
+		var rattle = (sin(t * 410.0 * TAU) * 0.4 + sin(t * 620.0 * TAU) * 0.3) * exp(-t * 22.0)
+		var metallic_ring = sin(t * 280.0 * TAU) * exp(-t * 6.0) * 0.35
+		var sample_val = clampf((thud * 0.75 + rattle * 0.45 + metallic_ring * 0.3), -1.0, 1.0)
+		var pcm = int(sample_val * 26000.0)
+		data.encode_s16(i * 2, pcm)
+	wav.data = data
+	return wav
