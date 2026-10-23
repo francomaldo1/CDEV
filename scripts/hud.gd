@@ -370,50 +370,69 @@ func _setup_trash_overlay() -> void:
 	trash_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	trash_overlay.visible = is_trash_overlay_active
 
-	var dark_color = Color(0.04, 0.04, 0.05, 0.98)
+	# Color interior metálico oscuro profundo (sin barras grises lavadas)
+	var dark_metal = Color(0.012, 0.012, 0.015, 1.0)
+	var slat_color = Color(0.025, 0.025, 0.03, 1.0)
 
-	# 1. Tapa superior del tacho (cubre desde arriba hasta el 35% de la pantalla)
-	var top_lid = ColorRect.new()
-	top_lid.name = "TopLid"
-	top_lid.color = dark_color
-	top_lid.anchor_left = 0.0
-	top_lid.anchor_right = 1.0
-	top_lid.anchor_top = 0.0
-	top_lid.anchor_bottom = 0.35
-	top_lid.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	trash_overlay.add_child(top_lid)
+	# 1. Tapa superior opaca
+	var top_mask = ColorRect.new()
+	top_mask.name = "TopMask"
+	top_mask.color = dark_metal
+	top_mask.anchor_left = 0.0
+	top_mask.anchor_right = 1.0
+	top_mask.anchor_top = 0.0
+	top_mask.anchor_bottom = 0.28
+	top_mask.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	trash_overlay.add_child(top_mask)
 
-	# 2. Cuerpo inferior del tacho (cubre desde el 67% hasta el 100% de la pantalla)
-	var bottom_body = ColorRect.new()
-	bottom_body.name = "BottomBody"
-	bottom_body.color = dark_color
-	bottom_body.anchor_left = 0.0
-	bottom_body.anchor_right = 1.0
-	bottom_body.anchor_top = 0.67
-	bottom_body.anchor_bottom = 1.0
-	bottom_body.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	trash_overlay.add_child(bottom_body)
+	# 2. Cuerpo inferior opaco
+	var bottom_mask = ColorRect.new()
+	bottom_mask.name = "BottomMask"
+	bottom_mask.color = dark_metal
+	bottom_mask.anchor_left = 0.0
+	bottom_mask.anchor_right = 1.0
+	bottom_mask.anchor_top = 0.655
+	bottom_mask.anchor_bottom = 1.0
+	bottom_mask.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	trash_overlay.add_child(bottom_mask)
 
-	# 3. Laterales izquierdo y derecho (marco de la ranura de visión)
-	var left_side = ColorRect.new()
-	left_side.name = "LeftSide"
-	left_side.color = dark_color
-	left_side.anchor_left = 0.0
-	left_side.anchor_right = 0.12
-	left_side.anchor_top = 0.35
-	left_side.anchor_bottom = 0.67
-	left_side.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	trash_overlay.add_child(left_side)
+	# 3. Laterales opacos (paredes internas izquierda y derecha)
+	var left_mask = ColorRect.new()
+	left_mask.name = "LeftMask"
+	left_mask.color = dark_metal
+	left_mask.anchor_left = 0.0
+	left_mask.anchor_right = 0.14
+	left_mask.anchor_top = 0.28
+	left_mask.anchor_bottom = 0.655
+	left_mask.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	trash_overlay.add_child(left_mask)
 
-	var right_side = ColorRect.new()
-	right_side.name = "RightSide"
-	right_side.color = dark_color
-	right_side.anchor_left = 0.88
-	right_side.anchor_right = 1.0
-	right_side.anchor_top = 0.35
-	right_side.anchor_bottom = 0.67
-	right_side.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	trash_overlay.add_child(right_side)
+	var right_mask = ColorRect.new()
+	right_mask.name = "RightMask"
+	right_mask.color = dark_metal
+	right_mask.anchor_left = 0.86
+	right_mask.anchor_right = 1.0
+	right_mask.anchor_top = 0.28
+	right_mask.anchor_bottom = 0.655
+	right_mask.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	trash_overlay.add_child(right_mask)
+
+	# 4. Los 3 divisores horizontales de chapa que forman las 4 RENDIJAS para espiar
+	var dividers_data = [
+		{"name": "Divider1", "top": 0.355, "bottom": 0.380},
+		{"name": "Divider2", "top": 0.455, "bottom": 0.480},
+		{"name": "Divider3", "top": 0.555, "bottom": 0.580}
+	]
+	for d in dividers_data:
+		var slat = ColorRect.new()
+		slat.name = d["name"]
+		slat.color = slat_color
+		slat.anchor_left = 0.14
+		slat.anchor_right = 0.86
+		slat.anchor_top = d["top"]
+		slat.anchor_bottom = d["bottom"]
+		slat.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		trash_overlay.add_child(slat)
 
 	# Agregarlo como fondo de los elementos interactivos del HUD
 	add_child(trash_overlay)
@@ -422,22 +441,49 @@ func _setup_trash_overlay() -> void:
 func update_trash_overlay_parallax(yaw_ratio: float, pitch_ratio: float) -> void:
 	if not trash_overlay or not trash_overlay.visible:
 		return
-	var top_lid = trash_overlay.get_node_or_null("TopLid") as ColorRect
-	var bottom_body = trash_overlay.get_node_or_null("BottomBody") as ColorRect
-	var left_side = trash_overlay.get_node_or_null("LeftSide") as ColorRect
-	var right_side = trash_overlay.get_node_or_null("RightSide") as ColorRect
+	var top_mask = trash_overlay.get_node_or_null("TopMask") as ColorRect
+	var bottom_mask = trash_overlay.get_node_or_null("BottomMask") as ColorRect
+	var left_mask = trash_overlay.get_node_or_null("LeftMask") as ColorRect
+	var right_mask = trash_overlay.get_node_or_null("RightMask") as ColorRect
+	var div1 = trash_overlay.get_node_or_null("Divider1") as ColorRect
+	var div2 = trash_overlay.get_node_or_null("Divider2") as ColorRect
+	var div3 = trash_overlay.get_node_or_null("Divider3") as ColorRect
 	
-	# Parallax estático: el tacho de basura está fijo en el mundo.
-	# Si giramos la cabeza a la izquierda (yaw_ratio < 0), la ranura se desplaza a la derecha
-	# y vemos la pared interna oscura a la izquierda.
-	var shift_x = yaw_ratio * 0.22
-	var shift_y = pitch_ratio * 0.12
+	# Parallax estático: el tacho de chapa está fijo en el mundo.
+	# Si giramos la cabeza a la izquierda (yaw_ratio > 0), las 4 rendijas se desplazan a la derecha
+	var shift_x = yaw_ratio * 0.18
+	var shift_y = pitch_ratio * 0.08
 	
-	if left_side:
-		left_side.anchor_right = clampf(0.12 + shift_x, 0.0, 0.45)
-	if right_side:
-		right_side.anchor_left = clampf(0.88 + shift_x, 0.55, 1.0)
-	if top_lid:
-		top_lid.anchor_bottom = clampf(0.35 + shift_y, 0.15, 0.50)
-	if bottom_body:
-		bottom_body.anchor_top = clampf(0.67 + shift_y, 0.50, 0.85)
+	var cur_left = clampf(0.14 + shift_x, 0.0, 0.45)
+	var cur_right = clampf(0.86 + shift_x, 0.55, 1.0)
+	var cur_top = clampf(0.28 + shift_y, 0.14, 0.42)
+	var cur_bottom = clampf(0.655 + shift_y, 0.52, 0.80)
+	
+	if left_mask:
+		left_mask.anchor_right = cur_left
+		left_mask.anchor_top = cur_top
+		left_mask.anchor_bottom = cur_bottom
+	if right_mask:
+		right_mask.anchor_left = cur_right
+		right_mask.anchor_top = cur_top
+		right_mask.anchor_bottom = cur_bottom
+	if top_mask:
+		top_mask.anchor_bottom = cur_top
+	if bottom_mask:
+		bottom_mask.anchor_top = cur_bottom
+
+	if div1:
+		div1.anchor_left = cur_left
+		div1.anchor_right = cur_right
+		div1.anchor_top = clampf(0.355 + shift_y, 0.20, 0.50)
+		div1.anchor_bottom = clampf(0.380 + shift_y, 0.22, 0.52)
+	if div2:
+		div2.anchor_left = cur_left
+		div2.anchor_right = cur_right
+		div2.anchor_top = clampf(0.455 + shift_y, 0.30, 0.60)
+		div2.anchor_bottom = clampf(0.480 + shift_y, 0.32, 0.62)
+	if div3:
+		div3.anchor_left = cur_left
+		div3.anchor_right = cur_right
+		div3.anchor_top = clampf(0.555 + shift_y, 0.40, 0.70)
+		div3.anchor_bottom = clampf(0.580 + shift_y, 0.42, 0.72)
