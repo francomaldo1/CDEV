@@ -135,10 +135,11 @@ func _execute_fuse_screamer_sequence(hud: Node) -> void:
 		player.force_flashlight(false)
 		
 	# 4. TELETRANSPORTAR AL PROFESOR A LA PUERTA DEL LABORATORIO (bloqueando la única salida)
-	# La puerta del lab hacia el pasillo oeste está exactamente en X = -36.2, Z = 0.5
-	var door_ambush_pos = Vector3(-34.4, -1.8, 0.8)
+	# La puerta del lab hacia el pasillo oeste está exactamente en X = -37.0, Z = 0.5.
+	# Colocamos al profesor parado dentro del laboratorio en PB (Y = 0.05) bloqueando la puerta.
+	var door_ambush_pos = Vector3(-35.0, 0.05, 0.5)
 	if is_instance_valid(prof):
-		var p_pos = player.global_position if is_instance_valid(player) else Vector3(-18.5, 0.0, 0.0)
+		var p_pos = player.global_position if is_instance_valid(player) else Vector3(-18.5, 0.05, 0.0)
 		var look_target = p_pos + Vector3(0, 1.4, 0)
 		prof.trigger_screamer_ambush(door_ambush_pos, look_target)
 		
@@ -152,9 +153,9 @@ func _execute_fuse_screamer_sequence(hud: Node) -> void:
 		player.shake_camera(0.45, 0.2)
 		
 	# 6. GIRO DRAMÁTICO DE CÁMARA HACIA LA PUERTA (T = 0.75s)
-	# La cámara del jugador gira 180° hacia el pasillo central apuntando directamente a la puerta
+	# La cámara del jugador gira hacia la puerta apuntando directamente a la cara del profesor
 	if is_instance_valid(player) and player.has_method("force_look_at"):
-		player.force_look_at(door_ambush_pos + Vector3(0, 1.6, 0), 0.40)
+		player.force_look_at(door_ambush_pos + Vector3(0, 1.5, 0), 0.40)
 		
 	# 7. ENERGÍA RESTABLECIDA, JUMPSCARE EN LA PUERTA Y PERSECUCIÓN (T = 1.18s)
 	await get_tree().create_timer(0.43).timeout

@@ -1,7 +1,11 @@
 extends CanvasLayer
 
 @onready var mic_progress_bar: ProgressBar = $MicContainer/ProgressBar
-@onready var mic_label: Label = $MicContainer/MicLabel
+@onready var mic_container: Control = $MicContainer
+@onready var mic_icon: TextureRect = $MicContainer.get_node_or_null("MicIcon")
+var current_mic_volume: float = 0.0
+var is_mic_alert: bool = false
+var is_mic_active_visible: bool = false
 @onready var alert_label: Label = $AlertLabel
 @onready var instruction_label: Label = $InstructionLabel
 @onready var key_status_label: Label = $KeyStatusLabel
@@ -57,9 +61,8 @@ func _ready() -> void:
 	if instruction_label:
 		instruction_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		instruction_label.text = "[W,A,S,D] Mover | [Shift] Correr | [F] Linterna | [E] Usar/Esconderse | [F3] Coords | [F2] Copiar | [M] Guia"
-	var mic_cont = find_child("MicContainer", true, false) as Control
-	if mic_cont:
-		mic_cont.visible = false
+	if mic_container:
+		mic_container.visible = is_mic_active_visible
 
 	option_buttons = [btn_opt0, btn_opt1, btn_opt2, btn_opt3]
 	for i in range(option_buttons.size()):
@@ -82,6 +85,32 @@ func _ready() -> void:
 	update_inventory_display()
 	_setup_debug_coords()
 	_setup_trash_overlay()
+	_style_mic_bar()
+
+func _style_mic_bar() -> void:
+	if mic_icon:
+		var img: Image = null
+		if FileAccess.file_exists("res://textures/mic_icon.png"):
+			img = Image.load_from_file("res://textures/mic_icon.png")
+		elif FileAccess.file_exists("res://textures/mic_icon.svg"):
+			img = Image.load_from_file("res://textures/mic_icon.svg")
+		if img and not img.is_empty():
+			mic_icon.texture = ImageTexture.create_from_image(img)
+	
+	if mic_progress_bar:
+		# Fondo oscuro con marco blanco nítido tipo juego de terror
+		var bg_box = StyleBoxFlat.new()
+		bg_box.bg_color = Color(0.06, 0.06, 0.08, 0.8)
+		bg_box.border_color = Color(1.0, 1.0, 1.0, 0.95)
+		bg_box.set_border_width_all(1)
+		bg_box.set_corner_radius_all(2)
+		mic_progress_bar.add_theme_stylebox_override("background", bg_box)
+		
+		# Relleno blanco sólido
+		var fill_box = StyleBoxFlat.new()
+		fill_box.bg_color = Color(1.0, 1.0, 1.0, 1.0)
+		fill_box.set_corner_radius_all(1)
+		mic_progress_bar.add_theme_stylebox_override("fill", fill_box)
 
 func is_modal_active() -> bool:
 	return (math_panel and math_panel.visible) or (victory_panel and victory_panel.visible)
@@ -128,29 +157,16 @@ func show_temporary_alert(text_msg: String, color: Color = Color(1.0, 0.3, 0.3))
 		)
 
 func set_mic_visible(vis: bool) -> void:
-	var mic_cont = find_child("MicContainer", true, false) as Control
-	if mic_cont:
-		mic_cont.visible = vis
-	if mic_label:
-		mic_label.text = "🎤 RUIDO DEL MICRÓFONO (¡MANTENÉ SILENCIO!)" if vis else "🎤 RUIDO DEL MICRÓFONO"
+	is_mic_active_visible = vis
+	if mic_container:
+		mic_container.visible = vis
+	if not vis:
+		current_mic_volume = 0.0
+		is_mic_alert = false
 
 func on_mic_volume_updated(volume: float, is_alert: bool) -> void:
-	if mic_progress_bar:
-		mic_progress_bar.value = volume * 100.0
-		
-		if is_alert:
-			mic_progress_bar.modulate = Color(1.0, 0.2, 0.2)
-			if alert_label:
-				alert_label.visible = true
-				alert_label.text = "¡PELIGRO: HACES DEMASIADO RUIDO!"
-		elif volume > 0.4:
-			mic_progress_bar.modulate = Color(1.0, 0.8, 0.2)
-			if alert_label:
-				alert_label.visible = false
-		else:
-			mic_progress_bar.modulate = Color(0.2, 1.0, 0.4)
-			if alert_label:
-				alert_label.visible = false
+	current_mic_volume = volume
+	is_mic_alert = is_alert
 
 ## =====================================================================
 ## DESAFÍO MATEMÁTICO
@@ -240,7 +256,35 @@ func trigger_victory_screen() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
+	_process_mic_bar(delta)
+	_process_debug_coords(delta)
+
+func _process_mic_bar(_delta: float) -> void:
+	if not mic_container or not mic_container.visible:
+		return
+		
+	# Sube y baja constante y sutil (idle breathing) para que el jugador sepa que el mic está activo
+	var idle_wave: float = (sin(Time.get_ticks_msec() * 0.0035) * 0.5 + 0.5) * 0.045 + 0.015
+	var display_vol: float = maxf(current_mic_volume, idle_wave)
+	
+	if mic_progress_bar:
+		mic_progress_bar.value = display_vol * 100.0
+		
+		if is_mic_alert:
+			mic_progress_bar.modulate = Color(1.0, 0.2, 0.2)
+			if mic_icon:
+				mic_icon.modulate = Color(1.0, 0.2, 0.2)
+		elif display_vol > 0.45:
+			mic_progress_bar.modulate = Color(1.0, 0.75, 0.2)
+			if mic_icon:
+				mic_icon.modulate = Color(1.0, 0.75, 0.2)
+		else:
+			mic_progress_bar.modulate = Color(1.0, 1.0, 1.0)
+			if mic_icon:
+				mic_icon.modulate = Color(1.0, 1.0, 1.0)
+
+func _process_debug_coords(_delta: float) -> void:
 	if not show_debug_coords or not debug_coords_label:
 		return
 		
@@ -312,8 +356,10 @@ func _setup_debug_coords() -> void:
 
 
 var trash_overlay: Control = null
+var is_trash_overlay_active: bool = false
 
 func set_trash_overlay_visible(is_vis: bool) -> void:
+	is_trash_overlay_active = is_vis
 	if trash_overlay:
 		trash_overlay.visible = is_vis
 
@@ -322,12 +368,14 @@ func _setup_trash_overlay() -> void:
 	trash_overlay.name = "TrashSpyOverlay"
 	trash_overlay.set_anchors_preset(Control.PRESET_FULL_RECT)
 	trash_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	trash_overlay.visible = false
+	trash_overlay.visible = is_trash_overlay_active
+
+	var dark_color = Color(0.04, 0.04, 0.05, 0.98)
 
 	# 1. Tapa superior del tacho (cubre desde arriba hasta el 35% de la pantalla)
 	var top_lid = ColorRect.new()
 	top_lid.name = "TopLid"
-	top_lid.color = Color(0.04, 0.04, 0.05, 0.98)
+	top_lid.color = dark_color
 	top_lid.anchor_left = 0.0
 	top_lid.anchor_right = 1.0
 	top_lid.anchor_top = 0.0
@@ -335,34 +383,13 @@ func _setup_trash_overlay() -> void:
 	top_lid.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	trash_overlay.add_child(top_lid)
 
-	# Borde metálico de la tapa con moldura
-	var top_rim = ColorRect.new()
-	top_rim.name = "TopRim"
-	top_rim.color = Color(0.22, 0.24, 0.27, 1.0)
-	top_rim.anchor_left = 0.0
-	top_rim.anchor_right = 1.0
-	top_rim.anchor_top = 0.34
-	top_rim.anchor_bottom = 0.35
-	top_rim.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	trash_overlay.add_child(top_rim)
-
-	# 2. Borde y cuerpo inferior del tacho (cubre desde el 68% hasta el 100% de la pantalla)
-	var bottom_rim = ColorRect.new()
-	bottom_rim.name = "BottomRim"
-	bottom_rim.color = Color(0.22, 0.24, 0.27, 1.0)
-	bottom_rim.anchor_left = 0.0
-	bottom_rim.anchor_right = 1.0
-	bottom_rim.anchor_top = 0.67
-	bottom_rim.anchor_bottom = 0.68
-	bottom_rim.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	trash_overlay.add_child(bottom_rim)
-
+	# 2. Cuerpo inferior del tacho (cubre desde el 67% hasta el 100% de la pantalla)
 	var bottom_body = ColorRect.new()
 	bottom_body.name = "BottomBody"
-	bottom_body.color = Color(0.04, 0.04, 0.05, 0.98)
+	bottom_body.color = dark_color
 	bottom_body.anchor_left = 0.0
 	bottom_body.anchor_right = 1.0
-	bottom_body.anchor_top = 0.68
+	bottom_body.anchor_top = 0.67
 	bottom_body.anchor_bottom = 1.0
 	bottom_body.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	trash_overlay.add_child(bottom_body)
@@ -370,7 +397,7 @@ func _setup_trash_overlay() -> void:
 	# 3. Laterales izquierdo y derecho (marco de la ranura de visión)
 	var left_side = ColorRect.new()
 	left_side.name = "LeftSide"
-	left_side.color = Color(0.04, 0.04, 0.05, 0.98)
+	left_side.color = dark_color
 	left_side.anchor_left = 0.0
 	left_side.anchor_right = 0.12
 	left_side.anchor_top = 0.35
@@ -380,26 +407,13 @@ func _setup_trash_overlay() -> void:
 
 	var right_side = ColorRect.new()
 	right_side.name = "RightSide"
-	right_side.color = Color(0.04, 0.04, 0.05, 0.98)
+	right_side.color = dark_color
 	right_side.anchor_left = 0.88
 	right_side.anchor_right = 1.0
 	right_side.anchor_top = 0.35
 	right_side.anchor_bottom = 0.67
 	right_side.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	trash_overlay.add_child(right_side)
-
-	# 4. Texto sutil de inmersión en la tapa
-	var label_inside = Label.new()
-	label_inside.text = "👁️ ESPIANDO DESDE LA RANURA DEL TACHO (TAPA SUPERIOR)"
-	label_inside.anchor_left = 0.5
-	label_inside.anchor_right = 0.5
-	label_inside.anchor_top = 0.30
-	label_inside.anchor_bottom = 0.30
-	label_inside.grow_horizontal = Control.GROW_DIRECTION_BOTH
-	label_inside.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	label_inside.modulate = Color(0.75, 0.8, 0.85, 0.55)
-	label_inside.add_theme_font_size_override("font_size", 13)
-	trash_overlay.add_child(label_inside)
 
 	# Agregarlo como fondo de los elementos interactivos del HUD
 	add_child(trash_overlay)

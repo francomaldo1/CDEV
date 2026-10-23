@@ -496,6 +496,11 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.y = -0.5
 
+	# Seguridad anti-caídas al vacío
+	if global_position.y < -0.8:
+		global_position.y = 0.05
+		velocity.y = 0.0
+
 	if attack_timer > 0.0:
 		attack_timer -= delta
 
@@ -1142,6 +1147,12 @@ func _animate_walk(delta: float, is_moving: bool) -> void:
 ## CINEMÁTICA Y SCREAMER DEL LABORATORIO
 ## =====================================================================
 func trigger_screamer_ambush(ambush_pos: Vector3, look_at_pos: Vector3) -> void:
+	set_active(true)
+	visible = true
+	is_investigating_floor = false
+	current_patrol_floor = 0
+	active_stair_idx = -1
+	active_stair_tower = ""
 	is_screamer_ambush = true
 	global_position = ambush_pos
 	prev_pos = ambush_pos
