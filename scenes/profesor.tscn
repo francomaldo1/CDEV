@@ -12,14 +12,14 @@
 [ext_resource type="PackedScene" uid="uid://uobwlenrbwfl" path="res://models/mask/horror_mask.glb" id="10_mask0"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_prof"]
-radius = 0.4
-height = 1.9
+radius = 0.38
+height = 1.75
 
 [node name="Profesor" type="CharacterBody3D" unique_id=1654511480]
 script = ExtResource("1_prof0")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=189950317]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88, 0)
 shape = SubResource("CapsuleShape3D_prof")
 
 [node name="Visuals" type="Node3D" parent="." unique_id=1347181764]
