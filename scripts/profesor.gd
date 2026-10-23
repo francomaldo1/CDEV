@@ -246,10 +246,27 @@ func _get_nav_target_to(destination_pos: Vector3) -> Vector3:
 	var my_tower = get_stair_tower_name(global_position)
 	var tgt_tower = get_stair_tower_name(destination_pos)
 
-	# Si ambos están en el mismo piso y ninguno dentro de una caja de escalera: línea directa
+	# Si ambos están en el mismo piso y ninguno dentro de una caja de escalera:
 	if my_floor == tgt_floor and my_tower == "" and tgt_tower == "":
 		active_stair_idx = -1
 		active_stair_tower = ""
+
+		# En el Laboratorio Central de Electrónica (PB, X de -37 a -17, Z de -10 a 11):
+		# Las 3 mesadas de 14m bloquean el paso directo entre pasillos.
+		if my_floor == 0 and (global_position.x >= -37.0 and global_position.x <= -17.0 and global_position.z >= -10.0 and global_position.z <= 11.0):
+			if not _is_walk_path_clear(global_position, destination_pos):
+				var dist_west = absf(global_position.x - (-35.5))
+				var dist_east = absf(global_position.x - (-18.5))
+				var corridor_x = -35.5 if dist_west <= dist_east else -18.5
+				
+				var in_corridor = (corridor_x == -35.5 and global_position.x <= -34.5) or (corridor_x == -18.5 and global_position.x >= -19.5)
+				if not in_corridor:
+					return Vector3(corridor_x, global_position.y, global_position.z)
+				elif absf(global_position.z - destination_pos.z) > 0.3:
+					return Vector3(corridor_x, global_position.y, destination_pos.z)
+				else:
+					return destination_pos
+
 		return destination_pos
 
 	# Elegir la torre de escaleras adecuada
@@ -720,15 +737,17 @@ func _is_walk_path_clear(from_pos: Vector3, to_pos: Vector3) -> bool:
 	var start_p = from_pos + Vector3(0, 0.55, 0)
 	var end_p = to_pos + Vector3(0, 0.55, 0)
 	var query = PhysicsRayQueryParameters3D.create(start_p, end_p)
-	query.exclude = [get_rid()]
+	var excl: Array[RID] = [get_rid()]
 	if is_instance_valid(player):
-		query.exclude.append(player.get_rid())
+		excl.append(player.get_rid())
+	query.exclude = excl
 	var result = space_state.intersect_ray(query)
 	return result.is_empty()
 
 func _check_flanking(target_dir: Vector3, speed_to_use: float, delta: float) -> Vector3:
 	var tower_name = get_stair_tower_name(global_position)
-	if tower_name != "":
+	# En escaleras o en el Laboratorio Central (donde _get_nav_target_to ya rutea por pasillos laterales):
+	if tower_name != "" or (global_position.x >= -37.0 and global_position.x <= -17.0 and global_position.z >= -10.0 and global_position.z <= 11.0):
 		is_flanking = false
 		flank_phase = 0
 		flank_timer = 0.0
@@ -750,9 +769,10 @@ func _check_flanking(target_dir: Vector3, speed_to_use: float, delta: float) -> 
 			# FASE 0: Deslizarse lateralmente por la mesa hasta llegar al borde
 			# Comprobar si en la dirección de paso (hacia el otro lado del obstáculo) ya quedó libre
 			var fwd_probe_q = PhysicsRayQueryParameters3D.create(my_hip, my_hip + flank_pass_dir * 1.5)
-			fwd_probe_q.exclude = [get_rid()]
+			var excl_fwd: Array[RID] = [get_rid()]
 			if is_instance_valid(player):
-				fwd_probe_q.exclude.append(player.get_rid())
+				excl_fwd.append(player.get_rid())
+			fwd_probe_q.exclude = excl_fwd
 			var fwd_hit = space_state.intersect_ray(fwd_probe_q)
 
 			if fwd_hit.is_empty():
