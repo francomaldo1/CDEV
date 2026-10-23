@@ -186,9 +186,9 @@ func _spawn_profesor() -> void:
 func _spawn_upper_floor_blockers() -> void:
 	# Bloquea la entrada de planta baja a las 3 torres de escaleras
 	var bloqueos = [
-		{"name": "BloqueoEscaleraOeste", "pos": Vector3(-64.25, 2.25, 32), "size": Vector3(0.4, 4.5, 10.0)},
-		{"name": "BloqueoEscaleraEste",  "pos": Vector3(65.0, 2.25, 32),  "size": Vector3(0.4, 4.5, 10.0)},
-		{"name": "BloqueoEscaleraNorte", "pos": Vector3(42.0, 2.25, -40.0), "size": Vector3(10.0, 4.5, 0.4)}
+		{"name": "BloqueoEscaleraOeste", "pos": Vector3(-65.0, 2.25, 30.0), "size": Vector3(0.5, 4.5, 10.4)},
+		{"name": "BloqueoEscaleraEste",  "pos": Vector3(65.0, 2.25, 30.0),  "size": Vector3(0.5, 4.5, 10.4)},
+		{"name": "BloqueoEscaleraNorte", "pos": Vector3(42.0, 2.25, -45.0), "size": Vector3(10.4, 4.5, 0.5)}
 	]
 	
 	var mat = StandardMaterial3D.new()
