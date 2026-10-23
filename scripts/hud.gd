@@ -418,3 +418,26 @@ func _setup_trash_overlay() -> void:
 	# Agregarlo como fondo de los elementos interactivos del HUD
 	add_child(trash_overlay)
 	move_child(trash_overlay, 0)
+
+func update_trash_overlay_parallax(yaw_ratio: float, pitch_ratio: float) -> void:
+	if not trash_overlay or not trash_overlay.visible:
+		return
+	var top_lid = trash_overlay.get_node_or_null("TopLid") as ColorRect
+	var bottom_body = trash_overlay.get_node_or_null("BottomBody") as ColorRect
+	var left_side = trash_overlay.get_node_or_null("LeftSide") as ColorRect
+	var right_side = trash_overlay.get_node_or_null("RightSide") as ColorRect
+	
+	# Parallax estático: el tacho de basura está fijo en el mundo.
+	# Si giramos la cabeza a la izquierda (yaw_ratio < 0), la ranura se desplaza a la derecha
+	# y vemos la pared interna oscura a la izquierda.
+	var shift_x = yaw_ratio * 0.22
+	var shift_y = pitch_ratio * 0.12
+	
+	if left_side:
+		left_side.anchor_right = clampf(0.12 + shift_x, 0.0, 0.45)
+	if right_side:
+		right_side.anchor_left = clampf(0.88 + shift_x, 0.55, 1.0)
+	if top_lid:
+		top_lid.anchor_bottom = clampf(0.35 + shift_y, 0.15, 0.50)
+	if bottom_body:
+		bottom_body.anchor_top = clampf(0.67 + shift_y, 0.50, 0.85)

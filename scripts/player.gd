@@ -17,6 +17,8 @@ var bob_time: float = 0.0
 var step_distance_accum: float = 0.0
 var time_stopped: float = 0.0
 var original_cam_y: float = 0.0
+var original_cam_pivot_y: float = 1.6
+var hiding_base_yaw: float = 0.0
 var is_frozen: bool = false
 var is_hidden: bool = false
 var current_hiding_spot: Node = null
@@ -46,6 +48,8 @@ func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	if camera:
 		original_cam_y = camera.position.y
+	if camera_pivot:
+		original_cam_pivot_y = camera_pivot.position.y
 	# Configurar suavizado de pendientes y escalones
 	floor_snap_length = 0.3
 	floor_constant_speed = true
@@ -137,10 +141,22 @@ func _input(event: InputEvent) -> void:
 	# Control de la cámara con el movimiento del ratón (solo si no está congelado en cinemática)
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		if not is_frozen:
-			rotate_y(-event.relative.x * mouse_sensitivity)
-			if camera_pivot:
-				camera_pivot.rotate_x(-event.relative.y * mouse_sensitivity)
-				camera_pivot.rotation.x = clampf(camera_pivot.rotation.x, deg_to_rad(-85.0), deg_to_rad(85.0))
+			if is_hidden:
+				# Rotación limitada adentro del tacho (rango fijo hacia la ranura frontal: +/- 45 grados)
+				var yaw_delta = -event.relative.x * mouse_sensitivity
+				var target_yaw = rotation.y + yaw_delta
+				var diff = wrapf(target_yaw - hiding_base_yaw, -PI, PI)
+				var max_yaw = deg_to_rad(45.0)
+				rotation.y = hiding_base_yaw + clampf(diff, -max_yaw, max_yaw)
+				
+				if camera_pivot:
+					camera_pivot.rotate_x(-event.relative.y * mouse_sensitivity)
+					camera_pivot.rotation.x = clampf(camera_pivot.rotation.x, deg_to_rad(-14.0), deg_to_rad(14.0))
+			else:
+				rotate_y(-event.relative.x * mouse_sensitivity)
+				if camera_pivot:
+					camera_pivot.rotate_x(-event.relative.y * mouse_sensitivity)
+					camera_pivot.rotation.x = clampf(camera_pivot.rotation.x, deg_to_rad(-85.0), deg_to_rad(85.0))
 
 	# Linterna (solo si no está congelado por evento)
 	if event.is_action_pressed("flashlight") or (event is InputEventKey and event.pressed and event.keycode == KEY_F):
@@ -170,6 +186,14 @@ func _physics_process(delta: float) -> void:
 	if is_hidden:
 		velocity.x = 0.0
 		velocity.z = 0.0
+		
+		# Actualizar parallax del tacho de basura en tiempo real
+		var yaw_diff = wrapf(rotation.y - hiding_base_yaw, -PI, PI)
+		var yaw_ratio = clampf(yaw_diff / deg_to_rad(45.0), -1.0, 1.0)
+		var pitch_ratio = clampf(camera_pivot.rotation.x / deg_to_rad(14.0), -1.0, 1.0) if camera_pivot else 0.0
+		var hud = get_tree().root.find_child("HUD", true, false)
+		if hud and hud.has_method("update_trash_overlay_parallax"):
+			hud.update_trash_overlay_parallax(yaw_ratio, pitch_ratio)
 		return
 	if _is_ui_active() or is_frozen:
 		velocity.x = 0.0
@@ -328,7 +352,8 @@ func _update_heartbeat(delta: float) -> void:
 	var is_chasing: bool = false
 	if is_instance_valid(prof) and prof.visible:
 		dist = global_position.distance_to(prof.global_position)
-		is_chasing = (prof.current_state == 1) # State.CHASE
+		var prof_state = prof.get("current_state")
+		is_chasing = (prof_state == 1) # State.CHASE
 		
 	if post_screamer_heartbeat_timer > 0.0:
 		post_screamer_heartbeat_timer -= delta
@@ -368,18 +393,22 @@ func enter_hiding(spot: Node, hide_global_pos: Vector3, face_dir: Vector3) -> vo
 	if col:
 		col.disabled = true
 		
-	# Bajar la altura de la cámara para que coincida con la ranura del tacho
+	# Bajar la altura del pivote de cámara para quedar adentro del tacho a nivel de la ranura (Y = 1.05m)
+	if camera_pivot:
+		camera_pivot.position.y = 1.05
+		camera_pivot.rotation.x = 0.0
 	if camera:
-		camera.position.y = 0.85
+		camera.position.y = 0.0
 		
 	if face_dir != Vector3.ZERO:
 		rotation.y = atan2(-face_dir.x, -face_dir.z)
-		if camera_pivot:
-			camera_pivot.rotation.x = 0.0
+	hiding_base_yaw = rotation.y
 			
 	var hud = get_tree().root.find_child("HUD", true, false)
 	if hud and hud.has_method("set_trash_overlay_visible"):
 		hud.set_trash_overlay_visible(true)
+	if hud and hud.has_method("update_trash_overlay_parallax"):
+		hud.update_trash_overlay_parallax(0.0, 0.0)
 
 func exit_hiding(exit_global_pos: Vector3) -> void:
 	is_hidden = false
@@ -390,8 +419,11 @@ func exit_hiding(exit_global_pos: Vector3) -> void:
 	if col:
 		col.disabled = false
 		
+	# Restaurar altura original de pie
+	if camera_pivot:
+		camera_pivot.position.y = original_cam_pivot_y
 	if camera:
-		camera.position.y = original_cam_y
+		camera.position.y = 0.0
 		
 	if was_flashlight_on_before_hiding and flashlight:
 		flashlight.visible = true
@@ -400,3 +432,5 @@ func exit_hiding(exit_global_pos: Vector3) -> void:
 	var hud = get_tree().root.find_child("HUD", true, false)
 	if hud and hud.has_method("set_trash_overlay_visible"):
 		hud.set_trash_overlay_visible(false)
+	if hud and hud.has_method("update_trash_overlay_parallax"):
+		hud.update_trash_overlay_parallax(0.0, 0.0)

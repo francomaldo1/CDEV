@@ -371,6 +371,11 @@ func _on_power_restored() -> void:
 				l.light_energy = building_lights_base_energy[l]
 	turned_off_lights.clear()
 			
+	# Asegurar que la linterna siga habilitada para ser usada siempre a partir del apagón
+	var player_node = find_child("Player", true, false)
+	if player_node and player_node.has_method("enable_flashlight"):
+		player_node.enable_flashlight()
+			
 	if hud and hud.has_method("show_temporary_alert"):
 		hud.show_temporary_alert("💡 ¡Energía restablecida! Las luces volvieron a encenderse.", Color(0.3, 1.0, 0.5))
 		
