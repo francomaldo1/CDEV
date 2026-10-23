@@ -247,30 +247,30 @@ func _unlock_upper_floor() -> void:
 func _spawn_tachos_basura() -> void:
 	var spots = [
 		# PLANTA BAJA (PB) - Ubicados contra paños ciegos de pared, lejos de puertas de aulas
-		{"pos": Vector3(-46.2, 0.0, -19.0), "rot": Vector3(0, 90, 0),   "desc": "Pasillo Oeste Norte PB"},
-		{"pos": Vector3(-46.2, 0.0, -5.0),  "rot": Vector3(0, 90, 0),   "desc": "Pasillo Oeste Centro PB"},
-		{"pos": Vector3(-46.2, 0.0, 10.0),  "rot": Vector3(0, 90, 0),   "desc": "Pasillo Oeste Sur PB"},
-		{"pos": Vector3(46.2, 0.0, -23.0),  "rot": Vector3(0, -90, 0),  "desc": "Pasillo Este Norte PB"},
-		{"pos": Vector3(46.2, 0.0, 8.0),    "rot": Vector3(0, -90, 0),  "desc": "Pasillo Este Sur PB"},
-		{"pos": Vector3(10.0, 0.0, -26.8),  "rot": Vector3(0, 0, 0),    "desc": "Pasillo Norte Este PB"},
-		{"pos": Vector3(-15.0, 0.0, -26.8), "rot": Vector3(0, 0, 0),    "desc": "Pasillo Norte Oeste PB"},
-		{"pos": Vector3(-18.0, 0.0, 22.0),  "rot": Vector3(0, 180, 0),  "desc": "Galeria Patio Oeste PB"},
-		{"pos": Vector3(18.0, 0.0, 22.0),   "rot": Vector3(0, 180, 0),  "desc": "Galeria Patio Este PB"},
-		{"pos": Vector3(-20.0, 0.0, 34.0),  "rot": Vector3(0, 0, 0),    "desc": "Pasillo Fotocopiadora PB"},
+		{"pos": Vector3(-46.05, 0.0, -19.0), "rot": Vector3(0, 90, 0),   "desc": "Pasillo Oeste Norte PB"},
+		{"pos": Vector3(-46.05, 0.0, -5.0),  "rot": Vector3(0, 90, 0),   "desc": "Pasillo Oeste Centro PB"},
+		{"pos": Vector3(-46.05, 0.0, 10.0),  "rot": Vector3(0, 90, 0),   "desc": "Pasillo Oeste Sur PB"},
+		{"pos": Vector3(46.05, 0.0, -23.0),  "rot": Vector3(0, -90, 0),  "desc": "Pasillo Este Norte PB"},
+		{"pos": Vector3(46.05, 0.0, 8.0),    "rot": Vector3(0, -90, 0),  "desc": "Pasillo Este Sur PB"},
+		{"pos": Vector3(10.0, 0.0, -26.65),  "rot": Vector3(0, 0, 0),    "desc": "Pasillo Norte Este PB"},
+		{"pos": Vector3(-15.0, 0.0, -26.65), "rot": Vector3(0, 0, 0),    "desc": "Pasillo Norte Oeste PB"},
+		{"pos": Vector3(-18.0, 0.0, 21.85),  "rot": Vector3(0, 180, 0),  "desc": "Galeria Patio Oeste PB"},
+		{"pos": Vector3(18.0, 0.0, 21.85),   "rot": Vector3(0, 180, 0),  "desc": "Galeria Patio Este PB"},
+		{"pos": Vector3(-20.0, 0.0, 33.85),  "rot": Vector3(0, 180, 0),  "desc": "Pasillo Fotocopiadora PB"},
 
 		# PRIMER PISO (P1)
-		{"pos": Vector3(-46.2, 4.5, -9.0),  "rot": Vector3(0, 90, 0),   "desc": "Pasillo Sistemas P1"},
-		{"pos": Vector3(-46.2, 4.5, 20.0),  "rot": Vector3(0, 90, 0),   "desc": "Pasillo Electronica P1"},
-		{"pos": Vector3(-22.0, 4.5, -26.8), "rot": Vector3(0, 0, 0),    "desc": "Pasillo Bedelia P1"},
-		{"pos": Vector3(46.2, 4.5, -18.0),  "rot": Vector3(0, -90, 0),  "desc": "Pasillo CETRA P1"},
-		{"pos": Vector3(46.2, 4.5, 18.0),   "rot": Vector3(0, -90, 0),  "desc": "Pasillo Biblioteca P1"},
+		{"pos": Vector3(-46.05, 4.5, -9.0),  "rot": Vector3(0, 90, 0),   "desc": "Pasillo Sistemas P1"},
+		{"pos": Vector3(-46.05, 4.5, 20.0),  "rot": Vector3(0, 90, 0),   "desc": "Pasillo Electronica P1"},
+		{"pos": Vector3(-22.0, 4.5, -26.65), "rot": Vector3(0, 0, 0),    "desc": "Pasillo Bedelia P1"},
+		{"pos": Vector3(46.05, 4.5, -18.0),  "rot": Vector3(0, -90, 0),  "desc": "Pasillo CETRA P1"},
+		{"pos": Vector3(46.05, 4.5, 18.0),   "rot": Vector3(0, -90, 0),  "desc": "Pasillo Biblioteca P1"},
 
 		# SEGUNDO PISO (P2)
-		{"pos": Vector3(-46.2, 9.0, -5.0),  "rot": Vector3(0, 90, 0),   "desc": "Pasillo Aulas Oeste P2"},
-		{"pos": Vector3(46.2, 9.0, -8.0),   "rot": Vector3(0, -90, 0),  "desc": "Pasillo Aulas Este P2"},
-		{"pos": Vector3(0.0, 9.0, -26.8),   "rot": Vector3(0, 0, 0),    "desc": "Pasillo Norte Aula Magna P2"},
-		{"pos": Vector3(-14.0, 9.0, 34.0),  "rot": Vector3(0, 0, 0),    "desc": "Cafeteria Entrada Oeste P2"},
-		{"pos": Vector3(14.0, 9.0, 34.0),   "rot": Vector3(0, 0, 0),    "desc": "Cafeteria Entrada Este P2"}
+		{"pos": Vector3(-46.05, 9.0, -5.0),  "rot": Vector3(0, 90, 0),   "desc": "Pasillo Aulas Oeste P2"},
+		{"pos": Vector3(46.05, 9.0, -8.0),   "rot": Vector3(0, -90, 0),  "desc": "Pasillo Aulas Este P2"},
+		{"pos": Vector3(0.0, 9.0, -26.65),   "rot": Vector3(0, 0, 0),    "desc": "Pasillo Norte Aula Magna P2"},
+		{"pos": Vector3(-14.0, 9.0, 33.85),  "rot": Vector3(0, 180, 0),  "desc": "Cafeteria Entrada Oeste P2"},
+		{"pos": Vector3(14.0, 9.0, 33.85),   "rot": Vector3(0, 180, 0),  "desc": "Cafeteria Entrada Este P2"}
 	]
 	for s in spots:
 		var tacho = tacho_scene.instantiate()

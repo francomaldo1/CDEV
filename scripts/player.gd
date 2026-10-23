@@ -385,9 +385,9 @@ func enter_hiding(spot: Node, hide_global_pos: Vector3, face_dir: Vector3) -> vo
 	if col:
 		col.disabled = true
 		
-	# Bajar la altura del pivote de cámara para quedar adentro del tacho a nivel de las aberturas (Y = 1.07m)
+	# Bajar la altura del pivote de cámara para quedar adentro del tacho a nivel de las aberturas (Y = 1.22m)
 	if camera_pivot:
-		camera_pivot.position.y = 1.07
+		camera_pivot.position.y = 1.22
 		camera_pivot.rotation.x = 0.0
 	if camera:
 		camera.position.y = 0.0
