@@ -312,26 +312,31 @@ func _get_nav_target_to(destination_pos: Vector3) -> Vector3:
 		# Jugador en otro piso fuera de la torre: salir en el piso objetivo
 		if tgt_floor == 0:
 			goal_idx = 0
-		elif tgt_floor == 1:
-			goal_idx = 7 if my_floor == 0 else 8
-		else:
+		elif tgt_floor == 2:
 			goal_idx = 15
+		else: # tgt_floor == 1
+			# Si viene desde PB (subiendo), la salida de la escalera a P1 es el nodo 7
+			# Si viene desde P2 (bajando), la salida de la escalera a P1 es el nodo 8
+			if active_stair_idx >= 8 or (active_stair_idx < 0 and global_position.y >= 4.5):
+				goal_idx = 8
+			else:
+				goal_idx = 7
 
 	# Si el profesor aún está fuera de la torre: dirigirse a la entrada del piso actual
 	if my_tower == "":
 		var entry_idx = 0
 		if my_floor == 0:
 			entry_idx = 0
-		elif my_floor == 1:
-			entry_idx = 8 if tgt_floor > 1 else 7
-		else:
+		elif my_floor == 2:
 			entry_idx = 15
+		else: # my_floor == 1
+			entry_idx = 8 if tgt_floor == 2 else 7
 		active_stair_idx = entry_idx
 		active_stair_tower = chosen_tower
 		return path[entry_idx]
 
 	# El profesor está dentro de la torre: actualizar el seguimiento secuencial
-	if active_stair_idx < 0 or active_stair_idx >= path.size() or active_stair_tower != chosen_tower or global_position.distance_to(path[active_stair_idx]) > 3.0:
+	if active_stair_idx < 0 or active_stair_idx >= path.size() or active_stair_tower != chosen_tower:
 		active_stair_tower = chosen_tower
 		var best_idx = 0
 		var best_d = 99999.0
@@ -340,26 +345,29 @@ func _get_nav_target_to(destination_pos: Vector3) -> Vector3:
 			if d < best_d:
 				best_d = d
 				best_idx = i
-		if best_idx < goal_idx:
-			active_stair_idx = best_idx + 1
-		elif best_idx > goal_idx:
-			active_stair_idx = best_idx - 1
-		else:
-			active_stair_idx = goal_idx
+		active_stair_idx = best_idx
 
-	# Si ya llegó cerca del nodo objetivo activo (< 0.85m), avanzar al siguiente nodo
+	# Si ya llegó cerca del nodo objetivo activo (< 1.25m), avanzar al siguiente nodo
 	var cur_target = path[active_stair_idx]
 	var d_to_cur = global_position.distance_to(cur_target)
-	if d_to_cur < 0.85:
+	if d_to_cur < 1.25:
 		if active_stair_idx < goal_idx:
 			active_stair_idx += 1
 		elif active_stair_idx > goal_idx:
 			active_stair_idx -= 1
 
-	# Si ya llegó al nodo meta
+	# Si ya llegó al nodo meta de la escalera o está saliendo al pasillo
 	if active_stair_idx == goal_idx:
 		var d_goal = global_position.distance_to(path[goal_idx])
-		if d_goal < 1.4 or (my_floor == tgt_floor and tgt_tower == ""):
+		if d_goal < 1.8 or my_tower == "":
+			# Si aún está dentro de la caja de escalera, forzar el paso hacia afuera para ingresar al pasillo despejado:
+			if my_tower != "":
+				if chosen_tower == "Oeste":
+					return Vector3(-61.5, path[goal_idx].y, path[goal_idx].z)
+				elif chosen_tower == "Este":
+					return Vector3(61.5, path[goal_idx].y, path[goal_idx].z)
+				elif chosen_tower == "Norte":
+					return Vector3(path[goal_idx].x, path[goal_idx].y, -41.0)
 			return destination_pos
 		return path[goal_idx]
 
@@ -382,7 +390,7 @@ func _start_floor_investigation() -> void:
 			available_floors.append(f)
 	
 	if available_floors.is_empty():
-		floor_investigate_timer = randf_range(40.0, 60.0)
+		floor_investigate_timer = randf_range(20.0, 35.0)
 		return
 
 	target_investigate_floor = available_floors[randi() % available_floors.size()]
@@ -462,7 +470,7 @@ func _ready() -> void:
 		mic.noise_triggered.connect(_on_player_noise)
 	
 	phrase_timer = randf_range(3.0, 7.0)
-	floor_investigate_timer = randf_range(40.0, 65.0)
+	floor_investigate_timer = randf_range(20.0, 35.0)
 	_pick_closest_waypoint()
 
 ## Activa o desactiva al profesor (invisible, sin moverse ni colisionar)
@@ -634,7 +642,7 @@ func _process_patrol_state(delta: float, can_see_player: bool) -> void:
 			current_floor_waypoints = get_floor_waypoints(current_patrol_floor)
 			patrol_waypoints = current_floor_waypoints
 			_pick_closest_waypoint()
-			floor_investigate_timer = randf_range(50.0, 85.0)
+			floor_investigate_timer = randf_range(25.0, 45.0)
 			_say("A ver qué alumnos andan por este piso...", Color(1.0, 0.85, 0.5))
 	else:
 		if dist_dest < 2.0:
@@ -680,10 +688,17 @@ func _process_chase_state(delta: float, can_see_player: bool) -> void:
 		last_known_player_pos = player.global_position
 		time_without_sight = 0.0
 	else:
-		time_without_sight += delta
-		if time_without_sight >= lost_sight_timeout:
-			_enter_search_state()
-			return
+		var in_stairs = get_stair_tower_name(global_position) != ""
+		var diff_floors = get_floor(global_position.y) != get_floor(player.global_position.y)
+		if in_stairs or diff_floors:
+			# Si están en pisos diferentes o cruzando escaleras, no perder al jugador
+			last_known_player_pos = player.global_position
+			time_without_sight = 0.0
+		else:
+			time_without_sight += delta
+			if time_without_sight >= lost_sight_timeout:
+				_enter_search_state()
+				return
 
 	# Si el jugador está escondido en un tacho y el profesor lo alcanzó persiguiendo el ruido:
 	if player.get("is_hidden") and dist_to_player <= attack_range + 0.6:
@@ -747,12 +762,16 @@ func _process_search_state(delta: float, can_see_player: bool) -> void:
 		_animate_walk(delta, false)
 
 	if search_timer <= 0.0:
-		current_state = State.PATROL
-		current_patrol_floor = get_floor(global_position.y)
-		current_floor_waypoints = get_floor_waypoints(current_patrol_floor)
-		patrol_waypoints = current_floor_waypoints
-		_pick_closest_waypoint()
-		_say("Debió ser el viento... Volvamos a la ronda.")
+		var my_tower = get_stair_tower_name(global_position)
+		if my_tower != "":
+			search_timer = 2.0
+		else:
+			current_state = State.PATROL
+			current_patrol_floor = get_floor(global_position.y)
+			current_floor_waypoints = get_floor_waypoints(current_patrol_floor)
+			patrol_waypoints = current_floor_waypoints
+			_pick_closest_waypoint()
+			_say("Debió ser el viento... Volvamos a la ronda.")
 
 func _process_attack_state(delta: float) -> void:
 	_process_attack(delta)
@@ -918,7 +937,8 @@ func _move_towards(delta: float, dir: Vector3, speed_to_use: float, rot_speed: f
 
 	# En escaleras, velocidad máxima controlada para no chocar paredes ni pasarse de largo
 	if tower_name != "":
-		speed_to_use = min(speed_to_use, 1.9)
+		var max_stair_spd = 3.8 if current_state == State.CHASE else 2.4
+		speed_to_use = min(speed_to_use, max_stair_spd)
 		is_flanking = false
 		flank_timer = 0.0
 	else:
@@ -927,6 +947,13 @@ func _move_towards(delta: float, dir: Vector3, speed_to_use: float, rot_speed: f
 			move_vec = _check_flanking(dir, speed_to_use, delta)
 	
 	if move_vec.length() > 0.05:
+		# Impulso vertical en escaleras para no trabarse con los escalones
+		if tower_name != "":
+			if dir.y > 0.05:
+				velocity.y = max(velocity.y, 3.2)
+			elif dir.y < -0.05:
+				velocity.y = min(velocity.y, -1.8)
+
 		# Si toca una pared, resolver deslizamiento o escape de esquinas
 		if is_on_wall():
 			var col_count = get_slide_collision_count()
@@ -966,9 +993,9 @@ func _move_towards(delta: float, dir: Vector3, speed_to_use: float, rot_speed: f
 	var was_on_floor = is_on_floor()
 	move_and_slide()
 
-	# Subir pequeños desniveles (Step-up hasta 25cm solo en pasillos, nunca en escaleras)
-	if tower_name == "" and was_on_floor and is_on_wall() and dir != Vector3.ZERO:
-		var step_h: float = 0.25
+	# Subir pequeños desniveles y escalones (Step-up suave hasta 28cm)
+	if was_on_floor and is_on_wall() and dir != Vector3.ZERO:
+		var step_h: float = 0.28
 		var step_t: Transform3D = global_transform
 		step_t.origin.y += step_h
 		if not test_move(global_transform, Vector3(0, step_h, 0)):
@@ -1001,16 +1028,9 @@ func _move_towards(delta: float, dir: Vector3, speed_to_use: float, rot_speed: f
 		flank_phase = 0
 		flank_timer = 0.0
 
-		var wall_n = get_wall_normal() if is_on_wall() else Vector3.ZERO
-		wall_n.y = 0.0
-		if wall_n.length() > 0.1:
-			wall_n = wall_n.normalized()
-			global_position += wall_n * 0.4
-			velocity.x = wall_n.x * (speed_to_use * 0.8)
-			velocity.z = wall_n.z * (speed_to_use * 0.8)
-
 		var tower = get_stair_tower_name(global_position)
 		if tower != "":
+			# En escaleras: elevarlo para superar el escalón o reubicarlo en el nodo de la escalera
 			var path = get_stair_path(tower)
 			var best_idx = 0
 			var best_d = 99999.0
@@ -1019,35 +1039,52 @@ func _move_towards(delta: float, dir: Vector3, speed_to_use: float, rot_speed: f
 				if d < best_d:
 					best_d = d
 					best_idx = i
-			global_position = path[best_idx]
+			global_position.x = path[best_idx].x
+			global_position.z = path[best_idx].z
+			global_position.y = max(global_position.y, path[best_idx].y) + 0.15
+			velocity.y = 2.5
 			stuck_timer = 0.0
 		else:
+			var wall_n = get_wall_normal() if is_on_wall() else Vector3.ZERO
+			wall_n.y = 0.0
+			if wall_n.length() > 0.1:
+				wall_n = wall_n.normalized()
+				global_position += wall_n * 0.4
+				velocity.x = wall_n.x * (speed_to_use * 0.8)
+				velocity.z = wall_n.z * (speed_to_use * 0.8)
 			_pick_closest_waypoint()
 
-		if current_state == State.CHASE and not _can_see_player():
-			_enter_search_state()
+		if current_state == State.CHASE:
+			if tower == "" and not _can_see_player():
+				_enter_search_state()
 		elif current_state == State.PATROL:
 			if not is_investigating_floor and current_floor_waypoints.size() > 0:
 				current_waypoint_idx = (current_waypoint_idx + 1) % current_floor_waypoints.size()
 
-		# Si lleva más de 2.0 segundos acumulados trabado: teletransporte seguro al centro del pasillo
+		# Si lleva más de 2.0 segundos acumulados trabado: teletransporte seguro
 		if stuck_timer >= 2.0:
 			stuck_timer = 0.0
-			var wps = current_floor_waypoints if current_floor_waypoints.size() > 0 else WAYPOINTS_PB
-			var best_idx: int = -1
-			var best_dist: float = 99999.0
-			for i in range(wps.size()):
-				var d = global_position.distance_to(wps[i])
-				if d >= 2.5 and d < best_dist:
-					best_dist = d
-					best_idx = i
-			if best_idx >= 0:
-				global_position = wps[best_idx]
-				prev_pos = global_position
-				current_waypoint_idx = (best_idx + 1) % wps.size()
-				velocity = Vector3.ZERO
-				if current_state != State.PATROL:
-					current_state = State.PATROL
+			if tower != "":
+				var path = get_stair_path(tower)
+				if active_stair_idx >= 0 and active_stair_idx < path.size():
+					global_position = path[active_stair_idx]
+					velocity = Vector3.ZERO
+			else:
+				var wps = current_floor_waypoints if current_floor_waypoints.size() > 0 else WAYPOINTS_PB
+				var best_idx: int = -1
+				var best_dist: float = 99999.0
+				for i in range(wps.size()):
+					var d = global_position.distance_to(wps[i])
+					if d >= 2.5 and d < best_dist:
+						best_dist = d
+						best_idx = i
+				if best_idx >= 0:
+					global_position = wps[best_idx]
+					prev_pos = global_position
+					current_waypoint_idx = (best_idx + 1) % wps.size()
+					velocity = Vector3.ZERO
+					if current_state != State.PATROL:
+						current_state = State.PATROL
 		stuck_timer = max(stuck_timer, 0.0)
 
 	_animate_walk(delta, dir.length() > 0.1)
