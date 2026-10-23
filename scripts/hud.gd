@@ -81,6 +81,7 @@ func _ready() -> void:
 
 	update_inventory_display()
 	_setup_debug_coords()
+	_setup_trash_overlay()
 
 func is_modal_active() -> bool:
 	return (math_panel and math_panel.visible) or (victory_panel and victory_panel.visible)
@@ -308,3 +309,98 @@ func _setup_debug_coords() -> void:
 	
 	debug_coords_panel.add_child(debug_coords_label)
 	add_child(debug_coords_panel)
+
+
+var trash_overlay: Control = null
+
+func set_trash_overlay_visible(is_vis: bool) -> void:
+	if trash_overlay:
+		trash_overlay.visible = is_vis
+
+func _setup_trash_overlay() -> void:
+	trash_overlay = Control.new()
+	trash_overlay.name = "TrashSpyOverlay"
+	trash_overlay.set_anchors_preset(Control.PRESET_FULL_RECT)
+	trash_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	trash_overlay.visible = false
+
+	# 1. Tapa superior del tacho (cubre desde arriba hasta el 35% de la pantalla)
+	var top_lid = ColorRect.new()
+	top_lid.name = "TopLid"
+	top_lid.color = Color(0.04, 0.04, 0.05, 0.98)
+	top_lid.anchor_left = 0.0
+	top_lid.anchor_right = 1.0
+	top_lid.anchor_top = 0.0
+	top_lid.anchor_bottom = 0.35
+	top_lid.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	trash_overlay.add_child(top_lid)
+
+	# Borde metálico de la tapa con moldura
+	var top_rim = ColorRect.new()
+	top_rim.name = "TopRim"
+	top_rim.color = Color(0.22, 0.24, 0.27, 1.0)
+	top_rim.anchor_left = 0.0
+	top_rim.anchor_right = 1.0
+	top_rim.anchor_top = 0.34
+	top_rim.anchor_bottom = 0.35
+	top_rim.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	trash_overlay.add_child(top_rim)
+
+	# 2. Borde y cuerpo inferior del tacho (cubre desde el 68% hasta el 100% de la pantalla)
+	var bottom_rim = ColorRect.new()
+	bottom_rim.name = "BottomRim"
+	bottom_rim.color = Color(0.22, 0.24, 0.27, 1.0)
+	bottom_rim.anchor_left = 0.0
+	bottom_rim.anchor_right = 1.0
+	bottom_rim.anchor_top = 0.67
+	bottom_rim.anchor_bottom = 0.68
+	bottom_rim.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	trash_overlay.add_child(bottom_rim)
+
+	var bottom_body = ColorRect.new()
+	bottom_body.name = "BottomBody"
+	bottom_body.color = Color(0.04, 0.04, 0.05, 0.98)
+	bottom_body.anchor_left = 0.0
+	bottom_body.anchor_right = 1.0
+	bottom_body.anchor_top = 0.68
+	bottom_body.anchor_bottom = 1.0
+	bottom_body.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	trash_overlay.add_child(bottom_body)
+
+	# 3. Laterales izquierdo y derecho (marco de la ranura de visión)
+	var left_side = ColorRect.new()
+	left_side.name = "LeftSide"
+	left_side.color = Color(0.04, 0.04, 0.05, 0.98)
+	left_side.anchor_left = 0.0
+	left_side.anchor_right = 0.12
+	left_side.anchor_top = 0.35
+	left_side.anchor_bottom = 0.67
+	left_side.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	trash_overlay.add_child(left_side)
+
+	var right_side = ColorRect.new()
+	right_side.name = "RightSide"
+	right_side.color = Color(0.04, 0.04, 0.05, 0.98)
+	right_side.anchor_left = 0.88
+	right_side.anchor_right = 1.0
+	right_side.anchor_top = 0.35
+	right_side.anchor_bottom = 0.67
+	right_side.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	trash_overlay.add_child(right_side)
+
+	# 4. Texto sutil de inmersión en la tapa
+	var label_inside = Label.new()
+	label_inside.text = "👁️ ESPIANDO DESDE LA RANURA DEL TACHO (TAPA SUPERIOR)"
+	label_inside.anchor_left = 0.5
+	label_inside.anchor_right = 0.5
+	label_inside.anchor_top = 0.30
+	label_inside.anchor_bottom = 0.30
+	label_inside.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	label_inside.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label_inside.modulate = Color(0.75, 0.8, 0.85, 0.55)
+	label_inside.add_theme_font_size_override("font_size", 13)
+	trash_overlay.add_child(label_inside)
+
+	# Agregarlo como fondo de los elementos interactivos del HUD
+	add_child(trash_overlay)
+	move_child(trash_overlay, 0)

@@ -167,7 +167,11 @@ func toggle_flashlight() -> void:
 
 func _physics_process(delta: float) -> void:
 	# Si hay un menú/examen abierto o el jugador está congelado en una cinemática de terror
-	if _is_ui_active() or is_frozen or is_hidden:
+	if is_hidden:
+		velocity.x = 0.0
+		velocity.z = 0.0
+		return
+	if _is_ui_active() or is_frozen:
 		velocity.x = 0.0
 		velocity.z = 0.0
 		move_and_slide()
@@ -358,15 +362,41 @@ func enter_hiding(spot: Node, hide_global_pos: Vector3, face_dir: Vector3) -> vo
 	if flashlight:
 		flashlight.visible = false
 	global_position = hide_global_pos
+	
+	# Desactivar colisión física para no ser expulsado por el sólido del tacho
+	var col = find_child("CollisionShape3D", true, false) as CollisionShape3D
+	if col:
+		col.disabled = true
+		
+	# Bajar la altura de la cámara para que coincida con la ranura del tacho
+	if camera:
+		camera.position.y = 0.85
+		
 	if face_dir != Vector3.ZERO:
 		rotation.y = atan2(-face_dir.x, -face_dir.z)
 		if camera_pivot:
 			camera_pivot.rotation.x = 0.0
+			
+	var hud = get_tree().root.find_child("HUD", true, false)
+	if hud and hud.has_method("set_trash_overlay_visible"):
+		hud.set_trash_overlay_visible(true)
 
 func exit_hiding(exit_global_pos: Vector3) -> void:
 	is_hidden = false
 	current_hiding_spot = null
 	global_position = exit_global_pos
+	
+	var col = find_child("CollisionShape3D", true, false) as CollisionShape3D
+	if col:
+		col.disabled = false
+		
+	if camera:
+		camera.position.y = original_cam_y
+		
 	if was_flashlight_on_before_hiding and flashlight:
 		flashlight.visible = true
 	was_flashlight_on_before_hiding = false
+	
+	var hud = get_tree().root.find_child("HUD", true, false)
+	if hud and hud.has_method("set_trash_overlay_visible"):
+		hud.set_trash_overlay_visible(false)

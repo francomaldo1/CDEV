@@ -40,7 +40,7 @@ func enter_trashcan() -> void:
 		audio_player.play()
 		
 	var target_pos = hide_pos.global_position if hide_pos else global_position + Vector3(0, 0.05, 0)
-	var forward_dir = -global_transform.basis.z # hacia donde mira el frente del tacho
+	var forward_dir = global_transform.basis.z.normalized() # hacia donde mira el frente del tacho
 	
 	if player_ref.has_method("enter_hiding"):
 		player_ref.enter_hiding(self, target_pos, forward_dir)
