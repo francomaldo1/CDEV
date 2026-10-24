@@ -218,27 +218,42 @@ func _slam_door(d: Dictionary) -> void:
 	if not is_instance_valid(hinge):
 		return
 		
-	# Portazo violento con rotación rápida
+	# Portazo violento con aceleración hacia el marco
 	var tw = create_tween()
-	tw.set_ease(Tween.EASE_OUT)
+	tw.set_ease(Tween.EASE_IN)
 	tw.set_trans(Tween.TRANS_QUAD)
-	tw.tween_property(hinge, "rotation:y", d["rot_closed"], 0.12)
+	tw.tween_property(hinge, "rotation:y", d["rot_closed"], 0.14)
 	
-	# Sonido estruendoso del portazo
+	# Sonido estruendoso del portazo (Loud Door Slam con decibeles aumentados)
 	var slam_player = AudioStreamPlayer3D.new()
-	slam_player.stream = HorrorAudio.get_wood_slam_sound()
+	var slam_stream: AudioStream = null
+	var candidates = [
+		"res://audio/sfx/door_slam_loud.mp3",
+		"res://Door Slam - (Loud) Sound.mp3",
+		"res://door_slam_loud.mp3"
+	]
+	for c in candidates:
+		if ResourceLoader.exists(c):
+			slam_stream = load(c)
+			break
+	if not slam_stream:
+		slam_stream = HorrorAudio.get_wood_slam_sound()
+		
+	slam_player.stream = slam_stream
 	slam_player.position = d["hinge_pos"]
-	slam_player.volume_db = 8.0
-	slam_player.max_distance = 35.0
+	slam_player.volume_db = 14.0 # Decibeles aumentados para mayor impacto y susto
+	slam_player.unit_size = 4.5
+	slam_player.max_distance = 45.0
+	slam_player.bus = &"Master"
 	add_child(slam_player)
 	slam_player.play()
 	slam_player.finished.connect(slam_player.queue_free)
 	
 	# Sacudida de cámara si el jugador está cerca
 	var dist = player.global_position.distance_to(d["trigger_pos"])
-	if dist < 8.0 and player.has_method("shake_camera"):
-		var intensity = clampf(1.0 - (dist / 8.0), 0.35, 0.85)
-		player.shake_camera(intensity, 0.35)
+	if dist < 10.0 and player.has_method("shake_camera"):
+		var intensity = clampf(1.0 - (dist / 10.0), 0.45, 1.05)
+		player.shake_camera(intensity, 0.42)
 		
 	# Activar colisión para que no se pueda ingresar
 	var leaf: CSGBox3D = hinge.get_node_or_null("DoorLeaf")

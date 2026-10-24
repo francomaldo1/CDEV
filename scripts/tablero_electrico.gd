@@ -115,26 +115,29 @@ func _execute_fuse_screamer_sequence(hud: Node) -> void:
 	if is_instance_valid(player) and player.has_method("set_frozen"):
 		player.set_frozen(true)
 		
-	# 2. CHISPAZO ELÉCTRICO Y DESCARGA INICIAL (T = 0.0s)
+	# 2. CHISPAZO ELÉCTRICO Y DESCARGA INICIAL (T = 0.0s a 0.85s)
 	var spark_light = OmniLight3D.new()
 	spark_light.position = Vector3(0.0, 1.25, 0.3)
 	spark_light.light_color = Color(0.65, 0.85, 1.0)
-	spark_light.light_energy = 6.0
-	spark_light.omni_range = 7.0
+	spark_light.light_energy = 7.0
+	spark_light.omni_range = 8.0
 	spark_light.shadow_enabled = false
 	add_child(spark_light)
 	
 	if is_instance_valid(player) and player.has_method("shake_camera"):
-		player.shake_camera(0.75, 0.45)
+		player.shake_camera(0.85, 0.6)
 		
 	var spark_tw = create_tween()
-	spark_tw.tween_property(spark_light, "light_energy", 1.2, 0.08)
-	spark_tw.tween_property(spark_light, "light_energy", 5.0, 0.05)
-	spark_tw.tween_property(spark_light, "light_energy", 0.0, 0.08)
+	spark_tw.tween_property(spark_light, "light_energy", 2.0, 0.15)
+	spark_tw.tween_property(spark_light, "light_energy", 6.5, 0.12)
+	spark_tw.tween_property(spark_light, "light_energy", 2.5, 0.18)
+	spark_tw.tween_property(spark_light, "light_energy", 0.0, 0.25)
 	spark_tw.tween_callback(spark_light.queue_free)
 	
-	# 3. CORTE DE LINTERNA Y OSCURIDAD TOTAL (T = 0.18s)
-	await get_tree().create_timer(0.18).timeout
+	# Dejar que el sonido y los chispazos de conexión se aprecien con claridad
+	await get_tree().create_timer(0.85).timeout
+	
+	# 3. CORTE DE LINTERNA Y OSCURIDAD TOTAL (T = 0.85s a 1.8s)
 	if is_instance_valid(player) and player.has_method("force_flashlight"):
 		player.force_flashlight(false)
 		
@@ -147,24 +150,29 @@ func _execute_fuse_screamer_sequence(hud: Node) -> void:
 		var look_target = p_pos + Vector3(0, 1.4, 0)
 		prof.trigger_screamer_ambush(door_ambush_pos, look_target)
 		
-	# 5. ANIMACION DEL PROFESOR EN LA PUERTA EN LA OSCURIDAD (T = 0.60s)
-	await get_tree().create_timer(0.42).timeout
+	await get_tree().create_timer(0.85).timeout
 	
+	# 5. GOLPE DE REGLA DEL PROFESOR EN LA OSCURIDAD (T = 1.8s a 2.7s)
 	if is_instance_valid(prof):
 		prof.play_ruler_slam_animation()
 		
 	if is_instance_valid(player) and player.has_method("shake_camera"):
-		player.shake_camera(0.45, 0.2)
+		player.shake_camera(0.55, 0.3)
 		
-	# 6. GIRO DRAMÁTICO DE CÁMARA HACIA LA PUERTA (T = 0.75s)
-	# La cámara del jugador gira hacia la puerta apuntando directamente a la cara del profesor
-	if is_instance_valid(player) and player.has_method("force_look_at"):
-		player.force_look_at(door_ambush_pos + Vector3(0, 1.5, 0), 0.40)
-	_play_ghostly_sound()
-		
-	# 7. ENERGÍA RESTABLECIDA, JUMPSCARE EN LA PUERTA Y PERSECUCIÓN (T = 1.18s)
-	await get_tree().create_timer(0.43).timeout
+	await get_tree().create_timer(0.75).timeout
 	
+	# 6. GIRO DRAMÁTICO DE CÁMARA HACIA LA PUERTA Y AUDIO FANTASMAL (T = 2.7s a 4.1s)
+	# Inicia el sonido espectral
+	_play_ghostly_sound()
+	
+	# Giro suave y cinematográfico de cámara de 180° hacia la puerta
+	if is_instance_valid(player) and player.has_method("force_look_at"):
+		player.force_look_at(door_ambush_pos + Vector3(0, 1.5, 0), 0.85)
+		
+	# Dejar contemplar la silueta fantasmal del profesor en la penumbra
+	await get_tree().create_timer(1.2).timeout
+		
+	# 7. ENERGÍA RESTABLECIDA, JUMPSCARE EN LA PUERTA Y PERSECUCIÓN (T = 4.1s a 6.8s)
 	if is_instance_valid(player) and player.has_method("force_flashlight"):
 		player.force_flashlight(true)
 		
@@ -183,21 +191,19 @@ func _execute_fuse_screamer_sequence(hud: Node) -> void:
 	# Encender las luces del edificio (la luz del pasillo recorta al profesor parado en la puerta)
 	power_restored.emit()
 	
-# Stinger removido - solo jumpscare al cargar
-	
 	if is_instance_valid(player) and player.has_method("shake_camera"):
-		player.shake_camera(0.95, 0.7)
+		player.shake_camera(1.1, 0.9)
 		
 	if is_instance_valid(prof):
 		prof._say("¡¡HORARIO DE CONSULTA FINALIZADO, ALUMNO!!", Color(1.0, 0.0, 0.0))
 		
 	hud.show_temporary_alert("⚡ ¡¡EL PROFESOR ESTÁ EN LA PUERTA!!", Color(1.0, 0.1, 0.1))
 	
-	# Bloqueo de cámara fijo en el profesor durante 1.4 segundos de tensión pura
-	await get_tree().create_timer(1.4).timeout
+	# Bloqueo de cámara fijo en el profesor durante 2.4 segundos de tensión pura
+	await get_tree().create_timer(2.4).timeout
 	
 	if is_instance_valid(player) and player.has_method("shake_camera"):
-		player.shake_camera(1.3, 0.9)
+		player.shake_camera(1.4, 0.9)
 	
 	# Desvanecer ghostly sound al desatarse la embestida
 	if is_instance_valid(ghostly_audio_player) and ghostly_audio_player.playing:
