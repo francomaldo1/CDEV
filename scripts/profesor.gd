@@ -56,6 +56,13 @@ var is_screamer_ambush: bool = false
 var is_screamer_charging: bool = false
 var screamer_charge_timer: float = 0.0
 
+## Corrida cinematográfica por el pasillo (susto al terminar el 4to examen)
+var is_hallway_dashing: bool = false
+var hallway_dash_target: Vector3 = Vector3.ZERO
+var hallway_dash_speed: float = 18.5
+var hallway_dash_timer: float = 0.0
+var hallway_dash_callback: Callable = Callable()
+
 
 ## Puntos de patrullaje por toda la facultad organizados por piso
 ## PB = Y ~0.2 | P1 = Y ~4.7 | P2 = Y ~9.2
@@ -522,6 +529,12 @@ func _physics_process(delta: float) -> void:
 	if attack_timer > 0.0:
 		attack_timer -= delta
 
+	# Si está ejecutando la corrida cinemática del susto por el pasillo:
+	if is_hallway_dashing:
+		_process_hallway_dash(delta)
+		_update_dialogue(delta)
+		return
+
 	# Comprobar visión hacia el jugador
 	var can_see = _can_see_player()
 	
@@ -941,6 +954,104 @@ func _animate_walk(delta: float, is_moving: bool) -> void:
 		if not is_attacking and not is_screamer_ambush and brazo_der:
 			brazo_der.rotation.x = lerpf(brazo_der.rotation.x, deg_to_rad(-40.0), delta * 5.0)
 			brazo_der.rotation.z = lerpf(brazo_der.rotation.z, deg_to_rad(-10.0), delta * 5.0)
+
+## =====================================================================
+## SUSTO CINEMÁTICO: CORRIDA POR EL PASILLO (4TO EXAMEN)
+## =====================================================================
+func start_hallway_dash(start_pos: Vector3, end_pos: Vector3, on_finished: Callable = Callable()) -> void:
+	set_active(true)
+	visible = true
+	is_investigating_floor = false
+	current_patrol_floor = 0
+	active_stair_idx = -1
+	active_stair_tower = ""
+	is_screamer_ambush = false
+	is_screamer_charging = false
+	is_hallway_dashing = true
+	hallway_dash_target = end_pos
+	hallway_dash_callback = on_finished
+	hallway_dash_speed = 18.5
+	hallway_dash_timer = 0.0
+	current_speed = 18.5
+	attack_timer = 4.0
+	is_attacking = false
+	stuck_timer = 0.0
+	time_without_sight = 0.0
+	
+	global_position = start_pos
+	prev_pos = start_pos
+	
+	var to_tgt = end_pos - start_pos
+	to_tgt.y = 0.0
+	if to_tgt.length() > 0.1:
+		rotation.y = atan2(to_tgt.x, to_tgt.z)
+		
+	if step_audio:
+		step_audio.volume_db = 4.0
+		
+	if ojos_luz:
+		ojos_luz.light_color = Color(1.0, 0.0, 0.0)
+		ojos_luz.light_energy = 4.5
+		ojos_luz.spot_range = 18.0
+		ojos_luz.visible = true
+		
+	if brazo_der:
+		brazo_der.rotation.x = deg_to_rad(-115.0)
+		brazo_der.rotation.y = deg_to_rad(-10.0)
+	if regla:
+		regla.rotation.x = deg_to_rad(-40.0)
+
+func _process_hallway_dash(delta: float) -> void:
+	hallway_dash_timer += delta
+	var to_dest = hallway_dash_target - global_position
+	to_dest.y = 0.0
+	var dist = to_dest.length()
+	
+	# Terminar si llegó al final o tras 3.5 segundos de seguridad
+	if dist < 1.6 or hallway_dash_timer >= 3.5:
+		is_hallway_dashing = false
+		velocity = Vector3.ZERO
+		current_speed = patrol_speed
+		current_state = State.PATROL
+		if step_audio:
+			step_audio.volume_db = -3.0
+		if ojos_luz:
+			ojos_luz.light_color = Color(1.0, 0.85, 0.5)
+			ojos_luz.light_energy = 0.8
+			ojos_luz.spot_range = 10.0
+		if brazo_der:
+			brazo_der.rotation = Vector3.ZERO
+		if regla:
+			regla.rotation = Vector3.ZERO
+		_pick_closest_waypoint()
+		if hallway_dash_callback.is_valid():
+			hallway_dash_callback.call()
+		return
+		
+	var dir = to_dest.normalized()
+	rotation.y = atan2(dir.x, dir.z)
+	velocity.x = dir.x * hallway_dash_speed
+	velocity.z = dir.z * hallway_dash_speed
+	
+	if not is_on_floor():
+		velocity.y -= gravity * delta
+		
+	var pre_pos = global_position
+	var was_on_floor = is_on_floor()
+	move_and_slide()
+	
+	# Step-up suave si toca algún borde en el pasillo
+	if was_on_floor and is_on_wall():
+		var step_h: float = 0.25
+		var step_transform: Transform3D = global_transform
+		step_transform.origin.y += step_h
+		if not test_move(global_transform, Vector3(0, step_h, 0)):
+			var fwd: Vector3 = dir * (hallway_dash_speed * delta + 0.06)
+			if not test_move(step_transform, fwd):
+				global_position = pre_pos + Vector3(0, step_h * 0.5, 0)
+				move_and_slide()
+
+	_animate_walk(delta, true)
 
 ## =====================================================================
 ## CINEMÁTICA Y SCREAMER DEL LABORATORIO

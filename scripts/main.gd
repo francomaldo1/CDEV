@@ -3,6 +3,7 @@ extends Node3D
 @onready var mic_detector = $MicDetector
 @onready var hud = $HUD
 @onready var profesor = $Profesor
+@onready var player = $Player
 @onready var world_env: WorldEnvironment = $WorldEnvironment
 @onready var moon_light: DirectionalLight3D = $MoonLight
 
@@ -25,6 +26,14 @@ var exams_approved: Array = []
 var profesor_spawn_transform: Transform3D
 ## Barreras que bloquean las escaleras hasta aprobar todos los exámenes
 var upper_floor_blockers: Array[Node3D] = []
+
+## Susto cinemático del 4to examen (corrida por el pasillo al darse vuelta)
+var is_waiting_for_turnaround_scare: bool = false
+var scare_cuaderno_pos: Vector3 = Vector3.ZERO
+var scare_cuaderno_name: String = ""
+var scare_initial_player_yaw: float = 0.0
+var scare_initial_player_pos: Vector3 = Vector3.ZERO
+var scare_wait_timer: float = 0.0
 
 var tablero_electrico: Area3D = null
 var is_blackout: bool = false
@@ -175,9 +184,10 @@ func _on_exam_solved(success: bool, cuaderno: Node) -> void:
 		_spawn_profesor()
 		_trigger_blackout()
 	
-	# Todos los exámenes aprobados: se habilita el piso de arriba
+	# Todos los exámenes aprobados: se habilita el piso de arriba y se prepara el susto del pasillo al darse vuelta
 	if n == exams_for_upper_floor:
 		_unlock_upper_floor()
+		_prepare_fourth_exam_turnaround_scare(cuaderno)
 
 func _spawn_profesor() -> void:
 	if not profesor:
@@ -406,6 +416,9 @@ func _on_power_restored() -> void:
 func _process(delta: float) -> void:
 	_process_light_flicker(delta)
 	
+	if is_waiting_for_turnaround_scare:
+		_check_turnaround_scare(delta)
+	
 	# Crujidos y sonidos espeluznantes periódicos a lo lejos en el edificio
 	spook_interval_timer += delta
 	if spook_interval_timer >= next_spook_delay:
@@ -430,6 +443,81 @@ func _play_distant_spook() -> void:
 	spook_audio_3d.pitch_scale = randf_range(0.85, 1.15)
 	spook_audio_3d.volume_db = randf_range(-6.0, -1.0)
 	spook_audio_3d.play()
+
+## =====================================================================
+## SUSTO DEL 4TO EXAMEN: CORRIDA POR EL PASILLO AL DARSE VUELTA
+## =====================================================================
+func _prepare_fourth_exam_turnaround_scare(cuaderno: Node) -> void:
+	if not is_instance_valid(player) or not is_instance_valid(profesor):
+		return
+	is_waiting_for_turnaround_scare = true
+	scare_cuaderno_pos = cuaderno.global_position if (cuaderno is Node3D) else (player.global_position if is_instance_valid(player) else Vector3.ZERO)
+	var c_name = cuaderno.get("classroom_name")
+	scare_cuaderno_name = str(c_name) if c_name != null else ""
+	scare_initial_player_yaw = player.rotation.y
+	scare_initial_player_pos = player.global_position
+	scare_wait_timer = 0.0
+	print(">>> 4to examen aprobado en: %s. Esperando giro de 180° para susto en el pasillo..." % scare_cuaderno_name)
+
+func _check_turnaround_scare(delta: float) -> void:
+	if not is_instance_valid(player) or not is_instance_valid(profesor):
+		is_waiting_for_turnaround_scare = false
+		return
+
+	scare_wait_timer += delta
+	
+	# Detectar giro de ~180° (mínimo 105°) respecto a la orientación al terminar el parcial
+	var yaw_diff = absf(wrapf(player.rotation.y - scare_initial_player_yaw, -PI, PI))
+	var moved_dist = player.global_position.distance_to(scare_initial_player_pos)
+	
+	var turned_around = yaw_diff >= deg_to_rad(105.0)
+	var walked_away = moved_dist >= 2.0
+	var timeout = scare_wait_timer >= 4.5
+	
+	if turned_around or walked_away or timeout:
+		is_waiting_for_turnaround_scare = false
+		_trigger_hallway_dash_scare()
+
+func _trigger_hallway_dash_scare() -> void:
+	if not is_instance_valid(profesor) or not is_instance_valid(player):
+		return
+		
+	var points = _get_scare_dash_points(scare_cuaderno_pos, scare_cuaderno_name)
+	var start_pos: Vector3 = points[0]
+	var end_pos: Vector3 = points[1]
+	
+	# Efectos audiovisuales de terror
+	if player.has_method("play_jumpscare_screamer"):
+		player.play_jumpscare_screamer()
+	if player.has_method("shake_camera"):
+		player.shake_camera(0.4, 0.6)
+	if player.has_method("trigger_post_screamer_heartbeat"):
+		player.trigger_post_screamer_heartbeat(15.0)
+		
+	var phrases = [
+		"¡¡EL RECREO SE TERMINÓ!!",
+		"¡¡PROHIBIDO CORRER POR EL PASILLO!!",
+		"¡¡A MARZO DIRECTO SIN DERECHO A FINAL!!",
+		"¡¡NO VAN A ESCAPAR DE LA FACULTAD!!"
+	]
+	profesor._say(phrases[randi() % phrases.size()], Color(1.0, 0.1, 0.1))
+	
+	profesor.start_hallway_dash(start_pos, end_pos)
+	print(">>> ¡Susto del 4to examen ejecutado! Profesor corriendo de %s a %s" % [start_pos, end_pos])
+
+func _get_scare_dash_points(exam_pos: Vector3, exam_name: String) -> Array[Vector3]:
+	if exam_name.contains("Aula") or exam_pos.x < -30.0:
+		# Aula 106: Pasillo Oeste (X = -42.0), cruza frente a la puerta en Z = -12.0
+		return [Vector3(-42.0, 0.05, -28.0), Vector3(-42.0, 0.05, 5.0)]
+	elif exam_name.contains("Cafeteria") or exam_pos.x > 30.0:
+		# Cafetería PB: Pasillo Este (X = 42.0), cruza frente a la entrada en Z = -2.5
+		return [Vector3(42.0, 0.05, -22.0), Vector3(42.0, 0.05, 8.0)]
+	elif exam_name.contains("Fotocopiadora") or exam_pos.z > 25.0:
+		# Fotocopiadora 1: Pasillo Sur (Z = 33.5), cruza frente a la puerta en X = -35.0
+		return [Vector3(-48.0, 0.05, 33.5), Vector3(-12.0, 0.05, 33.5)]
+	else:
+		# Patio del Estudiante: Galería Norte (Z = -18.0)
+		return [Vector3(-25.0, 0.05, -18.0), Vector3(25.0, 0.05, -18.0)]
 
 
 
