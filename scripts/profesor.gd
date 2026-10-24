@@ -72,31 +72,36 @@ const AULA_INSPECTIONS_PB: Array[Dictionary] = [
 		"name": "Aula 106",
 		"corridor_wp_idx": 1,                     # Vector3(-42.0, 0.2, -12.0)
 		"door_pos": Vector3(-47.0, 0.2, -12.0),
-		"inside_pos": Vector3(-52.0, 0.2, -12.0),
+		"inside_pos": Vector3(-49.5, 0.2, -12.0),
+		"yaw": deg_to_rad(-90.0)
 	},
 	{
 		"name": "Aula 107",
 		"corridor_wp_idx": 2,                     # Vector3(-42.0, 0.2, 5.0)
 		"door_pos": Vector3(-47.0, 0.2, 2.5),
-		"inside_pos": Vector3(-52.0, 0.2, 2.5),
+		"inside_pos": Vector3(-49.5, 0.2, 2.5),
+		"yaw": deg_to_rad(-90.0)
 	},
 	{
 		"name": "Aula 108",
 		"corridor_wp_idx": 3,                     # Vector3(-42.0, 0.2, 20.0)
 		"door_pos": Vector3(-47.0, 0.2, 17.5),
-		"inside_pos": Vector3(-52.0, 0.2, 17.5),
+		"inside_pos": Vector3(-49.5, 0.2, 17.5),
+		"yaw": deg_to_rad(-90.0)
 	},
 	{
 		"name": "Aula 102",
 		"corridor_wp_idx": 21,                    # Vector3(-25.0, 0.2, -28.5)
 		"door_pos": Vector3(-34.5, 0.2, -33.0),
-		"inside_pos": Vector3(-34.5, 0.2, -38.0),
+		"inside_pos": Vector3(-34.5, 0.2, -35.5),
+		"yaw": deg_to_rad(180.0)
 	},
 	{
 		"name": "Cafetería PB",
 		"corridor_wp_idx": 16,                    # Vector3(42.0, 0.2, 0.0)
 		"door_pos": Vector3(47.0, 0.2, -2.5),
-		"inside_pos": Vector3(53.0, 0.2, -2.5),
+		"inside_pos": Vector3(50.5, 0.2, -2.5),
+		"yaw": deg_to_rad(90.0)
 	}
 ]
 
@@ -105,6 +110,8 @@ var aula_inspect_phase: int = 0 # 0: yendo a puerta, 1: entrando, 2: buscando, 3
 var aula_inspect_data: Dictionary = {}
 var aula_inspect_wait_timer: float = 0.0
 var aula_inspect_cooldown: float = 8.0
+var saw_player_hide: bool = false
+var prev_player_hidden: bool = false
 
 
 ## Puntos de patrullaje por toda la facultad organizados por piso
@@ -297,26 +304,33 @@ func _get_nav_target_to(destination_pos: Vector3) -> Vector3:
 	var my_tower = get_stair_tower_name(global_position)
 	var tgt_tower = get_stair_tower_name(destination_pos)
 
+	if ONLY_PATROL_PB:
+		# El profesor patrulla exclusivamente Planta Baja y no usa escaleras
+		tgt_floor = 0
+		tgt_tower = ""
+		my_tower = ""
+		active_stair_idx = -1
+		active_stair_tower = ""
+
 	# Si ambos están en el mismo piso y ninguno dentro de una caja de escalera:
 	if my_floor == tgt_floor and my_tower == "" and tgt_tower == "":
 		active_stair_idx = -1
 		active_stair_tower = ""
 
 		# En el Laboratorio Central de Electrónica (PB, X de -37 a -17, Z de -10 a 11):
-		# Las 3 mesadas de 14m bloquean el paso directo entre pasillos.
+		# Las mesadas van de X=-34 a -20. El pasillo transversal central despejado está en Z = 1.0 ~ 1.5.
 		if my_floor == 0 and (global_position.x >= -37.0 and global_position.x <= -17.0 and global_position.z >= -10.0 and global_position.z <= 11.0):
-			if not _is_walk_path_clear(global_position, destination_pos):
-				var dist_west = absf(global_position.x - (-35.5))
-				var dist_east = absf(global_position.x - (-18.5))
-				var corridor_x = -35.5 if dist_west <= dist_east else -18.5
-				
-				var in_corridor = (corridor_x == -35.5 and global_position.x <= -34.5) or (corridor_x == -18.5 and global_position.x >= -19.5)
-				if not in_corridor:
-					return Vector3(corridor_x, global_position.y, global_position.z)
-				elif absf(global_position.z - destination_pos.z) > 0.3:
-					return Vector3(corridor_x, global_position.y, destination_pos.z)
-				else:
-					return destination_pos
+			if _is_walk_path_clear(global_position, destination_pos):
+				return destination_pos
+			# Si la línea recta hacia destination_pos está bloqueada por una mesada:
+			# Usar el pasillo central transversal despejado en Z = 1.2
+			if absf(global_position.z - 1.2) > 0.6 and (global_position.x <= -34.5 or global_position.x >= -19.5):
+				return Vector3(global_position.x, global_position.y, 1.2)
+			elif absf(destination_pos.x - global_position.x) > 0.6:
+				var tgt_x = -18.5 if destination_pos.x > -26.0 else -35.5
+				return Vector3(tgt_x, global_position.y, 1.2)
+			else:
+				return destination_pos
 
 		# Si el camino directo hacia el objetivo está libre (sin paredes intermedias), ir directo:
 		if _is_walk_path_clear(global_position, destination_pos):
@@ -605,6 +619,20 @@ func _physics_process(delta: float) -> void:
 		if not is_instance_valid(player):
 			return
 
+	# Registrar si el profesor vio explícitamente al jugador entrar a un escondite
+	var is_hidden_now = player.get("is_hidden") if is_instance_valid(player) else false
+	if is_hidden_now and not prev_player_hidden:
+		var has_los = _has_line_of_sight(global_position + Vector3(0, 1.5, 0), player.global_position + Vector3(0, 1.2, 0))
+		saw_player_hide = has_los and (current_state == State.CHASE)
+	elif not is_hidden_now:
+		saw_player_hide = false
+	prev_player_hidden = is_hidden_now
+
+	# Restricción absoluta a Planta Baja
+	if ONLY_PATROL_PB and global_position.y > 2.0:
+		global_position.y = 0.2
+		velocity.y = 0.0
+
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 
@@ -781,19 +809,19 @@ func _process_aula_inspection(delta: float, can_see_player: bool) -> void:
 			var door_p: Vector3 = aula_inspect_data["door_pos"]
 			var to_door = door_p - global_position
 			to_door.y = 0.0
-			if to_door.length() < 1.4:
+			if to_door.length() < 1.1:
 				aula_inspect_phase = 1
 			else:
 				var move_dir = to_door.normalized()
-				_move_towards(delta, move_dir, patrol_speed * 0.9, 4.5)
+				_move_towards(delta, move_dir, patrol_speed * 0.9, 5.0)
 		1:
-			# Fase 1: Entrar al aula entre los pupitres
+			# Fase 1: Entrar al aula en la zona despejada
 			var inside_p: Vector3 = aula_inspect_data["inside_pos"]
 			var to_inside = inside_p - global_position
 			to_inside.y = 0.0
-			if to_inside.length() < 1.5:
+			if to_inside.length() < 0.8:
 				aula_inspect_phase = 2
-				aula_inspect_wait_timer = randf_range(2.2, 3.5)
+				aula_inspect_wait_timer = randf_range(2.5, 3.8)
 				var phrases_inspect = [
 					"A ver si hay alguien copiándose acá adentro...",
 					"Silencio sospechoso en esta aula...",
@@ -803,13 +831,13 @@ func _process_aula_inspection(delta: float, can_see_player: bool) -> void:
 				_say(phrases_inspect[randi() % phrases_inspect.size()], Color(1.0, 0.85, 0.4))
 			else:
 				var move_dir = to_inside.normalized()
-				_move_towards(delta, move_dir, patrol_speed * 0.85, 4.5)
+				_move_towards(delta, move_dir, patrol_speed * 0.85, 5.0)
 		2:
-			# Fase 2: Parado en el aula mirando alrededor con los ojos-linterna
+			# Fase 2: Parado en el aula mirando alrededor hacia los pupitres y rincones con la linterna
 			aula_inspect_wait_timer -= delta
-			rotation.y += sin(aula_inspect_wait_timer * 3.5) * delta * 1.8
-			velocity.x = move_toward(velocity.x, 0.0, 10.0 * delta)
-			velocity.z = move_toward(velocity.z, 0.0, 10.0 * delta)
+			var base_yaw: float = aula_inspect_data.get("yaw", rotation.y)
+			rotation.y = base_yaw + sin(aula_inspect_wait_timer * 2.8) * 0.65
+			velocity = Vector3.ZERO
 			move_and_slide()
 			_animate_walk(delta, false)
 			
@@ -820,13 +848,13 @@ func _process_aula_inspection(delta: float, can_see_player: bool) -> void:
 			var door_p: Vector3 = aula_inspect_data["door_pos"]
 			var to_door = door_p - global_position
 			to_door.y = 0.0
-			if to_door.length() < 1.6:
+			if to_door.length() < 1.3:
 				is_inspecting_aula = false
-				aula_inspect_cooldown = randf_range(22.0, 40.0)
+				aula_inspect_cooldown = randf_range(20.0, 35.0)
 				current_waypoint_idx = (current_waypoint_idx + 1) % current_floor_waypoints.size()
 			else:
 				var move_dir = to_door.normalized()
-				_move_towards(delta, move_dir, patrol_speed * 0.9, 4.5)
+				_move_towards(delta, move_dir, patrol_speed * 0.9, 5.0)
 
 func _process_chase_state(delta: float, can_see_player: bool) -> void:
 	if is_screamer_ambush:
@@ -852,6 +880,16 @@ func _process_chase_state(delta: float, can_see_player: bool) -> void:
 	if is_screamer_charging and dist_to_player <= attack_range + 0.6:
 		_end_screamer_charge()
 
+	# Si el profesor está restringido a Planta Baja y el jugador subió las escaleras a P1/P2:
+	if ONLY_PATROL_PB:
+		var p_floor = get_floor(player.global_position.y)
+		var p_in_stairs = get_stair_tower_name(player.global_position) != ""
+		if p_floor > 0 or p_in_stairs:
+			_say("¡¡Cobarde, escapaste arriba... pero vas a tener que bajar!!", Color(1.0, 0.2, 0.2))
+			time_without_sight = 999.0
+			_enter_search_state()
+			return
+
 	if can_see_player:
 		last_known_player_pos = player.global_position
 		time_without_sight = 0.0
@@ -859,6 +897,9 @@ func _process_chase_state(delta: float, can_see_player: bool) -> void:
 		var in_stairs = get_stair_tower_name(global_position) != ""
 		var diff_floors = get_floor(global_position.y) != get_floor(player.global_position.y)
 		if in_stairs or diff_floors:
+			if ONLY_PATROL_PB:
+				_enter_search_state()
+				return
 			# Si están en pisos diferentes o cruzando escaleras, no perder al jugador
 			last_known_player_pos = player.global_position
 			time_without_sight = 0.0
@@ -868,18 +909,25 @@ func _process_chase_state(delta: float, can_see_player: bool) -> void:
 				_enter_search_state()
 				return
 
-	# Si el jugador está escondido en un tacho y el profesor lo alcanzó persiguiendo el ruido:
-	if player.get("is_hidden") and dist_to_player <= attack_range + 0.6:
-		_say("¡¡TE ENCONTRÉ! ¡SALÍ DE ESE TACHO!!", Color(1.0, 0.1, 0.1))
-		if player.get("current_hiding_spot") and player.current_hiding_spot.has_method("force_eject"):
-			player.current_hiding_spot.force_eject()
-		_start_attack()
-		return
+	# Si el jugador está escondido en un tacho:
+	if player.get("is_hidden"):
+		if saw_player_hide:
+			if dist_to_player <= attack_range + 0.6:
+				_say("¡¡TE VI METERTE AHÍ! ¡SALÍ DE ESE TACHO!!", Color(1.0, 0.1, 0.1))
+				if player.get("current_hiding_spot") and player.current_hiding_spot.has_method("force_eject"):
+					player.current_hiding_spot.force_eject()
+				_start_attack()
+				return
+		else:
+			# El profesor NO vio al jugador esconderse. Si llega cerca buscando ruido, pierde el rastro y NO lo ataca!
+			if dist_to_player <= 3.2:
+				_say("¿Dónde se metió este alumno? Parecía haber alguien acá...", Color(1.0, 0.85, 0.5))
+				_enter_search_state()
+				return
 
-	# Solo atacar si el jugador está a alcance cuerpo a cuerpo real (3D <= attack_range y desnivel vertical <= 0.85m)
-	# Esto evita que se quede trabado atacando al aire/techo si el jugador está en el tramo superior de la escalera
+	# Solo atacar si el jugador está visible (NO escondido) a alcance cuerpo a cuerpo real:
 	var vert_diff = absf(to_player.y)
-	if dist_to_player <= attack_range and vert_diff <= 0.85 and attack_timer <= 0.0:
+	if not player.get("is_hidden") and dist_to_player <= attack_range and vert_diff <= 0.85 and attack_timer <= 0.0:
 		if _has_line_of_sight(global_position + Vector3(0, 1.4, 0), player.global_position + Vector3(0, 1.2, 0)):
 			_start_attack()
 			return
@@ -1041,8 +1089,18 @@ func _move_towards(delta: float, dir: Vector3, speed_to_use: float, rot_speed: f
 				global_position = wps[current_waypoint_idx]
 				prev_pos = global_position
 				velocity = Vector3.ZERO
+			elif current_state == State.CHASE:
+				# EN PERSECUCIÓN: ¡¡NUNCA TELEPORTAR AL PROFESOR FUERA DE LA SALA!!
+				if is_screamer_charging:
+					_end_screamer_charge()
+				velocity = Vector3.ZERO
+				var slide_offset = Vector3(randf_range(-1.0, 1.0), 0.0, randf_range(-1.0, 1.0)).normalized() * 0.4
+				global_position += slide_offset
+				prev_pos = global_position
+				if not _can_see_player():
+					_enter_search_state()
 			else:
-				# En persecución o búsqueda: teleportar al waypoint más cercano con camino despejado
+				# En búsqueda: teleportar al waypoint más cercano con camino despejado
 				var best_idx: int = -1
 				var best_dist: float = 99999.0
 				for i in range(wps.size()):
