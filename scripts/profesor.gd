@@ -3,26 +3,27 @@ class_name Profesor
 
 enum State {
 	PATROL,
-	CHASE,
-	SEARCH,
-	ATTACK
+	CHASE,   ## Estado HUNT (Persecución activa)
+	SEARCH,  ## Estado SEEK (Investigación de estímulo sonoro o visual)
+	ATTACK   ## Ataque cuerpo a cuerpo con regla
 }
 
 ## Velocidades ajustables
-@export var base_patrol_speed: float = 2.0 ## Velocidad de patrullaje calmada y metódica
-@export var base_chase_speed: float = 2.8 ## Velocidad de persecución aterradora pero controlada
-@export var vision_range: float = 18.0 ## Metros de visión en cono
-@export var vision_angle_deg: float = 105.0 ## Apertura del cono de visión (ampliada de 80 a 105 para no perder al jugador)
-@export var proximity_range: float = 3.5 ## Detecta si el jugador está muy cerca en la espalda o costados
-@export var hearing_range: float = 35.0 ## Rango para escuchar ruidos del micrófono
+@export var base_patrol_speed: float = 2.0
+@export var base_chase_speed: float = 2.85
+@export var seek_speed: float = 2.4
+@export var vision_range: float = 18.0
+@export var vision_angle_deg: float = 105.0
+@export var proximity_range: float = 3.5
+@export var hearing_range: float = 35.0
 @export var attack_range: float = 1.6
 @export var attack_cooldown: float = 1.3
-@export var lost_sight_timeout: float = 5.5 ## Tiempo de memoria tras perder de vista (ampliado de 3.5 a 5.5s)
+@export var lost_sight_timeout: float = 4.5
 
 ## Estado actual
 var current_state: State = State.PATROL
 var current_speed: float = 2.0
-var chase_speed: float = 2.8
+var chase_speed: float = 2.85
 var patrol_speed: float = 2.0
 var speed_boost_count: int = 0
 
@@ -47,7 +48,9 @@ var attack_anim_time: float = 0.0
 
 var time_without_sight: float = 0.0
 var search_timer: float = 0.0
+var search_target_pos: Vector3 = Vector3.ZERO
 var last_known_player_pos: Vector3 = Vector3.ZERO
+var is_searching_around: bool = false
 
 var stuck_timer: float = 0.0
 var prev_pos: Vector3 = Vector3.ZERO
@@ -66,210 +69,105 @@ var hallway_dash_callback: Callable = Callable()
 ## El profesor se concentra en aterrorizar e inspeccionar la Planta Baja (PB)
 const ONLY_PATROL_PB: bool = true
 
-## Aulas de Planta Baja que el profesor inspecciona activamente durante su ronda
-const AULA_INSPECTIONS_PB: Array[Dictionary] = [
+## Inspección de aulas en PB
+var is_inspecting_aula: bool = false
+var aula_inspect_wait_timer: float = 0.0
+var aula_inspect_cooldown: float = 12.0
+var saw_player_hide: bool = false
+var prev_player_hidden: bool = false
+
+## =====================================================================
+## RED DE NAVEGACIÓN ASTAR3D PARA PLANTA BAJA (PB)
+## Garantiza que el profesor NUNCA camine contra paredes ni atraviese objetos
+## =====================================================================
+var astar_pb: AStar3D = AStar3D.new()
+var current_path: PackedVector3Array = PackedVector3Array()
+var current_path_idx: int = 0
+var repath_timer: float = 0.0
+
+## Circuito de patrullaje principal de Planta Baja
+const PATROL_CIRCUIT_PB: Array[Vector3] = [
+	Vector3(-42.0, 0.2, -28.5),   # 0: Pasillo Oeste (Esquina NW)
+	Vector3(-42.0, 0.2, -12.0),   # 1: Pasillo Oeste (frente a Aula 106)
+	Vector3(-42.0, 0.2, 2.5),     # 2: Pasillo Oeste (frente a Aula 107)
+	Vector3(-42.0, 0.2, 17.5),    # 3: Pasillo Oeste (frente a Aula 108)
+	Vector3(-42.0, 0.2, 30.0),    # 4: Esquina SW
+	Vector3(-20.0, 0.2, 30.0),    # 5: Pasillo Sur oeste (frente a Fotocopiadora 1)
+	Vector3(0.0, 0.2, 30.0),      # 6: Pasillo Sur centro (Entrada Patio y Auditorio)
+	Vector3(0.0, 0.2, 22.0),      # 7: Galería Sur Patio
+	Vector3(0.0, 0.2, 4.0),       # 8: Patio frente a la fuente
+	Vector3(0.0, 0.2, 22.0),      # 9: Retorno Galería Sur Patio
+	Vector3(0.0, 0.2, 30.0),      # 10: Pasillo Sur centro
+	Vector3(20.0, 0.2, 30.0),     # 11: Pasillo Sur este
+	Vector3(42.0, 0.2, 30.0),     # 12: Esquina SE
+	Vector3(42.0, 0.2, 17.0),     # 13: Pasillo Este sur (frente a Aula 115)
+	Vector3(42.0, 0.2, -2.5),     # 14: Pasillo Este centro (frente a Cafetería PB)
+	Vector3(42.0, 0.2, -15.0),    # 15: Pasillo Este norte (frente a Aula 114)
+	Vector3(42.0, 0.2, -28.5),    # 16: Esquina NE
+	Vector3(23.5, 0.2, -28.5),    # 17: Pasillo Norte este (frente a Aula 104)
+	Vector3(0.0, 0.2, -28.5),     # 18: Pasillo Norte centro
+	Vector3(-25.0, 0.2, -28.5)    # 19: Pasillo Norte oeste (frente a Aula 102)
+]
+var current_circuit_idx: int = 0
+
+## Inspecciones de aulas en PB
+const AULAS_PB_DATA: Array[Dictionary] = [
 	{
 		"name": "Aula 106",
-		"corridor_wp_idx": 1,                     # Vector3(-42.0, 0.2, -12.0)
+		"corridor_wp": Vector3(-42.0, 0.2, -12.0),
 		"door_pos": Vector3(-47.0, 0.2, -12.0),
 		"inside_pos": Vector3(-49.5, 0.2, -12.0),
 		"yaw": deg_to_rad(-90.0)
 	},
 	{
 		"name": "Aula 107",
-		"corridor_wp_idx": 2,                     # Vector3(-42.0, 0.2, 5.0)
+		"corridor_wp": Vector3(-42.0, 0.2, 2.5),
 		"door_pos": Vector3(-47.0, 0.2, 2.5),
 		"inside_pos": Vector3(-49.5, 0.2, 2.5),
 		"yaw": deg_to_rad(-90.0)
 	},
 	{
 		"name": "Aula 108",
-		"corridor_wp_idx": 3,                     # Vector3(-42.0, 0.2, 20.0)
+		"corridor_wp": Vector3(-42.0, 0.2, 17.5),
 		"door_pos": Vector3(-47.0, 0.2, 17.5),
 		"inside_pos": Vector3(-49.5, 0.2, 17.5),
 		"yaw": deg_to_rad(-90.0)
 	},
 	{
 		"name": "Aula 102",
-		"corridor_wp_idx": 21,                    # Vector3(-25.0, 0.2, -28.5)
-		"door_pos": Vector3(-34.5, 0.2, -33.0),
-		"inside_pos": Vector3(-34.5, 0.2, -35.5),
+		"corridor_wp": Vector3(-25.0, 0.2, -28.5),
+		"door_pos": Vector3(-27.5, 0.2, -33.0),
+		"inside_pos": Vector3(-27.5, 0.2, -35.5),
 		"yaw": deg_to_rad(180.0)
 	},
 	{
 		"name": "Cafetería PB",
-		"corridor_wp_idx": 16,                    # Vector3(42.0, 0.2, 0.0)
+		"corridor_wp": Vector3(42.0, 0.2, -2.5),
 		"door_pos": Vector3(47.0, 0.2, -2.5),
 		"inside_pos": Vector3(50.5, 0.2, -2.5),
 		"yaw": deg_to_rad(90.0)
 	}
 ]
 
-var is_inspecting_aula: bool = false
-var aula_inspect_phase: int = 0 # 0: yendo a puerta, 1: entrando, 2: buscando, 3: saliendo
-var aula_inspect_data: Dictionary = {}
-var aula_inspect_wait_timer: float = 0.0
-var aula_inspect_cooldown: float = 8.0
-var saw_player_hide: bool = false
-var prev_player_hidden: bool = false
-
-
-## Puntos de patrullaje por toda la facultad organizados por piso
-## PB = Y ~0.2 | P1 = Y ~4.7 | P2 = Y ~9.2
-const WAYPOINTS_PB: Array[Vector3] = [
-	# Pasillo Oeste (X = -42.0)
-	Vector3(-42.0, 0.2, -28.5),   # 0: PB: Esquina Noroeste (frente a Aula 105)
-	Vector3(-42.0, 0.2, -12.0),   # 1: PB: Pasillo Oeste (frente a Aula 106)
-	Vector3(-42.0, 0.2, 5.0),     # 2: PB: Pasillo Oeste (frente a Aula 107)
-	Vector3(-42.0, 0.2, 20.0),    # 3: PB: Pasillo Oeste (frente a Aula 108)
-	Vector3(-42.0, 0.2, 30.0),    # 4: PB: Esquina Suroeste
-	# Pasillo Sur (Z = 30.0)
-	Vector3(-25.0, 0.2, 30.0),    # 5: PB: Pasillo Sur oeste (frente a Bedelía)
-	Vector3(0.0, 0.2, 30.0),      # 6: PB: Pasillo Sur centro (frente a Auditorio y Entrada Patio)
-	# Incursión al Patio del Estudiante (Entrada Sur X = 0.0)
-	Vector3(0.0, 0.2, 22.0),      # 7: PB: Galería Sur frente a entrada al Patio
-	Vector3(0.0, 0.2, 6.0),       # 8: PB: Patio interior frente a la fuente
-	Vector3(0.0, 0.2, -4.0),      # 9: PB: Patio interior norte
-	Vector3(0.0, 0.2, 6.0),       # 10: PB: Retorno patio frente a la fuente
-	Vector3(0.0, 0.2, 22.0),      # 11: PB: Retorno galería Sur
-	Vector3(0.0, 0.2, 30.0),      # 12: PB: Salida Pasillo Sur centro
-	# Continuación Pasillo Sur
-	Vector3(25.0, 0.2, 30.0),     # 13: PB: Pasillo Sur este
-	Vector3(42.0, 0.2, 30.0),     # 14: PB: Esquina Sureste
-	# Pasillo Este (X = 42.0)
-	Vector3(42.0, 0.2, 17.0),     # 15: PB: Pasillo Este sur (frente a Aula 115)
-	Vector3(42.0, 0.2, 0.0),      # 16: PB: Pasillo Este centro (Cafetería PB)
-	Vector3(42.0, 0.2, -15.0),    # 17: PB: Pasillo Este norte (frente a Aula 114)
-	Vector3(42.0, 0.2, -28.5),    # 18: PB: Esquina Noreste
-	# Pasillo Norte (Z = -28.5)
-	Vector3(25.0, 0.2, -28.5),    # 19: PB: Pasillo Norte este (frente a Aula 104)
-	Vector3(0.0, 0.2, -28.5),     # 20: PB: Pasillo Norte centro
-	Vector3(-25.0, 0.2, -28.5)    # 21: PB: Pasillo Norte oeste (frente a Aula 102)
-]
-
-const WAYPOINTS_P1: Array[Vector3] = [
-	Vector3(-42.0, 4.7, 30.0),    # P1: Pasillo Oeste sur
-	Vector3(-42.0, 4.7, 15.0),    # P1: Pasillo Oeste centro
-	Vector3(-42.0, 4.7, 0.0),     # P1: Pasillo Oeste norte
-	Vector3(-42.0, 4.7, -15.0),   # P1: Pasillo Oeste (oficinas dept.)
-	Vector3(-42.0, 4.7, -28.5),   # P1: Esquina Noroeste
-	Vector3(-20.0, 4.7, -28.5),   # P1: Pasillo Norte oeste
-	Vector3(0.0, 4.7, -28.5),     # P1: Pasillo Norte centro
-	Vector3(20.0, 4.7, -28.5),    # P1: Pasillo Norte este
-	Vector3(42.0, 4.7, -28.5),    # P1: Esquina Noreste
-	Vector3(42.0, 4.7, -15.0),    # P1: Pasillo Este norte
-	Vector3(42.0, 4.7, 0.0),      # P1: Pasillo Este centro
-	Vector3(42.0, 4.7, 15.0),     # P1: Pasillo Este sur
-	Vector3(42.0, 4.7, 30.0),     # P1: Esquina Sureste
-	Vector3(20.0, 4.7, 30.0),     # P1: Pasillo Sur este
-	Vector3(0.0, 4.7, 30.0),      # P1: Pasillo Sur centro
-	Vector3(-20.0, 4.7, 30.0)     # P1: Pasillo Sur oeste
-]
-
-const WAYPOINTS_P2: Array[Vector3] = [
-	Vector3(42.0, 9.2, 30.0),     # P2: Esquina Sureste
-	Vector3(42.0, 9.2, 15.0),     # P2: Pasillo Este sur
-	Vector3(42.0, 9.2, 0.0),      # P2: Pasillo Este centro (Cafetería P2)
-	Vector3(42.0, 9.2, -15.0),    # P2: Pasillo Este norte
-	Vector3(42.0, 9.2, -28.5),    # P2: Esquina Noreste
-	Vector3(20.0, 9.2, -28.5),    # P2: Pasillo Norte este (Aula 215)
-	Vector3(0.0, 9.2, -28.5),     # P2: Pasillo Norte centro (Aula 210)
-	Vector3(-20.0, 9.2, -28.5),   # P2: Pasillo Norte oeste (Aula 205)
-	Vector3(-42.0, 9.2, -28.5),   # P2: Esquina Noroeste (Aula 201)
-	Vector3(-42.0, 9.2, -15.0),   # P2: Pasillo Oeste norte
-	Vector3(-42.0, 9.2, 0.0),     # P2: Pasillo Oeste centro
-	Vector3(-42.0, 9.2, 15.0),    # P2: Pasillo Oeste sur
-	Vector3(-42.0, 9.2, 30.0),    # P2: Esquina Suroeste
-	Vector3(-20.0, 9.2, 30.0),    # P2: Pasillo Sur oeste
-	Vector3(0.0, 9.2, 30.0),      # P2: Pasillo Sur centro
-	Vector3(20.0, 9.2, 30.0)      # P2: Pasillo Sur este
-]
-
-## Nodos secuenciales de escaleras para no trabarse con la pared divisoria (WallDiv)
-## Cada descanso tiene dos puntos: entrada (despeja WallDiv) y salida (alineado al siguiente tramo)
+## Nodos secuenciales de escaleras (por compatibilidad en caso de desbloqueo futuro)
 const STAIR_WEST_PATH: Array[Vector3] = [
-	Vector3(-64.5, 0.2, 27.5),    # 0: PB Entrada pasillo
-	Vector3(-66.0, 0.4, 27.5),    # 1: PB-P1 Tramo 1 inicio
-	Vector3(-71.0, 2.1, 27.5),    # 2: PB-P1 Tramo 1 fin
-	Vector3(-72.8, 2.25, 27.5),   # 3: PB-P1 Descanso Entrada (despeja WallDiv)
-	Vector3(-72.8, 2.25, 32.5),   # 4: PB-P1 Descanso Salida (alineado con Tramo 2)
-	Vector3(-71.0, 2.4, 32.5),    # 5: PB-P1 Tramo 2 inicio
-	Vector3(-66.0, 4.3, 32.5),    # 6: PB-P1 Tramo 2 fin
-	Vector3(-64.5, 4.7, 32.5),    # 7: P1 Salida/Hall
-	Vector3(-64.5, 4.7, 27.5),    # 8: P1 Entrada a P2
-	Vector3(-66.0, 4.9, 27.5),    # 9: P1-P2 Tramo 1 inicio
-	Vector3(-71.0, 6.6, 27.5),    # 10: P1-P2 Tramo 1 fin
-	Vector3(-72.8, 6.75, 27.5),   # 11: P1-P2 Descanso Entrada
-	Vector3(-72.8, 6.75, 32.5),   # 12: P1-P2 Descanso Salida
-	Vector3(-71.0, 6.9, 32.5),    # 13: P1-P2 Tramo 2 inicio
-	Vector3(-66.0, 8.8, 32.5),    # 14: P1-P2 Tramo 2 fin
-	Vector3(-64.5, 9.2, 32.5)     # 15: P2 Salida/Hall
+	Vector3(-64.5, 0.2, 27.5),
+	Vector3(-66.0, 0.4, 27.5),
+	Vector3(-71.0, 2.1, 27.5),
+	Vector3(-72.8, 2.25, 27.5),
+	Vector3(-72.8, 2.25, 32.5),
+	Vector3(-71.0, 2.4, 32.5),
+	Vector3(-66.0, 4.3, 32.5),
+	Vector3(-64.5, 4.7, 32.5)
 ]
 
-const STAIR_EAST_PATH: Array[Vector3] = [
-	Vector3(64.5, 0.2, 27.5),     # 0: PB Entrada pasillo
-	Vector3(66.0, 0.4, 27.5),     # 1: PB-P1 Tramo 1 inicio
-	Vector3(71.0, 2.1, 27.5),     # 2: PB-P1 Tramo 1 fin
-	Vector3(72.8, 2.25, 27.5),    # 3: PB-P1 Descanso Entrada (despeja WallDiv)
-	Vector3(72.8, 2.25, 32.5),    # 4: PB-P1 Descanso Salida (alineado con Tramo 2)
-	Vector3(71.0, 2.4, 32.5),     # 5: PB-P1 Tramo 2 inicio
-	Vector3(66.0, 4.3, 32.5),     # 6: PB-P1 Tramo 2 fin
-	Vector3(64.5, 4.7, 32.5),     # 7: P1 Salida/Hall
-	Vector3(64.5, 4.7, 27.5),     # 8: P1 Entrada a P2
-	Vector3(66.0, 4.9, 27.5),     # 9: P1-P2 Tramo 1 inicio
-	Vector3(71.0, 6.6, 27.5),     # 10: P1-P2 Tramo 1 fin
-	Vector3(72.8, 6.75, 27.5),    # 11: P1-P2 Descanso Entrada
-	Vector3(72.8, 6.75, 32.5),    # 12: P1-P2 Descanso Salida
-	Vector3(71.0, 6.9, 32.5),     # 13: P1-P2 Tramo 2 inicio
-	Vector3(66.0, 8.8, 32.5),     # 14: P1-P2 Tramo 2 fin
-	Vector3(64.5, 9.2, 32.5)      # 15: P2 Salida/Hall
-]
-
-const STAIR_NORTH_PATH: Array[Vector3] = [
-	Vector3(39.5, 0.2, -44.0),    # 0: PB Entrada pasillo (T1)
-	Vector3(39.5, 0.4, -45.5),    # 1: PB-P1 Tramo 1 inicio
-	Vector3(39.5, 2.1, -51.0),    # 2: PB-P1 Tramo 1 fin
-	Vector3(39.5, 2.25, -52.8),   # 3: PB-P1 Descanso Entrada
-	Vector3(44.5, 2.25, -52.8),   # 4: PB-P1 Descanso Salida
-	Vector3(44.5, 2.4, -51.0),    # 5: PB-P1 Tramo 2 inicio
-	Vector3(44.5, 4.3, -45.5),    # 6: PB-P1 Tramo 2 fin
-	Vector3(44.5, 4.7, -44.0),    # 7: P1 Salida/Hall
-	Vector3(39.5, 4.7, -44.0),    # 8: P1 Entrada a P2
-	Vector3(39.5, 4.9, -45.5),    # 9: P1-P2 Tramo 1 inicio
-	Vector3(39.5, 6.6, -51.0),    # 10: P1-P2 Tramo 1 fin
-	Vector3(39.5, 6.75, -52.8),   # 11: P1-P2 Descanso Entrada
-	Vector3(44.5, 6.75, -52.8),   # 12: P1-P2 Descanso Salida
-	Vector3(44.5, 6.9, -51.0),    # 13: P1-P2 Tramo 2 inicio
-	Vector3(44.5, 8.8, -45.5),    # 14: P1-P2 Tramo 2 fin
-	Vector3(44.5, 9.2, -44.0)     # 15: P2 Salida/Hall
-]
-
-var current_patrol_floor: int = 0
-var current_floor_waypoints: Array[Vector3] = WAYPOINTS_PB
-var patrol_waypoints: Array[Vector3] = WAYPOINTS_PB
-var current_waypoint_idx: int = 0
-
-## Seguimiento secuencial en escaleras
 var active_stair_idx: int = -1
 var active_stair_tower: String = ""
-
-## Investigación entre pisos
-var floor_investigate_timer: float = 50.0
-var is_investigating_floor: bool = false
-var target_investigate_floor: int = 0
-var target_floor_entry_pos: Vector3 = Vector3.ZERO
 
 func get_floor(y: float) -> int:
 	if y < 2.5: return 0
 	elif y < 7.0: return 1
 	else: return 2
-
-func get_floor_waypoints(floor_idx: int) -> Array[Vector3]:
-	match floor_idx:
-		0: return WAYPOINTS_PB
-		1: return WAYPOINTS_P1
-		2: return WAYPOINTS_P2
-		_: return WAYPOINTS_PB
 
 func get_stair_tower_name(pos: Vector3) -> String:
 	if pos.x <= -63.0 and pos.x >= -75.0 and pos.z >= 24.0 and pos.z <= 36.0:
@@ -279,226 +177,6 @@ func get_stair_tower_name(pos: Vector3) -> String:
 	if pos.x >= 37.0 and pos.x <= 47.0 and pos.z >= -55.0 and pos.z <= -43.0:
 		return "Norte"
 	return ""
-
-func get_stair_path(tower_name: String) -> Array[Vector3]:
-	match tower_name:
-		"Oeste": return STAIR_WEST_PATH
-		"Este": return STAIR_EAST_PATH
-		"Norte": return STAIR_NORTH_PATH
-		_: return STAIR_WEST_PATH
-
-func get_closest_stair_tower(pos: Vector3) -> String:
-	var d_west = Vector2(pos.x - (-64.5), pos.z - 27.5).length_squared()
-	var d_east = Vector2(pos.x - 64.5, pos.z - 27.5).length_squared()
-	var d_north = Vector2(pos.x - 39.5, pos.z - (-44.0)).length_squared()
-	if d_west <= d_east and d_west <= d_north:
-		return "Oeste"
-	elif d_east <= d_north:
-		return "Este"
-	else:
-		return "Norte"
-
-func _get_nav_target_to(destination_pos: Vector3) -> Vector3:
-	var my_floor = get_floor(global_position.y)
-	var tgt_floor = get_floor(destination_pos.y)
-	var my_tower = get_stair_tower_name(global_position)
-	var tgt_tower = get_stair_tower_name(destination_pos)
-
-	if ONLY_PATROL_PB:
-		# El profesor patrulla exclusivamente Planta Baja y no usa escaleras
-		tgt_floor = 0
-		tgt_tower = ""
-		my_tower = ""
-		active_stair_idx = -1
-		active_stair_tower = ""
-
-	# Si ambos están en el mismo piso y ninguno dentro de una caja de escalera:
-	if my_floor == tgt_floor and my_tower == "" and tgt_tower == "":
-		active_stair_idx = -1
-		active_stair_tower = ""
-
-		# En el Laboratorio Central de Electrónica (PB, X de -37 a -17, Z de -10 a 11):
-		# Las mesadas van de X=-34 a -20. El pasillo transversal central despejado está en Z = 1.0 ~ 1.5.
-		if my_floor == 0 and (global_position.x >= -37.0 and global_position.x <= -17.0 and global_position.z >= -10.0 and global_position.z <= 11.0):
-			if _is_walk_path_clear(global_position, destination_pos):
-				return destination_pos
-			# Si la línea recta hacia destination_pos está bloqueada por una mesada:
-			# Usar el pasillo central transversal despejado en Z = 1.2
-			if absf(global_position.z - 1.2) > 0.6 and (global_position.x <= -34.5 or global_position.x >= -19.5):
-				return Vector3(global_position.x, global_position.y, 1.2)
-			elif absf(destination_pos.x - global_position.x) > 0.6:
-				var tgt_x = -18.5 if destination_pos.x > -26.0 else -35.5
-				return Vector3(tgt_x, global_position.y, 1.2)
-			else:
-				return destination_pos
-
-		# Si el camino directo hacia el objetivo está libre (sin paredes intermedias), ir directo:
-		if _is_walk_path_clear(global_position, destination_pos):
-			return destination_pos
-
-		# Si hay una pared o esquina bloqueando la línea recta:
-		# Encontrar el waypoint del pasillo que tenga camino directo despejado y nos acerque al destino
-		var wps = get_floor_waypoints(my_floor)
-		var best_wp = Vector3.ZERO
-		var best_score = 99999.0
-		
-		for wp in wps:
-			var d_prof = global_position.distance_to(wp)
-			if d_prof < 35.0 and _is_walk_path_clear(global_position, wp):
-				var score = d_prof + wp.distance_to(destination_pos)
-				if score < best_score:
-					best_score = score
-					best_wp = wp
-					
-		if best_score < 99999.0:
-			return best_wp
-
-		# Respaldo de seguridad si ningún waypoint tiene visión directa libre:
-		# En lugar de caminar ciegamente contra la pared hacia destination_pos,
-		# ir al waypoint más cercano del pasillo para despejar la esquina.
-		var min_d = 99999.0
-		var fallback_wp = global_position
-		for wp in wps:
-			var d = global_position.distance_to(wp)
-			if d < min_d:
-				min_d = d
-				fallback_wp = wp
-		return fallback_wp
-
-	# Elegir la torre de escaleras adecuada
-	var chosen_tower = ""
-	if my_tower != "":
-		chosen_tower = my_tower
-	elif tgt_tower != "":
-		chosen_tower = tgt_tower
-	else:
-		chosen_tower = get_closest_stair_tower(global_position)
-
-	var path = get_stair_path(chosen_tower)
-
-	# Determinar el nodo objetivo final en la escalera (goal_idx)
-	var goal_idx = 0
-	if tgt_tower == chosen_tower:
-		# El jugador está dentro de esta misma escalera: buscar el nodo más cercano al jugador
-		var min_td = 99999.0
-		for i in range(path.size()):
-			var td = destination_pos.distance_to(path[i])
-			if td < min_td:
-				min_td = td
-				goal_idx = i
-	else:
-		# Jugador en otro piso fuera de la torre: salir en el piso objetivo
-		if tgt_floor == 0:
-			goal_idx = 0
-		elif tgt_floor == 2:
-			goal_idx = 15
-		else: # tgt_floor == 1
-			# Si viene desde PB (subiendo), la salida de la escalera a P1 es el nodo 7
-			# Si viene desde P2 (bajando), la salida de la escalera a P1 es el nodo 8
-			if active_stair_idx >= 8 or (active_stair_idx < 0 and global_position.y >= 4.5):
-				goal_idx = 8
-			else:
-				goal_idx = 7
-
-	# Si el profesor aún está fuera de la torre: dirigirse a la entrada del piso actual
-	if my_tower == "":
-		var entry_idx = 0
-		if my_floor == 0:
-			entry_idx = 0
-		elif my_floor == 2:
-			entry_idx = 15
-		else: # my_floor == 1
-			entry_idx = 8 if tgt_floor == 2 else 7
-		active_stair_idx = entry_idx
-		active_stair_tower = chosen_tower
-		return path[entry_idx]
-
-	# El profesor está dentro de la torre: actualizar el seguimiento secuencial
-	if active_stair_idx < 0 or active_stair_idx >= path.size() or active_stair_tower != chosen_tower:
-		active_stair_tower = chosen_tower
-		var best_idx = 0
-		var best_d = 99999.0
-		for i in range(path.size()):
-			var d = global_position.distance_to(path[i])
-			if d < best_d:
-				best_d = d
-				best_idx = i
-		active_stair_idx = best_idx
-
-	# Si ya llegó cerca del nodo objetivo activo (< 1.25m), avanzar al siguiente nodo
-	var cur_target = path[active_stair_idx]
-	var d_to_cur = global_position.distance_to(cur_target)
-	if d_to_cur < 1.25:
-		if active_stair_idx < goal_idx:
-			active_stair_idx += 1
-		elif active_stair_idx > goal_idx:
-			active_stair_idx -= 1
-
-	# Si ya llegó al nodo meta de la escalera o está saliendo al pasillo
-	if active_stair_idx == goal_idx:
-		var d_goal = global_position.distance_to(path[goal_idx])
-		if d_goal < 1.8 or my_tower == "":
-			# Si aún está dentro de la caja de escalera, forzar el paso hacia afuera para ingresar al pasillo despejado:
-			if my_tower != "":
-				if chosen_tower == "Oeste":
-					return Vector3(-61.5, path[goal_idx].y, path[goal_idx].z)
-				elif chosen_tower == "Este":
-					return Vector3(61.5, path[goal_idx].y, path[goal_idx].z)
-				elif chosen_tower == "Norte":
-					return Vector3(path[goal_idx].x, path[goal_idx].y, -41.0)
-			return destination_pos
-		return path[goal_idx]
-
-	return path[active_stair_idx]
-
-func are_upper_floors_unlocked() -> bool:
-	if ONLY_PATROL_PB:
-		return false
-	var main = get_tree().root.find_child("Main", true, false)
-	if main and "upper_floor_blockers" in main:
-		return main.upper_floor_blockers.size() == 0
-	var blocker = get_tree().root.find_child("BloqueoEscaleraOeste", true, false)
-	if blocker and is_instance_valid(blocker):
-		return false
-	return true
-
-func _start_floor_investigation() -> void:
-	if ONLY_PATROL_PB:
-		floor_investigate_timer = 99999.0
-		is_investigating_floor = false
-		return
-	var my_floor = get_floor(global_position.y)
-	var available_floors: Array[int] = []
-	for f in [0, 1, 2]:
-		if f != my_floor:
-			available_floors.append(f)
-	
-	if available_floors.is_empty():
-		floor_investigate_timer = randf_range(20.0, 35.0)
-		return
-
-	target_investigate_floor = available_floors[randi() % available_floors.size()]
-	is_investigating_floor = true
-
-	var wps = get_floor_waypoints(target_investigate_floor)
-	if wps.size() > 0:
-		target_floor_entry_pos = wps[0]
-
-	if target_investigate_floor > my_floor:
-		var up_phrases = [
-			"Voy a subir a revisar el piso " + str(target_investigate_floor) + "...",
-			"Me pareció escuchar pasos arriba...",
-			"Tengo que ir a buscar unos exámenes arriba...",
-			"A ver si hay alumnos en las aulas de arriba..."
-		]
-		_say(up_phrases[randi() % up_phrases.size()], Color(1.0, 0.85, 0.5))
-	else:
-		var down_phrases = [
-			"Todo en orden por aquí. Voy a bajar a revisar la planta baja...",
-			"Voy a pegar una vuelta por planta baja...",
-			"Volvamos a la ronda de abajo..."
-		]
-		_say(down_phrases[randi() % down_phrases.size()], Color(1.0, 0.85, 0.5))
 
 ## Frases del profesor
 var phrases_patrol: Array[String] = [
@@ -519,93 +197,230 @@ var phrases_enraged: Array[String] = [
 	"¡¡COPIARSE ES CAUSAL DE EXPULSIÓN INMEDIATA!!",
 	"¡¡NO TIENEN NIVEL PARA LA FACULTAD!!"
 ]
+var phrases_seek: Array[String] = [
+	"¿Dónde se metió este alumno? Parecía haber alguien acá...",
+	"¿Quién anda haciendo ruidos en mi hora...?",
+	"Me pareció escuchar pasos por acá...",
+	"Nadie debería estar afuera del aula..."
+]
+
 var phrase_timer: float = 0.0
 var step_audio: AudioStreamPlayer3D = null
 var step_phase: float = 0.0
 var last_chase_screamer_time: float = -999.0
 
+## Activa o desactiva al profesor
+var is_active: bool = true
+
 func _ready() -> void:
 	add_to_group("enemies")
 	
-	# Audio 3D espacial de pasos
 	_setup_step_audio()
+	_build_astar_pb_network()
 	
-	# Configuración de física para caminar suave y sin saltos ni flotar
 	floor_snap_length = 0.5
 	floor_constant_speed = true
 	floor_max_angle = deg_to_rad(50.0)
 	floor_block_on_wall = false
-	active_stair_idx = -1
-	active_stair_tower = ""
 	
 	patrol_speed = base_patrol_speed
 	chase_speed = base_chase_speed
 	current_speed = patrol_speed
 	
 	prev_pos = global_position
-	current_patrol_floor = get_floor(global_position.y)
-	current_floor_waypoints = get_floor_waypoints(current_patrol_floor)
-	patrol_waypoints = current_floor_waypoints
 	
 	_find_player()
 	
 	var mic = get_tree().root.find_child("MicDetector", true, false)
 	if mic and mic.has_signal("noise_triggered"):
 		mic.noise_triggered.connect(_on_player_noise)
-	
-	phrase_timer = randf_range(3.0, 7.0)
-	floor_investigate_timer = randf_range(20.0, 35.0)
-	_pick_closest_waypoint()
-
-## Activa o desactiva al profesor (invisible, sin moverse ni colisionar)
-var is_active: bool = true
+		
+	phrase_timer = randf_range(4.0, 8.0)
+	_pick_closest_patrol_circuit_idx()
+	_navigate_to_circuit_idx(current_circuit_idx)
 
 func set_active(active: bool) -> void:
 	is_active = active
 	visible = active
 	process_mode = Node.PROCESS_MODE_INHERIT if active else Node.PROCESS_MODE_DISABLED
-	if active:
+	if active and is_inside_tree():
 		velocity = Vector3.ZERO
 		current_state = State.PATROL
 		current_speed = patrol_speed
 		time_without_sight = 0.0
 		prev_pos = global_position
-		current_patrol_floor = get_floor(global_position.y)
-		current_floor_waypoints = get_floor_waypoints(current_patrol_floor)
-		patrol_waypoints = current_floor_waypoints
-		is_investigating_floor = false
-		active_stair_idx = -1
-		active_stair_tower = ""
-		_pick_closest_waypoint()
+		_pick_closest_patrol_circuit_idx()
+		_navigate_to_circuit_idx(current_circuit_idx)
 
-func _pick_closest_waypoint() -> void:
-	current_floor_waypoints = get_floor_waypoints(current_patrol_floor)
-	patrol_waypoints = current_floor_waypoints
-	if current_floor_waypoints.is_empty():
-		current_waypoint_idx = 0
-		return
-		
-	var best_visible_idx = -1
-	var best_visible_dist = 99999.0
-	var best_any_idx = 0
-	var best_any_dist = 99999.0
+## =====================================================================
+## CONSTRUCCIÓN DE LA RED ASTAR3D DE PLANTA BAJA
+## =====================================================================
+func _build_astar_pb_network() -> void:
+	astar_pb.clear()
 	
-	for i in range(current_floor_waypoints.size()):
-		var wp = current_floor_waypoints[i]
-		var d = global_position.distance_to(wp)
-		if d < best_any_dist:
-			best_any_dist = d
-			best_any_idx = i
-		if d < best_visible_dist and _is_walk_path_clear(global_position, wp):
-			best_visible_dist = d
-			best_visible_idx = i
-			
-	var chosen_idx = best_visible_idx if best_visible_idx >= 0 else best_any_idx
-	# Si ya estamos muy cerca de este punto, apuntar al siguiente del circuito
-	if global_position.distance_to(current_floor_waypoints[chosen_idx]) < 2.2:
-		chosen_idx = (chosen_idx + 1) % current_floor_waypoints.size()
-	current_waypoint_idx = chosen_idx
+	var points = {
+		# Pasillo Oeste (X = -42.0)
+		"W_0": Vector3(-42.0, 0.2, -28.5),
+		"W_1": Vector3(-42.0, 0.2, -20.0),
+		"W_2": Vector3(-42.0, 0.2, -12.0),
+		"W_3": Vector3(-42.0, 0.2, -8.0),
+		"W_4": Vector3(-42.0, 0.2, 2.5),
+		"W_5": Vector3(-42.0, 0.2, 17.5),
+		"W_6": Vector3(-42.0, 0.2, 30.0),
+		# Pasillo Sur (Z = 30.0)
+		"S_1": Vector3(-30.0, 0.2, 30.0),
+		"S_2": Vector3(-20.0, 0.2, 30.0),
+		"S_3": Vector3(-10.0, 0.2, 30.0),
+		"S_4": Vector3(0.0, 0.2, 30.0),
+		"S_5": Vector3(10.0, 0.2, 30.0),
+		"S_6": Vector3(20.0, 0.2, 30.0),
+		"S_7": Vector3(30.0, 0.2, 30.0),
+		"E_6": Vector3(42.0, 0.2, 30.0),
+		# Pasillo Este (X = 42.0)
+		"E_5": Vector3(42.0, 0.2, 17.0),
+		"E_4": Vector3(42.0, 0.2, 8.0),
+		"E_3": Vector3(42.0, 0.2, -2.5),
+		"E_2": Vector3(42.0, 0.2, -15.0),
+		"E_1": Vector3(42.0, 0.2, -22.0),
+		"E_0": Vector3(42.0, 0.2, -28.5),
+		# Pasillo Norte (Z = -28.5)
+		"N_5": Vector3(30.0, 0.2, -28.5),
+		"N_4": Vector3(23.5, 0.2, -28.5),
+		"N_3": Vector3(10.0, 0.2, -28.5),
+		"N_2": Vector3(0.0, 0.2, -28.5),
+		"N_1": Vector3(-15.0, 0.2, -28.5),
+		"N_0": Vector3(-25.0, 0.2, -28.5),
+		# Patio del Estudiante
+		"P_S": Vector3(0.0, 0.2, 22.0),
+		"P_MS": Vector3(0.0, 0.2, 14.0),
+		"P_FNT": Vector3(0.0, 0.2, 4.0),
+		"P_MN": Vector3(0.0, 0.2, -4.0),
+		"P_N": Vector3(0.0, 0.2, -12.0),
+		"P_W": Vector3(-12.0, 0.2, 6.0),
+		"P_E": Vector3(12.0, 0.2, 6.0),
+		# Aulas e interiores
+		"A106_DOOR": Vector3(-47.0, 0.2, -12.0),
+		"A106_IN": Vector3(-49.5, 0.2, -12.0),
+		"A107_DOOR": Vector3(-47.0, 0.2, 2.5),
+		"A107_IN": Vector3(-49.5, 0.2, 2.5),
+		"A108_DOOR": Vector3(-47.0, 0.2, 17.5),
+		"A108_IN": Vector3(-49.5, 0.2, 17.5),
+		"A102_DOOR": Vector3(-27.5, 0.2, -33.0),
+		"A102_IN": Vector3(-27.5, 0.2, -35.5),
+		"CAFE_DOOR": Vector3(47.0, 0.2, -2.5),
+		"CAFE_IN": Vector3(50.5, 0.2, -2.5),
+		"FOTO_DOOR": Vector3(-35.0, 0.2, 34.5),
+		"FOTO_IN": Vector3(-25.0, 0.2, 38.0),
+		# Lab Central de Electrónica
+		"LAB_W_DOOR": Vector3(-37.0, 0.2, -8.0),
+		"LAB_W_AISLE": Vector3(-35.0, 0.2, 1.2),
+		"LAB_MID": Vector3(-26.0, 0.2, 1.2),
+		"LAB_E_AISLE": Vector3(-18.5, 0.2, 1.2),
+		"LAB_E_DOOR": Vector3(-18.5, 0.2, -8.0)
+	}
+	
+	var name_to_id = {}
+	var id = 0
+	for k in points.keys():
+		name_to_id[k] = id
+		astar_pb.add_point(id, points[k])
+		id += 1
+		
+	var connections = [
+		# Pasillo Oeste
+		["W_0", "W_1"], ["W_1", "W_2"], ["W_2", "W_3"], ["W_3", "W_4"], ["W_4", "W_5"], ["W_5", "W_6"],
+		# Pasillo Sur
+		["W_6", "S_1"], ["S_1", "S_2"], ["S_2", "S_3"], ["S_3", "S_4"], ["S_4", "S_5"], ["S_5", "S_6"], ["S_6", "S_7"], ["S_7", "E_6"],
+		# Pasillo Este
+		["E_6", "E_5"], ["E_5", "E_4"], ["E_4", "E_3"], ["E_3", "E_2"], ["E_2", "E_1"], ["E_1", "E_0"],
+		# Pasillo Norte
+		["E_0", "N_5"], ["N_5", "N_4"], ["N_4", "N_3"], ["N_3", "N_2"], ["N_2", "N_1"], ["N_1", "N_0"], ["N_0", "W_0"],
+		# Patio
+		["S_4", "P_S"], ["P_S", "P_MS"], ["P_MS", "P_FNT"], ["P_FNT", "P_MN"], ["P_MN", "P_N"],
+		["P_MS", "P_W"], ["P_W", "P_MN"], ["P_MS", "P_E"], ["P_E", "P_MN"],
+		# Aulas
+		["W_2", "A106_DOOR"], ["A106_DOOR", "A106_IN"],
+		["W_4", "A107_DOOR"], ["A107_DOOR", "A107_IN"],
+		["W_5", "A108_DOOR"], ["A108_DOOR", "A108_IN"],
+		["N_0", "A102_DOOR"], ["A102_DOOR", "A102_IN"],
+		["E_3", "CAFE_DOOR"], ["CAFE_DOOR", "CAFE_IN"],
+		["S_2", "FOTO_DOOR"], ["FOTO_DOOR", "FOTO_IN"],
+		# Lab
+		["W_3", "LAB_W_DOOR"], ["LAB_W_DOOR", "LAB_W_AISLE"],
+		["LAB_W_AISLE", "LAB_MID"], ["LAB_MID", "LAB_E_AISLE"],
+		["LAB_E_AISLE", "LAB_E_DOOR"]
+	]
+	
+	for conn in connections:
+		var id_a = name_to_id[conn[0]]
+		var id_b = name_to_id[conn[1]]
+		astar_pb.connect_points(id_a, id_b, true)
 
+func _get_astar_path_to(destination_pos: Vector3) -> PackedVector3Array:
+	var dest_y0 = Vector3(destination_pos.x, 0.2, destination_pos.z)
+	var my_y0 = Vector3(global_position.x, 0.2, global_position.z)
+	
+	# Si la línea recta hacia el destino está totalmente libre y a corta distancia, ir directo:
+	if _is_walk_path_clear(global_position, dest_y0) and global_position.distance_to(dest_y0) < 6.0:
+		var direct = PackedVector3Array()
+		direct.append(dest_y0)
+		return direct
+		
+	var from_id = _find_best_graph_node(my_y0)
+	var to_id = _find_best_graph_node(dest_y0)
+	
+	if from_id == -1 or to_id == -1:
+		from_id = astar_pb.get_closest_point(my_y0)
+		to_id = astar_pb.get_closest_point(dest_y0)
+		
+	var node_path = astar_pb.get_point_path(from_id, to_id)
+	var result = PackedVector3Array()
+	
+	for pt in node_path:
+		result.append(pt)
+		
+	# Agregar la posición final precisa al final de la ruta
+	result.append(dest_y0)
+	return result
+
+func _find_best_graph_node(pos: Vector3) -> int:
+	var point_ids = astar_pb.get_point_ids()
+	var best_id = -1
+	var best_dist = 99999.0
+	
+	# Preferir un punto con camino despejado
+	for pid in point_ids:
+		var pt = astar_pb.get_point_position(pid)
+		var d = pos.distance_to(pt)
+		if d < best_dist and _is_walk_path_clear(pos, pt):
+			best_dist = d
+			best_id = pid
+			
+	if best_id != -1:
+		return best_id
+		
+	# Respaldo: el más cercano por distancia euclidiana
+	return astar_pb.get_closest_point(pos)
+
+func _pick_closest_patrol_circuit_idx() -> void:
+	var best_idx = 0
+	var best_d = 99999.0
+	for i in range(PATROL_CIRCUIT_PB.size()):
+		var d = global_position.distance_to(PATROL_CIRCUIT_PB[i])
+		if d < best_d:
+			best_d = d
+			best_idx = i
+	current_circuit_idx = best_idx
+
+func _navigate_to_circuit_idx(idx: int) -> void:
+	current_circuit_idx = idx % PATROL_CIRCUIT_PB.size()
+	var target = PATROL_CIRCUIT_PB[current_circuit_idx]
+	current_path = _get_astar_path_to(target)
+	current_path_idx = 0
+
+## =====================================================================
+## BUCLE PRINCIPAL DE FÍSICA Y ESTADOS
+## =====================================================================
 func _find_player() -> void:
 	var players = get_tree().get_nodes_in_group("player")
 	if players.size() > 0:
@@ -636,7 +451,6 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 
-	# Seguridad anti-caídas al vacío
 	if global_position.y < -0.8:
 		global_position.y = 0.05
 		velocity.y = 0.0
@@ -644,7 +458,6 @@ func _physics_process(delta: float) -> void:
 	if attack_timer > 0.0:
 		attack_timer -= delta
 
-	# Si está ejecutando la corrida cinemática del susto por el pasillo:
 	if is_hallway_dashing:
 		_process_hallway_dash(delta)
 		_update_dialogue(delta)
@@ -652,14 +465,18 @@ func _physics_process(delta: float) -> void:
 
 	# Comprobar visión hacia el jugador
 	var can_see = _can_see_player()
-	
+
+	# Transición inmediata si ve al jugador mientras patrulla o busca
+	if can_see and current_state != State.CHASE and current_state != State.ATTACK:
+		_enter_chase_state()
+
 	match current_state:
 		State.PATROL:
 			_process_patrol_state(delta, can_see)
-		State.CHASE:
-			_process_chase_state(delta, can_see)
 		State.SEARCH:
 			_process_search_state(delta, can_see)
+		State.CHASE:
+			_process_chase_state(delta, can_see)
 		State.ATTACK:
 			_process_attack_state(delta)
 
@@ -680,460 +497,188 @@ func _can_see_player() -> bool:
 	var to_player = player_eye - eye_pos
 	var dist = to_player.length()
 
-	# Modificador si el jugador tiene la linterna encendida
 	var current_vision_range = vision_range
 	var flashlight = player.find_child("Flashlight", true, false) as SpotLight3D
 	if flashlight and flashlight.visible:
 		current_vision_range *= 1.45
 
-	# Proximidad inmediata (si está a menos del rango de proximidad detrás o a los lados)
+	# Proximidad inmediata
 	if dist <= proximity_range:
 		return _has_line_of_sight(eye_pos, player_eye) or _has_line_of_sight(eye_pos, player_chest)
 
-	# Si está más lejos que el rango de visión, no lo ve
 	if dist > current_vision_range:
 		return false
 
-	# Cono de visión frontal:
-	# En escaleras o desniveles, proyectar horizontalmente para no perder de vista por inclinación vertical
+	# Cono de visión horizontal
 	var forward_h = Vector2(transform.basis.z.x, transform.basis.z.z).normalized()
 	var dir_to_player_h = Vector2(to_player.x, to_player.z).normalized()
 	if forward_h.length() > 0.1 and dir_to_player_h.length() > 0.1:
-		var angle_rad = forward_h.angle_to(dir_to_player_h)
-		var angle_deg = rad_to_deg(angle_rad)
-		if absf(angle_deg) > vision_angle_deg * 0.5:
+		var angle_deg = rad_to_deg(absf(forward_h.angle_to(dir_to_player_h)))
+		if angle_deg > vision_angle_deg * 0.5:
 			return false
 
-	# Desnivel vertical máximo de visión (no ver a través de múltiples pisos)
 	if absf(to_player.y) > 3.8:
 		return false
 
-	# Raycast para verificar si hay paredes intermedias (prueba a ojos y a torso)
 	return _has_line_of_sight(eye_pos, player_eye) or _has_line_of_sight(eye_pos, player_chest)
 
 func _has_line_of_sight(from_pos: Vector3, to_pos: Vector3) -> bool:
+	if not is_inside_tree() or not get_world_3d():
+		return false
 	var space_state = get_world_3d().direct_space_state
+	if not space_state:
+		return false
 	var query = PhysicsRayQueryParameters3D.create(from_pos, to_pos)
 	query.exclude = [self.get_rid()]
 	var result = space_state.intersect_ray(query)
 	
 	if result.is_empty():
 		return true
-	
 	if result.collider == player or (result.collider is Node and player.is_ancestor_of(result.collider)):
 		return true
-		
 	return false
 
 ## =====================================================================
-## ESTADOS DE IA
+## ESTADO: PATROL (Patrullaje Metódico por Pasillos y Aulas)
 ## =====================================================================
 func _process_patrol_state(delta: float, can_see_player: bool) -> void:
 	current_speed = patrol_speed
 	aula_inspect_cooldown = max(0.0, aula_inspect_cooldown - delta)
 
-	if can_see_player:
-		is_inspecting_aula = false
-		_enter_chase_state()
-		return
+	# Si no tiene ruta o terminó la actual, avanzar al siguiente punto del circuito
+	if current_path.is_empty() or current_path_idx >= current_path.size():
+		# Oportunidad de inspección de un aula si está cerca de una
+		if aula_inspect_cooldown <= 0.0 and randf() < 0.40:
+			for aula in AULAS_PB_DATA:
+				if global_position.distance_to(aula["corridor_wp"]) < 4.0:
+					_start_aula_inspection(aula)
+					return
 
-	# Inspección activa dentro de las aulas en Planta Baja
-	if is_inspecting_aula:
-		_process_aula_inspection(delta, can_see_player)
-		return
-
-	# Si los pisos superiores están desbloqueados, chequear si es momento de investigar otro piso
-	if are_upper_floors_unlocked() and not is_investigating_floor:
-		floor_investigate_timer -= delta
-		if floor_investigate_timer <= 0.0:
-			_start_floor_investigation()
-
-	var target_wp = Vector3.ZERO
-	if is_investigating_floor:
-		target_wp = target_floor_entry_pos
-	else:
-		if current_floor_waypoints.is_empty():
-			current_floor_waypoints = get_floor_waypoints(current_patrol_floor)
-			patrol_waypoints = current_floor_waypoints
-		target_wp = current_floor_waypoints[current_waypoint_idx]
-
-	var nav_dest = target_wp if _is_walk_path_clear(global_position, target_wp) else _get_nav_target_to(target_wp)
-	var to_dest = nav_dest - global_position
-	var dist_dest = to_dest.length()
-
-	# Si estábamos investigando y llegamos al piso destino (fuera de la escalera):
-	if is_investigating_floor:
-		var my_floor = get_floor(global_position.y)
-		var my_tower = get_stair_tower_name(global_position)
-		if my_floor == target_investigate_floor and my_tower == "":
-			is_investigating_floor = false
-			current_patrol_floor = target_investigate_floor
-			current_floor_waypoints = get_floor_waypoints(current_patrol_floor)
-			patrol_waypoints = current_floor_waypoints
-			_pick_closest_waypoint()
-			floor_investigate_timer = randf_range(25.0, 45.0)
-			_say("A ver qué alumnos andan por este piso...", Color(1.0, 0.85, 0.5))
-	else:
-		if dist_dest < 2.2:
-			# Posibilidad de inspeccionar un aula si estamos frente a una en PB
-			if current_patrol_floor == 0 and aula_inspect_cooldown <= 0.0:
-				for insp in AULA_INSPECTIONS_PB:
-					if insp["corridor_wp_idx"] == current_waypoint_idx:
-						if randf() < 0.45:
-							_start_aula_inspection(insp)
-							return
-
-			current_waypoint_idx = (current_waypoint_idx + 1) % current_floor_waypoints.size()
-			target_wp = current_floor_waypoints[current_waypoint_idx]
-			nav_dest = target_wp if _is_walk_path_clear(global_position, target_wp) else _get_nav_target_to(target_wp)
-			to_dest = nav_dest - global_position
-
-	var move_dir = Vector3(to_dest.x, 0.0, to_dest.z).normalized()
-	_move_towards(delta, move_dir, current_speed, 4.5)
-
-func _start_aula_inspection(insp: Dictionary) -> void:
-	is_inspecting_aula = true
-	aula_inspect_phase = 0
-	aula_inspect_data = insp
-	aula_inspect_wait_timer = 0.0
-
-func _process_aula_inspection(delta: float, can_see_player: bool) -> void:
-	if can_see_player:
-		is_inspecting_aula = false
-		_enter_chase_state()
-		return
-
-	match aula_inspect_phase:
-		0:
-			# Fase 0: Acercarse a la puerta del aula
-			var door_p: Vector3 = aula_inspect_data["door_pos"]
-			var to_door = door_p - global_position
-			to_door.y = 0.0
-			if to_door.length() < 1.1:
-				aula_inspect_phase = 1
-			else:
-				var move_dir = to_door.normalized()
-				_move_towards(delta, move_dir, patrol_speed * 0.9, 5.0)
-		1:
-			# Fase 1: Entrar al aula en la zona despejada
-			var inside_p: Vector3 = aula_inspect_data["inside_pos"]
-			var to_inside = inside_p - global_position
-			to_inside.y = 0.0
-			if to_inside.length() < 0.8:
-				aula_inspect_phase = 2
-				aula_inspect_wait_timer = randf_range(2.5, 3.8)
-				var phrases_inspect = [
-					"A ver si hay alguien copiándose acá adentro...",
-					"Silencio sospechoso en esta aula...",
-					"Mmm... me pareció ver una sombra entre los pupitres...",
-					"Nadie debería estar en esta aula a oscuras..."
-				]
-				_say(phrases_inspect[randi() % phrases_inspect.size()], Color(1.0, 0.85, 0.4))
-			else:
-				var move_dir = to_inside.normalized()
-				_move_towards(delta, move_dir, patrol_speed * 0.85, 5.0)
-		2:
-			# Fase 2: Parado en el aula mirando alrededor hacia los pupitres y rincones con la linterna
-			aula_inspect_wait_timer -= delta
-			var base_yaw: float = aula_inspect_data.get("yaw", rotation.y)
-			rotation.y = base_yaw + sin(aula_inspect_wait_timer * 2.8) * 0.65
-			velocity = Vector3.ZERO
-			move_and_slide()
-			_animate_walk(delta, false)
-			
-			if aula_inspect_wait_timer <= 0.0:
-				aula_inspect_phase = 3
-		3:
-			# Fase 3: Regresar a la puerta y salir al pasillo
-			var door_p: Vector3 = aula_inspect_data["door_pos"]
-			var to_door = door_p - global_position
-			to_door.y = 0.0
-			if to_door.length() < 1.3:
-				is_inspecting_aula = false
-				aula_inspect_cooldown = randf_range(20.0, 35.0)
-				current_waypoint_idx = (current_waypoint_idx + 1) % current_floor_waypoints.size()
-			else:
-				var move_dir = to_door.normalized()
-				_move_towards(delta, move_dir, patrol_speed * 0.9, 5.0)
-
-func _process_chase_state(delta: float, can_see_player: bool) -> void:
-	if is_screamer_ambush:
-		velocity.x = 0.0
-		velocity.z = 0.0
-		move_and_slide()
-		return
-
-	if is_screamer_charging:
-		screamer_charge_timer -= delta
-		current_speed = 42.0
-		if screamer_charge_timer <= 0.0:
-			is_screamer_charging = false
-			_end_screamer_charge()
-	else:
-		current_speed = chase_speed
-	
-	var to_player = player.global_position - global_position
-	var dist_to_player = to_player.length()
-	var horiz_dist = Vector2(to_player.x, to_player.z).length()
-
-	# Si estaba cargando a toda velocidad y ya alcanzó al jugador, volver a velocidad normal
-	if is_screamer_charging and dist_to_player <= attack_range + 0.6:
-		_end_screamer_charge()
-
-	# Si el profesor está restringido a Planta Baja y el jugador subió las escaleras a P1/P2:
-	if ONLY_PATROL_PB:
-		var p_floor = get_floor(player.global_position.y)
-		var p_in_stairs = get_stair_tower_name(player.global_position) != ""
-		if p_floor > 0 or p_in_stairs:
-			_say("¡¡Cobarde, escapaste arriba... pero vas a tener que bajar!!", Color(1.0, 0.2, 0.2))
-			time_without_sight = 999.0
-			_enter_search_state()
+		current_circuit_idx = (current_circuit_idx + 1) % PATROL_CIRCUIT_PB.size()
+		_navigate_to_circuit_idx(current_circuit_idx)
+		if current_path.is_empty():
 			return
 
-	if can_see_player:
-		last_known_player_pos = player.global_position
-		time_without_sight = 0.0
-	else:
-		var in_stairs = get_stair_tower_name(global_position) != ""
-		var diff_floors = get_floor(global_position.y) != get_floor(player.global_position.y)
-		if in_stairs or diff_floors:
-			if ONLY_PATROL_PB:
-				_enter_search_state()
-				return
-			# Si están en pisos diferentes o cruzando escaleras, no perder al jugador
-			last_known_player_pos = player.global_position
-			time_without_sight = 0.0
-		else:
-			time_without_sight += delta
-			if time_without_sight >= lost_sight_timeout:
-				_enter_search_state()
-				return
+	var next_wp = current_path[current_path_idx]
+	var dist_wp = global_position.distance_to(next_wp)
 
-	# Si el jugador está escondido en un tacho:
-	if player.get("is_hidden"):
-		if saw_player_hide:
-			if dist_to_player <= attack_range + 0.6:
-				_say("¡¡TE VI METERTE AHÍ! ¡SALÍ DE ESE TACHO!!", Color(1.0, 0.1, 0.1))
-				if player.get("current_hiding_spot") and player.current_hiding_spot.has_method("force_eject"):
-					player.current_hiding_spot.force_eject()
-				_start_attack()
-				return
-		else:
-			# El profesor NO vio al jugador esconderse. Si llega cerca buscando ruido, pierde el rastro y NO lo ataca!
-			if dist_to_player <= 3.2:
-				_say("¿Dónde se metió este alumno? Parecía haber alguien acá...", Color(1.0, 0.85, 0.5))
-				_enter_search_state()
-				return
-
-	# Solo atacar si el jugador está visible (NO escondido) a alcance cuerpo a cuerpo real:
-	var vert_diff = absf(to_player.y)
-	if not player.get("is_hidden") and dist_to_player <= attack_range and vert_diff <= 0.85 and attack_timer <= 0.0:
-		if _has_line_of_sight(global_position + Vector3(0, 1.4, 0), player.global_position + Vector3(0, 1.2, 0)):
-			_start_attack()
+	if dist_wp < 1.3:
+		current_path_idx += 1
+		if current_path_idx >= current_path.size():
 			return
+		next_wp = current_path[current_path_idx]
 
-	var target_dest = player.global_position if can_see_player else last_known_player_pos
-	var nav_dest = _get_nav_target_to(target_dest)
-	var to_target = nav_dest - global_position
+	_move_towards(delta, next_wp, current_speed, 4.5)
 
-	var move_dir = Vector3(to_target.x, 0.0, to_target.z).normalized()
+func _start_aula_inspection(aula: Dictionary) -> void:
+	aula_inspect_cooldown = randf_range(25.0, 40.0)
+	_enter_search_state(aula["inside_pos"], "aula_inspect")
+	if cartel_dialogo:
+		var phrases_inspect = [
+			"A ver si hay alguien copiándose acá adentro...",
+			"Silencio sospechoso en esta aula...",
+			"Mmm... me pareció ver una sombra entre los pupitres...",
+			"Nadie debería estar en esta aula a oscuras..."
+		]
+		_say(phrases_inspect[randi() % phrases_inspect.size()], Color(1.0, 0.85, 0.4))
+
+## =====================================================================
+## ESTADO: SEARCH / SEEK (Investigación de Ruido o Pérdida de Rastro)
+## =====================================================================
+func _enter_search_state(target_pos: Vector3, reason: String = "general") -> void:
+	current_state = State.SEARCH
+	search_target_pos = target_pos
+	search_timer = 3.8
+	is_searching_around = false
+	current_speed = seek_speed
+	current_path = _get_astar_path_to(search_target_pos)
+	current_path_idx = 0
 	
-	var rot_spd = 35.0 if is_screamer_charging else 8.0
-	_move_towards(delta, move_dir, current_speed, rot_spd)
+	if ojos_luz:
+		ojos_luz.light_color = Color(1.0, 0.65, 0.1)
+		ojos_luz.light_energy = 1.0
+		
+	if reason == "noise":
+		_say("¿Quién hace ruido en mi hora...?", Color(1.0, 0.8, 0.4))
+	elif reason == "lost_sight":
+		_say("¿Dónde se escondió ese alumno...?", Color(1.0, 0.8, 0.4))
 
 func _process_search_state(delta: float, can_see_player: bool) -> void:
 	if can_see_player:
 		_enter_chase_state()
 		return
 
-	search_timer -= delta
-
-	# Si la última posición conocida está a más de 2.5m, caminar hacia ella para investigar
-	var to_last = last_known_player_pos - global_position
-	var dist_last = to_last.length()
-	var my_floor = get_floor(global_position.y)
-	var last_floor = get_floor(last_known_player_pos.y)
-
-	if dist_last > 2.5 or my_floor != last_floor:
-		var nav_dest = _get_nav_target_to(last_known_player_pos)
-		var to_nav = nav_dest - global_position
-		var move_dir = Vector3(to_nav.x, 0.0, to_nav.z).normalized()
-		_move_towards(delta, move_dir, patrol_speed * 1.15, 6.0)
-	else:
-		# Ya está cerca del lugar: detenerse y girar mirando alrededor
-		rotation.y += sin(search_timer * 3.0) * delta * 2.0
+	# Si ya llegó al lugar a investigar: detenerse y registrar alrededor
+	if is_searching_around:
+		search_timer -= delta
+		rotation.y += sin(search_timer * 2.8) * delta * 2.2
 		velocity.x = move_toward(velocity.x, 0.0, 10.0 * delta)
 		velocity.z = move_toward(velocity.z, 0.0, 10.0 * delta)
 		move_and_slide()
 		_animate_walk(delta, false)
 
-	if search_timer <= 0.0:
-		var my_tower = get_stair_tower_name(global_position)
-		if my_tower != "":
-			search_timer = 2.0
-		else:
-			current_state = State.PATROL
-			current_patrol_floor = get_floor(global_position.y)
-			current_floor_waypoints = get_floor_waypoints(current_patrol_floor)
-			patrol_waypoints = current_floor_waypoints
-			_pick_closest_waypoint()
-			_say("Debió ser el viento... Volvamos a la ronda.")
+		# Comprobación de tacho de basura en el área
+		if is_instance_valid(player) and player.get("is_hidden"):
+			var d_player = global_position.distance_to(player.global_position)
+			if saw_player_hide and d_player <= attack_range + 0.6:
+				_say("¡¡TE VI METERTE AHÍ! ¡SALÍ DE ESE TACHO!!", Color(1.0, 0.1, 0.1))
+				if player.get("current_hiding_spot") and player.current_hiding_spot.has_method("force_eject"):
+					player.current_hiding_spot.force_eject()
+				_start_attack()
+				return
+			elif not saw_player_hide and d_player <= 3.2:
+				_say("¿Dónde se metió este alumno? Parecía haber alguien acá...", Color(1.0, 0.85, 0.5))
 
-func _process_attack_state(delta: float) -> void:
-	_process_attack(delta)
-	velocity.x = move_toward(velocity.x, 0.0, 12.0 * delta)
-	velocity.z = move_toward(velocity.z, 0.0, 12.0 * delta)
-	move_and_slide()
+		if search_timer <= 0.0:
+			# Fin de búsqueda: retomar patrulla
+			_enter_patrol_state()
+		return
 
-## =====================================================================
-## MOVIMIENTO Y ORIENTACIÓN SUAVE CON FLANQUEO INTELIGENTE
-## =====================================================================
-func _is_walk_path_clear(from_pos: Vector3, to_pos: Vector3) -> bool:
-	var space_state = get_world_3d().direct_space_state
-	var fwd = to_pos - from_pos
-	fwd.y = 0.0
-	if fwd.length_squared() < 0.01:
-		return true
-	var dir = fwd.normalized()
-	var side = Vector3(-dir.z, 0.0, dir.x) * 0.35
+	# Avanzar hacia el destino de búsqueda por la ruta AStar
+	var dist_target = global_position.distance_to(search_target_pos)
+	if dist_target < 1.8 or current_path_idx >= current_path.size():
+		is_searching_around = true
+		return
+
+	var next_wp = current_path[current_path_idx]
+	if global_position.distance_to(next_wp) < 1.3:
+		current_path_idx += 1
+		if current_path_idx >= current_path.size():
+			is_searching_around = true
+			return
+		next_wp = current_path[current_path_idx]
+
+	_move_towards(delta, next_wp, current_speed, 5.5)
+
+func _enter_patrol_state() -> void:
+	current_state = State.PATROL
+	current_speed = patrol_speed
+	is_searching_around = false
 	
-	var excl: Array[RID] = [get_rid()]
-	if is_instance_valid(player):
-		excl.append(player.get_rid())
-
-	# 1. Rayo central a la altura del pecho
-	var q_mid = PhysicsRayQueryParameters3D.create(from_pos + Vector3(0, 0.7, 0), to_pos + Vector3(0, 0.7, 0))
-	q_mid.exclude = excl
-	if not space_state.intersect_ray(q_mid).is_empty():
-		return false
-
-	# 2. Rayo lateral izquierdo (ancho del cuerpo del profesor)
-	var q_left = PhysicsRayQueryParameters3D.create(from_pos + side + Vector3(0, 0.7, 0), to_pos + side + Vector3(0, 0.7, 0))
-	q_left.exclude = excl
-	if not space_state.intersect_ray(q_left).is_empty():
-		return false
-
-	# 3. Rayo lateral derecho (ancho del cuerpo del profesor)
-	var q_right = PhysicsRayQueryParameters3D.create(from_pos - side + Vector3(0, 0.7, 0), to_pos - side + Vector3(0, 0.7, 0))
-	q_right.exclude = excl
-	if not space_state.intersect_ray(q_right).is_empty():
-		return false
-
-	return true
-
-
-
-func _move_towards(delta: float, dir: Vector3, speed_to_use: float, rot_speed: float) -> void:
-	var move_vec = Vector3(dir.x, 0.0, dir.z)
-	
-	if move_vec.length() > 0.05:
-		move_vec = move_vec.normalized()
-
-		# Rotación hacia la dirección de avance
-		var target_rot_y = atan2(move_vec.x, move_vec.z)
-		rotation.y = lerp_angle(rotation.y, target_rot_y, rot_speed * delta)
+	if ojos_luz:
+		ojos_luz.light_color = Color(1.0, 0.85, 0.5)
+		ojos_luz.light_energy = 0.8
 		
-		# Aceleración idéntica a la del jugador
-		var accel = 35.0 if is_screamer_charging else 12.0
-		velocity.x = lerpf(velocity.x, move_vec.x * speed_to_use, delta * accel)
-		velocity.z = lerpf(velocity.z, move_vec.z * speed_to_use, delta * accel)
-	else:
-		velocity.x = lerpf(velocity.x, 0.0, delta * 12.0)
-		velocity.z = lerpf(velocity.z, 0.0, delta * 12.0)
-
-	var pre_pos := global_position
-	var was_on_floor := is_on_floor()
-	move_and_slide()
-
-	# Subir pequeños bordes o escalones automáticamente (Step-up suave idéntico al del jugador)
-	if was_on_floor and is_on_wall() and move_vec != Vector3.ZERO:
-		var step_h: float = 0.25
-		var step_transform: Transform3D = global_transform
-		step_transform.origin.y += step_h
-		if not test_move(global_transform, Vector3(0, step_h, 0)):
-			var fwd: Vector3 = move_vec * (speed_to_use * delta + 0.06)
-			if not test_move(step_transform, fwd):
-				global_position = pre_pos + Vector3(0, step_h * 0.5, 0)
-				move_and_slide()
-
-	# Detección y recuperación automática solo si queda completamente inmóvil por más de 1.8 segundos
-	pos_sample_timer += delta
-	if pos_sample_timer >= 0.3:
-		pos_sample_timer = 0.0
-		var moved_dist = global_position.distance_to(prev_pos)
-		prev_pos = global_position
-
-		if moved_dist < 0.08 and speed_to_use > 0.5:
-			stuck_timer += 0.3
-		else:
-			stuck_timer = max(0.0, stuck_timer - 0.3)
-
-	# Si estuvo trabado más de 1.8 segundos:
-	if stuck_timer >= 1.8:
-		stuck_timer = 0.0
-		var tower = get_stair_tower_name(global_position)
-		if tower != "":
-			var path = get_stair_path(tower)
-			if active_stair_idx >= 0 and active_stair_idx < path.size():
-				global_position = path[active_stair_idx] + Vector3(0, 0.2, 0)
-				velocity = Vector3.ZERO
-		else:
-			var wps = current_floor_waypoints if current_floor_waypoints.size() > 0 else WAYPOINTS_PB
-			if is_inspecting_aula:
-				is_inspecting_aula = false
-				aula_inspect_cooldown = 25.0
-			if current_state == State.PATROL:
-				# En patrullaje: avanzar de inmediato al SIGUIENTE waypoint del circuito
-				# para evitar insistir contra la misma esquina y continuar la ronda
-				current_waypoint_idx = (current_waypoint_idx + 1) % wps.size()
-				global_position = wps[current_waypoint_idx]
-				prev_pos = global_position
-				velocity = Vector3.ZERO
-			elif current_state == State.CHASE:
-				# EN PERSECUCIÓN: ¡¡NUNCA TELEPORTAR AL PROFESOR FUERA DE LA SALA!!
-				if is_screamer_charging:
-					_end_screamer_charge()
-				velocity = Vector3.ZERO
-				var slide_offset = Vector3(randf_range(-1.0, 1.0), 0.0, randf_range(-1.0, 1.0)).normalized() * 0.4
-				global_position += slide_offset
-				prev_pos = global_position
-				if not _can_see_player():
-					_enter_search_state()
-			else:
-				# En búsqueda: teleportar al waypoint más cercano con camino despejado
-				var best_idx: int = -1
-				var best_dist: float = 99999.0
-				for i in range(wps.size()):
-					var d = global_position.distance_to(wps[i])
-					if d < best_dist and _is_walk_path_clear(global_position, wps[i]):
-						best_dist = d
-						best_idx = i
-				if best_idx == -1:
-					for i in range(wps.size()):
-						var d = global_position.distance_to(wps[i])
-						if d < best_dist:
-							best_dist = d
-							best_idx = i
-				if best_idx >= 0:
-					global_position = wps[best_idx]
-					prev_pos = global_position
-					velocity = Vector3.ZERO
-
-	_animate_walk(delta, move_vec.length() > 0.1)
+	_say("Debió ser el viento... Volvamos a la ronda.")
+	_pick_closest_patrol_circuit_idx()
+	_navigate_to_circuit_idx(current_circuit_idx)
 
 ## =====================================================================
-## TRANSICIONES Y ACCIONES
+## ESTADO: CHASE / HUNT (Persecución Implacable del Jugador)
 ## =====================================================================
 func _enter_chase_state() -> void:
 	current_state = State.CHASE
 	time_without_sight = 0.0
-	is_investigating_floor = false
-	is_inspecting_aula = false
-	last_known_player_pos = player.global_position
+	is_searching_around = false
+	last_known_player_pos = player.global_position if is_instance_valid(player) else global_position
+	
+	current_path = _get_astar_path_to(last_known_player_pos)
+	current_path_idx = 0
+	repath_timer = 0.25
 	
 	if ojos_luz:
 		ojos_luz.light_color = Color(1.0, 0.1, 0.1)
-		ojos_luz.light_energy = 1.6
+		ojos_luz.light_energy = 2.0
 		
 	_say(phrases_chase[randi() % phrases_chase.size()], Color(1.0, 0.2, 0.2))
 	
@@ -1143,284 +688,94 @@ func _enter_chase_state() -> void:
 		if is_instance_valid(player) and player.has_method("play_jumpscare_screamer"):
 			player.play_jumpscare_screamer()
 
-func _enter_search_state() -> void:
-	current_state = State.SEARCH
-	search_timer = 4.0
-	
-	if ojos_luz:
-		ojos_luz.light_color = Color(1.0, 0.6, 0.1)
-		ojos_luz.light_energy = 0.8
-		
-	_say("¿Dónde se escondió ese alumno...?", Color(1.0, 0.8, 0.4))
-
-## LLAMADO CUANDO EL JUGADOR FALLA EL DESAFÍO MATEMÁTICO
-func boost_speed() -> void:
-	speed_boost_count += 1
-	chase_speed = min(base_chase_speed + (speed_boost_count * 0.25), 3.4)
-	patrol_speed = min(base_patrol_speed + (speed_boost_count * 0.15), 2.4)
-	
-	# Si todavía no apareció, solo acumula la velocidad
-	if not is_active:
-		return
-	
-	_enter_chase_state()
-	
-	if ojos_luz:
-		ojos_luz.light_color = Color(1.0, 0.0, 0.0)
-		ojos_luz.light_energy = 2.5
-		
-	_say(phrases_enraged[randi() % phrases_enraged.size()], Color(1.0, 0.0, 0.0))
-
-func _setup_step_audio() -> void:
-	step_audio = AudioStreamPlayer3D.new()
-	step_audio.name = "ProfesorStepAudio3D"
-	step_audio.unit_size = 3.5
-	step_audio.max_distance = 35.0
-	step_audio.volume_db = -3.0
-	step_audio.bus = &"Master"
-	add_child(step_audio)
-
-func _play_prof_step() -> void:
-	if not step_audio:
-		return
-	step_audio.stream = HorrorAudio.get_profesor_footstep()
-	step_audio.pitch_scale = randf_range(0.96, 1.04)
-	step_audio.play()
-
-func _animate_walk(delta: float, is_moving: bool) -> void:
-	if is_moving and is_on_floor():
-		var step_mult = 2.8 if current_state == State.CHASE else 2.2
-		var anim_delta = delta * (current_speed * step_mult)
-		walk_anim_time += anim_delta
-		step_phase += anim_delta
-		
-		# Cada medio ciclo se apoya un zapato formal (izquierdo o derecho)
-		if step_phase >= PI:
-			step_phase -= PI
-			_play_prof_step()
-			
-		var swing_legs = sin(walk_anim_time) * deg_to_rad(28.0)
-		var swing_arms = cos(walk_anim_time) * deg_to_rad(25.0)
-		
-		if pierna_izq: pierna_izq.rotation.x = swing_legs
-		if pierna_der: pierna_der.rotation.x = -swing_legs
-		if brazo_izq: brazo_izq.rotation.x = -swing_arms
-		
-		if not is_attacking and brazo_der:
-			brazo_der.rotation.x = deg_to_rad(-35.0) + sin(walk_anim_time * 0.8) * deg_to_rad(15.0)
-			brazo_der.rotation.z = deg_to_rad(-10.0)
-			if regla:
-				regla.rotation.x = deg_to_rad(20.0) + cos(walk_anim_time * 1.5) * deg_to_rad(10.0)
-	else:
-		walk_anim_time = 0.0
-		step_phase = 1.0 # Pre-cargado para sonar apenas retome el paso
-		if pierna_izq: pierna_izq.rotation.x = lerpf(pierna_izq.rotation.x, 0.0, delta * 6.0)
-		if pierna_der: pierna_der.rotation.x = lerpf(pierna_der.rotation.x, 0.0, delta * 6.0)
-		if brazo_izq: brazo_izq.rotation.x = lerpf(brazo_izq.rotation.x, 0.0, delta * 6.0)
-		if not is_attacking and not is_screamer_ambush and brazo_der:
-			brazo_der.rotation.x = lerpf(brazo_der.rotation.x, deg_to_rad(-40.0), delta * 5.0)
-			brazo_der.rotation.z = lerpf(brazo_der.rotation.z, deg_to_rad(-10.0), delta * 5.0)
-
-## =====================================================================
-## SUSTO CINEMÁTICO: CORRIDA POR EL PASILLO (4TO EXAMEN)
-## =====================================================================
-func start_hallway_dash(start_pos: Vector3, end_pos: Vector3, on_finished: Callable = Callable()) -> void:
-	set_active(true)
-	visible = true
-	is_investigating_floor = false
-	current_patrol_floor = 0
-	active_stair_idx = -1
-	active_stair_tower = ""
-	is_screamer_ambush = false
-	is_screamer_charging = false
-	is_hallway_dashing = true
-	hallway_dash_target = end_pos
-	hallway_dash_callback = on_finished
-	hallway_dash_speed = 18.5
-	hallway_dash_timer = 0.0
-	current_speed = 18.5
-	attack_timer = 4.0
-	is_attacking = false
-	stuck_timer = 0.0
-	time_without_sight = 0.0
-	
-	global_position = start_pos
-	prev_pos = start_pos
-	
-	var to_tgt = end_pos - start_pos
-	to_tgt.y = 0.0
-	if to_tgt.length() > 0.1:
-		rotation.y = atan2(to_tgt.x, to_tgt.z)
-		
-	if step_audio:
-		step_audio.volume_db = 4.0
-		
-	if ojos_luz:
-		ojos_luz.light_color = Color(1.0, 0.0, 0.0)
-		ojos_luz.light_energy = 4.5
-		ojos_luz.spot_range = 18.0
-		ojos_luz.visible = true
-		
-	if brazo_der:
-		brazo_der.rotation.x = deg_to_rad(-115.0)
-		brazo_der.rotation.y = deg_to_rad(-10.0)
-	if regla:
-		regla.rotation.x = deg_to_rad(-40.0)
-
-func _process_hallway_dash(delta: float) -> void:
-	hallway_dash_timer += delta
-	var to_dest = hallway_dash_target - global_position
-	to_dest.y = 0.0
-	var dist = to_dest.length()
-	
-	# Terminar si llegó al final o tras 3.5 segundos de seguridad
-	if dist < 1.6 or hallway_dash_timer >= 3.5:
-		is_hallway_dashing = false
+func _process_chase_state(delta: float, can_see_player: bool) -> void:
+	if is_screamer_ambush:
 		velocity = Vector3.ZERO
-		current_speed = patrol_speed
-		current_state = State.PATROL
-		if step_audio:
-			step_audio.volume_db = -3.0
-		if ojos_luz:
-			ojos_luz.light_color = Color(1.0, 0.85, 0.5)
-			ojos_luz.light_energy = 0.8
-			ojos_luz.spot_range = 10.0
-		if brazo_der:
-			brazo_der.rotation = Vector3.ZERO
-		if regla:
-			regla.rotation = Vector3.ZERO
-		_pick_closest_waypoint()
-		if hallway_dash_callback.is_valid():
-			hallway_dash_callback.call()
+		move_and_slide()
 		return
-		
-	var dir = to_dest.normalized()
-	rotation.y = atan2(dir.x, dir.z)
-	velocity.x = dir.x * hallway_dash_speed
-	velocity.z = dir.z * hallway_dash_speed
-	
-	if not is_on_floor():
-		velocity.y -= gravity * delta
-		
-	var pre_pos = global_position
-	var was_on_floor = is_on_floor()
-	move_and_slide()
-	
-	# Step-up suave si toca algún borde en el pasillo
-	if was_on_floor and is_on_wall():
-		var step_h: float = 0.25
-		var step_transform: Transform3D = global_transform
-		step_transform.origin.y += step_h
-		if not test_move(global_transform, Vector3(0, step_h, 0)):
-			var fwd: Vector3 = dir * (hallway_dash_speed * delta + 0.06)
-			if not test_move(step_transform, fwd):
-				global_position = pre_pos + Vector3(0, step_h * 0.5, 0)
-				move_and_slide()
 
-	_animate_walk(delta, true)
+	if is_screamer_charging:
+		screamer_charge_timer -= delta
+		current_speed = 42.0
+		if screamer_charge_timer <= 0.0:
+			_end_screamer_charge()
+	else:
+		current_speed = chase_speed
+
+	var to_player = player.global_position - global_position
+	var dist_to_player = to_player.length()
+
+	if is_screamer_charging and dist_to_player <= attack_range + 0.6:
+		_end_screamer_charge()
+
+	# Si el profesor está en PB y el jugador huyó por la escalera a P1/P2:
+	if ONLY_PATROL_PB:
+		var p_floor = get_floor(player.global_position.y)
+		var p_in_stairs = get_stair_tower_name(player.global_position) != ""
+		if p_floor > 0 or p_in_stairs:
+			_say("¡¡Cobarde, escapaste arriba... pero vas a tener que bajar!!", Color(1.0, 0.2, 0.2))
+			_enter_patrol_state()
+			return
+
+	if can_see_player:
+		last_known_player_pos = player.global_position
+		time_without_sight = 0.0
+	else:
+		time_without_sight += delta
+		if time_without_sight >= lost_sight_timeout:
+			_enter_search_state(last_known_player_pos, "lost_sight")
+			return
+
+	# Si el jugador está escondido en un tacho
+	if player.get("is_hidden"):
+		if saw_player_hide:
+			if dist_to_player <= attack_range + 0.6:
+				_say("¡¡TE VI METERTE AHÍ! ¡SALÍ DE ESE TACHO!!", Color(1.0, 0.1, 0.1))
+				if player.get("current_hiding_spot") and player.current_hiding_spot.has_method("force_eject"):
+					player.current_hiding_spot.force_eject()
+				_start_attack()
+				return
+		else:
+			if dist_to_player <= 3.2:
+				_enter_search_state(last_known_player_pos, "lost_sight")
+				return
+
+	# Ataque cuerpo a cuerpo real (distancia <= attack_range y desnivel vertical <= 0.85m)
+	var vert_diff = absf(to_player.y)
+	if not player.get("is_hidden") and dist_to_player <= attack_range and vert_diff <= 0.85 and attack_timer <= 0.0:
+		if _has_line_of_sight(global_position + Vector3(0, 1.4, 0), player.global_position + Vector3(0, 1.2, 0)):
+			_start_attack()
+			return
+
+	# Persecución en línea recta si tiene camino despejado y lo ve
+	var can_rush_direct = can_see_player and _is_walk_path_clear(global_position, player.global_position)
+	if can_rush_direct:
+		var rot_spd = 35.0 if is_screamer_charging else 8.0
+		_move_towards(delta, player.global_position, current_speed, rot_spd)
+		return
+
+	# Si no tiene visión directa o dobló la esquina: recalcular ruta AStar a last_known_player_pos
+	repath_timer -= delta
+	if repath_timer <= 0.0 or current_path.is_empty():
+		repath_timer = 0.35
+		current_path = _get_astar_path_to(last_known_player_pos)
+		current_path_idx = 0
+
+	if current_path_idx < current_path.size():
+		var next_wp = current_path[current_path_idx]
+		if global_position.distance_to(next_wp) < 1.3:
+			current_path_idx += 1
+			if current_path_idx < current_path.size():
+				next_wp = current_path[current_path_idx]
+		var rot_spd = 35.0 if is_screamer_charging else 8.0
+		_move_towards(delta, next_wp, current_speed, rot_spd)
+	else:
+		# Llegó a last_known_player_pos y no ve al jugador -> investigar
+		_enter_search_state(last_known_player_pos, "lost_sight")
 
 ## =====================================================================
-## CINEMÁTICA Y SCREAMER DEL LABORATORIO
+## ESTADO: ATTACK
 ## =====================================================================
-func trigger_screamer_ambush(ambush_pos: Vector3, look_at_pos: Vector3) -> void:
-	set_active(true)
-	visible = true
-	is_investigating_floor = false
-	is_inspecting_aula = false
-	current_patrol_floor = 0
-	current_floor_waypoints = WAYPOINTS_PB
-	patrol_waypoints = WAYPOINTS_PB
-	active_stair_idx = -1
-	active_stair_tower = ""
-	is_screamer_ambush = true
-	global_position = ambush_pos
-	prev_pos = ambush_pos
-	velocity = Vector3.ZERO
-	stuck_timer = 0.0
-	attack_timer = 1.8
-	is_attacking = false
-	
-	# Mirar fijamente hacia el jugador y la pared del tablero
-	var to_target = look_at_pos - ambush_pos
-	to_target.y = 0.0
-	if to_target.length() > 0.1:
-		rotation.y = atan2(to_target.x, to_target.z)
-		
-	# Postura amenazante con la regla en alto
-	if brazo_der:
-		brazo_der.rotation.x = deg_to_rad(-125.0)
-		brazo_der.rotation.y = deg_to_rad(-15.0)
-		brazo_der.rotation.z = deg_to_rad(-10.0)
-	if regla:
-		regla.rotation.x = deg_to_rad(-45.0)
-		
-	# Ojos al rojo vivo con máxima intensidad
-	if ojos_luz:
-		ojos_luz.light_color = Color(1.0, 0.0, 0.0)
-		ojos_luz.light_energy = 4.0
-		ojos_luz.spot_range = 15.0
-		ojos_luz.visible = true
-		
-	# Entrar en persecución agresiva con incremento de velocidad
-	current_state = State.CHASE
-	chase_speed = base_chase_speed + 1.1
-	time_without_sight = 0.0
-	if is_instance_valid(player):
-		last_known_player_pos = player.global_position
-
-func play_ruler_slam_animation() -> void:
-	if not brazo_der or not regla:
-		return
-	var tw = create_tween()
-	# Azote rápido hacia abajo contra la mesada
-	tw.tween_property(brazo_der, "rotation:x", deg_to_rad(35.0), 0.09)
-	tw.parallel().tween_property(regla, "rotation:x", deg_to_rad(65.0), 0.09)
-	# Volver a levantar amenazante
-	tw.tween_property(brazo_der, "rotation:x", deg_to_rad(-120.0), 0.22)
-	tw.parallel().tween_property(regla, "rotation:x", deg_to_rad(-40.0), 0.22)
-
-func start_screamer_charge() -> void:
-	is_screamer_ambush = false
-	is_screamer_charging = true
-	screamer_charge_timer = 1.4
-	current_state = State.CHASE
-	current_speed = 40.0
-	stuck_timer = 0.0
-	attack_timer = 0.15
-	last_chase_screamer_time = Time.get_ticks_msec() / 1000.0
-	_say("¡¡NO HAY SALVACIÓN, DIRECTO A MARZO!!", Color(1.0, 0.0, 0.0))
-	if is_instance_valid(player) and player.has_method("play_jumpscare_screamer"):
-		player.play_jumpscare_screamer()
-	if is_instance_valid(player):
-		last_known_player_pos = player.global_position
-		var to_p = player.global_position - global_position
-		to_p.y = 0.0
-		if to_p.length() > 0.1:
-			var dir_p = to_p.normalized()
-			rotation.y = atan2(dir_p.x, dir_p.z)
-			velocity.x = dir_p.x * 42.0
-			velocity.z = dir_p.z * 42.0
-
-func _end_screamer_charge() -> void:
-	is_screamer_charging = false
-	screamer_charge_timer = 0.0
-	chase_speed = base_chase_speed + (speed_boost_count * 0.85)
-	current_speed = chase_speed
-	var horiz_vel = Vector2(velocity.x, velocity.z)
-	if horiz_vel.length() > chase_speed:
-		var clamped = horiz_vel.normalized() * chase_speed
-		velocity.x = clamped.x
-		velocity.z = clamped.y
-
-func release_screamer_ambush() -> void:
-	is_screamer_ambush = false
-	stuck_timer = 0.0
-	prev_pos = global_position
-	_pick_closest_waypoint()
-	# Asegurar que tiene un destino válido de movimiento
-	if current_state == State.CHASE and not _can_see_player():
-		_enter_search_state()
-
 func _start_attack() -> void:
 	_cut_screamer_audio()
 	if is_screamer_charging:
@@ -1430,6 +785,12 @@ func _start_attack() -> void:
 	attack_anim_time = 0.0
 	attack_timer = attack_cooldown
 	_say("¡¡¡CASTIGO POR COPIARSE!!!", Color(1.0, 0.1, 0.1))
+
+func _process_attack_state(delta: float) -> void:
+	_process_attack(delta)
+	velocity.x = move_toward(velocity.x, 0.0, 12.0 * delta)
+	velocity.z = move_toward(velocity.z, 0.0, 12.0 * delta)
+	move_and_slide()
 
 func _process_attack(delta: float) -> void:
 	attack_anim_time += delta
@@ -1474,6 +835,235 @@ func _hit_player() -> void:
 			tw.tween_property(cam, "rotation:z", deg_to_rad(randf_range(-14.0, 14.0)), 0.05)
 			tw.tween_property(cam, "rotation:z", 0.0, 0.18)
 
+## =====================================================================
+## MOVIMIENTO Y ESQUIVA CON BIGOTES (WHISKERS)
+## =====================================================================
+func _is_walk_path_clear(from_pos: Vector3, to_pos: Vector3) -> bool:
+	if not is_inside_tree() or not get_world_3d():
+		return true
+	var space_state = get_world_3d().direct_space_state
+	if not space_state:
+		return true
+	var fwd = to_pos - from_pos
+	fwd.y = 0.0
+	if fwd.length_squared() < 0.01:
+		return true
+	var dir = fwd.normalized()
+	var side = Vector3(-dir.z, 0.0, dir.x) * 0.35
+	
+	var excl: Array[RID] = [get_rid()]
+	if is_instance_valid(player):
+		excl.append(player.get_rid())
+
+	# 1. Rayo central
+	var q_mid = PhysicsRayQueryParameters3D.create(from_pos + Vector3(0, 0.7, 0), to_pos + Vector3(0, 0.7, 0))
+	q_mid.exclude = excl
+	if not space_state.intersect_ray(q_mid).is_empty():
+		return false
+
+	# 2. Rayo lateral izquierdo
+	var q_left = PhysicsRayQueryParameters3D.create(from_pos + side + Vector3(0, 0.7, 0), to_pos + side + Vector3(0, 0.7, 0))
+	q_left.exclude = excl
+	if not space_state.intersect_ray(q_left).is_empty():
+		return false
+
+	# 3. Rayo lateral derecho
+	var q_right = PhysicsRayQueryParameters3D.create(from_pos - side + Vector3(0, 0.7, 0), to_pos - side + Vector3(0, 0.7, 0))
+	q_right.exclude = excl
+	if not space_state.intersect_ray(q_right).is_empty():
+		return false
+
+	return true
+
+func _get_steered_dir(desired_dir: Vector3) -> Vector3:
+	if not is_inside_tree() or not get_world_3d():
+		return desired_dir
+	var space_state = get_world_3d().direct_space_state
+	if not space_state:
+		return desired_dir
+	var eye_pos = global_position + Vector3(0, 0.7, 0)
+	var forward = Vector3(desired_dir.x, 0.0, desired_dir.z).normalized()
+	if forward.length_squared() < 0.01:
+		return desired_dir
+		
+	var right = Vector3(-forward.z, 0.0, forward.x)
+	var whisker_dist = 1.05
+	
+	var left_dir = (forward - right * 0.45).normalized()
+	var right_dir = (forward + right * 0.45).normalized()
+	
+	var excl: Array[RID] = [get_rid()]
+	if is_instance_valid(player):
+		excl.append(player.get_rid())
+		
+	var q_left = PhysicsRayQueryParameters3D.create(eye_pos, eye_pos + left_dir * whisker_dist)
+	q_left.exclude = excl
+	var hit_left = not space_state.intersect_ray(q_left).is_empty()
+	
+	var q_right = PhysicsRayQueryParameters3D.create(eye_pos, eye_pos + right_dir * whisker_dist)
+	q_right.exclude = excl
+	var hit_right = not space_state.intersect_ray(q_right).is_empty()
+	
+	var steered = forward
+	if hit_left and not hit_right:
+		steered = (forward + right * 0.6).normalized()
+	elif hit_right and not hit_left:
+		steered = (forward - right * 0.6).normalized()
+		
+	return steered
+
+func _move_towards(delta: float, target_pos: Vector3, speed_to_use: float, rot_speed: float) -> void:
+	var to_tgt = target_pos - global_position
+	to_tgt.y = 0.0
+	
+	var move_vec = Vector3.ZERO
+	if to_tgt.length() > 0.05:
+		var raw_dir = to_tgt.normalized()
+		move_vec = _get_steered_dir(raw_dir)
+		
+		var target_rot_y = atan2(move_vec.x, move_vec.z)
+		rotation.y = lerp_angle(rotation.y, target_rot_y, rot_speed * delta)
+		
+		var accel = 35.0 if is_screamer_charging else 12.0
+		velocity.x = lerpf(velocity.x, move_vec.x * speed_to_use, delta * accel)
+		velocity.z = lerpf(velocity.z, move_vec.z * speed_to_use, delta * accel)
+	else:
+		velocity.x = lerpf(velocity.x, 0.0, delta * 12.0)
+		velocity.z = lerpf(velocity.z, 0.0, delta * 12.0)
+
+	var pre_pos := global_position
+	var was_on_floor := is_on_floor()
+	move_and_slide()
+
+	# Step-up suave si toca bordes bajos
+	if was_on_floor and is_on_wall() and move_vec != Vector3.ZERO:
+		var step_h: float = 0.25
+		var step_transform: Transform3D = global_transform
+		step_transform.origin.y += step_h
+		if not test_move(global_transform, Vector3(0, step_h, 0)):
+			var fwd: Vector3 = move_vec * (speed_to_use * delta + 0.06)
+			if not test_move(step_transform, fwd):
+				global_position = pre_pos + Vector3(0, step_h * 0.5, 0)
+				move_and_slide()
+
+	# Watchdog antitraba: SIN TELETRANSPORTE FANTASMA
+	pos_sample_timer += delta
+	if pos_sample_timer >= 0.3:
+		pos_sample_timer = 0.0
+		var moved_dist = global_position.distance_to(prev_pos)
+		prev_pos = global_position
+
+		if moved_dist < 0.08 and speed_to_use > 0.5:
+			stuck_timer += 0.3
+		else:
+			stuck_timer = max(0.0, stuck_timer - 0.3)
+
+	# Si queda atascado más de 1.8 segundos:
+	if stuck_timer >= 1.8:
+		stuck_timer = 0.0
+		if current_state == State.PATROL:
+			# Saltar al siguiente punto del circuito y recalcular ruta AStar
+			current_circuit_idx = (current_circuit_idx + 1) % PATROL_CIRCUIT_PB.size()
+			_navigate_to_circuit_idx(current_circuit_idx)
+		elif current_state == State.SEARCH:
+			# Si se trabó buscando en un aula/rincón, terminar la búsqueda y retomar patrulla
+			_enter_patrol_state()
+		elif current_state == State.CHASE:
+			# En persecución: solo dar un leve empuje lateral para despegarse del marco
+			if is_screamer_charging:
+				_end_screamer_charge()
+			velocity = Vector3.ZERO
+			var unstick_offset = Vector3(randf_range(-1.0, 1.0), 0.0, randf_range(-1.0, 1.0)).normalized() * 0.35
+			global_position += unstick_offset
+			prev_pos = global_position
+			repath_timer = 0.0
+			if not _can_see_player():
+				_enter_search_state(last_known_player_pos, "lost_sight")
+
+	_animate_walk(delta, move_vec.length() > 0.1)
+
+## =====================================================================
+## EVENTOS ESPECIALES Y REACCIONES
+## =====================================================================
+func _on_player_noise(volume: float) -> void:
+	if not is_active or not is_instance_valid(player):
+		return
+	if ONLY_PATROL_PB and get_floor(player.global_position.y) != 0:
+		return
+	var dist = global_position.distance_to(player.global_position)
+	if dist <= hearing_range:
+		if current_state == State.PATROL:
+			_enter_search_state(player.global_position, "noise")
+		elif current_state == State.SEARCH:
+			search_target_pos = player.global_position
+			current_path = _get_astar_path_to(search_target_pos)
+			current_path_idx = 0
+			is_searching_around = false
+			search_timer = 3.5
+
+func boost_speed() -> void:
+	speed_boost_count += 1
+	chase_speed = min(base_chase_speed + (speed_boost_count * 0.25), 3.4)
+	patrol_speed = min(base_patrol_speed + (speed_boost_count * 0.15), 2.4)
+	
+	if not is_active:
+		return
+	_enter_chase_state()
+	
+	if ojos_luz:
+		ojos_luz.light_color = Color(1.0, 0.0, 0.0)
+		ojos_luz.light_energy = 2.5
+	_say(phrases_enraged[randi() % phrases_enraged.size()], Color(1.0, 0.0, 0.0))
+
+func _setup_step_audio() -> void:
+	step_audio = AudioStreamPlayer3D.new()
+	step_audio.name = "ProfesorStepAudio3D"
+	step_audio.unit_size = 3.5
+	step_audio.max_distance = 35.0
+	step_audio.volume_db = -3.0
+	step_audio.bus = &"Master"
+	add_child(step_audio)
+
+func _play_prof_step() -> void:
+	if not step_audio:
+		return
+	step_audio.stream = HorrorAudio.get_profesor_footstep()
+	step_audio.pitch_scale = randf_range(0.96, 1.04)
+	step_audio.play()
+
+func _animate_walk(delta: float, is_moving: bool) -> void:
+	if is_moving and is_on_floor():
+		var step_mult = 2.8 if current_state == State.CHASE else 2.2
+		var anim_delta = delta * (current_speed * step_mult)
+		walk_anim_time += anim_delta
+		step_phase += anim_delta
+		
+		if step_phase >= PI:
+			step_phase -= PI
+			_play_prof_step()
+			
+		var swing_legs = sin(walk_anim_time) * deg_to_rad(28.0)
+		var swing_arms = cos(walk_anim_time) * deg_to_rad(25.0)
+		
+		if pierna_izq: pierna_izq.rotation.x = swing_legs
+		if pierna_der: pierna_der.rotation.x = -swing_legs
+		if brazo_izq: brazo_izq.rotation.x = -swing_arms
+		
+		if not is_attacking and brazo_der:
+			brazo_der.rotation.x = deg_to_rad(-35.0) + sin(walk_anim_time * 0.8) * deg_to_rad(15.0)
+			brazo_der.rotation.z = deg_to_rad(-10.0)
+			if regla:
+				regla.rotation.x = deg_to_rad(20.0) + cos(walk_anim_time * 1.5) * deg_to_rad(10.0)
+	else:
+		walk_anim_time = 0.0
+		step_phase = 1.0
+		if pierna_izq: pierna_izq.rotation.x = lerpf(pierna_izq.rotation.x, 0.0, delta * 6.0)
+		if pierna_der: pierna_der.rotation.x = lerpf(pierna_der.rotation.x, 0.0, delta * 6.0)
+		if brazo_izq: brazo_izq.rotation.x = lerpf(brazo_izq.rotation.x, 0.0, delta * 6.0)
+		if not is_attacking and not is_screamer_ambush and brazo_der:
+			brazo_der.rotation.x = lerpf(brazo_der.rotation.x, deg_to_rad(-40.0), delta * 5.0)
+			brazo_der.rotation.z = lerpf(brazo_der.rotation.z, deg_to_rad(-10.0), delta * 5.0)
+
 func _update_dialogue(delta: float) -> void:
 	phrase_timer -= delta
 	if phrase_timer <= 0.0:
@@ -1485,35 +1075,10 @@ func _say(text_msg: String, color: Color = Color(1.0, 0.85, 0.5)) -> void:
 	if cartel_dialogo:
 		cartel_dialogo.text = text_msg
 		cartel_dialogo.modulate = color
-		
 		get_tree().create_timer(3.5).timeout.connect(func():
 			if is_instance_valid(cartel_dialogo) and not is_attacking and current_state == State.PATROL:
 				cartel_dialogo.text = ""
 		)
-
-func _on_player_noise(volume: float) -> void:
-	if not is_active or not is_instance_valid(player):
-		return
-	if ONLY_PATROL_PB and get_floor(player.global_position.y) != 0:
-		return
-	var dist = global_position.distance_to(player.global_position)
-	if dist <= hearing_range:
-		_enter_chase_state()
-		last_known_player_pos = player.global_position
-		
-		var my_floor = get_floor(global_position.y)
-		var p_floor = get_floor(player.global_position.y)
-		if player.get("is_hidden"):
-			_say("¡¡¿QUÉ ES ESE RUIDO DENTRO DEL TACHO?!!", Color(1.0, 0.2, 0.2))
-		elif my_floor != p_floor:
-			_say("¡¡¿QUIÉN ANDA HACIENDO RUIDO EN EL OTRO PISO?!!", Color(1.0, 0.2, 0.2))
-		else:
-			_say("¡¡¿QUIÉN HACE RUIDO EN MI HORA?!!", Color(1.0, 0.2, 0.2))
-			
-		var to_player = player.global_position - global_position
-		to_player.y = 0.0
-		if to_player.length() > 0.1:
-			rotation.y = atan2(to_player.x, to_player.z)
 
 func _cut_screamer_audio() -> void:
 	if not is_inside_tree():
@@ -1531,3 +1096,183 @@ func _cut_screamer_audio() -> void:
 			player.fade_jumpscare_screamer(1.0)
 		if player.has_method("trigger_post_screamer_heartbeat"):
 			player.trigger_post_screamer_heartbeat(25.0)
+
+## =====================================================================
+## SUSTO CINEMÁTICO: CORRIDA POR EL PASILLO (4TO EXAMEN)
+## =====================================================================
+func start_hallway_dash(start_pos: Vector3, end_pos: Vector3, on_finished: Callable = Callable()) -> void:
+	set_active(true)
+	visible = true
+	is_screamer_ambush = false
+	is_screamer_charging = false
+	is_hallway_dashing = true
+	hallway_dash_target = end_pos
+	hallway_dash_callback = on_finished
+	hallway_dash_speed = 18.5
+	hallway_dash_timer = 0.0
+	current_speed = 18.5
+	attack_timer = 4.0
+	is_attacking = false
+	stuck_timer = 0.0
+	time_without_sight = 0.0
+	
+	global_position = start_pos
+	prev_pos = start_pos
+	
+	var to_tgt = end_pos - start_pos
+	to_tgt.y = 0.0
+	if to_tgt.length() > 0.1:
+		rotation.y = atan2(to_tgt.x, to_tgt.z)
+		
+	if step_audio:
+		step_audio.volume_db = 4.0
+		
+	if ojos_luz:
+		ojos_luz.light_color = Color(1.0, 0.0, 0.0)
+		ojos_luz.light_energy = 4.5
+		ojos_luz.spot_range = 18.0
+		ojos_luz.visible = true
+		
+	if brazo_der:
+		brazo_der.rotation.x = deg_to_rad(-115.0)
+		brazo_der.rotation.y = deg_to_rad(-10.0)
+	if regla:
+		regla.rotation.x = deg_to_rad(-40.0)
+
+func _process_hallway_dash(delta: float) -> void:
+	hallway_dash_timer += delta
+	var to_dest = hallway_dash_target - global_position
+	to_dest.y = 0.0
+	var dist = to_dest.length()
+	
+	if dist < 1.6 or hallway_dash_timer >= 3.5:
+		is_hallway_dashing = false
+		velocity = Vector3.ZERO
+		current_speed = patrol_speed
+		current_state = State.PATROL
+		if step_audio:
+			step_audio.volume_db = -3.0
+		if ojos_luz:
+			ojos_luz.light_color = Color(1.0, 0.85, 0.5)
+			ojos_luz.light_energy = 0.8
+			ojos_luz.spot_range = 10.0
+		if brazo_der:
+			brazo_der.rotation = Vector3.ZERO
+		if regla:
+			regla.rotation = Vector3.ZERO
+		_pick_closest_patrol_circuit_idx()
+		_navigate_to_circuit_idx(current_circuit_idx)
+		if hallway_dash_callback.is_valid():
+			hallway_dash_callback.call()
+		return
+		
+	var dir = to_dest.normalized()
+	rotation.y = atan2(dir.x, dir.z)
+	velocity.x = dir.x * hallway_dash_speed
+	velocity.z = dir.z * hallway_dash_speed
+	
+	if not is_on_floor():
+		velocity.y -= gravity * delta
+		
+	var pre_pos = global_position
+	var was_on_floor = is_on_floor()
+	move_and_slide()
+	
+	if was_on_floor and is_on_wall():
+		var step_h: float = 0.25
+		var step_transform: Transform3D = global_transform
+		step_transform.origin.y += step_h
+		if not test_move(global_transform, Vector3(0, step_h, 0)):
+			var fwd: Vector3 = dir * (hallway_dash_speed * delta + 0.06)
+			if not test_move(step_transform, fwd):
+				global_position = pre_pos + Vector3(0, step_h * 0.5, 0)
+				move_and_slide()
+
+	_animate_walk(delta, true)
+
+## =====================================================================
+## CINEMÁTICA Y EMBOSCADA DEL LABORATORIO (TABLERO ELÉCTRICO)
+## =====================================================================
+func trigger_screamer_ambush(ambush_pos: Vector3, look_at_pos: Vector3) -> void:
+	set_active(true)
+	visible = true
+	is_screamer_ambush = true
+	global_position = ambush_pos
+	prev_pos = ambush_pos
+	velocity = Vector3.ZERO
+	stuck_timer = 0.0
+	attack_timer = 1.8
+	is_attacking = false
+	
+	var to_target = look_at_pos - ambush_pos
+	to_target.y = 0.0
+	if to_target.length() > 0.1:
+		rotation.y = atan2(to_target.x, to_target.z)
+		
+	if brazo_der:
+		brazo_der.rotation.x = deg_to_rad(-125.0)
+		brazo_der.rotation.y = deg_to_rad(-15.0)
+		brazo_der.rotation.z = deg_to_rad(-10.0)
+	if regla:
+		regla.rotation.x = deg_to_rad(-45.0)
+		
+	if ojos_luz:
+		ojos_luz.light_color = Color(1.0, 0.0, 0.0)
+		ojos_luz.light_energy = 4.0
+		ojos_luz.spot_range = 15.0
+		ojos_luz.visible = true
+		
+	current_state = State.CHASE
+	chase_speed = base_chase_speed + 1.1
+	time_without_sight = 0.0
+	if is_instance_valid(player):
+		last_known_player_pos = player.global_position
+
+func play_ruler_slam_animation() -> void:
+	if not brazo_der or not regla:
+		return
+	var tw = create_tween()
+	tw.tween_property(brazo_der, "rotation:x", deg_to_rad(35.0), 0.09)
+	tw.parallel().tween_property(regla, "rotation:x", deg_to_rad(65.0), 0.09)
+	tw.tween_property(brazo_der, "rotation:x", deg_to_rad(-120.0), 0.22)
+	tw.parallel().tween_property(regla, "rotation:x", deg_to_rad(-40.0), 0.22)
+
+func start_screamer_charge() -> void:
+	is_screamer_ambush = false
+	is_screamer_charging = true
+	screamer_charge_timer = 1.4
+	current_state = State.CHASE
+	current_speed = 40.0
+	stuck_timer = 0.0
+	attack_timer = 0.15
+	last_chase_screamer_time = Time.get_ticks_msec() / 1000.0
+	_say("¡¡NO HAY SALVACIÓN, DIRECTO A MARZO!!", Color(1.0, 0.0, 0.0))
+	if is_instance_valid(player) and player.has_method("play_jumpscare_screamer"):
+		player.play_jumpscare_screamer()
+	if is_instance_valid(player):
+		last_known_player_pos = player.global_position
+		var to_p = player.global_position - global_position
+		to_p.y = 0.0
+		if to_p.length() > 0.1:
+			var dir_p = to_p.normalized()
+			rotation.y = atan2(dir_p.x, dir_p.z)
+			velocity.x = dir_p.x * 42.0
+			velocity.z = dir_p.z * 42.0
+
+func _end_screamer_charge() -> void:
+	is_screamer_charging = false
+	screamer_charge_timer = 0.0
+	chase_speed = base_chase_speed + (speed_boost_count * 0.85)
+	current_speed = chase_speed
+	var horiz_vel = Vector2(velocity.x, velocity.z)
+	if horiz_vel.length() > chase_speed:
+		var clamped = horiz_vel.normalized() * chase_speed
+		velocity.x = clamped.x
+		velocity.z = clamped.y
+
+func release_screamer_ambush() -> void:
+	is_screamer_ambush = false
+	stuck_timer = 0.0
+	prev_pos = global_position
+	if current_state == State.CHASE and not _can_see_player():
+		_enter_search_state(last_known_player_pos, "lost_sight")
