@@ -222,10 +222,25 @@ func _slam_door(d: Dictionary) -> void:
 	var tw = create_tween()
 	tw.set_ease(Tween.EASE_IN)
 	tw.set_trans(Tween.TRANS_QUAD)
-	tw.tween_property(hinge, "rotation:y", d["rot_closed"], 0.14)
+	tw.tween_property(hinge, "rotation:y", d["rot_closed"], 0.16)
 	
-	# Sonido estruendoso del portazo (Loud Door Slam con decibeles aumentados)
-	var slam_player = AudioStreamPlayer3D.new()
+	# Activar colisión al iniciar el cierre
+	var leaf: CSGBox3D = hinge.get_node_or_null("DoorLeaf")
+	if leaf:
+		leaf.use_collision = true
+	
+	# Disparar el BANG en el instante exacto en que la puerta choca contra el marco
+	tw.tween_callback(func():
+		_play_loud_slam_sound(d["hinge_pos"])
+		
+		# Sacudida de cámara en el instante del impacto
+		var dist = player.global_position.distance_to(d["trigger_pos"])
+		if dist < 12.0 and player.has_method("shake_camera"):
+			var intensity = clampf(1.0 - (dist / 12.0), 0.55, 1.25)
+			player.shake_camera(intensity, 0.45)
+	)
+
+func _play_loud_slam_sound(hinge_pos: Vector3) -> void:
 	var slam_stream: AudioStream = null
 	var candidates = [
 		"res://audio/sfx/door_slam_loud.mp3",
@@ -239,39 +254,27 @@ func _slam_door(d: Dictionary) -> void:
 	if not slam_stream:
 		slam_stream = HorrorAudio.get_wood_slam_sound()
 		
-	slam_player.stream = slam_stream
-	slam_player.position = d["hinge_pos"]
-	slam_player.volume_db = 14.0 # Decibeles aumentados para mayor impacto y susto
-	slam_player.unit_size = 4.5
-	slam_player.max_distance = 45.0
-	slam_player.bus = &"Master"
-	add_child(slam_player)
-	slam_player.play()
-	slam_player.finished.connect(slam_player.queue_free)
+	# 1. Reproductor 3D posicional a muy alto volumen
+	var slam_player_3d = AudioStreamPlayer3D.new()
+	slam_player_3d.stream = slam_stream
+	slam_player_3d.position = hinge_pos
+	slam_player_3d.volume_db = 22.0 # Decibeles notablemente aumentados para un susto potente
+	slam_player_3d.unit_size = 6.0
+	slam_player_3d.max_distance = 55.0
+	slam_player_3d.bus = &"Master"
+	add_child(slam_player_3d)
+	# Iniciar directamente en 1.54s donde estalla el golpe, omitiendo el silencio inicial del archivo
+	slam_player_3d.play(1.54)
+	slam_player_3d.finished.connect(slam_player_3d.queue_free)
 	
-	# Sacudida de cámara si el jugador está cerca
-	var dist = player.global_position.distance_to(d["trigger_pos"])
-	if dist < 10.0 and player.has_method("shake_camera"):
-		var intensity = clampf(1.0 - (dist / 10.0), 0.45, 1.05)
-		player.shake_camera(intensity, 0.42)
-		
-	# Activar colisión para que no se pueda ingresar
-	var leaf: CSGBox3D = hinge.get_node_or_null("DoorLeaf")
-	if leaf:
-		leaf.use_collision = true
-		
-	# Sonido posterior de picaporte trabado / traba metálica
-	var timer = get_tree().create_timer(0.22)
-	timer.timeout.connect(func():
-		var rattle = AudioStreamPlayer3D.new()
-		rattle.stream = HorrorAudio.get_door_rattle_sound()
-		rattle.position = d["hinge_pos"]
-		rattle.volume_db = 2.0
-		rattle.max_distance = 25.0
-		add_child(rattle)
-		rattle.play()
-		rattle.finished.connect(rattle.queue_free)
-	)
+	# 2. Capa de refuerzo estéreo directa para impacto de jumpscare
+	var slam_boost = AudioStreamPlayer.new()
+	slam_boost.stream = slam_stream
+	slam_boost.volume_db = 8.0
+	slam_boost.bus = &"Master"
+	add_child(slam_boost)
+	slam_boost.play(1.54)
+	slam_boost.finished.connect(slam_boost.queue_free)
 
 func _trigger_phantom_guide() -> void:
 	if not is_instance_valid(phantom_node):
