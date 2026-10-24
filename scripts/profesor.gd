@@ -76,6 +76,7 @@ var aula_inspect_wait_timer: float = 0.0
 var aula_inspect_cooldown: float = 12.0
 var saw_player_hide: bool = false
 var prev_player_hidden: bool = false
+var is_trash_rushing: bool = false
 
 ## =====================================================================
 ## RED DE NAVEGACIÓN ASTAR3D PARA PLANTA BAJA (PB)
@@ -147,6 +148,13 @@ const AULAS_PB_DATA: Array[Dictionary] = [
 		"door_pos": Vector3(47.0, 0.2, -2.5),
 		"inside_pos": Vector3(50.5, 0.2, -2.5),
 		"yaw": deg_to_rad(90.0)
+	},
+	{
+		"name": "Lab Central Electrónica",
+		"corridor_wp": Vector3(-42.0, 0.2, 0.5),
+		"door_pos": Vector3(-37.0, 0.2, 0.5),
+		"inside_pos": Vector3(-26.5, 0.2, 1.5),
+		"yaw": deg_to_rad(0.0)
 	}
 ]
 
@@ -270,6 +278,7 @@ func _build_astar_pb_network() -> void:
 		"W_1": Vector3(-42.0, 0.2, -20.0),
 		"W_2": Vector3(-42.0, 0.2, -12.0),
 		"W_3": Vector3(-42.0, 0.2, -8.0),
+		"W_LAB": Vector3(-42.0, 0.2, 0.5),
 		"W_4": Vector3(-42.0, 0.2, 2.5),
 		"W_5": Vector3(-42.0, 0.2, 17.5),
 		"W_6": Vector3(-42.0, 0.2, 30.0),
@@ -344,21 +353,23 @@ func _build_astar_pb_network() -> void:
 		# Fotocopiadora
 		"FOTO_DOOR": Vector3(-35.0, 0.2, 34.5),
 		"FOTO_IN": Vector3(-25.0, 0.2, 38.0),
-		# Lab Central de Electrónica (Pasillos entre y alrededor de las 3 mesadas de 14m)
-		"LAB_W_DOOR": Vector3(-37.0, 0.2, -8.0),
-		"LAB_W_N": Vector3(-35.5, 0.2, -8.0),
-		"LAB_W_01": Vector3(-35.5, 0.2, -3.5),
-		"LAB_W_12": Vector3(-35.5, 0.2, 1.5),
-		"LAB_W_S": Vector3(-35.5, 0.2, 6.5),
-		"LAB_E_DOOR": Vector3(-18.5, 0.2, -8.0),
-		"LAB_E_N": Vector3(-18.5, 0.2, -8.0),
+		# Lab Central de Electrónica (Entrada oeste real en Z = 0.5 y pasillos entre mesadas)
+		"LAB_DOOR_OUT": Vector3(-39.5, 0.2, 0.5),
+		"LAB_DOOR": Vector3(-37.0, 0.2, 0.5),
+		"LAB_DOOR_IN": Vector3(-35.0, 0.2, 0.5),
+		"LAB_W_N": Vector3(-35.0, 0.2, -8.3),
+		"LAB_W_01": Vector3(-35.0, 0.2, -3.5),
+		"LAB_W_12": Vector3(-35.0, 0.2, 1.5),
+		"LAB_W_S": Vector3(-35.0, 0.2, 7.5),
+		"LAB_MID_N": Vector3(-26.5, 0.2, -8.3),
+		"LAB_MID_01": Vector3(-26.5, 0.2, -3.5),
+		"LAB_MID_12": Vector3(-26.5, 0.2, 1.5),
+		"LAB_MID_S": Vector3(-26.5, 0.2, 7.5),
+		"LAB_E_N": Vector3(-18.5, 0.2, -8.3),
 		"LAB_E_01": Vector3(-18.5, 0.2, -3.5),
+		"LAB_E_PANEL": Vector3(-18.5, 0.2, 0.0),
 		"LAB_E_12": Vector3(-18.5, 0.2, 1.5),
-		"LAB_E_S": Vector3(-18.5, 0.2, 6.5),
-		"LAB_PANEL": Vector3(-27.0, 0.2, -8.0),
-		"LAB_MID_01": Vector3(-27.0, 0.2, -3.5),
-		"LAB_MID_12": Vector3(-27.0, 0.2, 1.5),
-		"LAB_MID_S": Vector3(-27.0, 0.2, 6.5)
+		"LAB_E_S": Vector3(-18.5, 0.2, 7.5)
 	}
 	
 	var name_to_id = {}
@@ -370,7 +381,7 @@ func _build_astar_pb_network() -> void:
 		
 	var connections = [
 		# Pasillo Oeste
-		["W_0", "W_1"], ["W_1", "W_2"], ["W_2", "W_3"], ["W_3", "W_4"], ["W_4", "W_5"], ["W_5", "W_6"],
+		["W_0", "W_1"], ["W_1", "W_2"], ["W_2", "W_3"], ["W_3", "W_LAB"], ["W_LAB", "W_4"], ["W_4", "W_5"], ["W_5", "W_6"],
 		# Pasillo Sur
 		["W_6", "S_1"], ["S_1", "S_2"], ["S_2", "S_3"], ["S_3", "S_4"], ["S_4", "S_5"], ["S_5", "S_6"], ["S_6", "S_7"], ["S_7", "E_6"],
 		# Pasillo Este
@@ -406,14 +417,15 @@ func _build_astar_pb_network() -> void:
 		["CAFE_FRONT", "CAFE_NORTH"], ["CAFE_FRONT", "CAFE_SOUTH"], ["CAFE_FRONT", "CAFE_BACK"],
 		# Fotocopiadora
 		["S_2", "FOTO_DOOR"], ["FOTO_DOOR", "FOTO_IN"],
-		# Lab Central de Electrónica (Pasillos Oeste, Este y Transversales entre mesadas)
-		["W_3", "LAB_W_DOOR"], ["LAB_W_DOOR", "LAB_W_N"],
-		["LAB_W_N", "LAB_W_01"], ["LAB_W_01", "LAB_W_12"], ["LAB_W_12", "LAB_W_S"],
-		["LAB_E_DOOR", "LAB_E_N"], ["LAB_E_N", "LAB_E_01"], ["LAB_E_01", "LAB_E_12"], ["LAB_E_12", "LAB_E_S"],
-		["LAB_W_N", "LAB_PANEL"], ["LAB_PANEL", "LAB_E_N"],
+		# Lab Central de Electrónica (Entrada y salida por puerta oeste real en Z = 0.5)
+		["W_LAB", "LAB_DOOR_OUT"], ["LAB_DOOR_OUT", "LAB_DOOR"], ["LAB_DOOR", "LAB_DOOR_IN"],
+		["LAB_DOOR_IN", "LAB_W_01"], ["LAB_DOOR_IN", "LAB_W_12"],
+		["LAB_W_01", "LAB_W_N"], ["LAB_W_12", "LAB_W_S"],
+		["LAB_W_N", "LAB_MID_N"], ["LAB_MID_N", "LAB_E_N"],
 		["LAB_W_01", "LAB_MID_01"], ["LAB_MID_01", "LAB_E_01"],
 		["LAB_W_12", "LAB_MID_12"], ["LAB_MID_12", "LAB_E_12"],
-		["LAB_W_S", "LAB_MID_S"], ["LAB_MID_S", "LAB_E_S"]
+		["LAB_W_S", "LAB_MID_S"], ["LAB_MID_S", "LAB_E_S"],
+		["LAB_E_N", "LAB_E_01"], ["LAB_E_01", "LAB_E_PANEL"], ["LAB_E_PANEL", "LAB_E_12"], ["LAB_E_12", "LAB_E_S"]
 	]
 	
 	for conn in connections:
@@ -512,6 +524,7 @@ func _physics_process(delta: float) -> void:
 		saw_player_hide = has_los and (current_state == State.CHASE)
 	elif not is_hidden_now:
 		saw_player_hide = false
+		is_trash_rushing = false
 	prev_player_hidden = is_hidden_now
 
 	# Restricción absoluta a Planta Baja
@@ -772,6 +785,8 @@ func _process_chase_state(delta: float, can_see_player: bool) -> void:
 		current_speed = 42.0
 		if screamer_charge_timer <= 0.0:
 			_end_screamer_charge()
+	elif is_trash_rushing:
+		current_speed = 5.5
 	else:
 		current_speed = chase_speed
 
@@ -793,6 +808,9 @@ func _process_chase_state(delta: float, can_see_player: bool) -> void:
 	if can_see_player:
 		last_known_player_pos = player.global_position
 		time_without_sight = 0.0
+	elif is_trash_rushing:
+		time_without_sight = 0.0
+		last_known_player_pos = player.global_position
 	else:
 		time_without_sight += delta
 		if time_without_sight >= lost_sight_timeout:
@@ -802,7 +820,8 @@ func _process_chase_state(delta: float, can_see_player: bool) -> void:
 	# Si el jugador está escondido en un tacho
 	if player.get("is_hidden"):
 		if saw_player_hide:
-			if dist_to_player <= attack_range + 0.8:
+			if dist_to_player <= attack_range + 0.9:
+				is_trash_rushing = false
 				_say("¡¡TE ESCUCHÉ AHÍ ADENTRO! ¡SALÍ DE ESE TACHO!!", Color(1.0, 0.1, 0.1))
 				if player.get("current_hiding_spot") and player.current_hiding_spot.has_method("force_eject"):
 					player.current_hiding_spot.force_eject()
@@ -823,11 +842,11 @@ func _process_chase_state(delta: float, can_see_player: bool) -> void:
 
 	loop_commit_timer = max(0.0, loop_commit_timer - delta)
 
-	# Persecución en línea recta si tiene camino despejado y lo ve
-	var can_rush_direct = can_see_player and _is_walk_path_clear(global_position, player.global_position)
+	# Persecución en línea recta si tiene camino despejado y lo ve (o sprint directo hacia el tacho si está despejado)
+	var can_rush_direct = (can_see_player or is_trash_rushing) and _is_walk_path_clear(global_position, player.global_position)
 	if can_rush_direct:
 		loop_commit_timer = 0.0
-		var rot_spd = 35.0 if is_screamer_charging else 8.0
+		var rot_spd = 35.0 if (is_screamer_charging or is_trash_rushing) else 8.0
 		_move_towards(delta, player.global_position, current_speed, rot_spd)
 		return
 
@@ -1131,13 +1150,26 @@ func _on_player_noise(volume: float) -> void:
 		print(">>> Profesor escuchó ruido! Dist: %.1fm (max %.1fm), En Tacho: %s" % [dist, effective_hearing_range, is_in_trash])
 		if is_in_trash:
 			saw_player_hide = true
-			if current_state == State.CHASE:
-				last_known_player_pos = player.global_position
-				current_path = _get_astar_path_to(last_known_player_pos)
-				current_path_idx = 0
-				_say("¡¡¿QUÉ ES ESE RUIDO DENTRO DEL TACHO?!!", Color(1.0, 0.1, 0.1))
-			else:
-				_enter_search_state(player.global_position, "noise_trash")
+			is_trash_rushing = true
+			last_known_player_pos = player.global_position
+			current_state = State.CHASE
+			current_speed = 5.5 # Sprint ultra-rápido ("casi instantáneo") hacia el tacho
+			current_path = _get_astar_path_to(player.global_position)
+			current_path_idx = 0
+			repath_timer = 0.2
+			_say("¡¡TE ESCUCHÉ EN ESE TACHO, NO TE VAS A ESCAPAR!!", Color(1.0, 0.1, 0.1))
+			if ojos_luz:
+				ojos_luz.light_color = Color(1.0, 0.0, 0.0)
+				ojos_luz.light_energy = 2.5
+				
+			# Si ya está al lado del tacho, actuar de inmediato
+			if dist <= attack_range + 0.9:
+				is_trash_rushing = false
+				_say("¡¡TE ESCUCHÉ AHÍ ADENTRO! ¡SALÍ DE ESE TACHO!!", Color(1.0, 0.1, 0.1))
+				if player.get("current_hiding_spot") and player.current_hiding_spot.has_method("force_eject"):
+					player.current_hiding_spot.force_eject()
+				_start_attack()
+				return
 		else:
 			if current_state == State.PATROL:
 				_enter_search_state(player.global_position, "noise")
@@ -1184,7 +1216,7 @@ func _play_prof_step() -> void:
 
 func _animate_walk(delta: float, is_moving: bool) -> void:
 	if is_moving and is_on_floor():
-		var step_mult = 2.8 if current_state == State.CHASE else 2.2
+		var step_mult = 3.6 if (is_trash_rushing or is_screamer_charging) else (2.8 if current_state == State.CHASE else 2.2)
 		var anim_delta = delta * (current_speed * step_mult)
 		walk_anim_time += anim_delta
 		step_phase += anim_delta
