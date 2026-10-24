@@ -67,27 +67,34 @@ var hallway_dash_callback: Callable = Callable()
 ## Puntos de patrullaje por toda la facultad organizados por piso
 ## PB = Y ~0.2 | P1 = Y ~4.7 | P2 = Y ~9.2
 const WAYPOINTS_PB: Array[Vector3] = [
-	Vector3(0.0, 0.2, -18.0),     # PB: Patio Norte
-	Vector3(0.0, 0.2, -28.5),     # PB: Pasillo Norte centro
-	Vector3(-25.0, 0.2, -28.5),   # PB: Pasillo Norte frente a Aula 102
-	Vector3(-42.0, 0.2, -28.5),   # PB: Esquina Noroeste (frente a Aula 105)
-	Vector3(-42.0, 0.2, -12.0),   # PB: Pasillo Oeste (frente a Aula 106)
-	Vector3(-42.0, 0.2, 5.0),     # PB: Pasillo Oeste (frente a Aula 107)
-	Vector3(-42.0, 0.2, 20.0),    # PB: Pasillo Oeste (frente a Aula 108)
-	Vector3(-42.0, 0.2, 30.0),    # PB: Esquina Suroeste
-	Vector3(-25.0, 0.2, 30.0),    # PB: Pasillo Sur oeste
-	Vector3(0.0, 0.2, 30.0),      # PB: Pasillo Sur centro (frente a auditorio)
-	Vector3(0.0, 0.2, 22.0),      # PB: Entrada Sur al Patio
-	Vector3(0.0, 0.2, 4.0),       # PB: Patio interior frente a la fuente
-	Vector3(0.0, 0.2, -4.0),      # PB: Patio interior norte
-	Vector3(0.0, 0.2, 22.0),      # PB: Salida Patio Sur
-	Vector3(25.0, 0.2, 30.0),     # PB: Pasillo Sur este
-	Vector3(42.0, 0.2, 30.0),     # PB: Esquina Sureste
-	Vector3(42.0, 0.2, 17.0),     # PB: Pasillo Este sur (frente a Aula 115)
-	Vector3(42.0, 0.2, 0.0),      # PB: Pasillo Este centro (Cafetería PB)
-	Vector3(42.0, 0.2, -15.0),    # PB: Pasillo Este norte (frente a Aula 114)
-	Vector3(42.0, 0.2, -28.5),    # PB: Esquina Noreste
-	Vector3(25.0, 0.2, -28.5)     # PB: Pasillo Norte este (frente a Aula 104)
+	# Pasillo Oeste (X = -42.0)
+	Vector3(-42.0, 0.2, -28.5),   # 0: PB: Esquina Noroeste (frente a Aula 105)
+	Vector3(-42.0, 0.2, -12.0),   # 1: PB: Pasillo Oeste (frente a Aula 106)
+	Vector3(-42.0, 0.2, 5.0),     # 2: PB: Pasillo Oeste (frente a Aula 107)
+	Vector3(-42.0, 0.2, 20.0),    # 3: PB: Pasillo Oeste (frente a Aula 108)
+	Vector3(-42.0, 0.2, 30.0),    # 4: PB: Esquina Suroeste
+	# Pasillo Sur (Z = 30.0)
+	Vector3(-25.0, 0.2, 30.0),    # 5: PB: Pasillo Sur oeste (frente a Bedelía)
+	Vector3(0.0, 0.2, 30.0),      # 6: PB: Pasillo Sur centro (frente a Auditorio y Entrada Patio)
+	# Incursión al Patio del Estudiante (Entrada Sur X = 0.0)
+	Vector3(0.0, 0.2, 22.0),      # 7: PB: Galería Sur frente a entrada al Patio
+	Vector3(0.0, 0.2, 6.0),       # 8: PB: Patio interior frente a la fuente
+	Vector3(0.0, 0.2, -4.0),      # 9: PB: Patio interior norte
+	Vector3(0.0, 0.2, 6.0),       # 10: PB: Retorno patio frente a la fuente
+	Vector3(0.0, 0.2, 22.0),      # 11: PB: Retorno galería Sur
+	Vector3(0.0, 0.2, 30.0),      # 12: PB: Salida Pasillo Sur centro
+	# Continuación Pasillo Sur
+	Vector3(25.0, 0.2, 30.0),     # 13: PB: Pasillo Sur este
+	Vector3(42.0, 0.2, 30.0),     # 14: PB: Esquina Sureste
+	# Pasillo Este (X = 42.0)
+	Vector3(42.0, 0.2, 17.0),     # 15: PB: Pasillo Este sur (frente a Aula 115)
+	Vector3(42.0, 0.2, 0.0),      # 16: PB: Pasillo Este centro (Cafetería PB)
+	Vector3(42.0, 0.2, -15.0),    # 17: PB: Pasillo Este norte (frente a Aula 114)
+	Vector3(42.0, 0.2, -28.5),    # 18: PB: Esquina Noreste
+	# Pasillo Norte (Z = -28.5)
+	Vector3(25.0, 0.2, -28.5),    # 19: PB: Pasillo Norte este (frente a Aula 104)
+	Vector3(0.0, 0.2, -28.5),     # 20: PB: Pasillo Norte centro
+	Vector3(-25.0, 0.2, -28.5)    # 21: PB: Pasillo Norte oeste (frente a Aula 102)
 ]
 
 const WAYPOINTS_P1: Array[Vector3] = [
@@ -275,7 +282,7 @@ func _get_nav_target_to(destination_pos: Vector3) -> Vector3:
 		# Si hay una pared o esquina bloqueando la línea recta:
 		# Encontrar el waypoint del pasillo que tenga camino directo despejado y nos acerque al destino
 		var wps = get_floor_waypoints(my_floor)
-		var best_wp = destination_pos
+		var best_wp = Vector3.ZERO
 		var best_score = 99999.0
 		
 		for wp in wps:
@@ -286,7 +293,20 @@ func _get_nav_target_to(destination_pos: Vector3) -> Vector3:
 					best_score = score
 					best_wp = wp
 					
-		return best_wp
+		if best_score < 99999.0:
+			return best_wp
+
+		# Respaldo de seguridad si ningún waypoint tiene visión directa libre:
+		# En lugar de caminar ciegamente contra la pared hacia destination_pos,
+		# ir al waypoint más cercano del pasillo para despejar la esquina.
+		var min_d = 99999.0
+		var fallback_wp = global_position
+		for wp in wps:
+			var d = global_position.distance_to(wp)
+			if d < min_d:
+				min_d = d
+				fallback_wp = wp
+		return fallback_wp
 
 	# Elegir la torre de escaleras adecuada
 	var chosen_tower = ""
@@ -498,12 +518,30 @@ func set_active(active: bool) -> void:
 func _pick_closest_waypoint() -> void:
 	current_floor_waypoints = get_floor_waypoints(current_patrol_floor)
 	patrol_waypoints = current_floor_waypoints
-	var best_dist = 99999.0
+	if current_floor_waypoints.is_empty():
+		current_waypoint_idx = 0
+		return
+		
+	var best_visible_idx = -1
+	var best_visible_dist = 99999.0
+	var best_any_idx = 0
+	var best_any_dist = 99999.0
+	
 	for i in range(current_floor_waypoints.size()):
-		var d = global_position.distance_to(current_floor_waypoints[i])
-		if d < best_dist:
-			best_dist = d
-			current_waypoint_idx = i
+		var wp = current_floor_waypoints[i]
+		var d = global_position.distance_to(wp)
+		if d < best_any_dist:
+			best_any_dist = d
+			best_any_idx = i
+		if d < best_visible_dist and _is_walk_path_clear(global_position, wp):
+			best_visible_dist = d
+			best_visible_idx = i
+			
+	var chosen_idx = best_visible_idx if best_visible_idx >= 0 else best_any_idx
+	# Si ya estamos muy cerca de este punto, apuntar al siguiente del circuito
+	if global_position.distance_to(current_floor_waypoints[chosen_idx]) < 2.2:
+		chosen_idx = (chosen_idx + 1) % current_floor_waypoints.size()
+	current_waypoint_idx = chosen_idx
 
 func _find_player() -> void:
 	var players = get_tree().get_nodes_in_group("player")
@@ -650,10 +688,10 @@ func _process_patrol_state(delta: float, can_see_player: bool) -> void:
 			floor_investigate_timer = randf_range(25.0, 45.0)
 			_say("A ver qué alumnos andan por este piso...", Color(1.0, 0.85, 0.5))
 	else:
-		if dist_dest < 2.0:
+		if dist_dest < 2.2:
 			current_waypoint_idx = (current_waypoint_idx + 1) % current_floor_waypoints.size()
 			target_wp = current_floor_waypoints[current_waypoint_idx]
-			nav_dest = _get_nav_target_to(target_wp)
+			nav_dest = target_wp if _is_walk_path_clear(global_position, target_wp) else _get_nav_target_to(target_wp)
 			to_dest = nav_dest - global_position
 
 	var move_dir = Vector3(to_dest.x, 0.0, to_dest.z).normalized()
@@ -773,15 +811,36 @@ func _process_attack_state(delta: float) -> void:
 ## =====================================================================
 func _is_walk_path_clear(from_pos: Vector3, to_pos: Vector3) -> bool:
 	var space_state = get_world_3d().direct_space_state
-	var start_p = from_pos + Vector3(0, 0.55, 0)
-	var end_p = to_pos + Vector3(0, 0.55, 0)
-	var query = PhysicsRayQueryParameters3D.create(start_p, end_p)
+	var fwd = to_pos - from_pos
+	fwd.y = 0.0
+	if fwd.length_squared() < 0.01:
+		return true
+	var dir = fwd.normalized()
+	var side = Vector3(-dir.z, 0.0, dir.x) * 0.35
+	
 	var excl: Array[RID] = [get_rid()]
 	if is_instance_valid(player):
 		excl.append(player.get_rid())
-	query.exclude = excl
-	var result = space_state.intersect_ray(query)
-	return result.is_empty()
+
+	# 1. Rayo central a la altura del pecho
+	var q_mid = PhysicsRayQueryParameters3D.create(from_pos + Vector3(0, 0.7, 0), to_pos + Vector3(0, 0.7, 0))
+	q_mid.exclude = excl
+	if not space_state.intersect_ray(q_mid).is_empty():
+		return false
+
+	# 2. Rayo lateral izquierdo (ancho del cuerpo del profesor)
+	var q_left = PhysicsRayQueryParameters3D.create(from_pos + side + Vector3(0, 0.7, 0), to_pos + side + Vector3(0, 0.7, 0))
+	q_left.exclude = excl
+	if not space_state.intersect_ray(q_left).is_empty():
+		return false
+
+	# 3. Rayo lateral derecho (ancho del cuerpo del profesor)
+	var q_right = PhysicsRayQueryParameters3D.create(from_pos - side + Vector3(0, 0.7, 0), to_pos - side + Vector3(0, 0.7, 0))
+	q_right.exclude = excl
+	if not space_state.intersect_ray(q_right).is_empty():
+		return false
+
+	return true
 
 
 
@@ -841,18 +900,32 @@ func _move_towards(delta: float, dir: Vector3, speed_to_use: float, rot_speed: f
 				velocity = Vector3.ZERO
 		else:
 			var wps = current_floor_waypoints if current_floor_waypoints.size() > 0 else WAYPOINTS_PB
-			var best_idx: int = -1
-			var best_dist: float = 99999.0
-			for i in range(wps.size()):
-				var d = global_position.distance_to(wps[i])
-				if d >= 2.5 and d < best_dist:
-					best_dist = d
-					best_idx = i
-			if best_idx >= 0:
-				global_position = wps[best_idx]
+			if current_state == State.PATROL:
+				# En patrullaje: avanzar de inmediato al SIGUIENTE waypoint del circuito
+				# para evitar insistir contra la misma esquina y continuar la ronda
+				current_waypoint_idx = (current_waypoint_idx + 1) % wps.size()
+				global_position = wps[current_waypoint_idx]
 				prev_pos = global_position
-				current_waypoint_idx = (best_idx + 1) % wps.size()
 				velocity = Vector3.ZERO
+			else:
+				# En persecución o búsqueda: teleportar al waypoint más cercano con camino despejado
+				var best_idx: int = -1
+				var best_dist: float = 99999.0
+				for i in range(wps.size()):
+					var d = global_position.distance_to(wps[i])
+					if d < best_dist and _is_walk_path_clear(global_position, wps[i]):
+						best_dist = d
+						best_idx = i
+				if best_idx == -1:
+					for i in range(wps.size()):
+						var d = global_position.distance_to(wps[i])
+						if d < best_dist:
+							best_dist = d
+							best_idx = i
+				if best_idx >= 0:
+					global_position = wps[best_idx]
+					prev_pos = global_position
+					velocity = Vector3.ZERO
 
 	_animate_walk(delta, move_vec.length() > 0.1)
 

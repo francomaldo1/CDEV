@@ -516,8 +516,27 @@ func _get_scare_dash_points(exam_pos: Vector3, exam_name: String) -> Array[Vecto
 		# Fotocopiadora 1: Pasillo Sur (Z = 33.5), cruza frente a la puerta en X = -35.0
 		return [Vector3(-48.0, 0.05, 33.5), Vector3(-12.0, 0.05, 33.5)]
 	else:
-		# Patio del Estudiante: Galería Norte (Z = -18.0)
-		return [Vector3(-25.0, 0.05, -18.0), Vector3(25.0, 0.05, -18.0)]
+		# Patio del Estudiante: Corre cruzando perpendicularmente en el campo de visión del jugador
+		var p_pos = player.global_position if is_instance_valid(player) else exam_pos
+		var p_fwd = -player.global_transform.basis.z if is_instance_valid(player) else Vector3.FORWARD
+		p_fwd.y = 0.0
+		if p_fwd.length() < 0.1:
+			p_fwd = Vector3.FORWARD
+		else:
+			p_fwd = p_fwd.normalized()
+		var p_right = Vector3(-p_fwd.z, 0.0, p_fwd.x).normalized()
+		var center = p_pos + p_fwd * 6.5
+		center.y = 0.05
+		# Mantener el centro dentro del patio abierto (-14 < x < 14, -12 < z < 14)
+		center.x = clampf(center.x, -14.0, 14.0)
+		center.z = clampf(center.z, -12.0, 14.0)
+		var start_pos = center - p_right * 16.0
+		var end_pos = center + p_right * 16.0
+		start_pos.x = clampf(start_pos.x, -16.5, 16.5)
+		start_pos.z = clampf(start_pos.z, -16.0, 16.5)
+		end_pos.x = clampf(end_pos.x, -16.5, 16.5)
+		end_pos.z = clampf(end_pos.z, -16.0, 16.5)
+		return [start_pos, end_pos]
 
 
 
