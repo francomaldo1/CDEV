@@ -15,6 +15,7 @@ var is_blackout_active: bool = false
 var is_restored: bool = false
 var is_screamer_running: bool = false
 var player_ref: CharacterBody3D = null
+var ghostly_audio_player: AudioStreamPlayer = null
 
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
@@ -94,6 +95,9 @@ func _execute_fuse_screamer_sequence(hud: Node) -> void:
 	if fusible_insertado:
 		fusible_insertado.visible = true
 		
+	# Reproducir sonido de fusible eléctrico conectado
+	_play_fuse_insert_sound()
+		
 	# Obtener referencias al jugador y al profesor
 	var player = player_ref
 	if not is_instance_valid(player):
@@ -156,6 +160,7 @@ func _execute_fuse_screamer_sequence(hud: Node) -> void:
 	# La cámara del jugador gira hacia la puerta apuntando directamente a la cara del profesor
 	if is_instance_valid(player) and player.has_method("force_look_at"):
 		player.force_look_at(door_ambush_pos + Vector3(0, 1.5, 0), 0.40)
+	_play_ghostly_sound()
 		
 	# 7. ENERGÍA RESTABLECIDA, JUMPSCARE EN LA PUERTA Y PERSECUCIÓN (T = 1.18s)
 	await get_tree().create_timer(0.43).timeout
@@ -194,6 +199,12 @@ func _execute_fuse_screamer_sequence(hud: Node) -> void:
 	if is_instance_valid(player) and player.has_method("shake_camera"):
 		player.shake_camera(1.3, 0.9)
 	
+	# Desvanecer ghostly sound al desatarse la embestida
+	if is_instance_valid(ghostly_audio_player) and ghostly_audio_player.playing:
+		var tw = create_tween()
+		tw.tween_property(ghostly_audio_player, "volume_db", -35.0, 0.35)
+		tw.tween_callback(ghostly_audio_player.queue_free)
+
 	# El profesor sale corriendo rapidísimo hacia nosotros (casi instantáneo)
 	if is_instance_valid(prof):
 		if prof.has_method("start_screamer_charge"):
@@ -208,6 +219,50 @@ func _execute_fuse_screamer_sequence(hud: Node) -> void:
 		player.set_frozen(false)
 		
 	is_screamer_running = false
+
+func _play_fuse_insert_sound() -> void:
+	var sfx_paths = [
+		"res://audio/sfx/Firefly_audio_sonido_de_fusible_electrico_conectado_variation3.wav",
+		"res://Firefly_audio_sonido_de_fusible_electrico_conectado_variation3.wav"
+	]
+	var stream: AudioStream = null
+	for p in sfx_paths:
+		if ResourceLoader.exists(p):
+			stream = load(p)
+			break
+	if stream:
+		var asp = AudioStreamPlayer.new()
+		asp.name = "FuseConnectedSFX"
+		asp.stream = stream
+		asp.bus = &"Master"
+		asp.volume_db = 2.0
+		add_child(asp)
+		asp.play()
+		asp.finished.connect(asp.queue_free)
+
+func _play_ghostly_sound() -> void:
+	var sfx_paths = [
+		"res://audio/sfx/ghostly-sound.mp3",
+		"res://ghostly-sound.mp3"
+	]
+	var stream: AudioStream = null
+	for p in sfx_paths:
+		if ResourceLoader.exists(p):
+			stream = load(p)
+			break
+	if stream:
+		ghostly_audio_player = AudioStreamPlayer.new()
+		ghostly_audio_player.name = "GhostlySoundSFX"
+		ghostly_audio_player.stream = stream
+		ghostly_audio_player.bus = &"Master"
+		ghostly_audio_player.volume_db = 2.5
+		add_child(ghostly_audio_player)
+		ghostly_audio_player.play()
+		ghostly_audio_player.finished.connect(func():
+			if is_instance_valid(ghostly_audio_player):
+				ghostly_audio_player.queue_free()
+				ghostly_audio_player = null
+		)
 
 func _on_body_entered(body: Node3D) -> void:
 	if body is Player or body.is_in_group("player") or body.name == "Player":
