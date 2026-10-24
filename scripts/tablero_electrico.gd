@@ -137,14 +137,15 @@ func _execute_fuse_screamer_sequence(hud: Node) -> void:
 	# Dejar que el sonido y los chispazos de conexión se aprecien con claridad
 	await get_tree().create_timer(0.85).timeout
 	
-	# 3. MANTENER LINTERNA PRENDIDA DURANTE LA CINEMÁTICA
+	# 3. MANTENER LINTERNA PRENDIDA Y ENCENDER HILERA DE LUCES DEL LABORATORIO
 	if is_instance_valid(player) and player.has_method("force_flashlight"):
 		player.force_flashlight(true)
+	_turn_on_hilera_luces()
 		
-	# 4. TELETRANSPORTAR AL PROFESOR A LA PUERTA DEL LABORATORIO (bloqueando la única salida)
-	# La puerta del lab hacia el pasillo oeste está en X = -37.0.
-	# Colocamos al profesor en el pasillo central del laboratorio (Z = 1.0) despejado de las mesadas.
-	var door_ambush_pos = Vector3(-35.0, 0.05, 1.2)
+	# 4. TELETRANSPORTAR AL PROFESOR A LA PUERTA DEL LABORATORIO (X = -36.2, Z = 0.9)
+	# La puerta del lab hacia el pasillo oeste está en X = -36.5, Z = 0.9.
+	# Colocamos al profesor justo bajo la lámpara de la puerta, bloqueando la salida.
+	var door_ambush_pos = Vector3(-36.0, 0.05, 0.9)
 	if is_instance_valid(prof):
 		var p_pos = player.global_position if is_instance_valid(player) else Vector3(-18.5, 0.05, 0.0)
 		var look_target = p_pos + Vector3(0, 1.4, 0)
@@ -152,7 +153,7 @@ func _execute_fuse_screamer_sequence(hud: Node) -> void:
 		
 	await get_tree().create_timer(0.85).timeout
 	
-	# 5. GOLPE DE REGLA DEL PROFESOR EN LA OSCURIDAD (T = 1.8s a 2.7s)
+	# 5. GOLPE DE REGLA DEL PROFESOR EN LA PENUMBRA (T = 1.8s a 2.7s)
 	if is_instance_valid(prof):
 		prof.play_ruler_slam_animation()
 		
@@ -161,16 +162,18 @@ func _execute_fuse_screamer_sequence(hud: Node) -> void:
 		
 	await get_tree().create_timer(0.75).timeout
 	
-	# 6. GIRO DRAMÁTICO DE CÁMARA HACIA LA PUERTA Y AUDIO FANTASMAL (T = 2.7s a 4.1s)
-	# Inicia el sonido espectral
+	# 6. GIRO DRAMÁTICO DE CÁMARA, AUDIO FANTASMAL Y APAGÓN EN CASCADA DE LUCES HACIA LA PUERTA
 	_play_ghostly_sound()
+	
+	# Iniciar el apagón progresivo de la hilera de luces desde el tablero hacia la puerta
+	_animate_hilera_lights_cascade()
 	
 	# Giro suave y cinematográfico de cámara de 180° hacia la puerta
 	if is_instance_valid(player) and player.has_method("force_look_at"):
-		player.force_look_at(door_ambush_pos + Vector3(0, 1.5, 0), 0.85)
+		player.force_look_at(door_ambush_pos + Vector3(0, 1.5, 0), 0.95)
 		
-	# Dejar contemplar la silueta fantasmal del profesor en la penumbra
-	await get_tree().create_timer(1.2).timeout
+	# Dejar contemplar al profesor perfectamente iluminado bajo la única luz de la puerta
+	await get_tree().create_timer(1.3).timeout
 		
 	# 7. ENERGÍA RESTABLECIDA, JUMPSCARE EN LA PUERTA Y PERSECUCIÓN (T = 4.1s a 6.8s)
 	if is_instance_valid(player) and player.has_method("force_flashlight"):
@@ -269,6 +272,58 @@ func _play_ghostly_sound() -> void:
 				ghostly_audio_player.queue_free()
 				ghostly_audio_player = null
 		)
+
+func _turn_on_hilera_luces() -> void:
+	var hilera = get_tree().root.find_child("HileraLucesLabElectronica", true, false)
+	if not hilera:
+		return
+	for child in hilera.get_children():
+		if child is SpotLight3D:
+			child.visible = true
+		elif child is CSGBox3D and child.name.begins_with("Tube_"):
+			if child.material is StandardMaterial3D:
+				var mat = (child.material as StandardMaterial3D).duplicate()
+				mat.emission_enabled = true
+				child.material = mat
+
+func _animate_hilera_lights_cascade() -> void:
+	var hilera = get_tree().root.find_child("HileraLucesLabElectronica", true, false)
+	if not hilera:
+		return
+	var spots: Array[SpotLight3D] = []
+	for child in hilera.get_children():
+		if child is SpotLight3D:
+			spots.append(child)
+	# Ordenar de mayor a menor X (desde tablero en X = -19.5 hacia la puerta en X = -36.5)
+	spots.sort_custom(func(a, b): return a.global_position.x > b.global_position.x)
+	if spots.is_empty():
+		return
+		
+	var snap_audio = AudioStreamPlayer3D.new()
+	snap_audio.unit_size = 5.0
+	snap_audio.max_distance = 35.0
+	snap_audio.bus = &"Master"
+	add_child(snap_audio)
+	
+	# Apagar en cascada todas las luces menos la última (la de la puerta en X = -36.5)
+	for i in range(spots.size() - 1):
+		await get_tree().create_timer(0.22).timeout
+		var s = spots[i]
+		if is_instance_valid(s):
+			s.visible = false
+			snap_audio.global_position = s.global_position
+			snap_audio.stream = HorrorAudio.get_spark_sound()
+			snap_audio.volume_db = 2.0
+			snap_audio.pitch_scale = randf_range(1.15, 1.35)
+			snap_audio.play()
+			
+			for child in hilera.get_children():
+				if child is CSGBox3D and child.name.begins_with("Tube_"):
+					if absf(child.global_position.x - s.global_position.x) < 0.6:
+						if child.material is StandardMaterial3D:
+							var mat = (child.material as StandardMaterial3D).duplicate()
+							mat.emission_enabled = false
+							child.material = mat
 
 func _on_body_entered(body: Node3D) -> void:
 	if body is Player or body.is_in_group("player") or body.name == "Player":

@@ -1,6 +1,8 @@
 extends Area3D
 class_name PeronachosShelf
 
+static var global_last_pickup_time: int = 0
+
 @export var max_capacity: int = 13
 var available_bags: Array[Node3D] = []
 var is_player_nearby: bool = false
@@ -8,6 +10,7 @@ var player_ref: CharacterBody3D = null
 var audio_player: AudioStreamPlayer3D = null
 
 func _ready() -> void:
+	add_to_group("peronachos_shelves")
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
 	
@@ -39,6 +42,10 @@ func _process(_delta: float) -> void:
 		_try_take_bag()
 
 func _try_take_bag() -> void:
+	var now = Time.get_ticks_msec()
+	if now - global_last_pickup_time < 350:
+		return
+		
 	var hud = get_tree().root.find_child("HUD", true, false)
 	if not is_instance_valid(player_ref):
 		var players = get_tree().get_nodes_in_group("player")
@@ -47,6 +54,13 @@ func _try_take_bag() -> void:
 			
 	if not is_instance_valid(player_ref):
 		return
+		
+	# Si hay otro estante de Peronachos más cerca del jugador, dejar que ese estante procese la toma
+	for other in get_tree().get_nodes_in_group("peronachos_shelves"):
+		if other != self and is_instance_valid(other):
+			if other.get("available_bags") != null and not other.available_bags.is_empty():
+				if other.global_position.distance_squared_to(player_ref.global_position) < global_position.distance_squared_to(player_ref.global_position):
+					return
 		
 	if available_bags.is_empty():
 		if hud:
@@ -58,7 +72,10 @@ func _try_take_bag() -> void:
 			hud.show_temporary_alert("🎒 Mochila llena de Peronachos (máximo 8 paquetes).", Color(1.0, 0.75, 0.2))
 		return
 		
-	# Tomar una bolsa de los estantes
+	global_last_pickup_time = now
+	get_viewport().set_input_as_handled()
+		
+	# Tomar exactamente UNA sola bolsa de los estantes
 	var bag = available_bags.pop_front()
 	if is_instance_valid(bag):
 		bag.visible = false

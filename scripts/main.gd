@@ -147,7 +147,61 @@ func _spawn_tablero_electronica() -> void:
 	luz_techo_lab.add_to_group("building_lights")
 	add_child(luz_techo_lab)
 	
+	_spawn_hilera_luces_lab()
+	
 	print(">>> Tablero Eléctrico instalado en Depto. de Electrónica (con iluminación y sombras de laboratorio)")
+
+func _spawn_hilera_luces_lab() -> void:
+	var root_hilera = Node3D.new()
+	root_hilera.name = "HileraLucesLabElectronica"
+	add_child(root_hilera)
+	
+	# 6 posiciones desde cerca del tablero (X = -19.5) hasta la puerta (X = -36.5) a lo largo de Z = 0.9
+	var light_x_positions = [-19.5, -23.0, -26.5, -30.0, -33.5, -36.5]
+	var mat_fixture = StandardMaterial3D.new()
+	mat_fixture.albedo_color = Color(0.12, 0.14, 0.16)
+	
+	for i in range(light_x_positions.size()):
+		var x_pos = light_x_positions[i]
+		var lamp_pos = Vector3(x_pos, 3.65, 0.9)
+		var is_door_lamp = (i == light_x_positions.size() - 1)
+		
+		var fixture = CSGBox3D.new()
+		fixture.name = "Fixture_%d" % i
+		fixture.position = lamp_pos + Vector3(0, 0.04, 0)
+		fixture.size = Vector3(1.1, 0.08, 0.28)
+		fixture.material = mat_fixture
+		root_hilera.add_child(fixture)
+		
+		var tube = CSGBox3D.new()
+		tube.name = "Tube_%d" % i
+		tube.position = lamp_pos
+		tube.size = Vector3(0.95, 0.04, 0.18)
+		var mat_tube = StandardMaterial3D.new()
+		mat_tube.albedo_color = Color(0.9, 0.95, 1.0)
+		mat_tube.emission_enabled = false
+		mat_tube.emission = Color(0.85, 0.94, 1.0)
+		mat_tube.emission_energy_multiplier = 1.0
+		tube.material = mat_tube
+		root_hilera.add_child(tube)
+		
+		var spot = SpotLight3D.new()
+		spot.name = "LuzLab_%d" % i
+		spot.position = lamp_pos - Vector3(0, 0.05, 0)
+		spot.rotation_degrees = Vector3(-90, 0, 0)
+		spot.light_color = Color(0.85, 0.94, 1.0)
+		spot.spot_angle = 68.0
+		spot.spot_attenuation = 1.0
+		if is_door_lamp:
+			spot.light_energy = 2.4 # Foco intenso en la puerta sobre el profesor
+			spot.spot_range = 8.0
+		else:
+			spot.light_energy = 1.3
+			spot.spot_range = 6.5
+		spot.shadow_enabled = true
+		spot.visible = false
+		spot.add_to_group("hilera_luces_lab")
+		root_hilera.add_child(spot)
 
 func _spawn_fusible() -> void:
 	# El fusible está guardado en Bedelía General (Primer Piso, entrada en X = -40, Z = -33)
@@ -337,7 +391,7 @@ func _setup_peronachos_shelves() -> void:
 	
 	var col = CollisionShape3D.new()
 	var box = BoxShape3D.new()
-	box.size = Vector3(0.9, 1.8, 1.4)
+	box.size = Vector3(0.48, 1.8, 1.3)
 	col.shape = box
 	col.position = Vector3(0.0, 0.9, -0.2)
 	original_shelf_area.add_child(col)

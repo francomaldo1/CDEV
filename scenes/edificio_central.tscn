@@ -6358,32 +6358,6 @@ light_color = Color(0.8, 0.7, 0.5, 1)
 light_energy = 0.22
 shadow_enabled = true
 
-[node name="Farol1_Poste" type="CSGCylinder3D" parent="PatioEstudiante" unique_id=1844373328]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.11952305, 1.0473552, -3.0495183)
-use_collision = true
-radius = 0.06
-material = ExtResource("16_bm001")
-
-[node name="Farol1_Luz" type="OmniLight3D" parent="PatioEstudiante" unique_id=662438180]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2.1, -2)
-light_color = Color(0.9, 0.6, 0.3, 1)
-light_energy = 0.25
-shadow_enabled = true
-omni_range = 3.5
-
-[node name="Farol2_Poste" type="CSGCylinder3D" parent="PatioEstudiante" unique_id=1294570341]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.07501984, 0.95740676, 2.0268054)
-use_collision = true
-radius = 0.06
-material = ExtResource("16_bm001")
-
-[node name="Farol2_Luz" type="OmniLight3D" parent="PatioEstudiante" unique_id=290988016]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2.1, 10)
-light_color = Color(0.9, 0.6, 0.3, 1)
-light_energy = 0.25
-shadow_enabled = true
-omni_range = 3.5
-
 [node name="ParedIntO_PB" type="CSGBox3D" parent="PatioEstudiante" unique_id=651308043]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 2.25, 0.5)
 use_collision = true

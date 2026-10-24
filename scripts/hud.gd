@@ -421,7 +421,6 @@ func trigger_victory_screen() -> void:
 
 var stamina_container: HBoxContainer = null
 var stamina_progress_bar: ProgressBar = null
-var stamina_icon_label: Label = null
 var stamina_fill_box: StyleBoxFlat = null
 var stamina_alpha: float = 0.0
 var stamina_full_timer: float = 0.0
@@ -452,15 +451,6 @@ func _setup_stamina_bar() -> void:
 	stamina_container.alignment = BoxContainer.ALIGNMENT_CENTER
 	stamina_container.add_theme_constant_override("separation", 8)
 	stamina_container.modulate = Color(1.0, 1.0, 1.0, 0.0) # Empieza invisible
-	
-	# Icono de energía / rayo
-	stamina_icon_label = Label.new()
-	stamina_icon_label.name = "StaminaIcon"
-	stamina_icon_label.text = "⚡"
-	stamina_icon_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	stamina_icon_label.add_theme_font_size_override("font_size", 14)
-	stamina_icon_label.modulate = Color(1.0, 1.0, 1.0)
-	stamina_container.add_child(stamina_icon_label)
 	
 	# Barra de progreso
 	stamina_progress_bar = ProgressBar.new()
@@ -527,16 +517,10 @@ func _process_stamina_bar(delta: float) -> void:
 		# Pulso de agotamiento en rojo parpadeante
 		var pulse = (sin(Time.get_ticks_msec() * 0.015) * 0.5 + 0.5)
 		stamina_fill_box.bg_color = lerp(Color(0.9, 0.1, 0.1), Color(1.0, 0.4, 0.4), pulse)
-		if stamina_icon_label:
-			stamina_icon_label.modulate = Color(1.0, 0.2, 0.2)
 	elif pct < 20.0:
 		stamina_fill_box.bg_color = Color(1.0, 0.85, 0.85) # Sutil alerta
-		if stamina_icon_label:
-			stamina_icon_label.modulate = Color(1.0, 1.0, 1.0)
 	else:
 		stamina_fill_box.bg_color = Color(1.0, 1.0, 1.0) # Blanco puro
-		if stamina_icon_label:
-			stamina_icon_label.modulate = Color(1.0, 1.0, 1.0)
 
 func _process_mic_bar(_delta: float) -> void:
 	if not mic_container or not mic_container.visible:
