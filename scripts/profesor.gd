@@ -58,6 +58,7 @@ var pos_sample_timer: float = 0.0
 var is_screamer_ambush: bool = false
 var is_screamer_charging: bool = false
 var screamer_charge_timer: float = 0.0
+var loop_commit_timer: float = 0.0
 
 ## Corrida cinematográfica por el pasillo (susto al terminar el 4to examen)
 var is_hallway_dashing: bool = false
@@ -415,7 +416,7 @@ func _build_astar_pb_network() -> void:
 		var id_b = name_to_id[conn[1]]
 		astar_pb.connect_points(id_a, id_b, true)
 
-func _get_astar_path_to(destination_pos: Vector3) -> PackedVector3Array:
+func _get_astar_path_to(destination_pos: Vector3, heading: Vector3 = Vector3.ZERO) -> PackedVector3Array:
 	var dest_y0 = Vector3(destination_pos.x, 0.2, destination_pos.z)
 	var my_y0 = Vector3(global_position.x, 0.2, global_position.z)
 	
@@ -425,7 +426,7 @@ func _get_astar_path_to(destination_pos: Vector3) -> PackedVector3Array:
 		direct.append(dest_y0)
 		return direct
 		
-	var from_id = _find_best_graph_node(my_y0)
+	var from_id = _find_best_graph_node(my_y0, heading)
 	var to_id = _find_best_graph_node(dest_y0)
 	
 	if from_id == -1 or to_id == -1:
@@ -442,23 +443,29 @@ func _get_astar_path_to(destination_pos: Vector3) -> PackedVector3Array:
 	result.append(dest_y0)
 	return result
 
-func _find_best_graph_node(pos: Vector3) -> int:
+func _find_best_graph_node(pos: Vector3, heading: Vector3 = Vector3.ZERO) -> int:
 	var point_ids = astar_pb.get_point_ids()
 	var best_id = -1
-	var best_dist = 99999.0
+	var best_score = 99999.0
 	
-	# Preferir un punto con camino despejado
 	for pid in point_ids:
 		var pt = astar_pb.get_point_position(pid)
 		var d = pos.distance_to(pt)
-		if d < best_dist and _is_walk_path_clear(pos, pt):
-			best_dist = d
-			best_id = pid
-			
+		if _is_walk_path_clear(pos, pt):
+			var score = d
+			# Si tenemos dirección de avance actual, favorecer nodos hacia adelante
+			if heading.length_squared() > 0.01:
+				var to_pt = (pt - pos).normalized()
+				var dot = heading.dot(to_pt)
+				if dot < 0.0:
+					score += 2.5 # Penalizar puntos que exigen darse vuelta hacia atrás
+			if score < best_score:
+				best_score = score
+				best_id = pid
+				
 	if best_id != -1:
 		return best_id
 		
-	# Respaldo: el más cercano por distancia euclidiana
 	return astar_pb.get_closest_point(pos)
 
 func _pick_closest_patrol_circuit_idx() -> void:
@@ -799,26 +806,65 @@ func _process_chase_state(delta: float, can_see_player: bool) -> void:
 				_enter_search_state(last_known_player_pos, "lost_sight")
 				return
 
-	# Ataque cuerpo a cuerpo real (distancia <= attack_range y desnivel vertical <= 0.85m)
+	# Ataque cuerpo a cuerpo real (con alcance de estocada con la regla de madera: 1.85m)
+	# Permite golpear por encima de mesas o pupitres si el jugador intenta campear pegado al mueble
 	var vert_diff = absf(to_player.y)
-	if not player.get("is_hidden") and dist_to_player <= attack_range and vert_diff <= 0.85 and attack_timer <= 0.0:
+	if not player.get("is_hidden") and dist_to_player <= attack_range + 0.25 and vert_diff <= 0.85 and attack_timer <= 0.0:
 		if _has_line_of_sight(global_position + Vector3(0, 1.4, 0), player.global_position + Vector3(0, 1.2, 0)):
 			_start_attack()
 			return
 
+	loop_commit_timer = max(0.0, loop_commit_timer - delta)
+
 	# Persecución en línea recta si tiene camino despejado y lo ve
 	var can_rush_direct = can_see_player and _is_walk_path_clear(global_position, player.global_position)
 	if can_rush_direct:
+		loop_commit_timer = 0.0
 		var rot_spd = 35.0 if is_screamer_charging else 8.0
 		_move_towards(delta, player.global_position, current_speed, rot_spd)
 		return
 
-	# Si no tiene visión directa o dobló la esquina: recalcular ruta AStar a last_known_player_pos
+	# Si hay un obstáculo intermedio (looping): recalcular ruta AStar con compromiso direccional
 	repath_timer -= delta
 	if repath_timer <= 0.0 or current_path.is_empty():
 		repath_timer = 0.35
-		current_path = _get_astar_path_to(last_known_player_pos)
-		current_path_idx = 0
+		var heading = Vector3(velocity.x, 0.0, velocity.z).normalized() if velocity.length() > 0.4 else Vector3.ZERO
+		var new_path = _get_astar_path_to(last_known_player_pos, heading)
+		
+		# Determinar índice inicial inteligente (no retroceder a puntos ya pasados)
+		var start_idx = 0
+		while start_idx < new_path.size() - 1:
+			var to_wp = new_path[start_idx] - global_position
+			to_wp.y = 0.0
+			if to_wp.length() < 1.1 or (heading.length_squared() > 0.01 and to_wp.dot(heading) < 0.0):
+				start_idx += 1
+			else:
+				break
+				
+		# Comprobar compromiso direccional (Anti-Looping Hysteresis)
+		if current_path.size() > 0 and current_path_idx < current_path.size() and start_idx < new_path.size():
+			var cur_dest = current_path[current_path_idx] - global_position
+			cur_dest.y = 0.0
+			var new_dest = new_path[start_idx] - global_position
+			new_dest.y = 0.0
+			
+			if cur_dest.length() > 0.2 and new_dest.length() > 0.2:
+				var cur_heading = cur_dest.normalized()
+				var new_heading = new_dest.normalized()
+				
+				# ¿La nueva ruta exige un giro en U de 180° hacia atrás?
+				var is_u_turn = cur_heading.dot(new_heading) < -0.3
+				if is_u_turn and loop_commit_timer > 0.0:
+					# RECHAZAR EL GIRO EN U: Mantener la ruta actual para rodear la estructura sin zigzaguear
+					pass
+				else:
+					current_path = new_path
+					current_path_idx = start_idx
+					loop_commit_timer = 1.6
+		else:
+			current_path = new_path
+			current_path_idx = start_idx
+			loop_commit_timer = 1.6
 
 	if current_path_idx < current_path.size():
 		var next_wp = current_path[current_path_idx]
@@ -1010,6 +1056,8 @@ func _move_towards(delta: float, target_pos: Vector3, speed_to_use: float, rot_s
 				velocity.x = slide_vec.x * speed_to_use
 				velocity.z = slide_vec.z * speed_to_use
 				move_and_slide()
+				var target_rot_y = atan2(slide_vec.x, slide_vec.z)
+				rotation.y = lerp_angle(rotation.y, target_rot_y, rot_speed * delta)
 
 	# Step-up suave si toca bordes bajos
 	if was_on_floor and is_on_wall() and move_vec != Vector3.ZERO:
