@@ -40,6 +40,7 @@ var footstep_player: AudioStreamPlayer = null
 var heartbeat_player: AudioStreamPlayer = null
 var jumpscare_player: AudioStreamPlayer = null
 var snack_audio_player: AudioStreamPlayer = null
+var stinger_player: AudioStreamPlayer = null
 var jumpscare_play_time: float = 0.0
 var heartbeat_timer: float = 0.0
 var post_screamer_heartbeat_timer: float = 0.0
@@ -202,10 +203,13 @@ func _physics_process(delta: float) -> void:
 	if is_hidden:
 		velocity.x = 0.0
 		velocity.z = 0.0
+		_regenerate_stamina(delta)
 		return
 	if _is_ui_active() or is_frozen:
 		velocity.x = 0.0
 		velocity.z = 0.0
+		if _is_ui_active():
+			_regenerate_stamina(delta)
 		move_and_slide()
 		return
 
@@ -239,12 +243,7 @@ func _physics_process(delta: float) -> void:
 			stamina_exhausted = true
 			is_sprinting = false
 	else:
-		is_sprinting = false
-		time_since_sprint += delta
-		if time_since_sprint >= stamina_regen_delay:
-			current_stamina = minf(max_stamina, current_stamina + stamina_regen_rate * delta)
-			if stamina_exhausted and current_stamina >= 25.0:
-				stamina_exhausted = false
+		_regenerate_stamina(delta)
 
 	var current_speed = sprint_speed if is_sprinting else walk_speed
 
@@ -307,9 +306,16 @@ func _setup_audio_players() -> void:
 
 	snack_audio_player = AudioStreamPlayer.new()
 	snack_audio_player.name = "SnackAudioPlayer"
-	snack_audio_player.volume_db = -2.0
+	snack_audio_player.volume_db = 2.0
 	snack_audio_player.bus = &"Master"
 	add_child(snack_audio_player)
+
+	stinger_player = AudioStreamPlayer.new()
+	stinger_player.name = "StingerPlayer"
+	stinger_player.stream = preload("res://audio/sfx/horror-stinger.mp3")
+	stinger_player.volume_db = 6.0
+	stinger_player.bus = &"Master"
+	add_child(stinger_player)
 
 func _apply_head_bob_and_footsteps(delta: float, is_sprinting: bool) -> void:
 	if not camera:
@@ -462,6 +468,19 @@ func exit_hiding(exit_global_pos: Vector3) -> void:
 	if hud and hud.has_method("update_trash_overlay_parallax"):
 		hud.update_trash_overlay_parallax(0.0, 0.0)
 
+func _regenerate_stamina(delta: float) -> void:
+	is_sprinting = false
+	time_since_sprint += delta
+	if time_since_sprint >= stamina_regen_delay:
+		current_stamina = minf(max_stamina, current_stamina + stamina_regen_rate * delta)
+		if stamina_exhausted and current_stamina >= 25.0:
+			stamina_exhausted = false
+
+func play_horror_stinger() -> void:
+	if stinger_player:
+		stinger_player.stop()
+		stinger_player.play()
+
 func add_peronachos(amount: int = 1) -> void:
 	peronachos_count += amount
 	var hud = get_tree().root.find_child("HUD", true, false)
@@ -488,7 +507,7 @@ func consume_peronachos() -> bool:
 	time_since_sprint = stamina_regen_delay
 	
 	if snack_audio_player:
-		snack_audio_player.stream = HorrorAudio.get_peronachos_crunch_sound()
+		snack_audio_player.stream = preload("res://audio/sfx/eating-chips.mp3")
 		snack_audio_player.pitch_scale = randf_range(0.96, 1.04)
 		snack_audio_player.play()
 		

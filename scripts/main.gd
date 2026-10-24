@@ -205,6 +205,9 @@ func _on_exam_solved(success: bool, cuaderno: Node) -> void:
 	var n = exams_approved.size()
 	print(">>> Exámenes aprobados: %d / %d" % [n, total_exams])
 	
+	if hud and hud.has_method("set_exams_progress"):
+		hud.set_exams_progress(n, total_exams)
+	
 	if hud and hud.has_method("show_temporary_alert"):
 		hud.show_temporary_alert("✅ ¡PARCIAL APROBADO! (%d/%d)" % [n, total_exams], Color(0.2, 1.0, 0.4))
 	
@@ -549,8 +552,10 @@ func _trigger_hallway_dash_scare() -> void:
 	var start_pos: Vector3 = points[0]
 	var end_pos: Vector3 = points[1]
 	
-	# Efectos audiovisuales de terror
-	if player.has_method("play_jumpscare_screamer"):
+	# Efectos audiovisuales de terror (Stinger estridente del 4to examen)
+	if player.has_method("play_horror_stinger"):
+		player.play_horror_stinger()
+	elif player.has_method("play_jumpscare_screamer"):
 		player.play_jumpscare_screamer()
 	if player.has_method("shake_camera"):
 		player.shake_camera(0.4, 0.6)
