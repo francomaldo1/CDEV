@@ -6,7 +6,7 @@ signal volume_updated(current_volume: float, is_alert: bool)
 signal noise_triggered(volume: float)
 
 @export var bus_name: String = "Record"
-@export var threshold_db: float = -24.0 ## Sensitivity threshold in dB (configurable in settings)
+@export var threshold_db: float = -28.0 ## Sensitivity threshold in dB (configurable in settings)
 @export var smoothing: float = 12.0 ## How quickly the UI bar reacts/smooths
 
 var bus_index: int = -1
@@ -90,6 +90,11 @@ func _process(delta: float) -> void:
 		var bus_max = maxf(l_peak, r_peak)
 		if bus_max > peak_db:
 			peak_db = bus_max
+
+	# Tecla opcional de test / debug (G o T) para simular ruido sin micrófono
+	var debug_noise = Input.is_key_pressed(KEY_G) or Input.is_key_pressed(KEY_T)
+	if debug_noise:
+		peak_db = maxf(peak_db, -10.0)
 
 	# Convertir dB (-60dB a 0dB) a escala lineal 0.0 -> 1.0
 	var target_norm = clampf(remap(peak_db, -60.0, 0.0, 0.0, 1.0), 0.0, 1.0)

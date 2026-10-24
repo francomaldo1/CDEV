@@ -231,14 +231,17 @@ func _ready() -> void:
 	prev_pos = global_position
 	
 	_find_player()
-	
-	var mic = get_tree().root.find_child("MicDetector", true, false)
-	if mic and mic.has_signal("noise_triggered"):
-		mic.noise_triggered.connect(_on_player_noise)
+	_ensure_mic_connected()
 		
 	phrase_timer = randf_range(4.0, 8.0)
 	_pick_closest_patrol_circuit_idx()
 	_navigate_to_circuit_idx(current_circuit_idx)
+
+func _ensure_mic_connected() -> void:
+	var mic = get_tree().root.find_child("MicDetector", true, false)
+	if mic and mic.has_signal("noise_triggered"):
+		if not mic.noise_triggered.is_connected(_on_player_noise):
+			mic.noise_triggered.connect(_on_player_noise)
 
 func set_active(active: bool) -> void:
 	is_active = active
@@ -250,6 +253,8 @@ func set_active(active: bool) -> void:
 		current_speed = patrol_speed
 		time_without_sight = 0.0
 		prev_pos = global_position
+		_find_player()
+		_ensure_mic_connected()
 		_pick_closest_patrol_circuit_idx()
 		_navigate_to_circuit_idx(current_circuit_idx)
 
@@ -664,7 +669,9 @@ func _enter_search_state(target_pos: Vector3, reason: String = "general") -> voi
 		ojos_luz.light_color = Color(1.0, 0.65, 0.1)
 		ojos_luz.light_energy = 1.0
 		
-	if reason == "noise":
+	if reason == "noise_trash":
+		_say("¡¡¿QUÉ ES ESE RUIDO DENTRO DEL TACHO?!!", Color(1.0, 0.1, 0.1))
+	elif reason == "noise":
 		_say("¿Quién hace ruido en mi hora...?", Color(1.0, 0.8, 0.4))
 	elif reason == "lost_sight":
 		_say("¿Dónde se escondió ese alumno...?", Color(1.0, 0.8, 0.4))
@@ -674,6 +681,18 @@ func _process_search_state(delta: float, can_see_player: bool) -> void:
 		_enter_chase_state()
 		return
 
+	# Si el jugador está escondido en un tacho en esta zona:
+	if is_instance_valid(player) and player.get("is_hidden"):
+		var d_player = global_position.distance_to(player.global_position)
+		if saw_player_hide and d_player <= attack_range + 0.8:
+			_say("¡¡TE ESCUCHÉ AHÍ ADENTRO! ¡SALÍ DE ESE TACHO!!", Color(1.0, 0.1, 0.1))
+			if player.get("current_hiding_spot") and player.current_hiding_spot.has_method("force_eject"):
+				player.current_hiding_spot.force_eject()
+			_start_attack()
+			return
+		elif not saw_player_hide and d_player <= 3.2 and is_searching_around:
+			_say("¿Dónde se metió este alumno? Parecía haber alguien acá...", Color(1.0, 0.85, 0.5))
+
 	# Si ya llegó al lugar a investigar: detenerse y registrar alrededor
 	if is_searching_around:
 		search_timer -= delta
@@ -682,18 +701,6 @@ func _process_search_state(delta: float, can_see_player: bool) -> void:
 		velocity.z = move_toward(velocity.z, 0.0, 10.0 * delta)
 		move_and_slide()
 		_animate_walk(delta, false)
-
-		# Comprobación de tacho de basura en el área
-		if is_instance_valid(player) and player.get("is_hidden"):
-			var d_player = global_position.distance_to(player.global_position)
-			if saw_player_hide and d_player <= attack_range + 0.6:
-				_say("¡¡TE VI METERTE AHÍ! ¡SALÍ DE ESE TACHO!!", Color(1.0, 0.1, 0.1))
-				if player.get("current_hiding_spot") and player.current_hiding_spot.has_method("force_eject"):
-					player.current_hiding_spot.force_eject()
-				_start_attack()
-				return
-			elif not saw_player_hide and d_player <= 3.2:
-				_say("¿Dónde se metió este alumno? Parecía haber alguien acá...", Color(1.0, 0.85, 0.5))
 
 		if search_timer <= 0.0:
 			# Fin de búsqueda: retomar patrulla
@@ -795,8 +802,8 @@ func _process_chase_state(delta: float, can_see_player: bool) -> void:
 	# Si el jugador está escondido en un tacho
 	if player.get("is_hidden"):
 		if saw_player_hide:
-			if dist_to_player <= attack_range + 0.6:
-				_say("¡¡TE VI METERTE AHÍ! ¡SALÍ DE ESE TACHO!!", Color(1.0, 0.1, 0.1))
+			if dist_to_player <= attack_range + 0.8:
+				_say("¡¡TE ESCUCHÉ AHÍ ADENTRO! ¡SALÍ DE ESE TACHO!!", Color(1.0, 0.1, 0.1))
 				if player.get("current_hiding_spot") and player.current_hiding_spot.has_method("force_eject"):
 					player.current_hiding_spot.force_eject()
 				_start_attack()
@@ -1114,16 +1121,36 @@ func _on_player_noise(volume: float) -> void:
 		return
 	if ONLY_PATROL_PB and get_floor(player.global_position.y) != 0:
 		return
+		
+	var is_in_trash = player.get("is_hidden")
+	# En el tacho de metal el ruido retumba por los pasillos; amplio rango en PB
+	var effective_hearing_range = 85.0 if is_in_trash else 45.0
 	var dist = global_position.distance_to(player.global_position)
-	if dist <= hearing_range:
-		if current_state == State.PATROL:
-			_enter_search_state(player.global_position, "noise")
-		elif current_state == State.SEARCH:
-			search_target_pos = player.global_position
-			current_path = _get_astar_path_to(search_target_pos)
-			current_path_idx = 0
-			is_searching_around = false
-			search_timer = 3.5
+	
+	if dist <= effective_hearing_range:
+		print(">>> Profesor escuchó ruido! Dist: %.1fm (max %.1fm), En Tacho: %s" % [dist, effective_hearing_range, is_in_trash])
+		if is_in_trash:
+			saw_player_hide = true
+			if current_state == State.CHASE:
+				last_known_player_pos = player.global_position
+				current_path = _get_astar_path_to(last_known_player_pos)
+				current_path_idx = 0
+				_say("¡¡¿QUÉ ES ESE RUIDO DENTRO DEL TACHO?!!", Color(1.0, 0.1, 0.1))
+			else:
+				_enter_search_state(player.global_position, "noise_trash")
+		else:
+			if current_state == State.PATROL:
+				_enter_search_state(player.global_position, "noise")
+			elif current_state == State.SEARCH:
+				search_target_pos = player.global_position
+				current_path = _get_astar_path_to(search_target_pos)
+				current_path_idx = 0
+				is_searching_around = false
+				search_timer = 3.5
+			elif current_state == State.CHASE:
+				last_known_player_pos = player.global_position
+				current_path = _get_astar_path_to(last_known_player_pos)
+				current_path_idx = 0
 
 func boost_speed() -> void:
 	speed_boost_count += 1
