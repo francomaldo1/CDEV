@@ -298,25 +298,61 @@ func _build_astar_pb_network() -> void:
 		"P_N": Vector3(0.0, 0.2, -12.0),
 		"P_W": Vector3(-12.0, 0.2, 6.0),
 		"P_E": Vector3(12.0, 0.2, 6.0),
-		# Aulas e interiores
+		# Aulas e interiores con pasillos completos entre pupitres
+		# Aula 106
 		"A106_DOOR": Vector3(-47.0, 0.2, -12.0),
-		"A106_IN": Vector3(-49.5, 0.2, -12.0),
+		"A106_FRONT": Vector3(-49.5, 0.2, -12.0),
+		"A106_AISLE_N": Vector3(-51.5, 0.2, -17.5),
+		"A106_AISLE_N_BACK": Vector3(-62.5, 0.2, -17.5),
+		"A106_AISLE_S": Vector3(-51.5, 0.2, -6.5),
+		"A106_AISLE_S_BACK": Vector3(-62.5, 0.2, -6.5),
+		"A106_BACK_MID": Vector3(-62.5, 0.2, -11.8),
+		"A106_ROW_MID": Vector3(-56.5, 0.2, -11.8),
+		# Aula 107
 		"A107_DOOR": Vector3(-47.0, 0.2, 2.5),
-		"A107_IN": Vector3(-49.5, 0.2, 2.5),
+		"A107_FRONT": Vector3(-49.5, 0.2, 2.5),
+		"A107_AISLE_N": Vector3(-51.5, 0.2, -3.0),
+		"A107_AISLE_N_BACK": Vector3(-62.5, 0.2, -3.0),
+		"A107_AISLE_S": Vector3(-51.5, 0.2, 7.5),
+		"A107_AISLE_S_BACK": Vector3(-62.5, 0.2, 7.5),
+		"A107_BACK_MID": Vector3(-62.5, 0.2, 2.5),
+		"A107_ROW_MID": Vector3(-56.5, 0.2, 2.5),
+		# Aula 108
 		"A108_DOOR": Vector3(-47.0, 0.2, 17.5),
-		"A108_IN": Vector3(-49.5, 0.2, 17.5),
+		"A108_FRONT": Vector3(-49.5, 0.2, 17.5),
+		"A108_AISLE_N": Vector3(-51.5, 0.2, 12.0),
+		"A108_AISLE_N_BACK": Vector3(-62.5, 0.2, 12.0),
+		"A108_AISLE_S": Vector3(-51.5, 0.2, 23.0),
+		"A108_AISLE_S_BACK": Vector3(-62.5, 0.2, 23.0),
+		"A108_BACK_MID": Vector3(-62.5, 0.2, 17.5),
+		"A108_ROW_MID": Vector3(-56.5, 0.2, 17.5),
+		# Aula 102
 		"A102_DOOR": Vector3(-27.5, 0.2, -33.0),
 		"A102_IN": Vector3(-27.5, 0.2, -35.5),
+		# Cafetería PB
 		"CAFE_DOOR": Vector3(47.0, 0.2, -2.5),
-		"CAFE_IN": Vector3(50.5, 0.2, -2.5),
+		"CAFE_FRONT": Vector3(50.5, 0.2, -2.5),
+		"CAFE_NORTH": Vector3(50.5, 0.2, -8.5),
+		"CAFE_SOUTH": Vector3(50.5, 0.2, 4.0),
+		"CAFE_BACK": Vector3(57.0, 0.2, -2.5),
+		# Fotocopiadora
 		"FOTO_DOOR": Vector3(-35.0, 0.2, 34.5),
 		"FOTO_IN": Vector3(-25.0, 0.2, 38.0),
-		# Lab Central de Electrónica
+		# Lab Central de Electrónica (Pasillos entre y alrededor de las 3 mesadas de 14m)
 		"LAB_W_DOOR": Vector3(-37.0, 0.2, -8.0),
-		"LAB_W_AISLE": Vector3(-35.0, 0.2, 1.2),
-		"LAB_MID": Vector3(-26.0, 0.2, 1.2),
-		"LAB_E_AISLE": Vector3(-18.5, 0.2, 1.2),
-		"LAB_E_DOOR": Vector3(-18.5, 0.2, -8.0)
+		"LAB_W_N": Vector3(-35.5, 0.2, -8.0),
+		"LAB_W_01": Vector3(-35.5, 0.2, -3.5),
+		"LAB_W_12": Vector3(-35.5, 0.2, 1.5),
+		"LAB_W_S": Vector3(-35.5, 0.2, 6.5),
+		"LAB_E_DOOR": Vector3(-18.5, 0.2, -8.0),
+		"LAB_E_N": Vector3(-18.5, 0.2, -8.0),
+		"LAB_E_01": Vector3(-18.5, 0.2, -3.5),
+		"LAB_E_12": Vector3(-18.5, 0.2, 1.5),
+		"LAB_E_S": Vector3(-18.5, 0.2, 6.5),
+		"LAB_PANEL": Vector3(-27.0, 0.2, -8.0),
+		"LAB_MID_01": Vector3(-27.0, 0.2, -3.5),
+		"LAB_MID_12": Vector3(-27.0, 0.2, 1.5),
+		"LAB_MID_S": Vector3(-27.0, 0.2, 6.5)
 	}
 	
 	var name_to_id = {}
@@ -339,16 +375,39 @@ func _build_astar_pb_network() -> void:
 		["S_4", "P_S"], ["P_S", "P_MS"], ["P_MS", "P_FNT"], ["P_FNT", "P_MN"], ["P_MN", "P_N"],
 		["P_MS", "P_W"], ["P_W", "P_MN"], ["P_MS", "P_E"], ["P_E", "P_MN"],
 		# Aulas
-		["W_2", "A106_DOOR"], ["A106_DOOR", "A106_IN"],
-		["W_4", "A107_DOOR"], ["A107_DOOR", "A107_IN"],
-		["W_5", "A108_DOOR"], ["A108_DOOR", "A108_IN"],
+		# Aula 106 (flanqueo completo de pupitres)
+		["W_2", "A106_DOOR"], ["A106_DOOR", "A106_FRONT"],
+		["A106_FRONT", "A106_AISLE_N"], ["A106_AISLE_N", "A106_AISLE_N_BACK"],
+		["A106_FRONT", "A106_AISLE_S"], ["A106_AISLE_S", "A106_AISLE_S_BACK"],
+		["A106_AISLE_N_BACK", "A106_BACK_MID"], ["A106_BACK_MID", "A106_AISLE_S_BACK"],
+		["A106_AISLE_N", "A106_ROW_MID"], ["A106_ROW_MID", "A106_AISLE_S"],
+		# Aula 107
+		["W_4", "A107_DOOR"], ["A107_DOOR", "A107_FRONT"],
+		["A107_FRONT", "A107_AISLE_N"], ["A107_AISLE_N", "A107_AISLE_N_BACK"],
+		["A107_FRONT", "A107_AISLE_S"], ["A107_AISLE_S", "A107_AISLE_S_BACK"],
+		["A107_AISLE_N_BACK", "A107_BACK_MID"], ["A107_BACK_MID", "A107_AISLE_S_BACK"],
+		["A107_AISLE_N", "A107_ROW_MID"], ["A107_ROW_MID", "A107_AISLE_S"],
+		# Aula 108
+		["W_5", "A108_DOOR"], ["A108_DOOR", "A108_FRONT"],
+		["A108_FRONT", "A108_AISLE_N"], ["A108_AISLE_N", "A108_AISLE_N_BACK"],
+		["A108_FRONT", "A108_AISLE_S"], ["A108_AISLE_S", "A108_AISLE_S_BACK"],
+		["A108_AISLE_N_BACK", "A108_BACK_MID"], ["A108_BACK_MID", "A108_AISLE_S_BACK"],
+		["A108_AISLE_N", "A108_ROW_MID"], ["A108_ROW_MID", "A108_AISLE_S"],
+		# Aula 102
 		["N_0", "A102_DOOR"], ["A102_DOOR", "A102_IN"],
-		["E_3", "CAFE_DOOR"], ["CAFE_DOOR", "CAFE_IN"],
+		# Cafetería PB
+		["E_3", "CAFE_DOOR"], ["CAFE_DOOR", "CAFE_FRONT"],
+		["CAFE_FRONT", "CAFE_NORTH"], ["CAFE_FRONT", "CAFE_SOUTH"], ["CAFE_FRONT", "CAFE_BACK"],
+		# Fotocopiadora
 		["S_2", "FOTO_DOOR"], ["FOTO_DOOR", "FOTO_IN"],
-		# Lab
-		["W_3", "LAB_W_DOOR"], ["LAB_W_DOOR", "LAB_W_AISLE"],
-		["LAB_W_AISLE", "LAB_MID"], ["LAB_MID", "LAB_E_AISLE"],
-		["LAB_E_AISLE", "LAB_E_DOOR"]
+		# Lab Central de Electrónica (Pasillos Oeste, Este y Transversales entre mesadas)
+		["W_3", "LAB_W_DOOR"], ["LAB_W_DOOR", "LAB_W_N"],
+		["LAB_W_N", "LAB_W_01"], ["LAB_W_01", "LAB_W_12"], ["LAB_W_12", "LAB_W_S"],
+		["LAB_E_DOOR", "LAB_E_N"], ["LAB_E_N", "LAB_E_01"], ["LAB_E_01", "LAB_E_12"], ["LAB_E_12", "LAB_E_S"],
+		["LAB_W_N", "LAB_PANEL"], ["LAB_PANEL", "LAB_E_N"],
+		["LAB_W_01", "LAB_MID_01"], ["LAB_MID_01", "LAB_E_01"],
+		["LAB_W_12", "LAB_MID_12"], ["LAB_MID_12", "LAB_E_12"],
+		["LAB_W_S", "LAB_MID_S"], ["LAB_MID_S", "LAB_E_S"]
 	]
 	
 	for conn in connections:
@@ -849,29 +908,31 @@ func _is_walk_path_clear(from_pos: Vector3, to_pos: Vector3) -> bool:
 	if fwd.length_squared() < 0.01:
 		return true
 	var dir = fwd.normalized()
-	var side = Vector3(-dir.z, 0.0, dir.x) * 0.35
+	var side = Vector3(-dir.z, 0.0, dir.x) * 0.32
 	
 	var excl: Array[RID] = [get_rid()]
 	if is_instance_valid(player):
 		excl.append(player.get_rid())
 
-	# 1. Rayo central
-	var q_mid = PhysicsRayQueryParameters3D.create(from_pos + Vector3(0, 0.7, 0), to_pos + Vector3(0, 0.7, 0))
-	q_mid.exclude = excl
-	if not space_state.intersect_ray(q_mid).is_empty():
-		return false
+	# Comprobar a dos alturas críticas:
+	# 0.35m: Altura baja (mesadas de laboratorio, pupitres de aula, bancos, sillas)
+	# 0.85m: Altura media (mesadas altas, dinteles bajos, medias paredes)
+	for h in [0.35, 0.85]:
+		var offset = Vector3(0, h, 0)
+		var q_mid = PhysicsRayQueryParameters3D.create(from_pos + offset, to_pos + offset)
+		q_mid.exclude = excl
+		if not space_state.intersect_ray(q_mid).is_empty():
+			return false
 
-	# 2. Rayo lateral izquierdo
-	var q_left = PhysicsRayQueryParameters3D.create(from_pos + side + Vector3(0, 0.7, 0), to_pos + side + Vector3(0, 0.7, 0))
-	q_left.exclude = excl
-	if not space_state.intersect_ray(q_left).is_empty():
-		return false
+		var q_left = PhysicsRayQueryParameters3D.create(from_pos + side + offset, to_pos + side + offset)
+		q_left.exclude = excl
+		if not space_state.intersect_ray(q_left).is_empty():
+			return false
 
-	# 3. Rayo lateral derecho
-	var q_right = PhysicsRayQueryParameters3D.create(from_pos - side + Vector3(0, 0.7, 0), to_pos - side + Vector3(0, 0.7, 0))
-	q_right.exclude = excl
-	if not space_state.intersect_ray(q_right).is_empty():
-		return false
+		var q_right = PhysicsRayQueryParameters3D.create(from_pos - side + offset, to_pos - side + offset)
+		q_right.exclude = excl
+		if not space_state.intersect_ray(q_right).is_empty():
+			return false
 
 	return true
 
@@ -881,13 +942,14 @@ func _get_steered_dir(desired_dir: Vector3) -> Vector3:
 	var space_state = get_world_3d().direct_space_state
 	if not space_state:
 		return desired_dir
-	var eye_pos = global_position + Vector3(0, 0.7, 0)
+	# Proyectar bigotes a la altura baja (0.40m) para detectar bordes de mesadas y pupitres
+	var eye_pos_low = global_position + Vector3(0, 0.40, 0)
 	var forward = Vector3(desired_dir.x, 0.0, desired_dir.z).normalized()
 	if forward.length_squared() < 0.01:
 		return desired_dir
 		
 	var right = Vector3(-forward.z, 0.0, forward.x)
-	var whisker_dist = 1.05
+	var whisker_dist = 0.95
 	
 	var left_dir = (forward - right * 0.45).normalized()
 	var right_dir = (forward + right * 0.45).normalized()
@@ -896,14 +958,18 @@ func _get_steered_dir(desired_dir: Vector3) -> Vector3:
 	if is_instance_valid(player):
 		excl.append(player.get_rid())
 		
-	var q_left = PhysicsRayQueryParameters3D.create(eye_pos, eye_pos + left_dir * whisker_dist)
+	var q_left = PhysicsRayQueryParameters3D.create(eye_pos_low, eye_pos_low + left_dir * whisker_dist)
 	q_left.exclude = excl
 	var hit_left = not space_state.intersect_ray(q_left).is_empty()
 	
-	var q_right = PhysicsRayQueryParameters3D.create(eye_pos, eye_pos + right_dir * whisker_dist)
+	var q_right = PhysicsRayQueryParameters3D.create(eye_pos_low, eye_pos_low + right_dir * whisker_dist)
 	q_right.exclude = excl
 	var hit_right = not space_state.intersect_ray(q_right).is_empty()
 	
+	# Si ambos lados tocan un obstáculo frontal plano (cara del pupitre/mesada), no oscilar
+	if hit_left and hit_right:
+		return forward
+		
 	var steered = forward
 	if hit_left and not hit_right:
 		steered = (forward + right * 0.6).normalized()
@@ -934,6 +1000,16 @@ func _move_towards(delta: float, target_pos: Vector3, speed_to_use: float, rot_s
 	var pre_pos := global_position
 	var was_on_floor := is_on_floor()
 	move_and_slide()
+
+	# Deslizamiento inteligente al colisionar contra paredes, pupitres o mesadas
+	if was_on_floor and is_on_wall() and move_vec != Vector3.ZERO:
+		var wall_norm = get_wall_normal()
+		if move_vec.dot(wall_norm) < -0.05:
+			var slide_vec = move_vec.slide(wall_norm).normalized()
+			if slide_vec.length_squared() > 0.01:
+				velocity.x = slide_vec.x * speed_to_use
+				velocity.z = slide_vec.z * speed_to_use
+				move_and_slide()
 
 	# Step-up suave si toca bordes bajos
 	if was_on_floor and is_on_wall() and move_vec != Vector3.ZERO:
