@@ -135,9 +135,9 @@ func _execute_fuse_screamer_sequence(hud: Node) -> void:
 		player.force_flashlight(false)
 		
 	# 4. TELETRANSPORTAR AL PROFESOR A LA PUERTA DEL LABORATORIO (bloqueando la única salida)
-	# La puerta del lab hacia el pasillo oeste está exactamente en X = -37.0, Z = 0.5.
-	# Colocamos al profesor parado dentro del laboratorio en PB (Y = 0.05) bloqueando la puerta.
-	var door_ambush_pos = Vector3(-35.0, 0.05, 0.5)
+	# La puerta del lab hacia el pasillo oeste está en X = -37.0.
+	# Colocamos al profesor en el pasillo central del laboratorio (Z = 1.0) despejado de las mesadas.
+	var door_ambush_pos = Vector3(-35.0, 0.05, 1.0)
 	if is_instance_valid(prof):
 		var p_pos = player.global_position if is_instance_valid(player) else Vector3(-18.5, 0.05, 0.0)
 		var look_target = p_pos + Vector3(0, 1.4, 0)

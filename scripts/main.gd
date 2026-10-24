@@ -74,6 +74,7 @@ func _ready() -> void:
 	_spawn_multiple_cuadernos()
 	_spawn_upper_floor_blockers()
 	_spawn_tachos_basura()
+	_spawn_p1_fuse_guide()
 	
 	# El profesor no está al principio: aparece con el corte de luz
 	if profesor:
@@ -148,11 +149,38 @@ func _spawn_tablero_electronica() -> void:
 	print(">>> Tablero Eléctrico instalado en Depto. de Electrónica (con iluminación y sombras de laboratorio)")
 
 func _spawn_fusible() -> void:
-	# El fusible está guardado en la Cafetería o Bedelía (ala este)
+	# El fusible está guardado en Bedelía General (Primer Piso, entrada en X = -40, Z = -33)
+	# Se monta un mostrador/escritorio iluminado con luz cálida en el centro de Bedelía
+	var desk = CSGBox3D.new()
+	desk.name = "EscritorioBedelia"
+	desk.position = Vector3(-40.0, 4.95, -39.0)
+	desk.size = Vector3(2.4, 0.75, 1.2)
+	desk.use_collision = true
+	var mat_desk = StandardMaterial3D.new()
+	mat_desk.albedo_color = Color(0.28, 0.20, 0.15)
+	desk.material = mat_desk
+	add_child(desk)
+	
+	var desk_light = OmniLight3D.new()
+	desk_light.name = "LuzEscritorioBedelia"
+	desk_light.position = Vector3(-40.0, 5.8, -39.0)
+	desk_light.light_color = Color(1.0, 0.8, 0.45)
+	desk_light.light_energy = 0.85
+	desk_light.omni_range = 5.0
+	desk_light.shadow_enabled = false
+	add_child(desk_light)
+	
 	var fusible = fusible_scene.instantiate()
-	fusible.position = Vector3(-12.8, 4.65, -42.3)
+	fusible.position = Vector3(-40.0, 5.4, -39.0)
 	add_child(fusible)
-	print(">>> Fusible de alta tensión colocado en Bedelía Primer Piso (-12.8, 4.65, -42.3)")
+	print(">>> Fusible de alta tensión colocado sobre escritorio en Bedelía General P1 (-40.0, 5.4, -39.0)")
+
+func _spawn_p1_fuse_guide() -> void:
+	var p1_guide_script = preload("res://scripts/p1_fuse_guide.gd")
+	var p1_guide = Node3D.new()
+	p1_guide.name = "P1FuseGuide"
+	p1_guide.set_script(p1_guide_script)
+	add_child(p1_guide)
 
 func _spawn_multiple_cuadernos() -> void:
 	classroom_spots.shuffle()

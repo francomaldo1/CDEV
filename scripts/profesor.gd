@@ -63,6 +63,49 @@ var hallway_dash_speed: float = 18.5
 var hallway_dash_timer: float = 0.0
 var hallway_dash_callback: Callable = Callable()
 
+## El profesor se concentra en aterrorizar e inspeccionar la Planta Baja (PB)
+const ONLY_PATROL_PB: bool = true
+
+## Aulas de Planta Baja que el profesor inspecciona activamente durante su ronda
+const AULA_INSPECTIONS_PB: Array[Dictionary] = [
+	{
+		"name": "Aula 106",
+		"corridor_wp_idx": 1,                     # Vector3(-42.0, 0.2, -12.0)
+		"door_pos": Vector3(-47.0, 0.2, -12.0),
+		"inside_pos": Vector3(-52.0, 0.2, -12.0),
+	},
+	{
+		"name": "Aula 107",
+		"corridor_wp_idx": 2,                     # Vector3(-42.0, 0.2, 5.0)
+		"door_pos": Vector3(-47.0, 0.2, 2.5),
+		"inside_pos": Vector3(-52.0, 0.2, 2.5),
+	},
+	{
+		"name": "Aula 108",
+		"corridor_wp_idx": 3,                     # Vector3(-42.0, 0.2, 20.0)
+		"door_pos": Vector3(-47.0, 0.2, 17.5),
+		"inside_pos": Vector3(-52.0, 0.2, 17.5),
+	},
+	{
+		"name": "Aula 102",
+		"corridor_wp_idx": 21,                    # Vector3(-25.0, 0.2, -28.5)
+		"door_pos": Vector3(-34.5, 0.2, -33.0),
+		"inside_pos": Vector3(-34.5, 0.2, -38.0),
+	},
+	{
+		"name": "Cafetería PB",
+		"corridor_wp_idx": 16,                    # Vector3(42.0, 0.2, 0.0)
+		"door_pos": Vector3(47.0, 0.2, -2.5),
+		"inside_pos": Vector3(53.0, 0.2, -2.5),
+	}
+]
+
+var is_inspecting_aula: bool = false
+var aula_inspect_phase: int = 0 # 0: yendo a puerta, 1: entrando, 2: buscando, 3: saliendo
+var aula_inspect_data: Dictionary = {}
+var aula_inspect_wait_timer: float = 0.0
+var aula_inspect_cooldown: float = 8.0
+
 
 ## Puntos de patrullaje por toda la facultad organizados por piso
 ## PB = Y ~0.2 | P1 = Y ~4.7 | P2 = Y ~9.2
@@ -395,6 +438,8 @@ func _get_nav_target_to(destination_pos: Vector3) -> Vector3:
 	return path[active_stair_idx]
 
 func are_upper_floors_unlocked() -> bool:
+	if ONLY_PATROL_PB:
+		return false
 	var main = get_tree().root.find_child("Main", true, false)
 	if main and "upper_floor_blockers" in main:
 		return main.upper_floor_blockers.size() == 0
@@ -404,6 +449,10 @@ func are_upper_floors_unlocked() -> bool:
 	return true
 
 func _start_floor_investigation() -> void:
+	if ONLY_PATROL_PB:
+		floor_investigate_timer = 99999.0
+		is_investigating_floor = false
+		return
 	var my_floor = get_floor(global_position.y)
 	var available_floors: Array[int] = []
 	for f in [0, 1, 2]:
@@ -594,6 +643,8 @@ func _physics_process(delta: float) -> void:
 func _can_see_player() -> bool:
 	if not is_instance_valid(player) or player.get("is_hidden"):
 		return false
+	if ONLY_PATROL_PB and get_floor(player.global_position.y) != 0:
+		return false
 	
 	var eye_pos = global_position + Vector3(0, 1.5, 0)
 	var player_eye = player.global_position + Vector3(0, 1.3, 0)
@@ -651,9 +702,16 @@ func _has_line_of_sight(from_pos: Vector3, to_pos: Vector3) -> bool:
 ## =====================================================================
 func _process_patrol_state(delta: float, can_see_player: bool) -> void:
 	current_speed = patrol_speed
-	
+	aula_inspect_cooldown = max(0.0, aula_inspect_cooldown - delta)
+
 	if can_see_player:
+		is_inspecting_aula = false
 		_enter_chase_state()
+		return
+
+	# Inspección activa dentro de las aulas en Planta Baja
+	if is_inspecting_aula:
+		_process_aula_inspection(delta, can_see_player)
 		return
 
 	# Si los pisos superiores están desbloqueados, chequear si es momento de investigar otro piso
@@ -671,7 +729,7 @@ func _process_patrol_state(delta: float, can_see_player: bool) -> void:
 			patrol_waypoints = current_floor_waypoints
 		target_wp = current_floor_waypoints[current_waypoint_idx]
 
-	var nav_dest = _get_nav_target_to(target_wp)
+	var nav_dest = target_wp if _is_walk_path_clear(global_position, target_wp) else _get_nav_target_to(target_wp)
 	var to_dest = nav_dest - global_position
 	var dist_dest = to_dest.length()
 
@@ -689,6 +747,14 @@ func _process_patrol_state(delta: float, can_see_player: bool) -> void:
 			_say("A ver qué alumnos andan por este piso...", Color(1.0, 0.85, 0.5))
 	else:
 		if dist_dest < 2.2:
+			# Posibilidad de inspeccionar un aula si estamos frente a una en PB
+			if current_patrol_floor == 0 and aula_inspect_cooldown <= 0.0:
+				for insp in AULA_INSPECTIONS_PB:
+					if insp["corridor_wp_idx"] == current_waypoint_idx:
+						if randf() < 0.45:
+							_start_aula_inspection(insp)
+							return
+
 			current_waypoint_idx = (current_waypoint_idx + 1) % current_floor_waypoints.size()
 			target_wp = current_floor_waypoints[current_waypoint_idx]
 			nav_dest = target_wp if _is_walk_path_clear(global_position, target_wp) else _get_nav_target_to(target_wp)
@@ -696,6 +762,71 @@ func _process_patrol_state(delta: float, can_see_player: bool) -> void:
 
 	var move_dir = Vector3(to_dest.x, 0.0, to_dest.z).normalized()
 	_move_towards(delta, move_dir, current_speed, 4.5)
+
+func _start_aula_inspection(insp: Dictionary) -> void:
+	is_inspecting_aula = true
+	aula_inspect_phase = 0
+	aula_inspect_data = insp
+	aula_inspect_wait_timer = 0.0
+
+func _process_aula_inspection(delta: float, can_see_player: bool) -> void:
+	if can_see_player:
+		is_inspecting_aula = false
+		_enter_chase_state()
+		return
+
+	match aula_inspect_phase:
+		0:
+			# Fase 0: Acercarse a la puerta del aula
+			var door_p: Vector3 = aula_inspect_data["door_pos"]
+			var to_door = door_p - global_position
+			to_door.y = 0.0
+			if to_door.length() < 1.4:
+				aula_inspect_phase = 1
+			else:
+				var move_dir = to_door.normalized()
+				_move_towards(delta, move_dir, patrol_speed * 0.9, 4.5)
+		1:
+			# Fase 1: Entrar al aula entre los pupitres
+			var inside_p: Vector3 = aula_inspect_data["inside_pos"]
+			var to_inside = inside_p - global_position
+			to_inside.y = 0.0
+			if to_inside.length() < 1.5:
+				aula_inspect_phase = 2
+				aula_inspect_wait_timer = randf_range(2.2, 3.5)
+				var phrases_inspect = [
+					"A ver si hay alguien copiándose acá adentro...",
+					"Silencio sospechoso en esta aula...",
+					"Mmm... me pareció ver una sombra entre los pupitres...",
+					"Nadie debería estar en esta aula a oscuras..."
+				]
+				_say(phrases_inspect[randi() % phrases_inspect.size()], Color(1.0, 0.85, 0.4))
+			else:
+				var move_dir = to_inside.normalized()
+				_move_towards(delta, move_dir, patrol_speed * 0.85, 4.5)
+		2:
+			# Fase 2: Parado en el aula mirando alrededor con los ojos-linterna
+			aula_inspect_wait_timer -= delta
+			rotation.y += sin(aula_inspect_wait_timer * 3.5) * delta * 1.8
+			velocity.x = move_toward(velocity.x, 0.0, 10.0 * delta)
+			velocity.z = move_toward(velocity.z, 0.0, 10.0 * delta)
+			move_and_slide()
+			_animate_walk(delta, false)
+			
+			if aula_inspect_wait_timer <= 0.0:
+				aula_inspect_phase = 3
+		3:
+			# Fase 3: Regresar a la puerta y salir al pasillo
+			var door_p: Vector3 = aula_inspect_data["door_pos"]
+			var to_door = door_p - global_position
+			to_door.y = 0.0
+			if to_door.length() < 1.6:
+				is_inspecting_aula = false
+				aula_inspect_cooldown = randf_range(22.0, 40.0)
+				current_waypoint_idx = (current_waypoint_idx + 1) % current_floor_waypoints.size()
+			else:
+				var move_dir = to_door.normalized()
+				_move_towards(delta, move_dir, patrol_speed * 0.9, 4.5)
 
 func _process_chase_state(delta: float, can_see_player: bool) -> void:
 	if is_screamer_ambush:
@@ -900,6 +1031,9 @@ func _move_towards(delta: float, dir: Vector3, speed_to_use: float, rot_speed: f
 				velocity = Vector3.ZERO
 		else:
 			var wps = current_floor_waypoints if current_floor_waypoints.size() > 0 else WAYPOINTS_PB
+			if is_inspecting_aula:
+				is_inspecting_aula = false
+				aula_inspect_cooldown = 25.0
 			if current_state == State.PATROL:
 				# En patrullaje: avanzar de inmediato al SIGUIENTE waypoint del circuito
 				# para evitar insistir contra la misma esquina y continuar la ronda
@@ -936,6 +1070,7 @@ func _enter_chase_state() -> void:
 	current_state = State.CHASE
 	time_without_sight = 0.0
 	is_investigating_floor = false
+	is_inspecting_aula = false
 	last_known_player_pos = player.global_position
 	
 	if ojos_luz:
@@ -1133,7 +1268,10 @@ func trigger_screamer_ambush(ambush_pos: Vector3, look_at_pos: Vector3) -> void:
 	set_active(true)
 	visible = true
 	is_investigating_floor = false
+	is_inspecting_aula = false
 	current_patrol_floor = 0
+	current_floor_waypoints = WAYPOINTS_PB
+	patrol_waypoints = WAYPOINTS_PB
 	active_stair_idx = -1
 	active_stair_tower = ""
 	is_screamer_ambush = true
@@ -1297,6 +1435,8 @@ func _say(text_msg: String, color: Color = Color(1.0, 0.85, 0.5)) -> void:
 
 func _on_player_noise(volume: float) -> void:
 	if not is_active or not is_instance_valid(player):
+		return
+	if ONLY_PATROL_PB and get_floor(player.global_position.y) != 0:
 		return
 	var dist = global_position.distance_to(player.global_position)
 	if dist <= hearing_range:
