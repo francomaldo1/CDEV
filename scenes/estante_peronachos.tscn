@@ -1,0 +1,170 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/peronachos_shelf.gd" id="1_peronachos_shelf"]
+[ext_resource type="ArrayMesh" path="res://models/mesh_peronachos.tres" id="2_mesh_peronachos"]
+[ext_resource type="Material" path="res://materials/mat_bench_wood.tres" id="3_mat_wood"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_interact"]
+size = Vector3(0.95, 1.8, 1.4)
+
+[node name="EstantePeronachos" type="Area3D"]
+script = ExtResource("1_peronachos_shelf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, -0.2)
+shape = SubResource("BoxShape3D_interact")
+
+[node name="PosteIzq" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.21, 0.7, 0.05)
+use_collision = true
+size = Vector3(0.03, 1.4, 0.035)
+material = ExtResource("3_mat_wood")
+
+[node name="PosteDer" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.21, 0.7, 0.05)
+use_collision = true
+size = Vector3(0.03, 1.4, 0.035)
+material = ExtResource("3_mat_wood")
+
+[node name="TopeSuperior" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.39, 0.05)
+size = Vector3(0.45, 0.02, 0.04)
+material = ExtResource("3_mat_wood")
+
+[node name="PieIzq" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.21, 0.02, -0.1)
+use_collision = true
+size = Vector3(0.03, 0.04, 0.35)
+material = ExtResource("3_mat_wood")
+
+[node name="PieDer" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.21, 0.02, -0.1)
+use_collision = true
+size = Vector3(0.03, 0.04, 0.35)
+material = ExtResource("3_mat_wood")
+
+[node name="PuntalIzq" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.975342, -0.220698, 0, 0.220698, 0.975342, -0.21, 0.705, -0.105)
+size = Vector3(0.03, 1.405, 0.035)
+material = ExtResource("3_mat_wood")
+
+[node name="PuntalDer" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.975342, -0.220698, 0, 0.220698, 0.975342, 0.21, 0.705, -0.105)
+size = Vector3(0.03, 1.405, 0.035)
+material = ExtResource("3_mat_wood")
+
+[node name="Estante1_Base" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.15, -0.025)
+use_collision = true
+size = Vector3(0.39, 0.02, 0.18)
+material = ExtResource("3_mat_wood")
+
+[node name="Estante1_Frente" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.185, -0.11)
+size = Vector3(0.39, 0.07, 0.015)
+material = ExtResource("3_mat_wood")
+
+[node name="Estante1_Atras" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.185, 0.06)
+size = Vector3(0.39, 0.07, 0.015)
+material = ExtResource("3_mat_wood")
+
+[node name="Estante2_Base" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.82, -0.05)
+use_collision = true
+size = Vector3(0.39, 0.02, 0.23)
+material = ExtResource("3_mat_wood")
+
+[node name="Estante2_Frente" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.855, -0.16)
+size = Vector3(0.39, 0.07, 0.015)
+material = ExtResource("3_mat_wood")
+
+[node name="Estante2_Atras" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.855, 0.06)
+size = Vector3(0.39, 0.07, 0.015)
+material = ExtResource("3_mat_wood")
+
+[node name="Estante3_Base" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.49, -0.075)
+use_collision = true
+size = Vector3(0.39, 0.02, 0.28)
+material = ExtResource("3_mat_wood")
+
+[node name="Estante3_Frente" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.525, -0.21)
+size = Vector3(0.39, 0.07, 0.015)
+material = ExtResource("3_mat_wood")
+
+[node name="Estante3_Atras" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.525, 0.06)
+size = Vector3(0.39, 0.07, 0.015)
+material = ExtResource("3_mat_wood")
+
+[node name="Estante4_Base" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.16, -0.1)
+use_collision = true
+size = Vector3(0.39, 0.02, 0.33)
+material = ExtResource("3_mat_wood")
+
+[node name="Estante4_Frente" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.195, -0.26)
+size = Vector3(0.39, 0.07, 0.015)
+material = ExtResource("3_mat_wood")
+
+[node name="Estante4_Atras" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.195, 0.06)
+size = Vector3(0.39, 0.07, 0.015)
+material = ExtResource("3_mat_wood")
+
+[node name="Peronachos_T1_1" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.997564, 0, -0.069756, -0.014503, 0.978148, 0.207405, 0.068232, 0.207912, -0.975765, -0.09, 1.16, -0.02)
+mesh = ExtResource("2_mesh_peronachos")
+
+[node name="Peronachos_T1_2" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.997564, 0, 0.069756, 0.014503, 0.978148, 0.207405, -0.068232, 0.207912, -0.975765, 0.09, 1.16, -0.02)
+mesh = ExtResource("2_mesh_peronachos")
+
+[node name="Peronachos_T2_1" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.997564, 0, -0.069756, -0.014503, 0.978148, 0.207405, 0.068232, 0.207912, -0.975765, -0.09, 0.83, 0)
+mesh = ExtResource("2_mesh_peronachos")
+
+[node name="Peronachos_T2_2" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.997564, 0, 0.069756, 0.014503, 0.978148, 0.207405, -0.068232, 0.207912, -0.975765, 0.09, 0.83, 0)
+mesh = ExtResource("2_mesh_peronachos")
+
+[node name="Peronachos_T2_3" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, 0, 0, 0, 0.978148, 0.207912, 0, 0.207912, -0.978148, 0, 0.83, -0.13)
+mesh = ExtResource("2_mesh_peronachos")
+
+[node name="Peronachos_T3_1" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.997564, 0, -0.069756, -0.014503, 0.978148, 0.207405, 0.068232, 0.207912, -0.975765, -0.09, 0.5, 0)
+mesh = ExtResource("2_mesh_peronachos")
+
+[node name="Peronachos_T3_2" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.997564, 0, 0.069756, 0.014503, 0.978148, 0.207405, -0.068232, 0.207912, -0.975765, 0.09, 0.5, 0)
+mesh = ExtResource("2_mesh_peronachos")
+
+[node name="Peronachos_T3_3" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, 0, 0, 0, 0.978148, 0.207912, 0, 0.207912, -0.978148, -0.09, 0.5, -0.13)
+mesh = ExtResource("2_mesh_peronachos")
+
+[node name="Peronachos_T3_4" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.997564, 0, 0.069756, 0.014503, 0.978148, 0.207405, -0.068232, 0.207912, -0.975765, 0.09, 0.5, -0.13)
+mesh = ExtResource("2_mesh_peronachos")
+
+[node name="Peronachos_T4_1" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.997564, 0, -0.069756, -0.014503, 0.978148, 0.207405, 0.068232, 0.207912, -0.975765, -0.09, 0.17, 0)
+mesh = ExtResource("2_mesh_peronachos")
+
+[node name="Peronachos_T4_2" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.997564, 0, 0.069756, 0.014503, 0.978148, 0.207405, -0.068232, 0.207912, -0.975765, 0.09, 0.17, 0)
+mesh = ExtResource("2_mesh_peronachos")
+
+[node name="Peronachos_T4_3" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, 0, 0, 0, 0.978148, 0.207912, 0, 0.207912, -0.978148, -0.09, 0.17, -0.17)
+mesh = ExtResource("2_mesh_peronachos")
+
+[node name="Peronachos_T4_4" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.997564, 0, 0.069756, 0.014503, 0.978148, 0.207405, -0.068232, 0.207912, -0.975765, 0.09, 0.17, -0.17)
+mesh = ExtResource("2_mesh_peronachos")

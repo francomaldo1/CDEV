@@ -75,6 +75,7 @@ func _ready() -> void:
 	_spawn_upper_floor_blockers()
 	_spawn_tachos_basura()
 	_spawn_p1_fuse_guide()
+	_setup_peronachos_shelves()
 	
 	# El profesor no está al principio: aparece con el corte de luz
 	if profesor:
@@ -323,6 +324,40 @@ func _spawn_tachos_basura() -> void:
 		tacho.name = "Tacho_" + s["desc"].replace(" ", "_").replace("(", "").replace(")", "")
 		add_child(tacho)
 		print(">>> Tacho de basura instalado en: %s %s" % [s["desc"], s["pos"]])
+
+func _setup_peronachos_shelves() -> void:
+	# 1. Configurar estante original en X=51.10 como interactivo
+	var original_shelf_area = Area3D.new()
+	original_shelf_area.name = "EstantePeronachos_Original"
+	original_shelf_area.set_script(preload("res://scripts/peronachos_shelf.gd"))
+	original_shelf_area.position = Vector3(51.10, 0.0, 4.0)
+	
+	var col = CollisionShape3D.new()
+	var box = BoxShape3D.new()
+	box.size = Vector3(0.9, 1.8, 1.4)
+	col.shape = box
+	col.position = Vector3(0.0, 0.9, -0.2)
+	original_shelf_area.add_child(col)
+	
+	add_child(original_shelf_area)
+	
+	# Recolectar las bolsas originales existentes en edificio_central
+	var habit_pb = find_child("HabitacionesPB", true, false)
+	var existing_bags: Array = []
+	if habit_pb:
+		for child in habit_pb.get_children():
+			if child is MeshInstance3D and child.name.begins_with("Peronachos_T"):
+				existing_bags.append(child)
+				
+	original_shelf_area.register_external_bags(existing_bags)
+	
+	# 2. Instanciar el nuevo segundo estante al lado en X=51.65
+	var estante_scene = preload("res://scenes/estante_peronachos.tscn")
+	var second_shelf = estante_scene.instantiate()
+	second_shelf.name = "EstantePeronachos_Segundo"
+	second_shelf.position = Vector3(51.65, 0.0, 4.0)
+	add_child(second_shelf)
+	print(">>> Estantes de Peronachos configurados e interactivos en Cafetería PB (X: 51.10 y X: 51.65)")
 
 func _collect_all_building_lights() -> Array[Light3D]:
 	var result: Array[Light3D] = []

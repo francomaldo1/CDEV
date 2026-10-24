@@ -477,6 +477,103 @@ static func get_door_rattle_sound() -> AudioStreamWAV:
 
 static var _cached_trash_enter: AudioStreamWAV = null
 static var _cached_trash_exit: AudioStreamWAV = null
+static var _cached_peronachos_pickup: AudioStreamWAV = null
+static var _cached_peronachos_crunch: AudioStreamWAV = null
+
+static func get_peronachos_pickup_sound() -> AudioStreamWAV:
+	if _cached_peronachos_pickup == null:
+		_cached_peronachos_pickup = _generate_bag_rustle()
+	return _cached_peronachos_pickup
+
+static func get_peronachos_crunch_sound() -> AudioStreamWAV:
+	if _cached_peronachos_crunch == null:
+		_cached_peronachos_crunch = _generate_snack_crunch()
+	return _cached_peronachos_crunch
+
+static func _generate_bag_rustle() -> AudioStreamWAV:
+	var wav = AudioStreamWAV.new()
+	wav.format = AudioStreamWAV.FORMAT_16_BITS
+	wav.mix_rate = 22050
+	wav.stereo = false
+	var length_sec = 0.28
+	var samples_count = int(22050 * length_sec)
+	var data = PackedByteArray()
+	data.resize(samples_count * 2)
+	
+	var bp1_low = 0.0
+	var bp1_band = 0.0
+	var f1 = 2.0 * sin(PI * 2400.0 / 22050.0)
+	var q1 = 1.6
+	
+	var bp2_low = 0.0
+	var bp2_band = 0.0
+	var f2 = 2.0 * sin(PI * 4500.0 / 22050.0)
+	var q2 = 2.0
+
+	for i in range(samples_count):
+		var t = float(i) / 22050.0
+		var noise = randf() * 2.0 - 1.0
+		
+		bp1_low += f1 * bp1_band
+		var bp1_high = noise - bp1_low - q1 * bp1_band
+		bp1_band += f1 * bp1_high
+		
+		bp2_low += f2 * bp2_band
+		var bp2_high = noise - bp2_low - q2 * bp2_band
+		bp2_band += f2 * bp2_high
+		
+		var env1 = exp(-t * 38.0)
+		var env2 = exp(-maxf(0.0, t - 0.08) * 45.0) if t >= 0.08 else 0.0
+		var env3 = exp(-maxf(0.0, t - 0.16) * 42.0) if t >= 0.16 else 0.0
+		
+		var crinkle = (bp1_band * 0.65 + bp2_band * 0.35) * (env1 * 0.8 + env2 * 0.95 + env3 * 0.65)
+		var total = tanh(crinkle * 2.2) * 0.85
+		var pcm = int(clampf(total, -1.0, 1.0) * 24000.0)
+		data.encode_s16(i * 2, pcm)
+		
+	wav.data = data
+	return wav
+
+static func _generate_snack_crunch() -> AudioStreamWAV:
+	var wav = AudioStreamWAV.new()
+	wav.format = AudioStreamWAV.FORMAT_16_BITS
+	wav.mix_rate = 22050
+	wav.stereo = false
+	var length_sec = 0.36
+	var samples_count = int(22050 * length_sec)
+	var data = PackedByteArray()
+	data.resize(samples_count * 2)
+	
+	var bp_low = 0.0
+	var bp_band = 0.0
+	var f_bp = 2.0 * sin(PI * 2600.0 / 22050.0)
+	var q_bp = 1.35
+
+	for i in range(samples_count):
+		var t = float(i) / 22050.0
+		var noise = randf() * 2.0 - 1.0
+		
+		bp_low += f_bp * bp_band
+		var bp_high = noise - bp_low - q_bp * bp_band
+		bp_band += f_bp * bp_high
+		
+		var env_bite1 = exp(-t * 42.0)
+		var crunch1 = (bp_band * 0.75 + noise * 0.25) * env_bite1
+		var body1 = sin(t * 135.0 * TAU) * exp(-t * 30.0) * 0.45
+		
+		var env_bite2 = exp(-maxf(0.0, t - 0.065) * 52.0) if t >= 0.065 else 0.0
+		var crunch2 = bp_band * env_bite2 * 0.70
+		
+		var env_bite3 = exp(-maxf(0.0, t - 0.14) * 60.0) if t >= 0.14 else 0.0
+		var crunch3 = (noise * 0.45 + bp_band * 0.55) * env_bite3 * 0.55
+		
+		var total = crunch1 + body1 + crunch2 + crunch3
+		total = tanh(total * 2.4) * 0.90
+		var pcm = int(clampf(total, -1.0, 1.0) * 27000.0)
+		data.encode_s16(i * 2, pcm)
+		
+	wav.data = data
+	return wav
 
 static func get_trashcan_sound(enter: bool = true) -> AudioStreamWAV:
 	if enter:

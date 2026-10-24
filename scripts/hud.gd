@@ -60,7 +60,7 @@ func _ready() -> void:
 		
 	if instruction_label:
 		instruction_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		instruction_label.text = "[W,A,S,D] Mover | [Shift] Correr | [F] Linterna | [E] Usar/Esconderse | [F3] Coords | [F2] Copiar | [M] Guia"
+		instruction_label.text = "[W,A,S,D] Mover | [Shift] Correr | [F] Linterna | [E] Usar/Esconderse | [Q] Peronachos | [F3] Coords | [F2] Copiar | [M] Guia"
 	if mic_container:
 		mic_container.visible = is_mic_active_visible
 
@@ -85,6 +85,7 @@ func _ready() -> void:
 	update_inventory_display()
 	_setup_debug_coords()
 	_setup_trash_overlay()
+	_setup_stamina_bar()
 	_style_mic_bar()
 
 func _style_mic_bar() -> void:
@@ -120,7 +121,16 @@ func update_inventory_display() -> void:
 		var key_str = "CONSEGUIDO ✓" if has_exit_key else "Buscando..."
 		var fuse_str = "EN MOCHILA ✓" if has_fuse else "No"
 		var aud_str = "EN MOCHILA ✓" if has_auditorium_key else "No"
-		key_status_label.text = "🎓 TÍTULO: %s   |   ⚡ FUSIBLE: %s   |   🏛 LLAVE AUDITORIO: %s" % [key_str, fuse_str, aud_str]
+		var peronachos_str = "0"
+		if is_instance_valid(player_cached) and player_cached.get("peronachos_count") != null:
+			peronachos_str = str(player_cached.peronachos_count)
+		else:
+			var players = get_tree().get_nodes_in_group("player")
+			if not players.is_empty():
+				player_cached = players[0] as CharacterBody3D
+				if player_cached.get("peronachos_count") != null:
+					peronachos_str = str(player_cached.peronachos_count)
+		key_status_label.text = "🎓 TÍTULO: %s   |   ⚡ FUSIBLE: %s   |   🏛 LLAVE AUDITORIO: %s   |   🍟 PERONACHOS: %s [Q]" % [key_str, fuse_str, aud_str, peronachos_str]
 		if has_exit_key:
 			key_status_label.modulate = Color(0.3, 1.0, 0.5)
 		else:
@@ -256,9 +266,124 @@ func trigger_victory_screen() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 
+var stamina_container: HBoxContainer = null
+var stamina_progress_bar: ProgressBar = null
+var stamina_icon_label: Label = null
+var stamina_fill_box: StyleBoxFlat = null
+var stamina_alpha: float = 0.0
+var stamina_full_timer: float = 0.0
+
 func _process(delta: float) -> void:
 	_process_mic_bar(delta)
+	_process_stamina_bar(delta)
 	_process_debug_coords(delta)
+
+func _setup_stamina_bar() -> void:
+	stamina_container = HBoxContainer.new()
+	stamina_container.name = "StaminaContainer"
+	stamina_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	stamina_container.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
+	# Ubicado justo arriba de la barra de micrófono
+	# MicContainer está en offset_top = -68, offset_bottom = -46
+	# Colocamos StaminaContainer en offset_top = -94, offset_bottom = -76
+	stamina_container.anchor_left = 0.5
+	stamina_container.anchor_right = 0.5
+	stamina_container.anchor_top = 1.0
+	stamina_container.anchor_bottom = 1.0
+	stamina_container.offset_left = -140.0
+	stamina_container.offset_right = 140.0
+	stamina_container.offset_top = -94.0
+	stamina_container.offset_bottom = -76.0
+	stamina_container.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	stamina_container.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	stamina_container.alignment = BoxContainer.ALIGNMENT_CENTER
+	stamina_container.add_theme_constant_override("separation", 8)
+	stamina_container.modulate = Color(1.0, 1.0, 1.0, 0.0) # Empieza invisible
+	
+	# Icono de energía / rayo
+	stamina_icon_label = Label.new()
+	stamina_icon_label.name = "StaminaIcon"
+	stamina_icon_label.text = "⚡"
+	stamina_icon_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	stamina_icon_label.add_theme_font_size_override("font_size", 14)
+	stamina_icon_label.modulate = Color(0.2, 0.9, 1.0)
+	stamina_container.add_child(stamina_icon_label)
+	
+	# Barra de progreso
+	stamina_progress_bar = ProgressBar.new()
+	stamina_progress_bar.name = "StaminaProgressBar"
+	stamina_progress_bar.custom_minimum_size = Vector2(230, 12)
+	stamina_progress_bar.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	stamina_progress_bar.show_percentage = false
+	stamina_progress_bar.max_value = 100.0
+	stamina_progress_bar.value = 100.0
+	stamina_progress_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	
+	var bg_box = StyleBoxFlat.new()
+	bg_box.bg_color = Color(0.06, 0.06, 0.08, 0.8)
+	bg_box.border_color = Color(0.3, 0.7, 0.9, 0.85)
+	bg_box.set_border_width_all(1)
+	bg_box.set_corner_radius_all(2)
+	stamina_progress_bar.add_theme_stylebox_override("background", bg_box)
+	
+	stamina_fill_box = StyleBoxFlat.new()
+	stamina_fill_box.bg_color = Color(0.2, 0.85, 1.0)
+	stamina_fill_box.set_corner_radius_all(1)
+	stamina_progress_bar.add_theme_stylebox_override("fill", stamina_fill_box)
+	
+	stamina_container.add_child(stamina_progress_bar)
+	add_child(stamina_container)
+
+func _process_stamina_bar(delta: float) -> void:
+	if not stamina_container or not stamina_progress_bar:
+		return
+		
+	if not is_instance_valid(player_cached):
+		var players = get_tree().get_nodes_in_group("player")
+		if not players.is_empty():
+			player_cached = players[0] as CharacterBody3D
+			
+	if not is_instance_valid(player_cached):
+		return
+		
+	var cur_stamina = player_cached.get("current_stamina")
+	var max_stamina = player_cached.get("max_stamina")
+	var is_sprint = player_cached.get("is_sprinting")
+	var is_exhausted = player_cached.get("stamina_exhausted")
+	
+	if cur_stamina == null or max_stamina == null:
+		return
+		
+	var pct = clampf((cur_stamina / max_stamina) * 100.0, 0.0, 100.0)
+	stamina_progress_bar.value = pct
+	
+	# Mostrar si está corriendo o si no tiene la estamina al 100%
+	var should_show = is_sprint or (cur_stamina < max_stamina - 0.5)
+	if should_show:
+		stamina_full_timer = 0.0
+		stamina_alpha = lerpf(stamina_alpha, 1.0, delta * 7.0)
+	else:
+		stamina_full_timer += delta
+		if stamina_full_timer > 0.8: # Tras 0.8s de estar llena, desvanecer suavemente
+			stamina_alpha = lerpf(stamina_alpha, 0.0, delta * 3.0)
+			
+	stamina_container.modulate.a = stamina_alpha
+	
+	# Modulación de color según nivel de estamina
+	if is_exhausted:
+		# Pulso de agotamiento en rojo parpadeante
+		var pulse = (sin(Time.get_ticks_msec() * 0.015) * 0.5 + 0.5)
+		stamina_fill_box.bg_color = lerp(Color(0.9, 0.1, 0.1), Color(1.0, 0.4, 0.4), pulse)
+		if stamina_icon_label:
+			stamina_icon_label.modulate = Color(1.0, 0.2, 0.2)
+	elif pct < 25.0:
+		stamina_fill_box.bg_color = Color(1.0, 0.55, 0.15) # Alerta ámbar/naranja
+		if stamina_icon_label:
+			stamina_icon_label.modulate = Color(1.0, 0.6, 0.2)
+	else:
+		stamina_fill_box.bg_color = Color(0.2, 0.85, 1.0) # Turquesa enérgico
+		if stamina_icon_label:
+			stamina_icon_label.modulate = Color(0.2, 0.9, 1.0)
 
 func _process_mic_bar(_delta: float) -> void:
 	if not mic_container or not mic_container.visible:

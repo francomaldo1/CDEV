@@ -137,9 +137,9 @@ func _execute_fuse_screamer_sequence(hud: Node) -> void:
 	# Dejar que el sonido y los chispazos de conexión se aprecien con claridad
 	await get_tree().create_timer(0.85).timeout
 	
-	# 3. CORTE DE LINTERNA Y OSCURIDAD TOTAL (T = 0.85s a 1.8s)
+	# 3. MANTENER LINTERNA PRENDIDA DURANTE LA CINEMÁTICA
 	if is_instance_valid(player) and player.has_method("force_flashlight"):
-		player.force_flashlight(false)
+		player.force_flashlight(true)
 		
 	# 4. TELETRANSPORTAR AL PROFESOR A LA PUERTA DEL LABORATORIO (bloqueando la única salida)
 	# La puerta del lab hacia el pasillo oeste está en X = -37.0.

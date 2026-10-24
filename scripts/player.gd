@@ -2,7 +2,11 @@ extends CharacterBody3D
 class_name Player
 
 @export var walk_speed: float = 4.0
-@export var sprint_speed: float = 50.0
+@export var sprint_speed: float = 7.0
+@export var max_stamina: float = 100.0
+@export var stamina_drain_rate: float = 20.0
+@export var stamina_regen_rate: float = 16.0
+@export var stamina_regen_delay: float = 1.0
 @export var acceleration: float = 10.0
 @export var mouse_sensitivity: float = 0.003
 @export var bob_frequency: float = 2.4
@@ -26,9 +30,16 @@ var was_flashlight_on_before_hiding: bool = false
 var shake_tween: Tween = null
 var look_tween: Tween = null
 
+var current_stamina: float = 100.0
+var is_sprinting: bool = false
+var stamina_exhausted: bool = false
+var time_since_sprint: float = 0.0
+var peronachos_count: int = 0
+
 var footstep_player: AudioStreamPlayer = null
 var heartbeat_player: AudioStreamPlayer = null
 var jumpscare_player: AudioStreamPlayer = null
+var snack_audio_player: AudioStreamPlayer = null
 var jumpscare_play_time: float = 0.0
 var heartbeat_timer: float = 0.0
 var post_screamer_heartbeat_timer: float = 0.0
@@ -163,6 +174,11 @@ func _input(event: InputEvent) -> void:
 		if not is_frozen:
 			toggle_flashlight()
 
+	# Consumir Peronachos con la tecla Q
+	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_Q:
+		if not is_frozen:
+			consume_peronachos()
+
 	# Tecla ESC para liberar o volver a capturar el cursor
 	if event.is_action_pressed("ui_cancel") or (event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE):
 		if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
@@ -212,8 +228,24 @@ func _physics_process(delta: float) -> void:
 	# Dirección relativa a la rotación del jugador
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 
-	# Determinar velocidad actual (caminar vs correr)
-	var is_sprinting = (Input.is_action_pressed("sprint") or Input.is_key_pressed(KEY_SHIFT)) and input_dir.y < 0
+	# Determinar velocidad actual (caminar vs correr con estamina)
+	var wants_to_sprint = (Input.is_action_pressed("sprint") or Input.is_key_pressed(KEY_SHIFT)) and input_dir.y < 0 and input_dir.length_squared() > 0.01
+
+	if wants_to_sprint and not stamina_exhausted and current_stamina > 0.0:
+		is_sprinting = true
+		current_stamina = maxf(0.0, current_stamina - stamina_drain_rate * delta)
+		time_since_sprint = 0.0
+		if current_stamina <= 0.0:
+			stamina_exhausted = true
+			is_sprinting = false
+	else:
+		is_sprinting = false
+		time_since_sprint += delta
+		if time_since_sprint >= stamina_regen_delay:
+			current_stamina = minf(max_stamina, current_stamina + stamina_regen_rate * delta)
+			if stamina_exhausted and current_stamina >= 25.0:
+				stamina_exhausted = false
+
 	var current_speed = sprint_speed if is_sprinting else walk_speed
 
 	# Aceleración horizontal
@@ -272,6 +304,12 @@ func _setup_audio_players() -> void:
 	jumpscare_player.bus = &"Master"
 	add_child(jumpscare_player)
 	jumpscare_player.finished.connect(_on_jumpscare_finished)
+
+	snack_audio_player = AudioStreamPlayer.new()
+	snack_audio_player.name = "SnackAudioPlayer"
+	snack_audio_player.volume_db = -2.0
+	snack_audio_player.bus = &"Master"
+	add_child(snack_audio_player)
 
 func _apply_head_bob_and_footsteps(delta: float, is_sprinting: bool) -> void:
 	if not camera:
@@ -423,3 +461,43 @@ func exit_hiding(exit_global_pos: Vector3) -> void:
 		hud.set_trash_overlay_visible(false)
 	if hud and hud.has_method("update_trash_overlay_parallax"):
 		hud.update_trash_overlay_parallax(0.0, 0.0)
+
+func add_peronachos(amount: int = 1) -> void:
+	peronachos_count += amount
+	var hud = get_tree().root.find_child("HUD", true, false)
+	if hud and hud.has_method("update_inventory_display"):
+		hud.update_inventory_display()
+	if hud and hud.has_method("show_temporary_alert"):
+		hud.show_temporary_alert("🎒 ¡Recogiste una bolsa de Peronachos! Presioná [Q] en emergencia para recuperar estamina.", Color(1.0, 0.85, 0.2))
+
+func consume_peronachos() -> bool:
+	var hud = get_tree().root.find_child("HUD", true, false)
+	if peronachos_count <= 0:
+		if hud and hud.has_method("show_temporary_alert"):
+			hud.show_temporary_alert("❌ No tenés paquetes de Peronachos en la mochila.", Color(1.0, 0.4, 0.3))
+		return false
+		
+	if current_stamina >= max_stamina - 1.0 and not stamina_exhausted:
+		if hud and hud.has_method("show_temporary_alert"):
+			hud.show_temporary_alert("⚡ Tu estamina ya está llena al 100%.", Color(0.7, 0.9, 1.0))
+		return false
+
+	peronachos_count -= 1
+	current_stamina = max_stamina
+	stamina_exhausted = false
+	time_since_sprint = stamina_regen_delay
+	
+	if snack_audio_player:
+		snack_audio_player.stream = HorrorAudio.get_peronachos_crunch_sound()
+		snack_audio_player.pitch_scale = randf_range(0.96, 1.04)
+		snack_audio_player.play()
+		
+	shake_camera(0.25, 0.25)
+	
+	if hud:
+		if hud.has_method("update_inventory_display"):
+			hud.update_inventory_display()
+		if hud.has_method("show_temporary_alert"):
+			hud.show_temporary_alert("⚡ ¡Peronachos crujientes consumidos! ¡Estamina al 100%! ⚡", Color(0.3, 1.0, 0.6))
+			
+	return true

@@ -205,10 +205,10 @@ func _process(_delta: float) -> void:
 			if dist <= 7.0:
 				_slam_door(d)
 				
-	# 2. Chequeo de la aparición y escape del fantasma hacia Bedelía
+	# 2. Chequeo de la aparición y escape del fantasma hacia Bedelía (a corta distancia para impacto visual)
 	if not phantom_triggered and is_instance_valid(phantom_node):
-		# Cuando el jugador avanza por el pasillo oeste hacia el norte (Z <= 2.0):
-		if p_pos.x <= -35.0 and p_pos.z <= 2.0:
+		# Se activa cuando el jugador está a corta distancia en el pasillo (aprox 12 metros)
+		if p_pos.x <= -35.0 and (p_pos.z <= -12.0 or p_pos.distance_to(phantom_node.global_position) <= 13.0):
 			phantom_triggered = true
 			_trigger_phantom_guide()
 
