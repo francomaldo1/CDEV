@@ -138,11 +138,11 @@ func _create_doors() -> void:
 func _create_phantom() -> void:
 	phantom_node = Node3D.new()
 	phantom_node.name = "CriaturaGuiaP1"
-	# Adelantado ligeramente de la punta de la esquina (X: -44.2, Y: 4.6, Z: -30.2) para dar espacio al brazo sin atravesar la pared
-	phantom_node.position = Vector3(-44.2, 4.6, -30.2)
+	# Posición calculada para que la mano derecha agarre exactamente el marco vertical de la puerta de Bedelía (X = -41.45, Z = -32.85)
+	phantom_node.position = Vector3(-43.5, 4.6, -30.8)
 	
-	# Rotado a ~48° (apuntando a +X y +Z) para que quede mirando fijo de frente al jugador en el pasillo
-	phantom_node.rotation.y = deg_to_rad(48.0)
+	# Rotado a 45° mirando fijo al jugador conforme se aproxima por el pasillo
+	phantom_node.rotation.y = deg_to_rad(45.0)
 	
 	var is_custom_tscn = ResourceLoader.exists("res://scenes/scp_096_guia.tscn")
 	var scp_scene = _load_scp_scene()
@@ -177,7 +177,7 @@ func _create_phantom() -> void:
 				anim.advance(0.5)
 				anim.pause()
 			
-			# Articular huesos del esqueleto: postura encorvada, muñeca contra la pared y mano izquierda fuera del suelo
+			# Articular huesos del esqueleto: postura encorvada, mano agarrando el marco de Bedelía
 			var skel = scp_inst.find_child("Skeleton3D", true, false) as Skeleton3D
 			if skel:
 				# 1. Encorvar torso y cuello hacia adelante mirando al jugador
@@ -194,22 +194,29 @@ func _create_phantom() -> void:
 					var cur_head = skel.get_bone_pose_rotation(b_head)
 					skel.set_bone_pose_rotation(b_head, cur_head * Quaternion(Vector3(1, 0, 0), deg_to_rad(-18.0)))
 					
-				# 2. Brazo derecho: hombro levantado, codo y muñeca doblada apoyando la palma sobre la pared
+				# 2. Brazo derecho: hombro y codo extendidos hacia el marco de Bedelía
 				var b_sh = skel.find_bone("Bone_009")
 				var b_el = skel.find_bone("Bone_012")
 				var b_r_wrist = skel.find_bone("Bone_011")
+				var b_r_hand = skel.find_bone("Bone_023")
 				if b_sh >= 0:
 					var cur_sh = skel.get_bone_pose_rotation(b_sh)
-					var q_sh = Quaternion(Vector3(0, 0, 1), deg_to_rad(80.0)) * Quaternion(Vector3(1, 0, 0), deg_to_rad(10.0))
+					var q_sh = Quaternion(Vector3(0, 0, 1), deg_to_rad(75.0)) * Quaternion(Vector3(1, 0, 0), deg_to_rad(10.0))
 					skel.set_bone_pose_rotation(b_sh, cur_sh * q_sh)
 				if b_el >= 0:
 					var cur_el = skel.get_bone_pose_rotation(b_el)
-					var q_el = Quaternion(Vector3(0, 0, 1), deg_to_rad(-15.0))
+					var q_el = Quaternion(Vector3(0, 0, 1), deg_to_rad(-20.0))
 					skel.set_bone_pose_rotation(b_el, cur_el * q_el)
+				# Muñeca orientada hacia el borde vertical del marco
 				if b_r_wrist >= 0:
 					var cur_wrist = skel.get_bone_pose_rotation(b_r_wrist)
-					var q_wrist = Quaternion(Vector3(1, 0, 0), deg_to_rad(-45.0)) * Quaternion(Vector3(0, 0, 1), deg_to_rad(25.0))
-					skel.set_bone_pose_rotation(b_r_wrist, cur_wrist * q_wrist)
+					var q_w = Quaternion(Vector3(1, 0, 0), deg_to_rad(-20.0)) * Quaternion(Vector3(0, 1, 0), deg_to_rad(-20.0)) * Quaternion(Vector3(0, 0, 1), deg_to_rad(15.0))
+					skel.set_bone_pose_rotation(b_r_wrist, cur_wrist * q_w)
+				# Dedos flexionados envolviendo el canto del marco
+				if b_r_hand >= 0:
+					var cur_hand = skel.get_bone_pose_rotation(b_r_hand)
+					var q_fingers = Quaternion(Vector3(1, 0, 0), deg_to_rad(35.0))
+					skel.set_bone_pose_rotation(b_r_hand, cur_hand * q_fingers)
 					
 				# 3. Brazo izquierdo: flexionar codo y muñeca para que la mano no traspase el suelo
 				var b_l_el = skel.find_bone("Bone_014")
@@ -342,9 +349,9 @@ func _play_loud_slam_sound(hinge_pos: Vector3) -> void:
 	var slam_player_3d = AudioStreamPlayer3D.new()
 	slam_player_3d.stream = slam_stream
 	slam_player_3d.position = hinge_pos
-	slam_player_3d.volume_db = 22.0 # Decibeles notablemente aumentados para un susto potente
-	slam_player_3d.unit_size = 6.0
-	slam_player_3d.max_distance = 55.0
+	slam_player_3d.volume_db = 27.0 # Decibeles incrementados para un golpe potente y resonante
+	slam_player_3d.unit_size = 7.0
+	slam_player_3d.max_distance = 60.0
 	slam_player_3d.bus = &"Master"
 	add_child(slam_player_3d)
 	# Iniciar directamente en 1.54s donde estalla el golpe, omitiendo el silencio inicial del archivo
@@ -354,7 +361,7 @@ func _play_loud_slam_sound(hinge_pos: Vector3) -> void:
 	# 2. Capa de refuerzo estéreo directa para impacto de jumpscare
 	var slam_boost = AudioStreamPlayer.new()
 	slam_boost.stream = slam_stream
-	slam_boost.volume_db = 8.0
+	slam_boost.volume_db = 13.0 # Refuerzo aumentado para susto inmediato
 	slam_boost.bus = &"Master"
 	add_child(slam_boost)
 	slam_boost.play(1.54)

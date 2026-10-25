@@ -782,9 +782,9 @@ func _debug_teleport_to_p1() -> void:
 	_unlock_upper_floor()
 	if is_instance_valid(player):
 		player.velocity = Vector3.ZERO
-		# Ubicar al jugador en el punto de vista exacto de la foto (X: -40.5, Z: -27.6) mirando hacia la esquina
-		player.global_position = Vector3(-40.5, 4.7, -27.6)
-		player.rotation.y = deg_to_rad(-128.0)
+		# Ubicar al jugador en el punto de vista con ángulo hacia la esquina y Bedelía
+		player.global_position = Vector3(-39.0, 4.7, -26.5)
+		player.rotation.y = deg_to_rad(-135.0)
 		if player.has_method("enable_flashlight"):
 			player.enable_flashlight()
 	if hud and hud.has_method("show_temporary_alert"):
