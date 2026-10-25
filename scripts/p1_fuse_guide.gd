@@ -138,8 +138,8 @@ func _create_doors() -> void:
 func _create_phantom() -> void:
 	phantom_node = Node3D.new()
 	phantom_node.name = "CriaturaGuiaP1"
-	# Parado estático en la ubicación exacta solicitada: X: -45.4, Y: 4.6 (apoyado en piso), Z: -31.3
-	phantom_node.position = Vector3(-45.4, 4.6, -31.3)
+	# Adelantado ligeramente de la punta de la esquina (X: -44.2, Y: 4.6, Z: -30.2) para dar espacio al brazo sin atravesar la pared
+	phantom_node.position = Vector3(-44.2, 4.6, -30.2)
 	
 	# Rotado a ~48° (apuntando a +X y +Z) para que quede mirando fijo de frente al jugador en el pasillo
 	phantom_node.rotation.y = deg_to_rad(48.0)
@@ -150,10 +150,9 @@ func _create_phantom() -> void:
 		scp_inst.name = "SCP096Model"
 		# El FBX importado en Godot ya viene en orientación Y-up con escala natural
 		scp_inst.rotation_degrees = Vector3(0, 0, 0)
-		# Escala 0.90x que le otorga una altura colosal de ~3.82 metros (el doble de un humano, llenando hasta el techo de 4.4m)
-		scp_inst.scale = Vector3(0.9, 0.9, 0.9)
-		# Con escala 0.9, los pies en espacio local quedan en Y = -0.93; elevamos +0.93 para que apoye perfecto en el piso
-		scp_inst.position = Vector3(0.0, 0.93, 0.0)
+		# Escala ~0.82x que le otorga una altura masiva y proporcionada
+		scp_inst.scale = Vector3(0.82, 0.82, 0.82)
+		scp_inst.position = Vector3(0.0, 0.85, 0.0)
 		
 		# Asignar textura del cuerpo
 		var mesh = scp_inst.find_child("scp096", true, false) as MeshInstance3D
@@ -173,14 +172,29 @@ func _create_phantom() -> void:
 			anim.advance(0.5)
 			anim.pause()
 		
-		# Articular los huesos del brazo derecho (Bone_009 hombro, Bone_012 codo) para que señale directo a Bedelía
+		# Articular huesos del esqueleto: postura encorvada y brazo señalando a Bedelía
 		var skel = scp_inst.find_child("Skeleton3D", true, false) as Skeleton3D
 		if skel:
+			# Encorvar torso y cuello hacia adelante (postura clásica espeluznante de SCP-096)
+			var b_rip = skel.find_bone("ripcage")
+			var b_neck = skel.find_bone("neck")
+			var b_head = skel.find_bone("head")
+			if b_rip >= 0:
+				var cur_rip = skel.get_bone_pose_rotation(b_rip)
+				skel.set_bone_pose_rotation(b_rip, cur_rip * Quaternion(Vector3(1, 0, 0), deg_to_rad(22.0)))
+			if b_neck >= 0:
+				var cur_neck = skel.get_bone_pose_rotation(b_neck)
+				skel.set_bone_pose_rotation(b_neck, cur_neck * Quaternion(Vector3(1, 0, 0), deg_to_rad(12.0)))
+			if b_head >= 0:
+				var cur_head = skel.get_bone_pose_rotation(b_head)
+				skel.set_bone_pose_rotation(b_head, cur_head * Quaternion(Vector3(1, 0, 0), deg_to_rad(-18.0)))
+				
+			# Brazo derecho señalando directo a Bedelía sin colisionar con la pared
 			var b_sh = skel.find_bone("Bone_009")
 			var b_el = skel.find_bone("Bone_012")
 			if b_sh >= 0:
 				var cur_sh = skel.get_bone_pose_rotation(b_sh)
-				var q_sh = Quaternion(Vector3(0, 0, 1), deg_to_rad(75.0))
+				var q_sh = Quaternion(Vector3(0, 0, 1), deg_to_rad(80.0)) * Quaternion(Vector3(1, 0, 0), deg_to_rad(10.0))
 				skel.set_bone_pose_rotation(b_sh, cur_sh * q_sh)
 			if b_el >= 0:
 				var cur_el = skel.get_bone_pose_rotation(b_el)
@@ -192,15 +206,15 @@ func _create_phantom() -> void:
 		# Respaldo si no se encuentra el modelo 3D
 		_create_fallback_phantom(phantom_node)
 	
-	# Colisión sólida física adaptada al doble de tamaño
+	# Colisión sólida física adaptada
 	var col_body = StaticBody3D.new()
 	col_body.name = "CreatureCollision"
 	var col_shape = CollisionShape3D.new()
 	var cap = CapsuleShape3D.new()
 	cap.radius = 0.70
-	cap.height = 3.80
+	cap.height = 3.40
 	col_shape.shape = cap
-	col_shape.position = Vector3(0.0, 1.90, 0.0)
+	col_shape.position = Vector3(0.0, 1.70, 0.0)
 	col_body.add_child(col_shape)
 	phantom_node.add_child(col_body)
 	
