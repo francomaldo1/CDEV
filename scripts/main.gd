@@ -777,6 +777,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		KEY_F9:
 			_debug_toggle_freeze_profesor()
 			get_viewport().set_input_as_handled()
+		KEY_F10:
+			_debug_toggle_retro_filter()
+			get_viewport().set_input_as_handled()
 
 func _debug_teleport_to_p1() -> void:
 	_unlock_upper_floor()
@@ -853,3 +856,11 @@ func _debug_toggle_freeze_profesor() -> void:
 			hud.show_temporary_alert("🧊 [F9] Profesor CONGELADO (Inmóvil para pruebas tranquilas)", Color(0.4, 0.85, 1.0))
 		else:
 			hud.show_temporary_alert("🏃 [F9] Profesor DESCONGELADO (Patrullando normalmente)", Color(1.0, 0.4, 0.4))
+
+func _debug_toggle_retro_filter() -> void:
+	if is_instance_valid(player) and player.has_method("toggle_retro_shader"):
+		var is_on = player.toggle_retro_shader()
+		if hud and hud.has_method("show_temporary_alert"):
+			var msg = "📼 [F10] Filtro Retro Fears to Fathom: " + ("ACTIVADO" if is_on else "DESACTIVADO")
+			var col = Color(0.9, 0.7, 1.0) if is_on else Color(0.7, 0.7, 0.7)
+			hud.show_temporary_alert(msg, col)

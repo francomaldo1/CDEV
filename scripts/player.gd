@@ -15,6 +15,7 @@ class_name Player
 @onready var camera_pivot: Node3D = $CameraPivot
 @onready var camera: Camera3D = $CameraPivot/Camera3D
 @onready var flashlight: SpotLight3D = $CameraPivot/Camera3D/Flashlight
+@onready var retro_post_process: CanvasLayer = get_node_or_null("RetroPostProcess")
 
 var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity", 9.8)
 var bob_time: float = 0.0
@@ -520,3 +521,14 @@ func consume_peronachos() -> bool:
 			hud.show_temporary_alert("⚡ ¡Peronachos crujientes consumidos! ¡Estamina al 100%! ⚡", Color(0.3, 1.0, 0.6))
 			
 	return true
+
+func toggle_retro_shader() -> bool:
+	if is_instance_valid(retro_post_process):
+		retro_post_process.visible = not retro_post_process.visible
+		return retro_post_process.visible
+	return false
+
+func is_retro_shader_enabled() -> bool:
+	if is_instance_valid(retro_post_process):
+		return retro_post_process.visible
+	return false
