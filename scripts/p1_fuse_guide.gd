@@ -141,32 +141,31 @@ func _create_phantom() -> void:
 	# Parado estático en la ubicación exacta solicitada: X: -45.4, Y: 4.6 (apoyado en piso), Z: -31.3
 	phantom_node.position = Vector3(-45.4, 4.6, -31.3)
 	
-	# Orientación apuntando directamente hacia la entrada de Bedelía General (X = -40.0, Z = -33.0)
-	var bedelia_door_pos = Vector3(-40.0, 4.6, -33.0)
-	var dir_to_door = bedelia_door_pos - phantom_node.position
-	phantom_node.rotation.y = atan2(dir_to_door.x, dir_to_door.z)
+	# Rotado a ~45° (apuntando a +X y +Z) para que quede mirando fijo de frente al jugador en el pasillo
+	phantom_node.rotation.y = deg_to_rad(52.0)
 	
 	var creature_scene = _load_creature_scene()
 	if creature_scene:
 		var creature_inst = creature_scene.instantiate()
 		creature_inst.name = "CreatureModel"
-		# El modelo tiene los pies en Y = -0.997, por lo que compensamos +0.997 para apoyarlo justo en el piso de P1
-		creature_inst.position = Vector3(0.0, 0.997, 0.0)
-		# Dejar el modelo 3D con su malla y materiales originales impecables (sin deformaciones por shader que lo bugueen)
+		# Hacer la criatura el doble de grande (altura ~4 metros, imponente hasta el techo)
+		creature_inst.scale = Vector3(2.0, 2.0, 2.0)
+		# Los pies están en -0.997 * 2.0 = -1.994 en espacio local; compensamos +1.994 para que apoye justo en el suelo
+		creature_inst.position = Vector3(0.0, 1.994, 0.0)
 		phantom_node.add_child(creature_inst)
 	else:
 		# Respaldo si no se encuentra el modelo 3D
 		_create_fallback_phantom(phantom_node)
 	
-	# Colisión sólida física para que el jugador no atraviese el modelo
+	# Colisión sólida física adaptada al doble de tamaño
 	var col_body = StaticBody3D.new()
 	col_body.name = "CreatureCollision"
 	var col_shape = CollisionShape3D.new()
 	var cap = CapsuleShape3D.new()
-	cap.radius = 0.35
-	cap.height = 1.95
+	cap.radius = 0.70
+	cap.height = 3.90
 	col_shape.shape = cap
-	col_shape.position = Vector3(0.0, 0.98, 0.0)
+	col_shape.position = Vector3(0.0, 1.95, 0.0)
 	col_body.add_child(col_shape)
 	phantom_node.add_child(col_body)
 	
