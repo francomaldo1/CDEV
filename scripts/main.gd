@@ -744,3 +744,112 @@ func _trigger_random_light_flicker() -> void:
 			"duration": randf_range(0.35, 1.25),
 			"base": base_e
 		}
+
+## =====================================================================
+## ATAJOS DE TESTING RÁPIDO Y MODO DEBUG
+## =====================================================================
+var is_profesor_frozen: bool = false
+
+func _unhandled_input(event: InputEvent) -> void:
+	if not (event is InputEventKey and event.pressed and not event.echo):
+		return
+		
+	match event.keycode:
+		KEY_F1:
+			if hud and hud.has_method("toggle_debug_cheats_panel"):
+				hud.toggle_debug_cheats_panel()
+				get_viewport().set_input_as_handled()
+		KEY_F4:
+			_debug_teleport_to_p1()
+			get_viewport().set_input_as_handled()
+		KEY_F5:
+			_debug_trigger_blackout_and_fuse()
+			get_viewport().set_input_as_handled()
+		KEY_F6:
+			_debug_teleport_to_tablero()
+			get_viewport().set_input_as_handled()
+		KEY_F7:
+			_debug_teleport_to_cafeteria()
+			get_viewport().set_input_as_handled()
+		KEY_F8:
+			_debug_approve_all_exams()
+			get_viewport().set_input_as_handled()
+		KEY_F9:
+			_debug_toggle_freeze_profesor()
+			get_viewport().set_input_as_handled()
+
+func _debug_teleport_to_p1() -> void:
+	_unlock_upper_floor()
+	if is_instance_valid(player):
+		player.velocity = Vector3.ZERO
+		# Parar al jugador en P1 frente a la esquina de la criatura (Z = -19.5) mirando hacia ella (-Z)
+		player.global_position = Vector3(-39.0, 4.65, -19.5)
+		player.rotation.y = deg_to_rad(180.0)
+		if player.has_method("enable_flashlight"):
+			player.enable_flashlight()
+	if hud and hud.has_method("show_temporary_alert"):
+		hud.show_temporary_alert("📍 [F4] Teletransporte a P1 (Frente a la Criatura y Bedelía)", Color(0.3, 1.0, 0.6))
+
+func _debug_trigger_blackout_and_fuse() -> void:
+	if not is_blackout:
+		_trigger_blackout()
+	if hud:
+		hud.has_fuse = true
+		if hud.has_method("update_inventory_display"):
+			hud.update_inventory_display()
+		if hud.has_method("show_temporary_alert"):
+			hud.show_temporary_alert("⚡ [F5] Apagón activado y Fusible listo en el inventario", Color(1.0, 0.85, 0.2))
+	if is_instance_valid(player) and player.has_method("enable_flashlight"):
+		player.enable_flashlight()
+
+func _debug_teleport_to_tablero() -> void:
+	if not is_blackout:
+		_trigger_blackout()
+	if hud:
+		hud.has_fuse = true
+		if hud.has_method("update_inventory_display"):
+			hud.update_inventory_display()
+	if is_instance_valid(player):
+		player.velocity = Vector3.ZERO
+		# Frente al tablero eléctrico en Depto. de Electrónica (X = -18.5, Z = 0.0) mirando al tablero
+		player.global_position = Vector3(-18.5, 0.05, 0.0)
+		player.rotation.y = deg_to_rad(90.0)
+		if player.has_method("enable_flashlight"):
+			player.enable_flashlight()
+	if hud and hud.has_method("show_temporary_alert"):
+		hud.show_temporary_alert("💡 [F6] En Tablero Eléctrico con Fusible listo. ¡Apreta [E]!", Color(0.3, 1.0, 0.6))
+
+func _debug_teleport_to_cafeteria() -> void:
+	if is_instance_valid(player):
+		player.velocity = Vector3.ZERO
+		# Cafetería PB frente a los estantes de Peronachos (X = 48.5, Z = -8.0)
+		player.global_position = Vector3(48.5, 0.05, -8.0)
+		player.rotation.y = deg_to_rad(-90.0)
+	if hud:
+		hud.peronachos_count = 3
+		if hud.has_method("update_inventory_display"):
+			hud.update_inventory_display()
+		if hud.has_method("show_temporary_alert"):
+			hud.show_temporary_alert("🍟 [F7] Cafetería PB: Estantes listos [E] y 3 Peronachos en inventario [Q]", Color(1.0, 0.6, 0.2))
+
+func _debug_approve_all_exams() -> void:
+	for spot in classroom_spots:
+		if not exams_approved.has(spot["name"]):
+			exams_approved.append(spot["name"])
+	_unlock_upper_floor()
+	if hud and hud.has_method("update_exams"):
+		hud.update_exams(exams_approved.size(), total_exams)
+	if hud and hud.has_method("show_temporary_alert"):
+		hud.show_temporary_alert("🎓 [F8] ¡Todos los parciales aprobados y accesos desbloqueados!", Color(0.3, 0.8, 1.0))
+
+func _debug_toggle_freeze_profesor() -> void:
+	is_profesor_frozen = not is_profesor_frozen
+	if is_instance_valid(profesor):
+		profesor.set_physics_process(not is_profesor_frozen)
+		profesor.set_process(not is_profesor_frozen)
+		profesor.velocity = Vector3.ZERO
+	if hud and hud.has_method("show_temporary_alert"):
+		if is_profesor_frozen:
+			hud.show_temporary_alert("🧊 [F9] Profesor CONGELADO (Inmóvil para pruebas tranquilas)", Color(0.4, 0.85, 1.0))
+		else:
+			hud.show_temporary_alert("🏃 [F9] Profesor DESCONGELADO (Patrullando normalmente)", Color(1.0, 0.4, 0.4))

@@ -65,7 +65,7 @@ func _ready() -> void:
 		
 	if instruction_label:
 		instruction_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		instruction_label.text = "[W,A,S,D] Mover | [Shift] Correr | [F] Linterna | [E] Usar/Esconderse | [Q] Peronachos | [F3] Coords | [F2] Copiar | [M] Guia"
+		instruction_label.text = "[W,A,S,D] Mover | [Shift] Correr | [F] Linterna | [E] Usar/Esconderse | [Q] Peronachos | [F1] Cheats | [F3] Coords | [M] Guia"
 	if mic_container:
 		mic_container.visible = is_mic_active_visible
 
@@ -295,7 +295,10 @@ func _unhandled_input(event: InputEvent) -> void:
 			_close_math_exam()
 			get_viewport().set_input_as_handled()
 	elif event is InputEventKey and event.pressed:
-		if event.keycode == KEY_F3:
+		if event.keycode == KEY_F1:
+			toggle_debug_cheats_panel()
+			get_viewport().set_input_as_handled()
+		elif event.keycode == KEY_F3:
 			show_debug_coords = not show_debug_coords
 			if debug_coords_panel:
 				debug_coords_panel.visible = show_debug_coords
@@ -579,9 +582,54 @@ func _process_debug_coords(_delta: float) -> void:
 			
 	last_coords_string = "X: %.1f, Y: %.1f, Z: %.1f (%s)" % [p.x, p.y, p.z, piso]
 	
-	debug_coords_label.text = "📍 Pos: X: %.1f  Y: %.1f  Z: %.1f\n🏢 %s | Mirando: %s\n⌨️ [F2] Copiar | [F3] Ocultar" % [
+	debug_coords_label.text = "📍 Pos: X: %.1f  Y: %.1f  Z: %.1f\n🏢 %s | Mirando: %s\n⌨️ [F1] Cheats | [F2] Copiar | [F3] Ocultar" % [
 		p.x, p.y, p.z, piso, heading
 	]
+
+var debug_cheats_panel: PanelContainer = null
+
+func toggle_debug_cheats_panel() -> void:
+	if not debug_cheats_panel:
+		_setup_debug_cheats_panel()
+	debug_cheats_panel.visible = not debug_cheats_panel.visible
+
+func _setup_debug_cheats_panel() -> void:
+	debug_cheats_panel = PanelContainer.new()
+	debug_cheats_panel.name = "DebugCheatsPanel"
+	debug_cheats_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	
+	var style = StyleBoxFlat.new()
+	style.bg_color = Color(0.04, 0.06, 0.10, 0.94)
+	style.border_color = Color(0.2, 0.75, 1.0, 0.85)
+	style.set_border_width_all(2)
+	style.set_corner_radius_all(8)
+	style.content_margin_left = 22
+	style.content_margin_right = 22
+	style.content_margin_top = 16
+	style.content_margin_bottom = 16
+	debug_cheats_panel.add_theme_stylebox_override("panel", style)
+	
+	debug_cheats_panel.set_anchors_preset(Control.PRESET_CENTER)
+	debug_cheats_panel.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	debug_cheats_panel.grow_vertical = Control.GROW_DIRECTION_BOTH
+	
+	var lbl = Label.new()
+	lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	lbl.add_theme_font_size_override("font_size", 14)
+	lbl.text = "🛠️ ATAJOS DE TESTING RÁPIDO (MODO DEBUG)\n\n" + \
+		"  [F4]  📍 Teleport a Primer Piso (P1) frente a la Criatura y Bedelía\n" + \
+		"  [F5]  ⚡ Activar Apagón inmediato y Obtener Fusible de 10A\n" + \
+		"  [F6]  💡 Teleport a Tablero Eléctrico (con Fusible listo para colocar [E])\n" + \
+		"  [F7]  🍟 Teleport a Cafetería PB (Estantes de Peronachos)\n" + \
+		"  [F8]  🎓 Aprobar todos los Parciales y Desbloquear Accesos\n" + \
+		"  [F9]  🧊 Congelar / Descongelar al Profesor (para probar sin peligro)\n" + \
+		"  [F2]  📋 Copiar coordenadas exactas al portapapeles\n" + \
+		"  [F3]  👁️ Ocultar / Mostrar visor de coordenadas\n" + \
+		"  [F1]  ❌ Cerrar esta ventana de ayuda"
+	lbl.add_theme_color_override("font_color", Color(0.95, 0.98, 1.0))
+	
+	debug_cheats_panel.add_child(lbl)
+	add_child(debug_cheats_panel)
 
 func _setup_debug_coords() -> void:
 	debug_coords_panel = PanelContainer.new()
