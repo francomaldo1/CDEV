@@ -156,7 +156,8 @@ func _create_phantom() -> void:
 			scp_inst.rotation_degrees = Vector3(0, 0, 0)
 			# Escala ~0.82x que le otorga una altura masiva y proporcionada
 			scp_inst.scale = Vector3(0.82, 0.82, 0.82)
-			scp_inst.position = Vector3(0.0, 0.85, 0.0)
+			# Elevado a Y = 1.02 para que las plantas de los pies apoyen limpiamente arriba del suelo
+			scp_inst.position = Vector3(0.0, 1.02, 0.0)
 			
 			# Asignar textura del cuerpo
 			var mesh = scp_inst.find_child("scp096", true, false) as MeshInstance3D
@@ -176,10 +177,10 @@ func _create_phantom() -> void:
 				anim.advance(0.5)
 				anim.pause()
 			
-			# Articular huesos del esqueleto: postura encorvada y brazo señalando a Bedelía
+			# Articular huesos del esqueleto: postura encorvada, muñeca contra la pared y mano izquierda fuera del suelo
 			var skel = scp_inst.find_child("Skeleton3D", true, false) as Skeleton3D
 			if skel:
-				# Encorvar torso y cuello hacia adelante (postura clásica espeluznante de SCP-096)
+				# 1. Encorvar torso y cuello hacia adelante mirando al jugador
 				var b_rip = skel.find_bone("ripcage")
 				var b_neck = skel.find_bone("neck")
 				var b_head = skel.find_bone("head")
@@ -193,9 +194,10 @@ func _create_phantom() -> void:
 					var cur_head = skel.get_bone_pose_rotation(b_head)
 					skel.set_bone_pose_rotation(b_head, cur_head * Quaternion(Vector3(1, 0, 0), deg_to_rad(-18.0)))
 					
-				# Brazo derecho señalando directo a Bedelía sin colisionar con la pared
+				# 2. Brazo derecho: hombro levantado, codo y muñeca doblada apoyando la palma sobre la pared
 				var b_sh = skel.find_bone("Bone_009")
 				var b_el = skel.find_bone("Bone_012")
+				var b_r_wrist = skel.find_bone("Bone_011")
 				if b_sh >= 0:
 					var cur_sh = skel.get_bone_pose_rotation(b_sh)
 					var q_sh = Quaternion(Vector3(0, 0, 1), deg_to_rad(80.0)) * Quaternion(Vector3(1, 0, 0), deg_to_rad(10.0))
@@ -204,6 +206,20 @@ func _create_phantom() -> void:
 					var cur_el = skel.get_bone_pose_rotation(b_el)
 					var q_el = Quaternion(Vector3(0, 0, 1), deg_to_rad(-15.0))
 					skel.set_bone_pose_rotation(b_el, cur_el * q_el)
+				if b_r_wrist >= 0:
+					var cur_wrist = skel.get_bone_pose_rotation(b_r_wrist)
+					var q_wrist = Quaternion(Vector3(1, 0, 0), deg_to_rad(-45.0)) * Quaternion(Vector3(0, 0, 1), deg_to_rad(25.0))
+					skel.set_bone_pose_rotation(b_r_wrist, cur_wrist * q_wrist)
+					
+				# 3. Brazo izquierdo: flexionar codo y muñeca para que la mano no traspase el suelo
+				var b_l_el = skel.find_bone("Bone_014")
+				var b_l_wrist = skel.find_bone("Bone_013")
+				if b_l_el >= 0:
+					var cur_l_el = skel.get_bone_pose_rotation(b_l_el)
+					skel.set_bone_pose_rotation(b_l_el, cur_l_el * Quaternion(Vector3(1, 0, 0), deg_to_rad(-30.0)))
+				if b_l_wrist >= 0:
+					var cur_l_wrist = skel.get_bone_pose_rotation(b_l_wrist)
+					skel.set_bone_pose_rotation(b_l_wrist, cur_l_wrist * Quaternion(Vector3(1, 0, 0), deg_to_rad(15.0)))
 					
 		phantom_node.add_child(scp_inst)
 	else:
