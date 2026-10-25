@@ -141,21 +141,21 @@ func _create_phantom() -> void:
 	# Parado estático en la ubicación exacta solicitada: X: -45.4, Y: 4.6 (apoyado en piso), Z: -31.3
 	phantom_node.position = Vector3(-45.4, 4.6, -31.3)
 	
-	# Rotado a ~45° (apuntando a +X y +Z) para que quede mirando fijo de frente al jugador en el pasillo
-	phantom_node.rotation.y = deg_to_rad(52.0)
+	# Rotado a ~48° (apuntando a +X y +Z) para que quede mirando fijo de frente al jugador en el pasillo
+	phantom_node.rotation.y = deg_to_rad(48.0)
 	
 	var scp_scene = _load_scp_scene()
 	if scp_scene:
 		var scp_inst = scp_scene.instantiate()
 		scp_inst.name = "SCP096Model"
-		# El FBX viene con orientación Z-up; rotamos -90° en X para dejarlo erguido
-		scp_inst.rotation_degrees = Vector3(-90, 0, 0)
-		# Escala al doble de tamaño: altura total ~3.7m - 3.8m, imponente casi hasta el techo (4.4m)
-		scp_inst.scale = Vector3(88.0, 88.0, 88.0)
-		# Con escala 88, los pies en espacio local quedan en Y = -0.886; compensamos para apoyar justo en el piso
-		scp_inst.position = Vector3(0.0, 0.886, 0.0)
+		# El FBX importado en Godot ya viene en orientación Y-up con escala natural
+		scp_inst.rotation_degrees = Vector3(0, 0, 0)
+		# Escala 0.90x que le otorga una altura colosal de ~3.82 metros (el doble de un humano, llenando hasta el techo de 4.4m)
+		scp_inst.scale = Vector3(0.9, 0.9, 0.9)
+		# Con escala 0.9, los pies en espacio local quedan en Y = -0.93; elevamos +0.93 para que apoye perfecto en el piso
+		scp_inst.position = Vector3(0.0, 0.93, 0.0)
 		
-		# Asignar textura del cuerpo si hace falta
+		# Asignar textura del cuerpo
 		var mesh = scp_inst.find_child("scp096", true, false) as MeshInstance3D
 		if mesh:
 			var tex = load("res://scpcb-future-horror-mod-scp-096/textures/SCP096_fh_fix.jpg")
@@ -180,11 +180,11 @@ func _create_phantom() -> void:
 			var b_el = skel.find_bone("Bone_012")
 			if b_sh >= 0:
 				var cur_sh = skel.get_bone_pose_rotation(b_sh)
-				var q_sh = Quaternion(Vector3(0, 0, 1), deg_to_rad(70.0)) * Quaternion(Vector3(1, 0, 0), deg_to_rad(-25.0))
+				var q_sh = Quaternion(Vector3(0, 0, 1), deg_to_rad(75.0))
 				skel.set_bone_pose_rotation(b_sh, cur_sh * q_sh)
 			if b_el >= 0:
 				var cur_el = skel.get_bone_pose_rotation(b_el)
-				var q_el = Quaternion(Vector3(0, 0, 1), deg_to_rad(-20.0))
+				var q_el = Quaternion(Vector3(0, 0, 1), deg_to_rad(-15.0))
 				skel.set_bone_pose_rotation(b_el, cur_el * q_el)
 				
 		phantom_node.add_child(scp_inst)
@@ -198,9 +198,9 @@ func _create_phantom() -> void:
 	var col_shape = CollisionShape3D.new()
 	var cap = CapsuleShape3D.new()
 	cap.radius = 0.70
-	cap.height = 3.90
+	cap.height = 3.80
 	col_shape.shape = cap
-	col_shape.position = Vector3(0.0, 1.95, 0.0)
+	col_shape.position = Vector3(0.0, 1.90, 0.0)
 	col_body.add_child(col_shape)
 	phantom_node.add_child(col_body)
 	
