@@ -140,9 +140,13 @@ func _create_doors() -> void:
 func _create_phantom() -> void:
 	phantom_node = Node3D.new()
 	phantom_node.name = "CriaturaGuiaP1"
-	# Parado al final del pasillo oeste antes de doblar hacia Bedelía
-	phantom_node.position = Vector3(-42.0, 4.6, -24.0)
-	phantom_node.rotation.y = deg_to_rad(180.0) # Mirando de frente al jugador que sube por el pasillo oeste
+	# Parado estático en la esquina X: -39.0, Y: 4.6 (apoyado en piso), Z: -25.6
+	phantom_node.position = Vector3(-39.0, 4.6, -25.6)
+	
+	# Orientación apuntando con exactitud hacia la entrada de Bedelía General (X = -40.0, Z = -33.0)
+	var bedelia_door_pos = Vector3(-40.0, 4.6, -33.0)
+	var dir_to_door = bedelia_door_pos - phantom_node.position
+	phantom_node.rotation.y = atan2(dir_to_door.x, dir_to_door.z)
 	
 	var creature_scene = _load_creature_scene()
 	if creature_scene:
@@ -160,6 +164,18 @@ func _create_phantom() -> void:
 	else:
 		# Respaldo si no se encuentra el modelo 3D
 		_create_fallback_phantom(phantom_node)
+	
+	# Colisión sólida física para que el jugador no atraviese el modelo
+	var col_body = StaticBody3D.new()
+	col_body.name = "CreatureCollision"
+	var col_shape = CollisionShape3D.new()
+	var cap = CapsuleShape3D.new()
+	cap.radius = 0.35
+	cap.height = 1.95
+	col_shape.shape = cap
+	col_shape.position = Vector3(0.0, 0.98, 0.0)
+	col_body.add_child(col_shape)
+	phantom_node.add_child(col_body)
 	
 	add_child(phantom_node)
 
@@ -279,8 +295,8 @@ void fragment() {
 			creature_material.set_shader_parameter("metallic_texture", tex)
 			break
 			
-	creature_material.set_shader_parameter("point_blend", 0.0)
-	creature_material.set_shader_parameter("tremor_intensity", 1.0)
+	creature_material.set_shader_parameter("point_blend", 1.0) # Apuntando estático desde el inicio
+	creature_material.set_shader_parameter("tremor_intensity", 0.75)
 	creature_material.set_shader_parameter("finger_stretch", 1.25)
 	
 	mesh_inst.material_override = creature_material
@@ -318,12 +334,19 @@ func _process(_delta: float) -> void:
 			if dist <= 7.0:
 				_slam_door(d)
 				
-	# 2. Chequeo de la aparición y escape del fantasma hacia Bedelía (a corta distancia para impacto visual)
+	# 2. Sonido espectral ambiental sutil la primera vez que el jugador se aproxima a la esquina
 	if not phantom_triggered and is_instance_valid(phantom_node):
-		# Se activa cuando el jugador está a corta distancia en el pasillo (aprox 12 metros)
-		if p_pos.x <= -35.0 and (p_pos.z <= -12.0 or p_pos.distance_to(phantom_node.global_position) <= 13.0):
+		if p_pos.distance_to(phantom_node.global_position) <= 12.0:
 			phantom_triggered = true
-			_trigger_phantom_guide()
+			var whisper = AudioStreamPlayer3D.new()
+			whisper.stream = HorrorAudio.get_screamer_stinger()
+			whisper.position = phantom_node.position
+			whisper.volume_db = -8.0
+			whisper.pitch_scale = 0.55
+			whisper.max_distance = 25.0
+			add_child(whisper)
+			whisper.play()
+			whisper.finished.connect(whisper.queue_free)
 
 func _slam_door(d: Dictionary) -> void:
 	d["is_slammed"] = true
@@ -388,49 +411,6 @@ func _play_loud_slam_sound(hinge_pos: Vector3) -> void:
 	add_child(slam_boost)
 	slam_boost.play(1.54)
 	slam_boost.finished.connect(slam_boost.queue_free)
-
-func _trigger_phantom_guide() -> void:
-	if not is_instance_valid(phantom_node):
-		return
-		
-	# Sonido sutil espectral / suspiro frío
-	var whisper = AudioStreamPlayer3D.new()
-	whisper.stream = HorrorAudio.get_screamer_stinger()
-	whisper.position = phantom_node.position
-	whisper.volume_db = -6.0
-	whisper.pitch_scale = 0.65
-	whisper.max_distance = 32.0
-	add_child(whisper)
-	whisper.play()
-	whisper.finished.connect(whisper.queue_free)
-	
-	# La entrada a Bedelía General donde se ubica el fusible
-	var bedelia_door_pos = Vector3(-40.0, 4.6, -33.0)
-	
-	# Ángulo de orientación hacia la entrada de Bedelía
-	# (la criatura en su sistema local tiene el frente en +Z)
-	var dir_to_door = bedelia_door_pos - phantom_node.position
-	var target_yaw = atan2(dir_to_door.x, dir_to_door.z)
-	
-	var tw = create_tween()
-	# 1. Gira su cuerpo hacia la dirección de Bedelía
-	tw.tween_property(phantom_node, "rotation:y", target_yaw, 0.35).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-	
-	# 2. Simultáneamente levanta su brazo derecho y su dedo índice se alarga señalando de lleno a la habitación
-	if creature_material:
-		tw.parallel().tween_property(creature_material, "shader_parameter/point_blend", 1.0, 0.45).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-		
-	# 3. Mantiene la postura de señalamiento fija y tensa durante 1.8 segundos para que el jugador lo contemple
-	tw.tween_interval(1.8)
-	
-	# 4. Se desplaza velozmente hacia y a través de la entrada de Bedelía adentrándose en el aula
-	tw.tween_property(phantom_node, "position", Vector3(-40.0, 4.6, -35.0), 0.85).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
-	
-	# 5. Una vez dentro de la habitación tras la pared, se elimina
-	tw.tween_callback(func():
-		if is_instance_valid(phantom_node):
-			phantom_node.queue_free()
-	)
 
 func _find_player() -> void:
 	var players = get_tree().get_nodes_in_group("player")
