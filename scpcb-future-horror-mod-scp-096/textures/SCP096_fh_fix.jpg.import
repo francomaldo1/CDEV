@@ -2,19 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dqmtck3pnhjwh"
-path="res://.godot/imported/человек_у_ко_0828200815_texture_2.jpg-2fac47633cb1c16ce53823d1a66d172e.ctex"
+uid="uid://ckqxndy23ul2n"
+path="res://.godot/imported/SCP096_fh_fix.jpg-6be3fa9565a0d472186c0f470958f4bf.ctex"
 metadata={
 "vram_texture": false
-}
-generator_parameters={
-"md5": "3be9eea0e564d90133185a7f94b30836"
 }
 
 [deps]
 
-source_file="res://gaunt-horror-creature-free-creepy-3d-model/source/человек_у_ко_0828200815_texture_2.jpg"
-dest_files=["res://.godot/imported/человек_у_ко_0828200815_texture_2.jpg-2fac47633cb1c16ce53823d1a66d172e.ctex"]
+source_file="res://scpcb-future-horror-mod-scp-096/textures/SCP096_fh_fix.jpg"
+dest_files=["res://.godot/imported/SCP096_fh_fix.jpg-6be3fa9565a0d472186c0f470958f4bf.ctex"]
 
 [params]
 
@@ -26,7 +23,7 @@ compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=true
+mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""

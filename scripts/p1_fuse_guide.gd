@@ -144,15 +144,50 @@ func _create_phantom() -> void:
 	# Rotado a ~45° (apuntando a +X y +Z) para que quede mirando fijo de frente al jugador en el pasillo
 	phantom_node.rotation.y = deg_to_rad(52.0)
 	
-	var creature_scene = _load_creature_scene()
-	if creature_scene:
-		var creature_inst = creature_scene.instantiate()
-		creature_inst.name = "CreatureModel"
-		# Hacer la criatura el doble de grande (altura ~4 metros, imponente hasta el techo)
-		creature_inst.scale = Vector3(2.0, 2.0, 2.0)
-		# Los pies están en -0.997 * 2.0 = -1.994 en espacio local; compensamos +1.994 para que apoye justo en el suelo
-		creature_inst.position = Vector3(0.0, 1.994, 0.0)
-		phantom_node.add_child(creature_inst)
+	var scp_scene = _load_scp_scene()
+	if scp_scene:
+		var scp_inst = scp_scene.instantiate()
+		scp_inst.name = "SCP096Model"
+		# El FBX viene con orientación Z-up; rotamos -90° en X para dejarlo erguido
+		scp_inst.rotation_degrees = Vector3(-90, 0, 0)
+		# Escala al doble de tamaño: altura total ~3.7m - 3.8m, imponente casi hasta el techo (4.4m)
+		scp_inst.scale = Vector3(88.0, 88.0, 88.0)
+		# Con escala 88, los pies en espacio local quedan en Y = -0.886; compensamos para apoyar justo en el piso
+		scp_inst.position = Vector3(0.0, 0.886, 0.0)
+		
+		# Asignar textura del cuerpo si hace falta
+		var mesh = scp_inst.find_child("scp096", true, false) as MeshInstance3D
+		if mesh:
+			var tex = load("res://scpcb-future-horror-mod-scp-096/textures/SCP096_fh_fix.jpg")
+			if tex:
+				var mat0 = mesh.get_active_material(0)
+				if mat0 is StandardMaterial3D:
+					var m_dup = mat0.duplicate() as StandardMaterial3D
+					m_dup.albedo_texture = tex
+					mesh.set_surface_override_material(0, m_dup)
+		
+		# Animar un instante para adoptar postura y luego pausar
+		var anim = scp_inst.find_child("AnimationPlayer", true, false) as AnimationPlayer
+		if anim:
+			anim.play("scp096_skeleton|idle2")
+			anim.advance(0.5)
+			anim.pause()
+		
+		# Articular los huesos del brazo derecho (Bone_009 hombro, Bone_012 codo) para que señale directo a Bedelía
+		var skel = scp_inst.find_child("Skeleton3D", true, false) as Skeleton3D
+		if skel:
+			var b_sh = skel.find_bone("Bone_009")
+			var b_el = skel.find_bone("Bone_012")
+			if b_sh >= 0:
+				var cur_sh = skel.get_bone_pose_rotation(b_sh)
+				var q_sh = Quaternion(Vector3(0, 0, 1), deg_to_rad(70.0)) * Quaternion(Vector3(1, 0, 0), deg_to_rad(-25.0))
+				skel.set_bone_pose_rotation(b_sh, cur_sh * q_sh)
+			if b_el >= 0:
+				var cur_el = skel.get_bone_pose_rotation(b_el)
+				var q_el = Quaternion(Vector3(0, 0, 1), deg_to_rad(-20.0))
+				skel.set_bone_pose_rotation(b_el, cur_el * q_el)
+				
+		phantom_node.add_child(scp_inst)
 	else:
 		# Respaldo si no se encuentra el modelo 3D
 		_create_fallback_phantom(phantom_node)
@@ -171,18 +206,10 @@ func _create_phantom() -> void:
 	
 	add_child(phantom_node)
 
-func _load_creature_scene() -> PackedScene:
-	var path = "res://gaunt-horror-creature-free-creepy-3d-model/source/человек_у_ко_0828200815_texture.glb"
+func _load_scp_scene() -> PackedScene:
+	var path = "res://scpcb-future-horror-mod-scp-096/source/SCP-096.fbx"
 	if ResourceLoader.exists(path):
 		return load(path)
-	var dir = DirAccess.open("res://gaunt-horror-creature-free-creepy-3d-model/source")
-	if dir:
-		dir.list_dir_begin()
-		var fname = dir.get_next()
-		while fname != "":
-			if fname.ends_with(".glb"):
-				return load("res://gaunt-horror-creature-free-creepy-3d-model/source/" + fname)
-			fname = dir.get_next()
 	return null
 
 func _create_fallback_phantom(parent: Node3D) -> void:

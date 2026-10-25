@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d0qc1esj7evfa"
-path="res://.godot/imported/gltf_embedded_1@channels=B.jpeg-26707eeda4717769d3f8e98a8dad4608.ctex"
+uid="uid://burdthpaugeph"
+path="res://.godot/imported/SCP096.jpg-0962015d26fd52224ee37751fcf23b48.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://gaunt-horror-creature-free-creepy-3d-model/textures/gltf_embedded_1@channels=B.jpeg"
-dest_files=["res://.godot/imported/gltf_embedded_1@channels=B.jpeg-26707eeda4717769d3f8e98a8dad4608.ctex"]
+source_file="res://scpcb-future-horror-mod-scp-096/source/SCP096.jpg"
+dest_files=["res://.godot/imported/SCP096.jpg-0962015d26fd52224ee37751fcf23b48.ctex"]
 
 [params]
 
