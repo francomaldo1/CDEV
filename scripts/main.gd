@@ -782,13 +782,13 @@ func _debug_teleport_to_p1() -> void:
 	_unlock_upper_floor()
 	if is_instance_valid(player):
 		player.velocity = Vector3.ZERO
-		# Parar al jugador en P1 frente a la esquina de la criatura (Z = -19.5) mirando hacia ella (-Z)
-		player.global_position = Vector3(-39.0, 4.65, -19.5)
+		# Parar al jugador en P1 en el pasillo (X = -45.4, Z = -24.0) mirando hacia el norte de frente a la criatura en la esquina
+		player.global_position = Vector3(-45.4, 4.65, -24.0)
 		player.rotation.y = deg_to_rad(180.0)
 		if player.has_method("enable_flashlight"):
 			player.enable_flashlight()
 	if hud and hud.has_method("show_temporary_alert"):
-		hud.show_temporary_alert("📍 [F4] Teletransporte a P1 (Frente a la Criatura y Bedelía)", Color(0.3, 1.0, 0.6))
+		hud.show_temporary_alert("📍 [F4] Teletransporte a P1 (Frente a la Criatura en la esquina)", Color(0.3, 1.0, 0.6))
 
 func _debug_trigger_blackout_and_fuse() -> void:
 	if not is_blackout:

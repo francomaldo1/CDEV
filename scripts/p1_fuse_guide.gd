@@ -71,8 +71,6 @@ var doors_data: Array[Dictionary] = [
 # Referencia a la criatura del primer piso
 var phantom_node: Node3D = null
 var phantom_triggered: bool = false
-var creature_mesh_inst: MeshInstance3D = null
-var creature_material: ShaderMaterial = null
 
 # Materiales reutilizables
 var mat_door: StandardMaterial3D = null
@@ -140,10 +138,10 @@ func _create_doors() -> void:
 func _create_phantom() -> void:
 	phantom_node = Node3D.new()
 	phantom_node.name = "CriaturaGuiaP1"
-	# Parado estático en la esquina X: -39.0, Y: 4.6 (apoyado en piso), Z: -25.6
-	phantom_node.position = Vector3(-39.0, 4.6, -25.6)
+	# Parado estático en la ubicación exacta solicitada: X: -45.4, Y: 4.6 (apoyado en piso), Z: -31.3
+	phantom_node.position = Vector3(-45.4, 4.6, -31.3)
 	
-	# Orientación apuntando con exactitud hacia la entrada de Bedelía General (X = -40.0, Z = -33.0)
+	# Orientación apuntando directamente hacia la entrada de Bedelía General (X = -40.0, Z = -33.0)
 	var bedelia_door_pos = Vector3(-40.0, 4.6, -33.0)
 	var dir_to_door = bedelia_door_pos - phantom_node.position
 	phantom_node.rotation.y = atan2(dir_to_door.x, dir_to_door.z)
@@ -154,12 +152,7 @@ func _create_phantom() -> void:
 		creature_inst.name = "CreatureModel"
 		# El modelo tiene los pies en Y = -0.997, por lo que compensamos +0.997 para apoyarlo justo en el piso de P1
 		creature_inst.position = Vector3(0.0, 0.997, 0.0)
-		
-		# Buscar el MeshInstance3D y configurar el sombreador opaco original con cinemática de brazo y dedo
-		creature_mesh_inst = _find_mesh_instance(creature_inst)
-		if creature_mesh_inst:
-			_setup_creature_shader(creature_mesh_inst)
-			
+		# Dejar el modelo 3D con su malla y materiales originales impecables (sin deformaciones por shader que lo bugueen)
 		phantom_node.add_child(creature_inst)
 	else:
 		# Respaldo si no se encuentra el modelo 3D
@@ -192,114 +185,6 @@ func _load_creature_scene() -> PackedScene:
 				return load("res://gaunt-horror-creature-free-creepy-3d-model/source/" + fname)
 			fname = dir.get_next()
 	return null
-
-func _find_mesh_instance(node: Node) -> MeshInstance3D:
-	if node is MeshInstance3D:
-		return node
-	for child in node.get_children():
-		var found = _find_mesh_instance(child)
-		if found:
-			return found
-	return null
-
-func _setup_creature_shader(mesh_inst: MeshInstance3D) -> void:
-	var shader = Shader.new()
-	shader.code = """
-shader_type spatial;
-render_mode cull_disabled; // Renderizar ambas caras igual que el modelo original (evita huecos)
-
-uniform sampler2D albedo_texture : source_color;
-uniform sampler2D normal_texture : hint_normal;
-uniform sampler2D roughness_texture;
-uniform sampler2D metallic_texture;
-
-uniform float point_blend : hint_range(0.0, 1.0) = 0.0;
-uniform float tremor_intensity : hint_range(0.0, 1.0) = 1.0;
-uniform float finger_stretch : hint_range(0.0, 2.0) = 1.25;
-
-void vertex() {
-	// Brazo derecho de la criatura en espacio de modelo (X > 0.22, Y < 0.52, Y > -0.65)
-	if (VERTEX.x > 0.22 && VERTEX.y < 0.52 && VERTEX.y > -0.65) {
-		float weight = clamp((0.50 - VERTEX.y) / 0.15, 0.0, 1.0) * point_blend;
-		vec3 shoulder = vec3(0.28, 0.45, 0.0);
-		vec3 rel = VERTEX - shoulder;
-		
-		// Temblor tenso en el brazo y dedo al señalar
-		float jitter = sin(TIME * 24.0 + VERTEX.y * 12.0) * 0.008 * tremor_intensity * point_blend;
-		
-		// Rotación hacia arriba y adelante (hacia +Z)
-		float ang_x = -1.48 * weight + jitter;
-		float cos_x = cos(ang_x);
-		float sin_x = sin(ang_x);
-		
-		vec3 rot = vec3(
-			rel.x,
-			rel.y * cos_x - rel.z * sin_x,
-			rel.y * sin_x + rel.z * cos_x
-		);
-		
-		// El dedo índice frontal se alarga señalando de punta hacia la habitación
-		if (VERTEX.y < -0.52 && VERTEX.z > 0.25) {
-			rot.z += (0.35 * finger_stretch * weight);
-		}
-		
-		VERTEX = shoulder + rot;
-		
-		NORMAL = vec3(
-			NORMAL.x,
-			NORMAL.y * cos_x - NORMAL.z * sin_x,
-			NORMAL.y * sin_x + NORMAL.z * cos_x
-		);
-	}
-}
-
-void fragment() {
-	// Texturas y materiales exactamente idénticos al modelo 3D original, 100% opaco
-	vec4 alb = texture(albedo_texture, UV);
-	ALBEDO = alb.rgb;
-	NORMAL_MAP = texture(normal_texture, UV).rgb;
-	NORMAL_MAP_DEPTH = 1.0;
-	ROUGHNESS = texture(roughness_texture, UV).g; // Canal verde (G) estándar glTF
-	METALLIC = texture(metallic_texture, UV).b;  // Canal azul (B) estándar glTF
-}
-"""
-	creature_material = ShaderMaterial.new()
-	creature_material.shader = shader
-	
-	var alb_paths = [
-		"res://gaunt-horror-creature-free-creepy-3d-model/source/человек_у_ко_0828200815_texture_0.jpg",
-		"res://gaunt-horror-creature-free-creepy-3d-model/textures/gltf_embedded_0.jpeg"
-	]
-	for p in alb_paths:
-		if ResourceLoader.exists(p):
-			creature_material.set_shader_parameter("albedo_texture", load(p))
-			break
-			
-	var norm_paths = [
-		"res://gaunt-horror-creature-free-creepy-3d-model/source/человек_у_ко_0828200815_texture_2.jpg",
-		"res://gaunt-horror-creature-free-creepy-3d-model/textures/gltf_embedded_2.jpeg"
-	]
-	for p in norm_paths:
-		if ResourceLoader.exists(p):
-			creature_material.set_shader_parameter("normal_texture", load(p))
-			break
-			
-	var rough_paths = [
-		"res://gaunt-horror-creature-free-creepy-3d-model/source/человек_у_ко_0828200815_texture_1.jpg",
-		"res://gaunt-horror-creature-free-creepy-3d-model/textures/gltf_embedded_1@channels=B.jpeg"
-	]
-	for p in rough_paths:
-		if ResourceLoader.exists(p):
-			var tex = load(p)
-			creature_material.set_shader_parameter("roughness_texture", tex)
-			creature_material.set_shader_parameter("metallic_texture", tex)
-			break
-			
-	creature_material.set_shader_parameter("point_blend", 1.0) # Apuntando estático desde el inicio
-	creature_material.set_shader_parameter("tremor_intensity", 0.75)
-	creature_material.set_shader_parameter("finger_stretch", 1.25)
-	
-	mesh_inst.material_override = creature_material
 
 func _create_fallback_phantom(parent: Node3D) -> void:
 	var body = CSGCylinder3D.new()
