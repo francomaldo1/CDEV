@@ -1,36 +1,37 @@
 shader_type canvas_item;
 // Shader: 1990s Found-Footage Camcorder / VHS Degraded Video Camera
-// - Iluminación y exposición levantada (sombras lechosas de cinta analógica, buena visibilidad)
-// - Distorsión de lente sutil de cámara noventera
-// - Destello tenue de lente en focos de luz (Lens Glare / Halation)
-// - Grano de video analógico dinámico de sensor de cámara
-// - Scanlines suaves de entrelazado de video
-// - Aberración cromática radial suave (CERO en el centro, sutil y orgánica en las esquinas)
+// Especificamente calibrado para estetica retro Fears to Fathom / terror liminal:
+// - Buena iluminacion y exposicion (no oscurece el juego, levanta sombras lechosas de cinta analogica)
+// - Distorsion de lente curvada (ojo de pez / angular sutil de camcorder de los 90s)
+// - Destello tenue de lente en focos de luz (Lens Glare / Halation de linterna)
+// - Grano de video analogico dinamico de sensor de camara
+// - Scanlines suaves de entrelazado NTSC
+// - Aberracion cromatica equilibrada (sutil en el centro estilo cinta VHS, visible en bordes estilo lente retro)
 // - Dithering Bayer 8x8 fino en gradientes
 
 uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_linear;
 
-// Iluminación / Exposición (evita que sea oscuro, levanta las sombras como cámara real)
+// Iluminacion / Exposicion (evita que sea oscuro, levanta las sombras como camara real)
 uniform float exposure_boost : hint_range(1.0, 1.8, 0.05) = 1.15;
 uniform float black_lift : hint_range(0.0, 0.15, 0.01) = 0.04;
 
-// Lente y Distorsión de cámara de los 90s
+// Lente y Distorsion de camara de los 90s
 uniform float lens_distortion : hint_range(0.0, 0.25, 0.01) = 0.03;
 uniform float lens_vignette : hint_range(0.0, 0.8, 0.05) = 0.22;
 
-// Ruido y Grano analógico de sensor camcorder
+// Ruido y Grano analogico de sensor camcorder
 uniform float video_noise : hint_range(0.0, 0.2, 0.005) = 0.03;
 
 // Scanlines de video / entrelazado NTSC suaves
 uniform float scanline_intensity : hint_range(0.0, 0.3, 0.01) = 0.04;
 
-// Aberración cromática radial suave (cero en el centro, tenue en esquinas)
-uniform float chromatic_aberration : hint_range(0.0, 0.005, 0.0001) = 0.0008;
+// Aberracion cromatica equilibrada
+uniform float chromatic_aberration : hint_range(0.0, 0.006, 0.0002) = 0.0018;
 
 // Destello / Resplandor tenue de lente en zonas iluminadas (linterna)
 uniform float glare_strength : hint_range(0.0, 0.5, 0.02) = 0.12;
 
-// Dithering Bayer 8x8 y cuantización
+// Dithering Bayer 8x8 y cuantizacion
 uniform float dither_strength : hint_range(0.0, 0.8, 0.02) = 0.22;
 uniform float color_depth : hint_range(16.0, 64.0, 2.0) = 36.0;
 
@@ -61,12 +62,11 @@ void fragment() {
     vec2 uv = distort_lens(SCREEN_UV);
     vec2 clamped_uv = clamp(uv, vec2(0.001), vec2(0.999));
     
-    // Aberración cromática radial natural de lente:
-    // En el centro de la pantalla es exactamente 0.0 (imagen limpia sin doble visión)
-    // Aumenta muy suavemente hacia las esquinas exteriores
+    // Aberracion cromatica hibrida (radial de lente + leve desfase horizontal de cinta VHS):
+    // Deja una franja de color retro claramente perceptible pero nitida y sin vision doble molesta
     vec2 from_center = clamped_uv - 0.5;
-    float dist_sq = dot(from_center, from_center);
-    vec2 chroma_offset = from_center * (dist_sq * chromatic_aberration * 4.0);
+    float dist = length(from_center);
+    vec2 chroma_offset = from_center * (dist * chromatic_aberration * 2.0) + vec2(chromatic_aberration * 0.4, 0.0);
     
     float r = texture(screen_texture, clamp(clamped_uv + chroma_offset, vec2(0.001), vec2(0.999))).r;
     float g = texture(screen_texture, clamped_uv).g;
@@ -80,9 +80,9 @@ void fragment() {
         color += vec3(highlight * glare_strength * 0.7, highlight * glare_strength * 0.8, highlight * glare_strength * 0.6);
     }
     
-    // Iluminación clara y abierta (evita que el juego quede oscuro)
+    // Iluminacion clara y abierta (evita que el juego quede oscuro)
     color *= exposure_boost;
-    color = max(color, vec3(black_lift)); // Levanta negros al tono lechoso analógico
+    color = max(color, vec3(black_lift)); // Levanta negros al tono lechoso analogico
     
     // Grano / Ruido de video de sensor de camcorder
     if (video_noise > 0.0) {
@@ -103,15 +103,16 @@ void fragment() {
         color *= 1.0 - (scanline * scanline_intensity);
     }
     
-    // Viñeta tenue de lente
+    // Vineta tenue de lente
     if (lens_vignette > 0.0) {
-        float vig = clamp(1.0 - dist_sq * (lens_vignette * 0.35), 0.0, 1.0);
+        vec2 centered_uv = (uv - 0.5) * 2.0;
+        float vig = clamp(1.0 - dot(centered_uv, centered_uv) * (lens_vignette * 0.35), 0.0, 1.0);
         color *= vig;
     }
     
-    // Tinte levemente desaturado / analógico de camcorder
+    // Tinte levemente desaturado / autentico de camcorder
     float gray = dot(color, vec3(0.299, 0.587, 0.114));
-    color = mix(color, vec3(gray), 0.05);
+    color = mix(color, vec3(gray), 0.06);
     
     COLOR = vec4(clamp(color, 0.0, 1.0), 1.0);
 }
