@@ -4,14 +4,15 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_retro"]
 shader = ExtResource("1_retro")
-shader_parameter/color_depth = 12.0
-shader_parameter/dither_strength = 0.9
-shader_parameter/dither_size = 2.0
-shader_parameter/pixel_size = 2.0
-shader_parameter/noise_amount = 0.045
-shader_parameter/chromatic_aberration = 0.005
-shader_parameter/scanline_strength = 0.12
-shader_parameter/vignette_intensity = 0.5
+shader_parameter/color_depth = 32.0
+shader_parameter/dither_strength = 0.35
+shader_parameter/pixel_size = 1.0
+shader_parameter/film_grain = 0.022
+shader_parameter/chromatic_aberration = 0.0018
+shader_parameter/contrast = 1.08
+shader_parameter/brightness = -0.01
+shader_parameter/tint_color = Color(0.99, 0.97, 0.95, 1)
+shader_parameter/vignette_intensity = 0.28
 
 [node name="RetroPostProcess" type="CanvasLayer"]
 layer = 1
