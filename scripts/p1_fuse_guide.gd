@@ -73,7 +73,6 @@ var phantom_node: Node3D = null
 var phantom_triggered: bool = false
 var creature_mesh_inst: MeshInstance3D = null
 var creature_material: ShaderMaterial = null
-var creature_aura: OmniLight3D = null
 
 # Materiales reutilizables
 var mat_door: StandardMaterial3D = null
@@ -152,7 +151,7 @@ func _create_phantom() -> void:
 		# El modelo tiene los pies en Y = -0.997, por lo que compensamos +0.997 para apoyarlo justo en el piso de P1
 		creature_inst.position = Vector3(0.0, 0.997, 0.0)
 		
-		# Buscar el MeshInstance3D y configurar el shader con animación de brazo y dedo
+		# Buscar el MeshInstance3D y configurar el sombreador opaco original con cinemática de brazo y dedo
 		creature_mesh_inst = _find_mesh_instance(creature_inst)
 		if creature_mesh_inst:
 			_setup_creature_shader(creature_mesh_inst)
@@ -161,35 +160,6 @@ func _create_phantom() -> void:
 	else:
 		# Respaldo si no se encuentra el modelo 3D
 		_create_fallback_phantom(phantom_node)
-		
-	# Aura y luz tenue espectral alrededor de la criatura para visibilidad en la penumbra
-	creature_aura = OmniLight3D.new()
-	creature_aura.name = "CreatureAura"
-	creature_aura.position = Vector3(0.0, 1.4, 0.0)
-	creature_aura.light_color = Color(0.35, 0.55, 0.95)
-	creature_aura.light_energy = 0.45
-	creature_aura.omni_range = 4.2
-	creature_aura.shadow_enabled = false
-	phantom_node.add_child(creature_aura)
-	
-	# Ojos pálidos y espectrales en la cabeza para mayor impacto visual
-	var eye_mat = StandardMaterial3D.new()
-	eye_mat.emission_enabled = true
-	eye_mat.emission = Color(0.9, 0.95, 1.0)
-	eye_mat.emission_energy_multiplier = 3.2
-	eye_mat.albedo_color = Color(1, 1, 1, 1)
-	
-	var eye_l = CSGSphere3D.new()
-	eye_l.radius = 0.025
-	eye_l.position = Vector3(-0.065, 1.83, 0.18)
-	eye_l.material = eye_mat
-	phantom_node.add_child(eye_l)
-	
-	var eye_r = CSGSphere3D.new()
-	eye_r.radius = 0.025
-	eye_r.position = Vector3(0.065, 1.83, 0.18)
-	eye_r.material = eye_mat
-	phantom_node.add_child(eye_r)
 	
 	add_child(phantom_node)
 
@@ -220,7 +190,7 @@ func _setup_creature_shader(mesh_inst: MeshInstance3D) -> void:
 	var shader = Shader.new()
 	shader.code = """
 shader_type spatial;
-render_mode cull_back, depth_draw_opaque;
+render_mode cull_disabled; // Renderizar ambas caras igual que el modelo original (evita huecos)
 
 uniform sampler2D albedo_texture : source_color;
 uniform sampler2D normal_texture : hint_normal;
@@ -230,9 +200,6 @@ uniform sampler2D metallic_texture;
 uniform float point_blend : hint_range(0.0, 1.0) = 0.0;
 uniform float tremor_intensity : hint_range(0.0, 1.0) = 1.0;
 uniform float finger_stretch : hint_range(0.0, 2.0) = 1.25;
-uniform float alpha : hint_range(0.0, 1.0) = 1.0;
-uniform vec4 spectral_tint : source_color = vec4(0.9, 0.95, 1.0, 1.0);
-uniform float emission_energy : hint_range(0.0, 5.0) = 0.15;
 
 void vertex() {
 	// Brazo derecho de la criatura en espacio de modelo (X > 0.22, Y < 0.52, Y > -0.65)
@@ -241,7 +208,7 @@ void vertex() {
 		vec3 shoulder = vec3(0.28, 0.45, 0.0);
 		vec3 rel = VERTEX - shoulder;
 		
-		// Temblor sobrenatural tenso en el brazo al señalar
+		// Temblor tenso en el brazo y dedo al señalar
 		float jitter = sin(TIME * 24.0 + VERTEX.y * 12.0) * 0.008 * tremor_intensity * point_blend;
 		
 		// Rotación hacia arriba y adelante (hacia +Z)
@@ -271,14 +238,13 @@ void vertex() {
 }
 
 void fragment() {
+	// Texturas y materiales exactamente idénticos al modelo 3D original, 100% opaco
 	vec4 alb = texture(albedo_texture, UV);
-	ALBEDO = alb.rgb * spectral_tint.rgb;
+	ALBEDO = alb.rgb;
 	NORMAL_MAP = texture(normal_texture, UV).rgb;
 	NORMAL_MAP_DEPTH = 1.0;
-	ROUGHNESS = texture(roughness_texture, UV).r;
-	METALLIC = texture(metallic_texture, UV).r * 0.15;
-	EMISSION = vec3(0.08, 0.15, 0.3) * emission_energy;
-	ALPHA = alpha;
+	ROUGHNESS = texture(roughness_texture, UV).g; // Canal verde (G) estándar glTF
+	METALLIC = texture(metallic_texture, UV).b;  // Canal azul (B) estándar glTF
 }
 """
 	creature_material = ShaderMaterial.new()
@@ -316,7 +282,6 @@ void fragment() {
 	creature_material.set_shader_parameter("point_blend", 0.0)
 	creature_material.set_shader_parameter("tremor_intensity", 1.0)
 	creature_material.set_shader_parameter("finger_stretch", 1.25)
-	creature_material.set_shader_parameter("alpha", 1.0)
 	
 	mesh_inst.material_override = creature_material
 
@@ -458,16 +423,10 @@ func _trigger_phantom_guide() -> void:
 	# 3. Mantiene la postura de señalamiento fija y tensa durante 1.8 segundos para que el jugador lo contemple
 	tw.tween_interval(1.8)
 	
-	# 4. Se desliza flotando velozmente hacia la entrada de Bedelía guiando al jugador
-	tw.tween_property(phantom_node, "position", bedelia_door_pos, 0.90).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	# 4. Se desplaza velozmente hacia y a través de la entrada de Bedelía adentrándose en el aula
+	tw.tween_property(phantom_node, "position", Vector3(-40.0, 4.6, -35.0), 0.85).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 	
-	# 5. Al alcanzar la puerta de Bedelía, se desvanece suavemente entrando a la habitación
-	if creature_material:
-		tw.parallel().tween_property(creature_material, "shader_parameter/alpha", 0.0, 0.45)
-	if creature_aura:
-		tw.parallel().tween_property(creature_aura, "light_energy", 0.0, 0.45)
-		
-	# Al finalizar, liberar el nodo
+	# 5. Una vez dentro de la habitación tras la pared, se elimina
 	tw.tween_callback(func():
 		if is_instance_valid(phantom_node):
 			phantom_node.queue_free()
