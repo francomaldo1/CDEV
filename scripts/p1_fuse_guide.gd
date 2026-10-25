@@ -144,63 +144,67 @@ func _create_phantom() -> void:
 	# Rotado a ~48° (apuntando a +X y +Z) para que quede mirando fijo de frente al jugador en el pasillo
 	phantom_node.rotation.y = deg_to_rad(48.0)
 	
+	var is_custom_tscn = ResourceLoader.exists("res://scenes/scp_096_guia.tscn")
 	var scp_scene = _load_scp_scene()
 	if scp_scene:
 		var scp_inst = scp_scene.instantiate()
 		scp_inst.name = "SCP096Model"
-		# El FBX importado en Godot ya viene en orientación Y-up con escala natural
-		scp_inst.rotation_degrees = Vector3(0, 0, 0)
-		# Escala ~0.82x que le otorga una altura masiva y proporcionada
-		scp_inst.scale = Vector3(0.82, 0.82, 0.82)
-		scp_inst.position = Vector3(0.0, 0.85, 0.0)
 		
-		# Asignar textura del cuerpo
-		var mesh = scp_inst.find_child("scp096", true, false) as MeshInstance3D
-		if mesh:
-			var tex = load("res://scpcb-future-horror-mod-scp-096/textures/SCP096_fh_fix.jpg")
-			if tex:
-				var mat0 = mesh.get_active_material(0)
-				if mat0 is StandardMaterial3D:
-					var m_dup = mat0.duplicate() as StandardMaterial3D
-					m_dup.albedo_texture = tex
-					mesh.set_surface_override_material(0, m_dup)
-		
-		# Animar un instante para adoptar postura y luego pausar
-		var anim = scp_inst.find_child("AnimationPlayer", true, false) as AnimationPlayer
-		if anim:
-			anim.play("scp096_skeleton|idle2")
-			anim.advance(0.5)
-			anim.pause()
-		
-		# Articular huesos del esqueleto: postura encorvada y brazo señalando a Bedelía
-		var skel = scp_inst.find_child("Skeleton3D", true, false) as Skeleton3D
-		if skel:
-			# Encorvar torso y cuello hacia adelante (postura clásica espeluznante de SCP-096)
-			var b_rip = skel.find_bone("ripcage")
-			var b_neck = skel.find_bone("neck")
-			var b_head = skel.find_bone("head")
-			if b_rip >= 0:
-				var cur_rip = skel.get_bone_pose_rotation(b_rip)
-				skel.set_bone_pose_rotation(b_rip, cur_rip * Quaternion(Vector3(1, 0, 0), deg_to_rad(22.0)))
-			if b_neck >= 0:
-				var cur_neck = skel.get_bone_pose_rotation(b_neck)
-				skel.set_bone_pose_rotation(b_neck, cur_neck * Quaternion(Vector3(1, 0, 0), deg_to_rad(12.0)))
-			if b_head >= 0:
-				var cur_head = skel.get_bone_pose_rotation(b_head)
-				skel.set_bone_pose_rotation(b_head, cur_head * Quaternion(Vector3(1, 0, 0), deg_to_rad(-18.0)))
-				
-			# Brazo derecho señalando directo a Bedelía sin colisionar con la pared
-			var b_sh = skel.find_bone("Bone_009")
-			var b_el = skel.find_bone("Bone_012")
-			if b_sh >= 0:
-				var cur_sh = skel.get_bone_pose_rotation(b_sh)
-				var q_sh = Quaternion(Vector3(0, 0, 1), deg_to_rad(80.0)) * Quaternion(Vector3(1, 0, 0), deg_to_rad(10.0))
-				skel.set_bone_pose_rotation(b_sh, cur_sh * q_sh)
-			if b_el >= 0:
-				var cur_el = skel.get_bone_pose_rotation(b_el)
-				var q_el = Quaternion(Vector3(0, 0, 1), deg_to_rad(-15.0))
-				skel.set_bone_pose_rotation(b_el, cur_el * q_el)
-				
+		# Si se carga desde el FBX crudo (no desde la escena editable .tscn), aplicamos la postura inicial por código
+		if not is_custom_tscn:
+			# El FBX importado en Godot ya viene en orientación Y-up con escala natural
+			scp_inst.rotation_degrees = Vector3(0, 0, 0)
+			# Escala ~0.82x que le otorga una altura masiva y proporcionada
+			scp_inst.scale = Vector3(0.82, 0.82, 0.82)
+			scp_inst.position = Vector3(0.0, 0.85, 0.0)
+			
+			# Asignar textura del cuerpo
+			var mesh = scp_inst.find_child("scp096", true, false) as MeshInstance3D
+			if mesh:
+				var tex = load("res://scpcb-future-horror-mod-scp-096/textures/SCP096_fh_fix.jpg")
+				if tex:
+					var mat0 = mesh.get_active_material(0)
+					if mat0 is StandardMaterial3D:
+						var m_dup = mat0.duplicate() as StandardMaterial3D
+						m_dup.albedo_texture = tex
+						mesh.set_surface_override_material(0, m_dup)
+			
+			# Animar un instante para adoptar postura y luego pausar
+			var anim = scp_inst.find_child("AnimationPlayer", true, false) as AnimationPlayer
+			if anim:
+				anim.play("scp096_skeleton|idle2")
+				anim.advance(0.5)
+				anim.pause()
+			
+			# Articular huesos del esqueleto: postura encorvada y brazo señalando a Bedelía
+			var skel = scp_inst.find_child("Skeleton3D", true, false) as Skeleton3D
+			if skel:
+				# Encorvar torso y cuello hacia adelante (postura clásica espeluznante de SCP-096)
+				var b_rip = skel.find_bone("ripcage")
+				var b_neck = skel.find_bone("neck")
+				var b_head = skel.find_bone("head")
+				if b_rip >= 0:
+					var cur_rip = skel.get_bone_pose_rotation(b_rip)
+					skel.set_bone_pose_rotation(b_rip, cur_rip * Quaternion(Vector3(1, 0, 0), deg_to_rad(22.0)))
+				if b_neck >= 0:
+					var cur_neck = skel.get_bone_pose_rotation(b_neck)
+					skel.set_bone_pose_rotation(b_neck, cur_neck * Quaternion(Vector3(1, 0, 0), deg_to_rad(12.0)))
+				if b_head >= 0:
+					var cur_head = skel.get_bone_pose_rotation(b_head)
+					skel.set_bone_pose_rotation(b_head, cur_head * Quaternion(Vector3(1, 0, 0), deg_to_rad(-18.0)))
+					
+				# Brazo derecho señalando directo a Bedelía sin colisionar con la pared
+				var b_sh = skel.find_bone("Bone_009")
+				var b_el = skel.find_bone("Bone_012")
+				if b_sh >= 0:
+					var cur_sh = skel.get_bone_pose_rotation(b_sh)
+					var q_sh = Quaternion(Vector3(0, 0, 1), deg_to_rad(80.0)) * Quaternion(Vector3(1, 0, 0), deg_to_rad(10.0))
+					skel.set_bone_pose_rotation(b_sh, cur_sh * q_sh)
+				if b_el >= 0:
+					var cur_el = skel.get_bone_pose_rotation(b_el)
+					var q_el = Quaternion(Vector3(0, 0, 1), deg_to_rad(-15.0))
+					skel.set_bone_pose_rotation(b_el, cur_el * q_el)
+					
 		phantom_node.add_child(scp_inst)
 	else:
 		# Respaldo si no se encuentra el modelo 3D
@@ -221,9 +225,12 @@ func _create_phantom() -> void:
 	add_child(phantom_node)
 
 func _load_scp_scene() -> PackedScene:
-	var path = "res://scpcb-future-horror-mod-scp-096/source/SCP-096.fbx"
-	if ResourceLoader.exists(path):
-		return load(path)
+	var path_tscn = "res://scenes/scp_096_guia.tscn"
+	if ResourceLoader.exists(path_tscn):
+		return load(path_tscn)
+	var path_fbx = "res://scpcb-future-horror-mod-scp-096/source/SCP-096.fbx"
+	if ResourceLoader.exists(path_fbx):
+		return load(path_fbx)
 	return null
 
 func _create_fallback_phantom(parent: Node3D) -> void:
