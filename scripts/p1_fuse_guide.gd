@@ -68,9 +68,12 @@ var doors_data: Array[Dictionary] = [
 	}
 ]
 
-# Referencia a la silueta del fantasma
+# Referencia a la criatura del primer piso
 var phantom_node: Node3D = null
 var phantom_triggered: bool = false
+var creature_mesh_inst: MeshInstance3D = null
+var creature_material: ShaderMaterial = null
+var creature_aura: OmniLight3D = null
 
 # Materiales reutilizables
 var mat_door: StandardMaterial3D = null
@@ -137,54 +140,199 @@ func _create_doors() -> void:
 
 func _create_phantom() -> void:
 	phantom_node = Node3D.new()
-	phantom_node.name = "AlumnoFantasma"
+	phantom_node.name = "CriaturaGuiaP1"
 	# Parado al final del pasillo oeste antes de doblar hacia Bedelía
 	phantom_node.position = Vector3(-42.0, 4.6, -24.0)
-	phantom_node.rotation.y = deg_to_rad(180.0) # Mirando hacia el jugador que sube por el pasillo oeste
+	phantom_node.rotation.y = deg_to_rad(180.0) # Mirando de frente al jugador que sube por el pasillo oeste
 	
-	# Cuerpo del fantasma
+	var creature_scene = _load_creature_scene()
+	if creature_scene:
+		var creature_inst = creature_scene.instantiate()
+		creature_inst.name = "CreatureModel"
+		# El modelo tiene los pies en Y = -0.997, por lo que compensamos +0.997 para apoyarlo justo en el piso de P1
+		creature_inst.position = Vector3(0.0, 0.997, 0.0)
+		
+		# Buscar el MeshInstance3D y configurar el shader con animación de brazo y dedo
+		creature_mesh_inst = _find_mesh_instance(creature_inst)
+		if creature_mesh_inst:
+			_setup_creature_shader(creature_mesh_inst)
+			
+		phantom_node.add_child(creature_inst)
+	else:
+		# Respaldo si no se encuentra el modelo 3D
+		_create_fallback_phantom(phantom_node)
+		
+	# Aura y luz tenue espectral alrededor de la criatura para visibilidad en la penumbra
+	creature_aura = OmniLight3D.new()
+	creature_aura.name = "CreatureAura"
+	creature_aura.position = Vector3(0.0, 1.4, 0.0)
+	creature_aura.light_color = Color(0.35, 0.55, 0.95)
+	creature_aura.light_energy = 0.45
+	creature_aura.omni_range = 4.2
+	creature_aura.shadow_enabled = false
+	phantom_node.add_child(creature_aura)
+	
+	# Ojos pálidos y espectrales en la cabeza para mayor impacto visual
+	var eye_mat = StandardMaterial3D.new()
+	eye_mat.emission_enabled = true
+	eye_mat.emission = Color(0.9, 0.95, 1.0)
+	eye_mat.emission_energy_multiplier = 3.2
+	eye_mat.albedo_color = Color(1, 1, 1, 1)
+	
+	var eye_l = CSGSphere3D.new()
+	eye_l.radius = 0.025
+	eye_l.position = Vector3(-0.065, 1.83, 0.18)
+	eye_l.material = eye_mat
+	phantom_node.add_child(eye_l)
+	
+	var eye_r = CSGSphere3D.new()
+	eye_r.radius = 0.025
+	eye_r.position = Vector3(0.065, 1.83, 0.18)
+	eye_r.material = eye_mat
+	phantom_node.add_child(eye_r)
+	
+	add_child(phantom_node)
+
+func _load_creature_scene() -> PackedScene:
+	var path = "res://gaunt-horror-creature-free-creepy-3d-model/source/человек_у_ко_0828200815_texture.glb"
+	if ResourceLoader.exists(path):
+		return load(path)
+	var dir = DirAccess.open("res://gaunt-horror-creature-free-creepy-3d-model/source")
+	if dir:
+		dir.list_dir_begin()
+		var fname = dir.get_next()
+		while fname != "":
+			if fname.ends_with(".glb"):
+				return load("res://gaunt-horror-creature-free-creepy-3d-model/source/" + fname)
+			fname = dir.get_next()
+	return null
+
+func _find_mesh_instance(node: Node) -> MeshInstance3D:
+	if node is MeshInstance3D:
+		return node
+	for child in node.get_children():
+		var found = _find_mesh_instance(child)
+		if found:
+			return found
+	return null
+
+func _setup_creature_shader(mesh_inst: MeshInstance3D) -> void:
+	var shader = Shader.new()
+	shader.code = """
+shader_type spatial;
+render_mode cull_back, depth_draw_opaque;
+
+uniform sampler2D albedo_texture : source_color;
+uniform sampler2D normal_texture : hint_normal;
+uniform sampler2D roughness_texture;
+uniform sampler2D metallic_texture;
+
+uniform float point_blend : hint_range(0.0, 1.0) = 0.0;
+uniform float tremor_intensity : hint_range(0.0, 1.0) = 1.0;
+uniform float finger_stretch : hint_range(0.0, 2.0) = 1.25;
+uniform float alpha : hint_range(0.0, 1.0) = 1.0;
+uniform vec4 spectral_tint : source_color = vec4(0.9, 0.95, 1.0, 1.0);
+uniform float emission_energy : hint_range(0.0, 5.0) = 0.15;
+
+void vertex() {
+	// Brazo derecho de la criatura en espacio de modelo (X > 0.22, Y < 0.52, Y > -0.65)
+	if (VERTEX.x > 0.22 && VERTEX.y < 0.52 && VERTEX.y > -0.65) {
+		float weight = clamp((0.50 - VERTEX.y) / 0.15, 0.0, 1.0) * point_blend;
+		vec3 shoulder = vec3(0.28, 0.45, 0.0);
+		vec3 rel = VERTEX - shoulder;
+		
+		// Temblor sobrenatural tenso en el brazo al señalar
+		float jitter = sin(TIME * 24.0 + VERTEX.y * 12.0) * 0.008 * tremor_intensity * point_blend;
+		
+		// Rotación hacia arriba y adelante (hacia +Z)
+		float ang_x = -1.48 * weight + jitter;
+		float cos_x = cos(ang_x);
+		float sin_x = sin(ang_x);
+		
+		vec3 rot = vec3(
+			rel.x,
+			rel.y * cos_x - rel.z * sin_x,
+			rel.y * sin_x + rel.z * cos_x
+		);
+		
+		// El dedo índice frontal se alarga señalando de punta hacia la habitación
+		if (VERTEX.y < -0.52 && VERTEX.z > 0.25) {
+			rot.z += (0.35 * finger_stretch * weight);
+		}
+		
+		VERTEX = shoulder + rot;
+		
+		NORMAL = vec3(
+			NORMAL.x,
+			NORMAL.y * cos_x - NORMAL.z * sin_x,
+			NORMAL.y * sin_x + NORMAL.z * cos_x
+		);
+	}
+}
+
+void fragment() {
+	vec4 alb = texture(albedo_texture, UV);
+	ALBEDO = alb.rgb * spectral_tint.rgb;
+	NORMAL_MAP = texture(normal_texture, UV).rgb;
+	NORMAL_MAP_DEPTH = 1.0;
+	ROUGHNESS = texture(roughness_texture, UV).r;
+	METALLIC = texture(metallic_texture, UV).r * 0.15;
+	EMISSION = vec3(0.08, 0.15, 0.3) * emission_energy;
+	ALPHA = alpha;
+}
+"""
+	creature_material = ShaderMaterial.new()
+	creature_material.shader = shader
+	
+	var alb_paths = [
+		"res://gaunt-horror-creature-free-creepy-3d-model/source/человек_у_ко_0828200815_texture_0.jpg",
+		"res://gaunt-horror-creature-free-creepy-3d-model/textures/gltf_embedded_0.jpeg"
+	]
+	for p in alb_paths:
+		if ResourceLoader.exists(p):
+			creature_material.set_shader_parameter("albedo_texture", load(p))
+			break
+			
+	var norm_paths = [
+		"res://gaunt-horror-creature-free-creepy-3d-model/source/человек_у_ко_0828200815_texture_2.jpg",
+		"res://gaunt-horror-creature-free-creepy-3d-model/textures/gltf_embedded_2.jpeg"
+	]
+	for p in norm_paths:
+		if ResourceLoader.exists(p):
+			creature_material.set_shader_parameter("normal_texture", load(p))
+			break
+			
+	var rough_paths = [
+		"res://gaunt-horror-creature-free-creepy-3d-model/source/человек_у_ко_0828200815_texture_1.jpg",
+		"res://gaunt-horror-creature-free-creepy-3d-model/textures/gltf_embedded_1@channels=B.jpeg"
+	]
+	for p in rough_paths:
+		if ResourceLoader.exists(p):
+			var tex = load(p)
+			creature_material.set_shader_parameter("roughness_texture", tex)
+			creature_material.set_shader_parameter("metallic_texture", tex)
+			break
+			
+	creature_material.set_shader_parameter("point_blend", 0.0)
+	creature_material.set_shader_parameter("tremor_intensity", 1.0)
+	creature_material.set_shader_parameter("finger_stretch", 1.25)
+	creature_material.set_shader_parameter("alpha", 1.0)
+	
+	mesh_inst.material_override = creature_material
+
+func _create_fallback_phantom(parent: Node3D) -> void:
 	var body = CSGCylinder3D.new()
 	body.radius = 0.38
 	body.height = 1.75
 	body.position = Vector3(0, 0.88, 0)
 	body.material = mat_phantom
-	phantom_node.add_child(body)
+	parent.add_child(body)
 	
-	# Cabeza / capucha
 	var head = CSGSphere3D.new()
 	head.radius = 0.24
 	head.position = Vector3(0, 1.82, 0)
 	head.material = mat_phantom
-	phantom_node.add_child(head)
-	
-	# Ojos pálidos espectrales
-	var eye_mat = StandardMaterial3D.new()
-	eye_mat.emission_enabled = true
-	eye_mat.emission = Color(0.8, 0.9, 1.0)
-	eye_mat.emission_energy_multiplier = 2.5
-	eye_mat.albedo_color = Color(1, 1, 1, 1)
-	
-	var eye_l = CSGSphere3D.new()
-	eye_l.radius = 0.04
-	eye_l.position = Vector3(-0.08, 1.85, 0.21)
-	eye_l.material = eye_mat
-	phantom_node.add_child(eye_l)
-	
-	var eye_r = CSGSphere3D.new()
-	eye_r.radius = 0.04
-	eye_r.position = Vector3(0.08, 1.85, 0.21)
-	eye_r.material = eye_mat
-	phantom_node.add_child(eye_r)
-	
-	# Luz muy tenue alrededor de la figura
-	var aura = OmniLight3D.new()
-	aura.light_color = Color(0.3, 0.5, 0.9)
-	aura.light_energy = 0.3
-	aura.omni_range = 3.5
-	aura.shadow_enabled = false
-	phantom_node.add_child(aura)
-	
-	add_child(phantom_node)
+	parent.add_child(head)
 
 func _process(_delta: float) -> void:
 	if not is_instance_valid(player):
@@ -284,29 +432,45 @@ func _trigger_phantom_guide() -> void:
 	var whisper = AudioStreamPlayer3D.new()
 	whisper.stream = HorrorAudio.get_screamer_stinger()
 	whisper.position = phantom_node.position
-	whisper.volume_db = -8.0
+	whisper.volume_db = -6.0
 	whisper.pitch_scale = 0.65
-	whisper.max_distance = 30.0
+	whisper.max_distance = 32.0
 	add_child(whisper)
 	whisper.play()
 	whisper.finished.connect(whisper.queue_free)
 	
-	# Animación: El fantasma gira hacia Bedelía y se desliza velozmente hacia la puerta
+	# La entrada a Bedelía General donde se ubica el fusible
+	var bedelia_door_pos = Vector3(-40.0, 4.6, -33.0)
+	
+	# Ángulo de orientación hacia la entrada de Bedelía
+	# (la criatura en su sistema local tiene el frente en +Z)
+	var dir_to_door = bedelia_door_pos - phantom_node.position
+	var target_yaw = atan2(dir_to_door.x, dir_to_door.z)
+	
 	var tw = create_tween()
-	# Gira hacia la entrada de Bedelía en X = -40, Z = -33
-	tw.tween_property(phantom_node, "rotation:y", deg_to_rad(90.0), 0.20)
-	# Se desliza flotando hacia la puerta de Bedelía
-	tw.tween_property(phantom_node, "position", Vector3(-40.0, 4.6, -33.0), 0.95)
-	# Al llegar a la puerta, se desvanece entrando al aula
+	# 1. Gira su cuerpo hacia la dirección de Bedelía
+	tw.tween_property(phantom_node, "rotation:y", target_yaw, 0.35).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	
+	# 2. Simultáneamente levanta su brazo derecho y su dedo índice se alarga señalando de lleno a la habitación
+	if creature_material:
+		tw.parallel().tween_property(creature_material, "shader_parameter/point_blend", 1.0, 0.45).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		
+	# 3. Mantiene la postura de señalamiento fija y tensa durante 1.8 segundos para que el jugador lo contemple
+	tw.tween_interval(1.8)
+	
+	# 4. Se desliza flotando velozmente hacia la entrada de Bedelía guiando al jugador
+	tw.tween_property(phantom_node, "position", bedelia_door_pos, 0.90).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	
+	# 5. Al alcanzar la puerta de Bedelía, se desvanece suavemente entrando a la habitación
+	if creature_material:
+		tw.parallel().tween_property(creature_material, "shader_parameter/alpha", 0.0, 0.45)
+	if creature_aura:
+		tw.parallel().tween_property(creature_aura, "light_energy", 0.0, 0.45)
+		
+	# Al finalizar, liberar el nodo
 	tw.tween_callback(func():
 		if is_instance_valid(phantom_node):
-			var fade_tw = create_tween()
-			for child in phantom_node.get_children():
-				if child is GeometryInstance3D and child.material:
-					fade_tw.parallel().tween_property(child.material, "albedo_color:a", 0.0, 0.4)
-				elif child is Light3D:
-					fade_tw.parallel().tween_property(child, "light_energy", 0.0, 0.4)
-			fade_tw.tween_callback(phantom_node.queue_free)
+			phantom_node.queue_free()
 	)
 
 func _find_player() -> void:

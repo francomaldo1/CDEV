@@ -165,15 +165,18 @@ func _execute_fuse_screamer_sequence(hud: Node) -> void:
 	# 6. GIRO DRAMÁTICO DE CÁMARA, AUDIO FANTASMAL Y APAGÓN EN CASCADA DE LUCES HACIA LA PUERTA
 	_play_ghostly_sound()
 	
-	# Iniciar el apagón progresivo de la hilera de luces desde el tablero hacia la puerta
-	_animate_hilera_lights_cascade()
-	
-	# Giro suave y cinematográfico de cámara de 180° hacia la puerta
+	# Giro suave y cinematográfico de cámara hacia la puerta
 	if is_instance_valid(player) and player.has_method("force_look_at"):
-		player.force_look_at(door_ambush_pos + Vector3(0, 1.5, 0), 0.95)
+		player.force_look_at(door_ambush_pos + Vector3(0, 1.5, 0), 0.85)
+		
+	# Pausa para que la cámara complete el giro y el jugador observe el pasillo del laboratorio
+	await get_tree().create_timer(0.40).timeout
+	
+	# Iniciar y esperar el apagón progresivo pausado de la hilera de luces hacia la puerta
+	await _animate_hilera_lights_cascade()
 		
 	# Dejar contemplar al profesor perfectamente iluminado bajo la única luz de la puerta
-	await get_tree().create_timer(1.3).timeout
+	await get_tree().create_timer(1.2).timeout
 		
 	# 7. ENERGÍA RESTABLECIDA, JUMPSCARE EN LA PUERTA Y PERSECUCIÓN (T = 4.1s a 6.8s)
 	if is_instance_valid(player) and player.has_method("force_flashlight"):
@@ -305,9 +308,9 @@ func _animate_hilera_lights_cascade() -> void:
 	snap_audio.bus = &"Master"
 	add_child(snap_audio)
 	
-	# Apagar en cascada todas las luces menos la última (la de la puerta en X = -36.5)
+	# Apagar en cascada pausada todas las luces menos la última (la de la puerta en X = -36.5)
 	for i in range(spots.size() - 1):
-		await get_tree().create_timer(0.22).timeout
+		await get_tree().create_timer(0.48).timeout
 		var s = spots[i]
 		if is_instance_valid(s):
 			s.visible = false
