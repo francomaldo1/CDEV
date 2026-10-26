@@ -476,8 +476,13 @@ func enter_hiding(spot: Node, hide_global_pos: Vector3, face_dir: Vector3) -> vo
 	if camera_pivot:
 		camera_pivot.position.y = 1.22
 		camera_pivot.rotation.x = 0.0
+	# Proyectar la luz de la cámara hacia afuera de la abertura del tacho
+	if night_vision_light:
+		night_vision_light.position.z = 0.48
 	if camera:
 		camera.position.y = 0.0
+	if night_vision_light:
+		night_vision_light.position.z = 0.0
 		
 	# Asegurar que el cuerpo esté perfectamente vertical
 	rotation.x = 0.0
@@ -500,6 +505,8 @@ func exit_hiding(exit_global_pos: Vector3) -> void:
 		camera_pivot.position.y = original_cam_pivot_y
 	if camera:
 		camera.position.y = 0.0
+	if night_vision_light:
+		night_vision_light.position.z = 0.0
 		
 	if was_flashlight_on_before_hiding and flashlight:
 		flashlight.visible = true
@@ -596,8 +603,6 @@ func toggle_night_vision() -> void:
 func _update_night_vision_lights() -> void:
 	if night_vision_light:
 		night_vision_light.visible = is_night_vision_on
-	if night_vision_omni:
-		night_vision_omni.visible = is_night_vision_on
 
 func _update_night_vision_process(delta: float) -> void:
 	if is_night_vision_on:

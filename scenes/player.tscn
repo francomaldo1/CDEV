@@ -28,16 +28,10 @@ spot_angle = 38.0
 
 [node name="NightVisionLight" type="SpotLight3D" parent="CameraPivot/Camera3D" unique_id=1015910190]
 visible = false
-light_color = Color(0.65, 1, 0.78, 1)
-light_energy = 2.4
-spot_range = 28.0
-spot_attenuation = 1.15
-spot_angle = 68.0
-
-[node name="NightVisionOmni" type="OmniLight3D" parent="CameraPivot/Camera3D" unique_id=1015910191]
-visible = false
-light_color = Color(0.5, 1, 0.65, 1)
-light_energy = 0.55
-omni_range = 14.0
+light_color = Color(0.82, 0.95, 0.90, 1)
+light_energy = 1.4
+spot_range = 26.0
+spot_attenuation = 1.1
+spot_angle = 62.0
 
 [node name="RetroPostProcess" parent="." instance=ExtResource("2_retro")]

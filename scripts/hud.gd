@@ -740,7 +740,7 @@ func set_night_vision_active(active: bool) -> void:
 	if camcorder_nv_label:
 		if is_nv_active:
 			camcorder_nv_label.text = "NIGHT VISION [ ACTIVE ]"
-			camcorder_nv_label.add_theme_color_override("font_color", Color(0.2, 1.0, 0.45, 1.0))
+			camcorder_nv_label.add_theme_color_override("font_color", Color(0.55, 0.92, 0.72, 0.95))
 		else:
 			camcorder_nv_label.text = "[Click Der / F] VISIÓN NOCTURNA: OFF"
 			camcorder_nv_label.add_theme_color_override("font_color", Color(0.7, 0.75, 0.8, 0.65))
@@ -756,7 +756,7 @@ func set_night_vision_battery(pct: float) -> void:
 		if pct <= 20.0:
 			camcorder_battery_label.add_theme_color_override("font_color", Color(1.0, 0.25, 0.2, 0.95))
 		elif is_nv_active:
-			camcorder_battery_label.add_theme_color_override("font_color", Color(0.2, 1.0, 0.45, 1.0))
+			camcorder_battery_label.add_theme_color_override("font_color", Color(0.55, 0.92, 0.72, 0.95))
 		else:
 			camcorder_battery_label.add_theme_color_override("font_color", Color(0.7, 0.75, 0.8, 0.7))
 

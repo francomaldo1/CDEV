@@ -232,6 +232,8 @@ var phrases_seek: Array[String] = [
 
 var phrase_timer: float = 0.0
 var step_audio: AudioStreamPlayer3D = null
+var slam_audio: AudioStreamPlayer3D = null
+var creepy_steps_stream: AudioStream = null
 var step_phase: float = 0.0
 var last_chase_screamer_time: float = -999.0
 
@@ -1260,11 +1262,26 @@ func boost_speed() -> void:
 func _setup_step_audio() -> void:
 	step_audio = AudioStreamPlayer3D.new()
 	step_audio.name = "ProfesorStepAudio3D"
-	step_audio.unit_size = 3.5
-	step_audio.max_distance = 35.0
-	step_audio.volume_db = -3.0
+	step_audio.unit_size = 3.8
+	step_audio.max_distance = 40.0
+	step_audio.volume_db = -2.0
 	step_audio.bus = &"Master"
 	add_child(step_audio)
+	
+	# Cargar Creepy Footsteps.mp3 para las pisadas tenebrosas del profesor
+	if ResourceLoader.exists("res://audio/footsteps/creepy_footsteps.mp3"):
+		creepy_steps_stream = load("res://audio/footsteps/creepy_footsteps.mp3")
+		if creepy_steps_stream is AudioStreamMP3:
+			(creepy_steps_stream as AudioStreamMP3).loop = true
+		step_audio.stream = creepy_steps_stream
+	
+	slam_audio = AudioStreamPlayer3D.new()
+	slam_audio.name = "ProfesorSlamAudio3D"
+	slam_audio.unit_size = 4.5
+	slam_audio.max_distance = 35.0
+	slam_audio.volume_db = 7.0
+	slam_audio.bus = &"Master"
+	add_child(slam_audio)
 
 func _play_prof_step() -> void:
 	if not step_audio:
@@ -1278,11 +1295,14 @@ func _animate_walk(delta: float, is_moving: bool) -> void:
 		var step_mult = 3.6 if (is_trash_rushing or is_screamer_charging) else (2.8 if current_state == State.CHASE else 2.2)
 		var anim_delta = delta * (current_speed * step_mult)
 		walk_anim_time += anim_delta
-		step_phase += anim_delta
 		
-		if step_phase >= PI:
-			step_phase -= PI
-			_play_prof_step()
+		if step_audio:
+			if not step_audio.playing:
+				step_audio.play()
+			var target_pitch = 1.35 if current_state == State.CHASE else (1.45 if is_enraged_final else 1.0)
+			step_audio.pitch_scale = lerpf(step_audio.pitch_scale, target_pitch, delta * 3.0)
+			var target_vol = 1.5 if is_enraged_final else (0.0 if current_state == State.CHASE else -2.5)
+			step_audio.volume_db = lerpf(step_audio.volume_db, target_vol, delta * 3.0)
 			
 		var swing_legs = sin(walk_anim_time) * deg_to_rad(28.0)
 		var swing_arms = cos(walk_anim_time) * deg_to_rad(25.0)
@@ -1298,6 +1318,8 @@ func _animate_walk(delta: float, is_moving: bool) -> void:
 				regla.rotation.x = deg_to_rad(20.0) + cos(walk_anim_time * 1.5) * deg_to_rad(10.0)
 	else:
 		walk_anim_time = 0.0
+		if step_audio and step_audio.playing:
+			step_audio.stop()
 		step_phase = 1.0
 		if pierna_izq: pierna_izq.rotation.x = lerpf(pierna_izq.rotation.x, 0.0, delta * 6.0)
 		if pierna_der: pierna_der.rotation.x = lerpf(pierna_der.rotation.x, 0.0, delta * 6.0)
@@ -1595,11 +1617,11 @@ func _trigger_trash_suspense() -> void:
 			rotation.y = atan2(to_hiding.x, to_hiding.z)
 		
 	var slam_stream = HorrorAudio.get_wood_slam_sound()
-	if slam_stream and step_audio:
-		step_audio.stream = slam_stream
-		step_audio.volume_db = 6.0
-		step_audio.pitch_scale = randf_range(0.85, 1.05)
-		step_audio.play()
+	if slam_stream and slam_audio:
+		slam_audio.stream = slam_stream
+		slam_audio.volume_db = 8.5
+		slam_audio.pitch_scale = randf_range(0.85, 1.05)
+		slam_audio.play()
 		
 	if is_instance_valid(player) and player.has_method("shake_camera"):
 		player.shake_camera(0.65, 0.45)
