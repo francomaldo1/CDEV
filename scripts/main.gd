@@ -274,6 +274,10 @@ func _on_exam_solved(success: bool, cuaderno: Node) -> void:
 	if n == exams_for_upper_floor:
 		_unlock_upper_floor()
 		_prepare_fourth_exam_turnaround_scare(cuaderno)
+		if is_instance_valid(profesor) and profesor.has_method("activate_enraged_final_phase"):
+			profesor.activate_enraged_final_phase()
+		if hud and hud.has_method("show_temporary_alert"):
+			hud.show_temporary_alert("⚠️ ¡EL PROFESOR PERDIÓ LA CORDURA! Enfureció tras los 4 parciales. Corré al piso de arriba...", Color(1.0, 0.15, 0.15))
 
 func _spawn_profesor() -> void:
 	if not profesor:
@@ -478,11 +482,12 @@ func _trigger_blackout() -> void:
 		if is_instance_valid(l):
 			l.visible = false
 			
-	# Oscuridad casi total (solo tenue luz de luna en patio)
+	# Oscuridad con visibilidad atmosférica tenue (siluetas de pasillos y puertas)
 	if world_env and world_env.environment:
-		world_env.environment.ambient_light_energy = 0.01
+		world_env.environment.ambient_light_color = Color(0.18, 0.22, 0.32, 1.0)
+		world_env.environment.ambient_light_energy = 0.05
 	if moon_light:
-		moon_light.light_energy = 0.04
+		moon_light.light_energy = 0.08
 		
 	# Transicionar a dron oscuro de apagón
 	if ambient_drone_player:
@@ -512,6 +517,7 @@ func _on_power_restored() -> void:
 	
 	# Restaurar iluminación ambiental y lunar
 	if world_env and world_env.environment:
+		world_env.environment.ambient_light_color = Color(0.04, 0.04, 0.06, 1.0)
 		world_env.environment.ambient_light_energy = original_ambient_energy
 	if moon_light:
 		moon_light.light_energy = original_moon_energy

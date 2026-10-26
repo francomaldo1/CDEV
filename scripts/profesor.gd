@@ -37,6 +37,9 @@ var speed_boost_count: int = 0
 @onready var cabeza: Node3D = $Visuals/Torso/Cabeza
 @onready var cartel_dialogo: Label3D = $Visuals/DialogoLabel
 @onready var ojos_luz: SpotLight3D = $Visuals/Torso/Cabeza/OjosLuz
+@onready var aura_luz: OmniLight3D = get_node_or_null("Visuals/Torso/AuraProfesor")
+@onready var ojo_izq: GeometryInstance3D = get_node_or_null("Visuals/Torso/Cabeza/OjoBrilloIzq")
+@onready var ojo_der: GeometryInstance3D = get_node_or_null("Visuals/Torso/Cabeza/OjoBrilloDer")
 
 var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity", 9.8)
 var player: CharacterBody3D = null
@@ -66,6 +69,20 @@ var hallway_dash_target: Vector3 = Vector3.ZERO
 var hallway_dash_speed: float = 18.5
 var hallway_dash_timer: float = 0.0
 var hallway_dash_callback: Callable = Callable()
+
+## Fase enfurecida final (al resolver los 4 parciales de PB)
+var is_enraged_final: bool = false
+
+## Terror procedimental: balanceo de linterna y espasmos de cabeza
+var lantern_sway_timer: float = 0.0
+var twitch_timer: float = 6.0
+var twitch_active_timer: float = 0.0
+var twitch_offset: Vector3 = Vector3.ZERO
+
+## Tensión al inspeccionar tachos de basura
+var trash_suspicion_cooldown: float = 0.0
+var is_inspecting_trash_suspense: bool = false
+var trash_suspense_timer: float = 0.0
 
 ## El profesor se concentra en aterrorizar e inspeccionar la Planta Baja (PB)
 const ONLY_PATROL_PB: bool = true
@@ -542,6 +559,14 @@ func _physics_process(delta: float) -> void:
 	if attack_timer > 0.0:
 		attack_timer -= delta
 
+	if trash_suspicion_cooldown > 0.0:
+		trash_suspicion_cooldown -= delta
+
+	if is_inspecting_trash_suspense:
+		_process_trash_suspense(delta)
+		_update_dialogue(delta)
+		return
+
 	if is_hallway_dashing:
 		_process_hallway_dash(delta)
 		_update_dialogue(delta)
@@ -630,6 +655,13 @@ func _process_patrol_state(delta: float, can_see_player: bool) -> void:
 	aula_inspect_cooldown = max(0.0, aula_inspect_cooldown - delta)
 
 	# Si no tiene ruta o terminó la actual, avanzar al siguiente punto del circuito
+	# Si el jugador está en un tacho cercano durante la ronda, oportunidad de susto de impacto
+	if is_instance_valid(player) and player.get("is_hidden") and not saw_player_hide and trash_suspicion_cooldown <= 0.0:
+		var d_tacho = global_position.distance_to(player.global_position)
+		if d_tacho <= 2.8:
+			_trigger_trash_suspense()
+			return
+
 	if current_path.is_empty() or current_path_idx >= current_path.size():
 		# Oportunidad de inspección de un aula si está cerca de una
 		if aula_inspect_cooldown <= 0.0 and randf() < 0.40:
@@ -679,8 +711,15 @@ func _enter_search_state(target_pos: Vector3, reason: String = "general") -> voi
 	current_path_idx = 0
 	
 	if ojos_luz:
-		ojos_luz.light_color = Color(1.0, 0.65, 0.1)
-		ojos_luz.light_energy = 1.0
+		if is_enraged_final:
+			ojos_luz.light_color = Color(1.0, 0.05, 0.05)
+			ojos_luz.light_energy = 2.4
+		else:
+			ojos_luz.light_color = Color(1.0, 0.65, 0.1)
+			ojos_luz.light_energy = 1.0
+	if aura_luz:
+		aura_luz.light_color = Color(1.0, 0.05, 0.05) if is_enraged_final else Color(1.0, 0.35, 0.12)
+		aura_luz.light_energy = 0.85 if is_enraged_final else 0.55
 		
 	if reason == "noise_trash":
 		_say("¡¡¿QUÉ ES ESE RUIDO DENTRO DEL TACHO?!!", Color(1.0, 0.1, 0.1))
@@ -704,6 +743,9 @@ func _process_search_state(delta: float, can_see_player: bool) -> void:
 			_start_attack()
 			return
 		elif not saw_player_hide and d_player <= 3.2 and is_searching_around:
+			if trash_suspicion_cooldown <= 0.0:
+				_trigger_trash_suspense()
+				return
 			_say("¿Dónde se metió este alumno? Parecía haber alguien acá...", Color(1.0, 0.85, 0.5))
 
 	# Si ya llegó al lugar a investigar: detenerse y registrar alrededor
@@ -742,8 +784,17 @@ func _enter_patrol_state() -> void:
 	is_searching_around = false
 	
 	if ojos_luz:
-		ojos_luz.light_color = Color(1.0, 0.85, 0.5)
-		ojos_luz.light_energy = 0.8
+		if is_enraged_final:
+			ojos_luz.light_color = Color(1.0, 0.05, 0.05)
+			ojos_luz.light_energy = 2.4
+			ojos_luz.spot_range = 14.0
+		else:
+			ojos_luz.light_color = Color(1.0, 0.85, 0.5)
+			ojos_luz.light_energy = 0.8
+			ojos_luz.spot_range = 9.5
+	if aura_luz:
+		aura_luz.light_color = Color(1.0, 0.05, 0.05) if is_enraged_final else Color(1.0, 0.35, 0.12)
+		aura_luz.light_energy = 0.85 if is_enraged_final else 0.55
 		
 	_say("Debió ser el viento... Volvamos a la ronda.")
 	_pick_closest_patrol_circuit_idx()
@@ -763,8 +814,11 @@ func _enter_chase_state() -> void:
 	repath_timer = 0.25
 	
 	if ojos_luz:
-		ojos_luz.light_color = Color(1.0, 0.1, 0.1)
-		ojos_luz.light_energy = 2.0
+		ojos_luz.light_color = Color(1.0, 0.05, 0.05)
+		ojos_luz.light_energy = 2.5
+	if aura_luz:
+		aura_luz.light_color = Color(1.0, 0.05, 0.05)
+		aura_luz.light_energy = 0.85
 		
 	_say(phrases_chase[randi() % phrases_chase.size()], Color(1.0, 0.2, 0.2))
 	
@@ -1247,6 +1301,31 @@ func _animate_walk(delta: float, is_moving: bool) -> void:
 			brazo_der.rotation.x = lerpf(brazo_der.rotation.x, deg_to_rad(-40.0), delta * 5.0)
 			brazo_der.rotation.z = lerpf(brazo_der.rotation.z, deg_to_rad(-10.0), delta * 5.0)
 
+	# Animación procedimental de cabeza (balanceo de linterna + espasmos tenebrosos)
+	if cabeza:
+		if current_state == State.CHASE:
+			var jitter_x = randf_range(-0.02, 0.02) if is_enraged_final else 0.0
+			var jitter_y = randf_range(-0.02, 0.02) if is_enraged_final else 0.0
+			cabeza.rotation = Vector3(jitter_x, jitter_y, 0.0)
+		else:
+			lantern_sway_timer += delta * (2.2 if current_state == State.SEARCH else 1.3)
+			var sway_yaw = sin(lantern_sway_timer) * deg_to_rad(28.0)
+			var sway_pitch = cos(lantern_sway_timer * 0.7) * deg_to_rad(6.0)
+			twitch_timer -= delta
+			if twitch_timer <= 0.0:
+				twitch_timer = randf_range(5.0, 10.0)
+				twitch_active_timer = randf_range(0.18, 0.35)
+				twitch_offset = Vector3(
+					deg_to_rad(randf_range(-14.0, 18.0)),
+					deg_to_rad(randf_range(-38.0, 38.0)),
+					deg_to_rad(randf_range(-16.0, 16.0))
+				)
+			if twitch_active_timer > 0.0:
+				twitch_active_timer -= delta
+				cabeza.rotation = twitch_offset
+			else:
+				cabeza.rotation = Vector3(sway_pitch, sway_yaw, 0.0)
+
 func _update_dialogue(delta: float) -> void:
 	phrase_timer -= delta
 	if phrase_timer <= 0.0:
@@ -1334,11 +1413,19 @@ func _process_hallway_dash(delta: float) -> void:
 		current_speed = patrol_speed
 		current_state = State.PATROL
 		if step_audio:
-			step_audio.volume_db = -3.0
+			step_audio.volume_db = 0.0 if is_enraged_final else -3.0
 		if ojos_luz:
-			ojos_luz.light_color = Color(1.0, 0.85, 0.5)
-			ojos_luz.light_energy = 0.8
-			ojos_luz.spot_range = 10.0
+			if is_enraged_final:
+				ojos_luz.light_color = Color(1.0, 0.05, 0.05)
+				ojos_luz.light_energy = 2.4
+				ojos_luz.spot_range = 14.0
+			else:
+				ojos_luz.light_color = Color(1.0, 0.85, 0.5)
+				ojos_luz.light_energy = 0.8
+				ojos_luz.spot_range = 10.0
+		if aura_luz:
+			aura_luz.light_color = Color(1.0, 0.05, 0.05) if is_enraged_final else Color(1.0, 0.35, 0.12)
+			aura_luz.light_energy = 0.85 if is_enraged_final else 0.55
 		if brazo_der:
 			brazo_der.rotation = Vector3.ZERO
 		if regla:
@@ -1459,3 +1546,80 @@ func release_screamer_ambush() -> void:
 	prev_pos = global_position
 	if current_state == State.CHASE and not _can_see_player():
 		_enter_search_state(last_known_player_pos, "lost_sight")
+
+
+func activate_enraged_final_phase() -> void:
+	is_enraged_final = true
+	base_patrol_speed = 2.85
+	base_chase_speed = 3.9
+	patrol_speed = 2.85
+	chase_speed = 3.9
+	seek_speed = 3.3
+	vision_range = 26.0
+	vision_angle_deg = 85.0
+	proximity_range = 4.2
+	
+	if current_state == State.PATROL or current_state == State.SEARCH:
+		current_speed = patrol_speed
+	elif current_state == State.CHASE:
+		current_speed = chase_speed
+		
+	if ojos_luz:
+		ojos_luz.light_color = Color(1.0, 0.05, 0.05)
+		ojos_luz.light_energy = 2.5
+		ojos_luz.spot_range = 14.0
+	if aura_luz:
+		aura_luz.light_color = Color(1.0, 0.05, 0.05)
+		aura_luz.light_energy = 0.85
+		aura_luz.omni_range = 5.2
+	if step_audio:
+		step_audio.volume_db = 0.0
+		
+	_say("¡¡SE TERMINÓ EL TIEMPO!! ¡NADIE SE VA DE ACÁ SIN ENTREGAR!!", Color(1.0, 0.0, 0.0))
+
+func _trigger_trash_suspense() -> void:
+	is_inspecting_trash_suspense = true
+	trash_suspense_timer = 2.0
+	trash_suspicion_cooldown = 20.0
+	velocity = Vector3.ZERO
+	
+	if is_instance_valid(player):
+		var to_hiding = (player.global_position - global_position)
+		to_hiding.y = 0.0
+		if to_hiding.length() > 0.1:
+			rotation.y = atan2(to_hiding.x, to_hiding.z)
+		
+	var slam_stream = HorrorAudio.get_wood_slam_sound()
+	if slam_stream and step_audio:
+		step_audio.stream = slam_stream
+		step_audio.volume_db = 6.0
+		step_audio.pitch_scale = randf_range(0.85, 1.05)
+		step_audio.play()
+		
+	if is_instance_valid(player) and player.has_method("shake_camera"):
+		player.shake_camera(0.65, 0.45)
+		
+	if brazo_der:
+		brazo_der.rotation.x = deg_to_rad(-85.0)
+		
+	var suspense_phrases = [
+		"Sé que andás respirando por acá...",
+		"Mmm... ¿Quién anda escondido como una rata?",
+		"Puedo oler el miedo a desaprobar...",
+		"Salí ahora y tal vez te dé recuperatorio..."
+	]
+	_say(suspense_phrases[randi() % suspense_phrases.size()], Color(1.0, 0.25, 0.15))
+
+func _process_trash_suspense(delta: float) -> void:
+	trash_suspense_timer -= delta
+	velocity.x = 0.0
+	velocity.z = 0.0
+	if not is_on_floor():
+		velocity.y -= gravity * delta
+	move_and_slide()
+	_animate_walk(delta, false)
+	
+	if trash_suspense_timer <= 0.0:
+		is_inspecting_trash_suspense = false
+		if brazo_der:
+			brazo_der.rotation = Vector3.ZERO

@@ -420,6 +420,28 @@ func _update_heartbeat(delta: float) -> void:
 			if heartbeat_player.volume_db <= -40.0:
 				heartbeat_player.stop()
 
+	# Distorsión y estática VHS según proximidad al peligro
+	var retro_rect = retro_post_process.get_node_or_null("EffectRect") if is_instance_valid(retro_post_process) else null
+	if retro_rect and retro_rect.material is ShaderMaterial:
+		var mat = retro_rect.material as ShaderMaterial
+		if in_danger and dist < 12.0:
+			var glitch_intensity = clampf(1.0 - (dist / 12.0), 0.0, 1.0)
+			var target_noise = lerpf(0.03, 0.065, glitch_intensity)
+			var target_chroma = lerpf(0.0018, 0.0042, glitch_intensity)
+			var cur_noise = mat.get_shader_parameter("video_noise")
+			var cur_chroma = mat.get_shader_parameter("chromatic_aberration")
+			if cur_noise != null:
+				mat.set_shader_parameter("video_noise", lerpf(cur_noise, target_noise, delta * 3.5))
+			if cur_chroma != null:
+				mat.set_shader_parameter("chromatic_aberration", lerpf(cur_chroma, target_chroma, delta * 3.5))
+		else:
+			var cur_noise = mat.get_shader_parameter("video_noise")
+			var cur_chroma = mat.get_shader_parameter("chromatic_aberration")
+			if cur_noise != null and cur_noise > 0.0305:
+				mat.set_shader_parameter("video_noise", lerpf(cur_noise, 0.03, delta * 2.5))
+			if cur_chroma != null and cur_chroma > 0.00185:
+				mat.set_shader_parameter("chromatic_aberration", lerpf(cur_chroma, 0.0018, delta * 2.5))
+
 
 func enter_hiding(spot: Node, hide_global_pos: Vector3, face_dir: Vector3) -> void:
 	is_hidden = true

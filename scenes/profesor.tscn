@@ -11,6 +11,10 @@
 [ext_resource type="Material" path="res://materials/mat_prof_ruler.tres" id="9_rule0"]
 [ext_resource type="PackedScene" uid="uid://uobwlenrbwfl" path="res://models/mask/horror_mask.glb" id="10_mask0"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ojos"]
+shading_mode = 0
+albedo_color = Color(1, 0.25, 0.08, 1)
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_prof"]
 radius = 0.38
 height = 1.75
@@ -35,6 +39,17 @@ outline_size = 10
 
 [node name="Torso" type="Node3D" parent="Visuals" unique_id=403720156]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, 0)
+
+[node name="AuraProfesor" type="OmniLight3D" parent="Visuals/Torso" unique_id=1911387472]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0.05)
+light_color = Color(1, 0.28, 0.12, 1)
+light_energy = 0.55
+omni_range = 4.2
+omni_attenuation = 1.3
+shadow_enabled = true
+distance_fade_enabled = true
+distance_fade_shadow = 14.0
+distance_fade_begin = 28.0
 
 [node name="Saco" type="CSGBox3D" parent="Visuals/Torso" unique_id=1061022198]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
@@ -101,9 +116,19 @@ material = ExtResource("7_hair0")
 [node name="OjosLuz" type="SpotLight3D" parent="Visuals/Torso/Cabeza" unique_id=1911387471]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.02, 0.2)
 light_color = Color(1, 0.35, 0.15, 1)
-light_energy = 0.8
-spot_range = 6.0
-spot_angle = 28.0
+light_energy = 1.4
+spot_range = 9.5
+spot_angle = 36.0
+
+[node name="OjoBrilloIzq" type="CSGSphere3D" parent="Visuals/Torso/Cabeza" unique_id=1911387473]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.075, 0.02, 0.21)
+radius = 0.024
+material = SubResource("StandardMaterial3D_ojos")
+
+[node name="OjoBrilloDer" type="CSGSphere3D" parent="Visuals/Torso/Cabeza" unique_id=1911387474]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.075, 0.02, 0.21)
+radius = 0.024
+material = SubResource("StandardMaterial3D_ojos")
 
 [node name="HorrorMask" parent="Visuals/Torso/Cabeza" unique_id=1344863846 instance=ExtResource("10_mask0")]
 transform = Transform3D(2.55, 0, 0, 0, 2.3, 0, 0, 0, 2.65, 0, -0.25, 0.095)
