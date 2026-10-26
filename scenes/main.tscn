@@ -37,8 +37,8 @@ environment = SubResource("Environment_eb6dy")
 
 [node name="MoonLight" type="DirectionalLight3D" parent="." unique_id=202207671]
 transform = Transform3D(0.90630776, -0.36599818, 0.21130912, 0, 0.49999997, 0.86602545, -0.42261827, -0.7848856, 0.45315385, 0, 0, 0)
-light_color = Color(0.35, 0.45, 0.65, 1)
-light_energy = 0.12
+light_color = Color(0.50, 0.65, 0.90, 1)
+light_energy = 0.38
 shadow_enabled = true
 
 [node name="Profesor" parent="." unique_id=1380220076 instance=ExtResource("8_prof0")]

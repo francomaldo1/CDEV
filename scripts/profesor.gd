@@ -1262,18 +1262,11 @@ func boost_speed() -> void:
 func _setup_step_audio() -> void:
 	step_audio = AudioStreamPlayer3D.new()
 	step_audio.name = "ProfesorStepAudio3D"
-	step_audio.unit_size = 3.8
-	step_audio.max_distance = 40.0
-	step_audio.volume_db = -2.0
+	step_audio.unit_size = 14.0
+	step_audio.max_distance = 65.0
+	step_audio.volume_db = 9.0
 	step_audio.bus = &"Master"
 	add_child(step_audio)
-	
-	# Cargar Creepy Footsteps.mp3 para las pisadas tenebrosas del profesor
-	if ResourceLoader.exists("res://audio/footsteps/creepy_footsteps.mp3"):
-		creepy_steps_stream = load("res://audio/footsteps/creepy_footsteps.mp3")
-		if creepy_steps_stream is AudioStreamMP3:
-			(creepy_steps_stream as AudioStreamMP3).loop = true
-		step_audio.stream = creepy_steps_stream
 	
 	slam_audio = AudioStreamPlayer3D.new()
 	slam_audio.name = "ProfesorSlamAudio3D"
@@ -1286,23 +1279,28 @@ func _setup_step_audio() -> void:
 func _play_prof_step() -> void:
 	if not step_audio:
 		return
-	step_audio.stream = HorrorAudio.get_profesor_footstep()
-	step_audio.pitch_scale = randf_range(0.96, 1.04)
+	step_audio.stream = HorrorAudio.get_creepy_footstep()
+	var pitch_target = 1.0
+	if current_state == State.CHASE or is_trash_rushing or is_screamer_charging:
+		pitch_target = randf_range(1.15, 1.25)
+	else:
+		pitch_target = randf_range(0.95, 1.05)
+	step_audio.pitch_scale = pitch_target
+	var target_vol = 14.5 if is_enraged_final else (13.0 if (current_state == State.CHASE or is_trash_rushing) else 9.0)
+	step_audio.volume_db = target_vol
 	step_audio.play()
 
 func _animate_walk(delta: float, is_moving: bool) -> void:
 	if is_moving and is_on_floor():
 		var step_mult = 3.6 if (is_trash_rushing or is_screamer_charging) else (2.8 if current_state == State.CHASE else 2.2)
 		var anim_delta = delta * (current_speed * step_mult)
+		var prev_sin = sin(walk_anim_time)
 		walk_anim_time += anim_delta
+		var curr_sin = sin(walk_anim_time)
 		
-		if step_audio:
-			if not step_audio.playing:
-				step_audio.play()
-			var target_pitch = 1.35 if current_state == State.CHASE else (1.45 if is_enraged_final else 1.0)
-			step_audio.pitch_scale = lerpf(step_audio.pitch_scale, target_pitch, delta * 3.0)
-			var target_vol = 1.5 if is_enraged_final else (0.0 if current_state == State.CHASE else -2.5)
-			step_audio.volume_db = lerpf(step_audio.volume_db, target_vol, delta * 3.0)
+		# Disparo sincronizado de pisada en el impacto de cada pierna contra el suelo
+		if (prev_sin <= 0.0 and curr_sin > 0.0) or (prev_sin >= 0.0 and curr_sin < 0.0):
+			_play_prof_step()
 			
 		var swing_legs = sin(walk_anim_time) * deg_to_rad(28.0)
 		var swing_arms = cos(walk_anim_time) * deg_to_rad(25.0)
@@ -1440,7 +1438,7 @@ func _process_hallway_dash(delta: float) -> void:
 		current_speed = patrol_speed
 		current_state = State.PATROL
 		if step_audio:
-			step_audio.volume_db = 0.0 if is_enraged_final else -3.0
+			step_audio.volume_db = 14.5 if is_enraged_final else 9.0
 		if ojos_luz:
 			if is_enraged_final:
 				ojos_luz.light_color = Color(1.0, 0.05, 0.05)
@@ -1600,7 +1598,7 @@ func activate_enraged_final_phase() -> void:
 		aura_luz.light_energy = 0.85
 		aura_luz.omni_range = 5.2
 	if step_audio:
-		step_audio.volume_db = 0.0
+		step_audio.volume_db = 14.5
 		
 	_say("¡¡SE TERMINÓ EL TIEMPO!! ¡NADIE SE VA DE ACÁ SIN ENTREGAR!!", Color(1.0, 0.0, 0.0))
 

@@ -52,6 +52,8 @@ var stinger_player: AudioStreamPlayer = null
 var jumpscare_play_time: float = 0.0
 var heartbeat_timer: float = 0.0
 var post_screamer_heartbeat_timer: float = 0.0
+var panic_drone_player: AudioStreamPlayer = null
+var current_panic_glitch: float = 0.0
 
 ## La linterna empieza bloqueada y se habilita con el corte de luz (ver main.gd)
 var flashlight_enabled: bool = false
@@ -340,6 +342,13 @@ func _setup_audio_players() -> void:
 	stinger_player.bus = &"Master"
 	add_child(stinger_player)
 
+	panic_drone_player = AudioStreamPlayer.new()
+	panic_drone_player.name = "PanicDronePlayer"
+	panic_drone_player.volume_db = -45.0
+	panic_drone_player.bus = &"Master"
+	panic_drone_player.stream = HorrorAudio.get_panic_sub_drone()
+	add_child(panic_drone_player)
+
 func _apply_head_bob_and_footsteps(delta: float, is_sprinting: bool) -> void:
 	if not camera:
 		return
@@ -437,10 +446,30 @@ func _update_heartbeat(delta: float) -> void:
 			if heartbeat_player.volume_db <= -40.0:
 				heartbeat_player.stop()
 
+	# Proximidad al profesor y efecto pánico analógico (Opción C)
+	var prox_panic: float = 0.0
+	if is_instance_valid(prof) and prof.visible and dist < 6.0:
+		prox_panic = clampf(1.0 - (dist / 6.0), 0.0, 1.0)
+	current_panic_glitch = lerpf(current_panic_glitch, prox_panic, delta * 6.0)
+
+	# Modulación del zumbido subgrave (sub-bass drone)
+	if panic_drone_player:
+		if current_panic_glitch > 0.03:
+			if not panic_drone_player.playing:
+				panic_drone_player.play()
+			var drone_vol = lerpf(-36.0, 1.5, current_panic_glitch)
+			panic_drone_player.volume_db = drone_vol
+		else:
+			if panic_drone_player.playing:
+				panic_drone_player.volume_db = lerpf(panic_drone_player.volume_db, -50.0, delta * 3.0)
+				if panic_drone_player.volume_db <= -45.0:
+					panic_drone_player.stop()
+
 	# Distorsión y estática VHS según proximidad al peligro
 	var retro_rect = retro_post_process.get_node_or_null("EffectRect") if is_instance_valid(retro_post_process) else null
 	if retro_rect and retro_rect.material is ShaderMaterial:
 		var mat = retro_rect.material as ShaderMaterial
+		mat.set_shader_parameter("panic_glitch", current_panic_glitch)
 		if in_danger and dist < 12.0:
 			var glitch_intensity = clampf(1.0 - (dist / 12.0), 0.0, 1.0)
 			var target_noise = lerpf(0.03, 0.065, glitch_intensity)
@@ -458,6 +487,10 @@ func _update_heartbeat(delta: float) -> void:
 				mat.set_shader_parameter("video_noise", lerpf(cur_noise, 0.03, delta * 2.5))
 			if cur_chroma != null and cur_chroma > 0.00185:
 				mat.set_shader_parameter("chromatic_aberration", lerpf(cur_chroma, 0.0018, delta * 2.5))
+	
+	# Si está escondido en el tacho y el profesor pasa pegado (< 3.2m), vibración de pánico en cámara
+	if is_hidden and current_panic_glitch > 0.45:
+		shake_camera(0.18 * current_panic_glitch, 0.08)
 
 
 func enter_hiding(spot: Node, hide_global_pos: Vector3, face_dir: Vector3) -> void:

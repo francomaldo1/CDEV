@@ -38,7 +38,7 @@ var scare_wait_timer: float = 0.0
 var tablero_electrico: Area3D = null
 var is_blackout: bool = false
 var original_ambient_energy: float = 0.4
-var original_moon_energy: float = 0.35
+var original_moon_energy: float = 0.38
 
 var ambient_drone_player: AudioStreamPlayer = null
 var spook_audio_3d: AudioStreamPlayer3D = null
@@ -489,9 +489,10 @@ func _trigger_blackout() -> void:
 	if world_env and world_env.environment:
 		world_env.environment.ambient_light_color = Color(0.18, 0.22, 0.32, 1.0)
 		world_env.environment.ambient_light_color = Color(0.22, 0.28, 0.40, 1.0)
-		world_env.environment.ambient_light_energy = 0.09
+		world_env.environment.ambient_light_energy = 0.11
 	if moon_light:
-		moon_light.light_energy = 0.16
+		moon_light.light_energy = 0.48
+		moon_light.light_color = Color(0.50, 0.65, 0.90, 1.0)
 		
 	# Transicionar a dron oscuro de apagón
 	if ambient_drone_player:

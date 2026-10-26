@@ -20,6 +20,9 @@ static var _prof_step_idx: int = 0
 static var _cached_heartbeat_stream: AudioStream = null
 static var _cached_heartbeat: AudioStreamWAV = null
 static var _cached_creak: AudioStreamWAV = null
+static var _cached_creepy_steps: Array[AudioStream] = []
+static var _creepy_step_idx: int = 0
+static var _cached_panic_drone: AudioStreamWAV = null
 
 static func get_spark_sound() -> AudioStreamWAV:
 	if _cached_spark == null:
@@ -77,6 +80,44 @@ static func get_profesor_footstep() -> AudioStreamWAV:
 		return _generate_prof_step()
 	_prof_step_idx = (_prof_step_idx + 1) % _cached_prof_step.size()
 	return _cached_prof_step[_prof_step_idx]
+
+static func get_creepy_footstep() -> AudioStream:
+	if _cached_creepy_steps.is_empty():
+		for i in range(1, 5):
+			var path = "res://audio/footsteps/creepy_step_%02d.wav" % i
+			if ResourceLoader.exists(path):
+				var s = load(path)
+				if s:
+					_cached_creepy_steps.append(s)
+	if not _cached_creepy_steps.is_empty():
+		_creepy_step_idx = (_creepy_step_idx + 1) % _cached_creepy_steps.size()
+		return _cached_creepy_steps[_creepy_step_idx]
+	return get_profesor_footstep()
+
+static func get_panic_sub_drone() -> AudioStreamWAV:
+	if _cached_panic_drone != null:
+		return _cached_panic_drone
+	var sample_rate = 22050
+	var duration = 4.0
+	var total_samples = int(sample_rate * duration)
+	var data = PackedByteArray()
+	data.resize(total_samples * 2)
+	for i in range(total_samples):
+		var t = float(i) / float(sample_rate)
+		var pulse = 0.8 + 0.2 * sin(t * TAU * 3.8)
+		var val = (sin(t * TAU * 46.0) * 0.65 + sin(t * TAU * 92.0) * 0.25 + sin(t * TAU * 23.0) * 0.15) * pulse
+		var s16 = int(clampf(val, -1.0, 1.0) * 32767.0)
+		data.encode_s16(i * 2, s16)
+	var wav = AudioStreamWAV.new()
+	wav.format = AudioStreamWAV.FORMAT_16_BITS
+	wav.mix_rate = sample_rate
+	wav.stereo = false
+	wav.loop_mode = AudioStreamWAV.LOOP_FORWARD
+	wav.loop_begin = 0
+	wav.loop_end = total_samples
+	wav.data = data
+	_cached_panic_drone = wav
+	return _cached_panic_drone
 
 static func _ensure_footsteps_loaded() -> void:
 	if _cached_player_walk.is_empty():

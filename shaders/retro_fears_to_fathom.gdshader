@@ -15,6 +15,9 @@ uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_l
 // Modo Vision Nocturna estilo Outlast Camcorder (intensificador de luz infrarrojo / fosforico)
 uniform float night_vision_active : hint_range(0.0, 1.0, 0.05) = 0.0;
 
+// Efecto de panico / distorsion analogica por proximidad al profesor (Efecto C)
+uniform float panic_glitch : hint_range(0.0, 1.0, 0.02) = 0.0;
+
 uniform float exposure_boost : hint_range(1.0, 1.8, 0.05) = 1.15;
 uniform float black_lift : hint_range(0.0, 0.15, 0.01) = 0.04;
 
@@ -65,16 +68,33 @@ void fragment() {
     vec2 uv = distort_lens(SCREEN_UV);
     vec2 clamped_uv = clamp(uv, vec2(0.001), vec2(0.999));
     
-    // Aberracion cromatica hibrida (radial de lente + leve desfase horizontal de cinta VHS):
-    // Deja una franja de color retro claramente perceptible pero nitida y sin vision doble molesta
+    // Distorsión y desgarro horizontal VHS por proximidad al profesor (Efecto pánico)
+    if (panic_glitch > 0.0) {
+        float tape_slice = floor(clamped_uv.y * 55.0);
+        float tear_hash = random(vec2(tape_slice, floor(TIME * 24.0)));
+        float tear_active = step(0.82 - panic_glitch * 0.35, tear_hash);
+        float h_shift = (tear_hash - 0.5) * 0.038 * panic_glitch * tear_active;
+        float tape_wobble = sin(clamped_uv.y * 95.0 + TIME * 36.0) * 0.003 * panic_glitch;
+        clamped_uv.x = clamp(clamped_uv.x + h_shift + tape_wobble, 0.001, 0.999);
+    }
+    
+    // Aberracion cromatica hibrida con incremento tembloroso en panico:
     vec2 from_center = clamped_uv - 0.5;
     float dist = length(from_center);
-    vec2 chroma_offset = from_center * (dist * chromatic_aberration * 2.0) + vec2(chromatic_aberration * 0.4, 0.0);
+    float dynamic_chroma = chromatic_aberration + panic_glitch * 0.0038 * (0.8 + 0.35 * sin(TIME * 42.0));
+    vec2 chroma_offset = from_center * (dist * dynamic_chroma * 2.0) + vec2(dynamic_chroma * 0.4, 0.0);
     
     float r = texture(screen_texture, clamp(clamped_uv + chroma_offset, vec2(0.001), vec2(0.999))).r;
     float g = texture(screen_texture, clamped_uv).g;
     float b = texture(screen_texture, clamp(clamped_uv - chroma_offset, vec2(0.001), vec2(0.999))).b;
     vec3 color = vec3(r, g, b);
+    
+    // Estática analógica VHS y barras de tracking en pánico
+    if (panic_glitch > 0.0) {
+        float static_noise = (random(clamped_uv * 2.5 + vec2(fract(TIME * 43.1), fract(TIME * 67.9))) - 0.5) * (0.22 * panic_glitch);
+        float tracking_bar = smoothstep(0.92, 1.0, sin(clamped_uv.y * 3.5 - TIME * 5.0));
+        color += static_noise + tracking_bar * 0.07 * panic_glitch;
+    }
     
     // Destello de lente / Resplandor (Lens Glare / Halation) en zonas iluminadas (linterna)
     float luma = dot(color, vec3(0.299, 0.587, 0.114));
@@ -137,8 +157,10 @@ void fragment() {
         } else {
             nv_outlast = mix(c_mid, c_high, clamp((boosted - 0.65) / 0.35, 0.0, 1.0));
         }
-        float nv_grain = (random(clamped_uv + vec2(fract(TIME * 14.3), fract(TIME * 31.7))) - 0.5) * 0.035;
-        nv_outlast += vec3(nv_grain * 0.4, nv_grain * 0.7, nv_grain * 0.5);
+        // Grano analógico y ruido de sensor CCD de alta ganancia Outlast
+        float nv_grain = (random(clamped_uv + vec2(fract(TIME * 19.3), fract(TIME * 41.7))) - 0.5) * 0.115;
+        float nv_sparkle = step(0.972, random(clamped_uv * 3.0 + vec2(fract(TIME * 53.7), fract(TIME * 17.9)))) * 0.15;
+        nv_outlast += vec3(nv_grain * 0.5 + nv_sparkle * 0.35, nv_grain * 0.9 + nv_sparkle * 0.6, nv_grain * 0.6 + nv_sparkle * 0.45);
         color = mix(color, nv_outlast, night_vision_active);
     }
 
