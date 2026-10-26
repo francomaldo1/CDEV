@@ -16,6 +16,8 @@ class_name Player
 @onready var camera: Camera3D = $CameraPivot/Camera3D
 @onready var flashlight: SpotLight3D = $CameraPivot/Camera3D/Flashlight
 @onready var retro_post_process: CanvasLayer = get_node_or_null("RetroPostProcess")
+@onready var night_vision_light: SpotLight3D = get_node_or_null("CameraPivot/Camera3D/NightVisionLight")
+@onready var night_vision_omni: OmniLight3D = get_node_or_null("CameraPivot/Camera3D/NightVisionOmni")
 
 var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity", 9.8)
 var bob_time: float = 0.0
@@ -28,6 +30,11 @@ var is_frozen: bool = false
 var is_hidden: bool = false
 var current_hiding_spot: Node = null
 var was_flashlight_on_before_hiding: bool = false
+var is_night_vision_on: bool = false
+var night_vision_active_val: float = 0.0
+var night_vision_battery: float = 100.0
+const NIGHT_VISION_BATTERY_DRAIN_SPEED: float = 0.65
+const NIGHT_VISION_BATTERY_RECHARGE_SPEED: float = 1.2
 var shake_tween: Tween = null
 var look_tween: Tween = null
 
@@ -177,6 +184,13 @@ func _input(event: InputEvent) -> void:
 					camera_pivot.rotation.x = clampf(camera_pivot.rotation.x, deg_to_rad(-85.0), deg_to_rad(85.0))
 
 	# Linterna (solo si no está congelado por evento)
+	# Visión Nocturna tipo Outlast (Click Derecho del ratón, tecla F o tecla N)
+	if (event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_RIGHT) \
+	   or (event is InputEventKey and event.pressed and (event.keycode == KEY_F or event.keycode == KEY_N or event.keycode == KEY_V)):
+		if not is_frozen:
+			toggle_night_vision()
+			return
+
 	if event.is_action_pressed("flashlight") or (event is InputEventKey and event.pressed and event.keycode == KEY_F):
 		if not is_frozen:
 			toggle_flashlight()
@@ -284,6 +298,7 @@ func _physics_process(delta: float) -> void:
 	
 	# Latidos cardíacos cuando el peligro acecha
 	_update_heartbeat(delta)
+	_update_night_vision_process(delta)
 
 func _setup_audio_players() -> void:
 	footstep_player = AudioStreamPlayer.new()
@@ -559,3 +574,70 @@ func is_retro_shader_enabled() -> bool:
 	if is_instance_valid(retro_post_process):
 		return retro_post_process.visible
 	return false
+
+
+func toggle_night_vision() -> void:
+	if is_frozen:
+		return
+	if night_vision_battery <= 2.0 and not is_night_vision_on:
+		var hud = get_tree().root.find_child("HUD", true, false)
+		if hud and hud.has_method("show_temporary_alert"):
+			hud.show_temporary_alert("🪫 Batería de la cámara agotada... Esperá a que recargue.", Color(1.0, 0.3, 0.3))
+		return
+	
+	is_night_vision_on = not is_night_vision_on
+	_update_night_vision_lights()
+	_play_night_vision_sound(is_night_vision_on)
+	
+	var hud = get_tree().root.find_child("HUD", true, false)
+	if hud and hud.has_method("set_night_vision_active"):
+		hud.set_night_vision_active(is_night_vision_on)
+
+func _update_night_vision_lights() -> void:
+	if night_vision_light:
+		night_vision_light.visible = is_night_vision_on
+	if night_vision_omni:
+		night_vision_omni.visible = is_night_vision_on
+
+func _update_night_vision_process(delta: float) -> void:
+	if is_night_vision_on:
+		night_vision_battery = maxf(0.0, night_vision_battery - delta * NIGHT_VISION_BATTERY_DRAIN_SPEED)
+		if night_vision_battery <= 0.0:
+			toggle_night_vision()
+	else:
+		night_vision_battery = minf(100.0, night_vision_battery + delta * NIGHT_VISION_BATTERY_RECHARGE_SPEED)
+	
+	var target_nv = 1.0 if is_night_vision_on else 0.0
+	night_vision_active_val = lerpf(night_vision_active_val, target_nv, delta * 9.0)
+	
+	var retro_rect = retro_post_process.get_node_or_null("EffectRect") if is_instance_valid(retro_post_process) else null
+	if retro_rect and retro_rect.material is ShaderMaterial:
+		(retro_rect.material as ShaderMaterial).set_shader_parameter("night_vision_active", night_vision_active_val)
+	
+	var hud = get_tree().root.find_child("HUD", true, false)
+	if hud and hud.has_method("set_night_vision_battery"):
+		hud.set_night_vision_battery(night_vision_battery)
+
+func _play_night_vision_sound(is_on: bool) -> void:
+	var click_player = AudioStreamPlayer.new()
+	click_player.bus = &"Master"
+	click_player.volume_db = -5.0
+	add_child(click_player)
+	var gen = AudioStreamGenerator.new()
+	gen.mix_rate = 44100
+	gen.buffer_length = 0.08
+	click_player.stream = gen
+	click_player.play()
+	var pb = click_player.get_stream_playback()
+	if pb:
+		var freq = 1800.0 if is_on else 1100.0
+		var frames = int(44100 * 0.04)
+		for i in range(frames):
+			var t = float(i) / 44100.0
+			var decay = 1.0 - (float(i) / float(frames))
+			var sample = sin(t * freq * TAU) * decay * 0.35
+			pb.push_frame(Vector2(sample, sample))
+	get_tree().create_timer(0.2).timeout.connect(func():
+		if is_instance_valid(click_player):
+			click_player.queue_free()
+	)

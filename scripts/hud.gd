@@ -42,6 +42,17 @@ var inventory_slots: Dictionary = {}
 var exams_approved_count: int = 0
 var exams_total_count: int = 4
 
+## Interfaz de Videocámara Outlast
+var camcorder_container: Control = null
+var camcorder_rec_label: Label = null
+var camcorder_nv_label: Label = null
+var camcorder_battery_label: Label = null
+var camcorder_timecode_label: Label = null
+var camcorder_rec_blink_timer: float = 0.0
+var camcorder_time_elapsed: float = 0.0
+var is_nv_active: bool = false
+var nv_battery_pct: float = 100.0
+
 func _ready() -> void:
 	if alert_label:
 		alert_label.visible = false
@@ -92,6 +103,7 @@ func _ready() -> void:
 	_setup_trash_overlay()
 	_setup_stamina_bar()
 	_setup_inventory_slots()
+	_setup_camcorder_ui()
 	_style_mic_bar()
 
 func _style_mic_bar() -> void:
@@ -430,6 +442,7 @@ var stamina_full_timer: float = 0.0
 
 func _process(delta: float) -> void:
 	_process_mic_bar(delta)
+	_process_camcorder_ui(delta)
 	_process_stamina_bar(delta)
 	_process_debug_coords(delta)
 
@@ -679,3 +692,86 @@ func _setup_trash_overlay() -> void:
 
 func update_trash_overlay_parallax(_yaw_ratio: float, _pitch_ratio: float) -> void:
 	pass
+
+
+func _setup_camcorder_ui() -> void:
+	camcorder_container = Control.new()
+	camcorder_container.name = "CamcorderUI"
+	camcorder_container.set_anchors_preset(Control.PRESET_FULL_RECT)
+	camcorder_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(camcorder_container)
+	
+	# Top Left: REC
+	camcorder_rec_label = Label.new()
+	camcorder_rec_label.text = "● REC   SP"
+	camcorder_rec_label.position = Vector2(30, 25)
+	camcorder_rec_label.add_theme_color_override("font_color", Color(1.0, 0.2, 0.2, 0.9))
+	camcorder_rec_label.add_theme_font_size_override("font_size", 16)
+	camcorder_container.add_child(camcorder_rec_label)
+	
+	# Top Right: NIGHT VISION + BATERIA
+	camcorder_nv_label = Label.new()
+	camcorder_nv_label.text = "[Click Der / F] VISIÓN NOCTURNA: OFF"
+	camcorder_nv_label.set_anchors_preset(Control.PRESET_TOP_RIGHT)
+	camcorder_nv_label.position = Vector2(-360, 25)
+	camcorder_nv_label.add_theme_color_override("font_color", Color(0.7, 0.75, 0.8, 0.75))
+	camcorder_nv_label.add_theme_font_size_override("font_size", 14)
+	camcorder_container.add_child(camcorder_nv_label)
+	
+	camcorder_battery_label = Label.new()
+	camcorder_battery_label.text = "BAT [▮▮▮▮] 100%"
+	camcorder_battery_label.set_anchors_preset(Control.PRESET_TOP_RIGHT)
+	camcorder_battery_label.position = Vector2(-160, 48)
+	camcorder_battery_label.add_theme_color_override("font_color", Color(0.3, 1.0, 0.5, 0.9))
+	camcorder_battery_label.add_theme_font_size_override("font_size", 14)
+	camcorder_container.add_child(camcorder_battery_label)
+	
+	# Bottom Left: Timecode y cámara
+	camcorder_timecode_label = Label.new()
+	camcorder_timecode_label.text = "CAM 01 - UTN FRC | 00:00:00"
+	camcorder_timecode_label.set_anchors_preset(Control.PRESET_BOTTOM_LEFT)
+	camcorder_timecode_label.position = Vector2(30, -45)
+	camcorder_timecode_label.add_theme_color_override("font_color", Color(0.8, 0.85, 0.9, 0.6))
+	camcorder_timecode_label.add_theme_font_size_override("font_size", 13)
+	camcorder_container.add_child(camcorder_timecode_label)
+
+func set_night_vision_active(active: bool) -> void:
+	is_nv_active = active
+	if camcorder_nv_label:
+		if is_nv_active:
+			camcorder_nv_label.text = "NIGHT VISION [ ACTIVE ]"
+			camcorder_nv_label.add_theme_color_override("font_color", Color(0.2, 1.0, 0.45, 1.0))
+		else:
+			camcorder_nv_label.text = "[Click Der / F] VISIÓN NOCTURNA: OFF"
+			camcorder_nv_label.add_theme_color_override("font_color", Color(0.7, 0.75, 0.8, 0.65))
+
+func set_night_vision_battery(pct: float) -> void:
+	nv_battery_pct = pct
+	if camcorder_battery_label:
+		var bars = int(pct / 25.0)
+		var bar_str = ""
+		for i in range(4):
+			bar_str += "▮" if i < bars else "▯"
+		camcorder_battery_label.text = "BAT [%s] %d%%" % [bar_str, int(pct)]
+		if pct <= 20.0:
+			camcorder_battery_label.add_theme_color_override("font_color", Color(1.0, 0.25, 0.2, 0.95))
+		elif is_nv_active:
+			camcorder_battery_label.add_theme_color_override("font_color", Color(0.2, 1.0, 0.45, 1.0))
+		else:
+			camcorder_battery_label.add_theme_color_override("font_color", Color(0.7, 0.75, 0.8, 0.7))
+
+func _process_camcorder_ui(delta: float) -> void:
+	if not camcorder_container:
+		return
+	camcorder_time_elapsed += delta
+	camcorder_rec_blink_timer += delta
+	
+	if camcorder_rec_label:
+		var is_rec_vis = fmod(camcorder_rec_blink_timer, 1.2) < 0.75
+		camcorder_rec_label.visible = is_rec_vis
+	
+	if camcorder_timecode_label:
+		var s = int(camcorder_time_elapsed) % 60
+		var m = int(camcorder_time_elapsed / 60.0) % 60
+		var h = int(camcorder_time_elapsed / 3600.0)
+		camcorder_timecode_label.text = "CAM 01 - UTN FRC | %02d:%02d:%02d" % [h, m, s]

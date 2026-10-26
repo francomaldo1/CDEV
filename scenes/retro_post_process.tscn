@@ -4,6 +4,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_retro"]
 shader = ExtResource("1_retro")
+shader_parameter/night_vision_active = 0.0
 shader_parameter/exposure_boost = 1.15
 shader_parameter/black_lift = 0.04
 shader_parameter/lens_distortion = 0.03

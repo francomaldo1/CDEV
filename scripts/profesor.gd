@@ -658,7 +658,7 @@ func _process_patrol_state(delta: float, can_see_player: bool) -> void:
 	# Si el jugador está en un tacho cercano durante la ronda, oportunidad de susto de impacto
 	if is_instance_valid(player) and player.get("is_hidden") and not saw_player_hide and trash_suspicion_cooldown <= 0.0:
 		var d_tacho = global_position.distance_to(player.global_position)
-		if d_tacho <= 2.8:
+		if d_tacho <= 7.5:
 			_trigger_trash_suspense()
 			return
 
@@ -1240,8 +1240,13 @@ func _on_player_noise(volume: float) -> void:
 
 func boost_speed() -> void:
 	speed_boost_count += 1
-	chase_speed = min(base_chase_speed + (speed_boost_count * 0.25), 3.4)
-	patrol_speed = min(base_patrol_speed + (speed_boost_count * 0.15), 2.4)
+	base_patrol_speed = 2.45
+	base_chase_speed = 3.4
+	patrol_speed = 2.45
+	chase_speed = 3.4
+	seek_speed = 2.8
+	vision_range = 22.0
+	current_speed = patrol_speed
 	
 	if not is_active:
 		return
@@ -1612,12 +1617,28 @@ func _trigger_trash_suspense() -> void:
 
 func _process_trash_suspense(delta: float) -> void:
 	trash_suspense_timer -= delta
-	velocity.x = 0.0
-	velocity.z = 0.0
+	
+	# Acercarse al tacho si está a más de 1.9 metros
+	if is_instance_valid(player):
+		var to_hiding = (player.global_position - global_position)
+		to_hiding.y = 0.0
+		var d = to_hiding.length()
+		if d > 1.9:
+			var dir = to_hiding.normalized()
+			velocity.x = dir.x * 1.6
+			velocity.z = dir.z * 1.6
+			rotation.y = atan2(dir.x, dir.z)
+		else:
+			velocity.x = 0.0
+			velocity.z = 0.0
+	else:
+		velocity.x = 0.0
+		velocity.z = 0.0
+	
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 	move_and_slide()
-	_animate_walk(delta, false)
+	_animate_walk(delta, velocity.length() > 0.1)
 	
 	if trash_suspense_timer <= 0.0:
 		is_inspecting_trash_suspense = false

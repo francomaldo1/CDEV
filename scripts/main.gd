@@ -269,8 +269,17 @@ func _on_exam_solved(success: bool, cuaderno: Node) -> void:
 	if n == exams_for_blackout:
 		_spawn_profesor()
 		_trigger_blackout()
+		if hud and hud.has_method("show_temporary_alert"):
+			hud.show_temporary_alert("⚡ ¡SE CORTÓ LA LUZ! Activá la cámara con [Click Derecho] o [F]", Color(1.0, 0.8, 0.2))
 	
-	# Todos los exámenes aprobados: se habilita el piso de arriba y se prepara el susto del pasillo al darse vuelta
+	# 3er examen: el profesor se acelera y se vuelve más agresivo
+	elif n == 3:
+		if is_instance_valid(profesor):
+			profesor.boost_speed()
+		if hud and hud.has_method("show_temporary_alert"):
+			hud.show_temporary_alert("⚠️ El profesor escuchó tus hojas... Ahora patrulla más rápido.", Color(1.0, 0.5, 0.2))
+	
+	# Todos los exámenes aprobados: se habilita el piso de arriba y entra en FASE FURIA
 	if n == exams_for_upper_floor:
 		_unlock_upper_floor()
 		_prepare_fourth_exam_turnaround_scare(cuaderno)
@@ -485,9 +494,10 @@ func _trigger_blackout() -> void:
 	# Oscuridad con visibilidad atmosférica tenue (siluetas de pasillos y puertas)
 	if world_env and world_env.environment:
 		world_env.environment.ambient_light_color = Color(0.18, 0.22, 0.32, 1.0)
-		world_env.environment.ambient_light_energy = 0.05
+		world_env.environment.ambient_light_color = Color(0.22, 0.28, 0.40, 1.0)
+		world_env.environment.ambient_light_energy = 0.09
 	if moon_light:
-		moon_light.light_energy = 0.08
+		moon_light.light_energy = 0.16
 		
 	# Transicionar a dron oscuro de apagón
 	if ambient_drone_player:

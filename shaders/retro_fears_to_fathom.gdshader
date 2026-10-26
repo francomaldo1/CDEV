@@ -12,6 +12,9 @@ shader_type canvas_item;
 uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_linear;
 
 // Iluminacion / Exposicion (evita que sea oscuro, levanta las sombras como camara real)
+// Modo Vision Nocturna estilo Outlast Camcorder (intensificador de luz infrarrojo / fosforico)
+uniform float night_vision_active : hint_range(0.0, 1.0, 0.05) = 0.0;
+
 uniform float exposure_boost : hint_range(1.0, 1.8, 0.05) = 1.15;
 uniform float black_lift : hint_range(0.0, 0.15, 0.01) = 0.04;
 
@@ -114,5 +117,15 @@ void fragment() {
     float gray = dot(color, vec3(0.299, 0.587, 0.114));
     color = mix(color, vec3(gray), 0.06);
     
+    // Modo Vision Nocturna tipo Camcorder Outlast
+    if (night_vision_active > 0.0) {
+        float nv_luma = dot(color, vec3(0.299, 0.587, 0.114));
+        float amplified = pow(nv_luma, 0.60) * 2.3;
+        vec3 nv_palette = vec3(0.18, 0.98, 0.44) * amplified;
+        float nv_grain = (random(clamped_uv + vec2(fract(TIME * 13.7), fract(TIME * 29.3))) - 0.5) * 0.08;
+        nv_palette += vec3(nv_grain * 0.7, nv_grain * 1.2, nv_grain * 0.9);
+        color = mix(color, nv_palette, night_vision_active);
+    }
+
     COLOR = vec4(clamp(color, 0.0, 1.0), 1.0);
 }
