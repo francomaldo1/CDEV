@@ -476,13 +476,12 @@ func enter_hiding(spot: Node, hide_global_pos: Vector3, face_dir: Vector3) -> vo
 	if camera_pivot:
 		camera_pivot.position.y = 1.22
 		camera_pivot.rotation.x = 0.0
-	# Proyectar la luz de la cámara hacia afuera de la abertura del tacho
-	if night_vision_light:
-		night_vision_light.position.z = 0.48
+	# Acercar la cámara a la abertura frontal e iluminar hacia el pasillo
 	if camera:
 		camera.position.y = 0.0
+		camera.position.z = -0.20
 	if night_vision_light:
-		night_vision_light.position.z = 0.0
+		night_vision_light.position = Vector3(0, 0, -0.45)
 		
 	# Asegurar que el cuerpo esté perfectamente vertical
 	rotation.x = 0.0
@@ -505,8 +504,9 @@ func exit_hiding(exit_global_pos: Vector3) -> void:
 		camera_pivot.position.y = original_cam_pivot_y
 	if camera:
 		camera.position.y = 0.0
+		camera.position.z = 0.0
 	if night_vision_light:
-		night_vision_light.position.z = 0.0
+		night_vision_light.position = Vector3.ZERO
 		
 	if was_flashlight_on_before_hiding and flashlight:
 		flashlight.visible = true

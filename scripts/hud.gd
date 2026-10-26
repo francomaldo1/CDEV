@@ -168,7 +168,18 @@ func _setup_inventory_slots() -> void:
 	inventory_container = HBoxContainer.new()
 	inventory_container.name = "InventorySlotsContainer"
 	inventory_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	inventory_container.position = Vector2(25, 20)
+	inventory_container.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
+	inventory_container.anchor_left = 0.5
+	inventory_container.anchor_right = 0.5
+	inventory_container.anchor_top = 1.0
+	inventory_container.anchor_bottom = 1.0
+	inventory_container.offset_left = -180.0
+	inventory_container.offset_right = 180.0
+	inventory_container.offset_top = -152.0
+	inventory_container.offset_bottom = -102.0
+	inventory_container.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	inventory_container.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	inventory_container.alignment = BoxContainer.ALIGNMENT_CENTER
 	inventory_container.add_theme_constant_override("separation", 8)
 	add_child(inventory_container)
 	

@@ -30,8 +30,8 @@ spot_angle = 38.0
 visible = false
 light_color = Color(0.82, 0.95, 0.90, 1)
 light_energy = 1.4
-spot_range = 26.0
-spot_attenuation = 1.1
-spot_angle = 62.0
+spot_range = 38.0
+spot_attenuation = 0.55
+spot_angle = 68.0
 
 [node name="RetroPostProcess" parent="." instance=ExtResource("2_retro")]

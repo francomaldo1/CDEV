@@ -117,25 +117,28 @@ void fragment() {
     float gray = dot(color, vec3(0.299, 0.587, 0.114));
     color = mix(color, vec3(gray), 0.06);
     
-    // Modo Vision Nocturna estilo Outlast Camcorder exacta
+    // Modo Vision Nocturna estilo Outlast Camcorder exacta (menos brillante, sombras profundas, haz IR circular)
     if (night_vision_active > 0.0) {
         float luma = dot(color, vec3(0.299, 0.587, 0.114));
-        float boosted_luma = pow(luma, 0.68) * 1.55;
         vec2 centered_uv = uv - 0.5;
+        centered_uv.x *= screen_size.x / screen_size.y;
         float r = length(centered_uv);
-        float ir_cone = smoothstep(0.70, 0.15, r);
-        boosted_luma *= (ir_cone * 0.70 + 0.30);
-        vec3 nv_dark = vec3(0.03, 0.08, 0.06);
-        vec3 nv_mid  = vec3(0.42, 0.75, 0.60);
-        vec3 nv_high = vec3(0.90, 0.98, 0.93);
+        float ir_beam = smoothstep(0.65, 0.18, r);
+        float boosted = pow(luma * 1.45, 0.80) * (ir_beam * 0.94 + 0.06);
+        vec3 c_dark  = vec3(0.00, 0.015, 0.008);
+        vec3 c_edge  = vec3(0.059, 0.137, 0.094);
+        vec3 c_mid   = vec3(0.388, 0.596, 0.475);
+        vec3 c_high  = vec3(0.761, 0.961, 0.875);
         vec3 nv_outlast;
-        if (boosted_luma < 0.5) {
-            nv_outlast = mix(nv_dark, nv_mid, clamp(boosted_luma * 2.0, 0.0, 1.0));
+        if (boosted < 0.18) {
+            nv_outlast = mix(c_dark, c_edge, boosted / 0.18);
+        } else if (boosted < 0.65) {
+            nv_outlast = mix(c_edge, c_mid, (boosted - 0.18) / 0.47);
         } else {
-            nv_outlast = mix(nv_mid, nv_high, clamp((boosted_luma - 0.5) * 2.0, 0.0, 1.0));
+            nv_outlast = mix(c_mid, c_high, clamp((boosted - 0.65) / 0.35, 0.0, 1.0));
         }
-        float nv_grain = (random(clamped_uv + vec2(fract(TIME * 13.7), fract(TIME * 29.3))) - 0.5) * 0.05;
-        nv_outlast += vec3(nv_grain * 0.7, nv_grain * 1.0, nv_grain * 0.8);
+        float nv_grain = (random(clamped_uv + vec2(fract(TIME * 14.3), fract(TIME * 31.7))) - 0.5) * 0.035;
+        nv_outlast += vec3(nv_grain * 0.4, nv_grain * 0.7, nv_grain * 0.5);
         color = mix(color, nv_outlast, night_vision_active);
     }
 
