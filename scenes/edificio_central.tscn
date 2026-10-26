@@ -2259,58 +2259,44 @@ use_collision = true
 size = Vector3(0.42, 0.45, 0.06)
 material = ExtResource("11_g4jqe")
 
-[node name="LuzCafePB_N1" type="SpotLight3D" parent="PlantaBaja/HabitacionesPB" unique_id=554179628]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 53, 3.8, -9)
-spot_range = 8.0
-spot_angle = 60.0
+[node name="LuzCafePB_N1" type="OmniLight3D" parent="PlantaBaja/HabitacionesPB" unique_id=554179628]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53, 3.8, -9)
 light_color = Color(1, 0.96, 0.88, 1)
 light_energy = 0.28
 omni_range = 12.0
 
-[node name="LuzCafePB_N2" type="SpotLight3D" parent="PlantaBaja/HabitacionesPB" unique_id=1548536911]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 60, 3.8, -9)
-spot_range = 8.0
-spot_angle = 60.0
+[node name="LuzCafePB_N2" type="OmniLight3D" parent="PlantaBaja/HabitacionesPB" unique_id=1548536911]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 3.8, -9)
 light_color = Color(1, 0.96, 0.88, 1)
 light_energy = 0.28
 omni_range = 12.0
 
-[node name="LuzCafePB_S1" type="SpotLight3D" parent="PlantaBaja/HabitacionesPB" unique_id=1965485496]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 52, 3.8, 6.5)
-spot_range = 8.0
-spot_angle = 60.0
+[node name="LuzCafePB_S1" type="OmniLight3D" parent="PlantaBaja/HabitacionesPB" unique_id=1965485496]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 52, 3.8, 6.5)
 light_color = Color(1, 0.96, 0.88, 1)
 light_energy = 0.28
 omni_range = 12.0
 
-[node name="LuzCafePB_S2" type="SpotLight3D" parent="PlantaBaja/HabitacionesPB" unique_id=2135417584]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 60, 3.8, 6.5)
-spot_range = 8.0
-spot_angle = 60.0
+[node name="LuzCafePB_S2" type="OmniLight3D" parent="PlantaBaja/HabitacionesPB" unique_id=2135417584]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 3.8, 6.5)
 light_color = Color(1, 0.96, 0.88, 1)
 light_energy = 0.25
 omni_range = 12.0
 
-[node name="LuzCafePB_M1" type="SpotLight3D" parent="PlantaBaja/HabitacionesPB" unique_id=1948536912]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 51.5, 3.8, -1.3)
-spot_range = 8.0
-spot_angle = 60.0
+[node name="LuzCafePB_M1" type="OmniLight3D" parent="PlantaBaja/HabitacionesPB" unique_id=1948536912]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.5, 3.8, -1.3)
 light_color = Color(1, 0.96, 0.88, 1)
 light_energy = 0.28
 omni_range = 12.0
 
-[node name="LuzCafePB_M2" type="SpotLight3D" parent="PlantaBaja/HabitacionesPB" unique_id=1948536913]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 59.5, 3.8, -1.3)
-spot_range = 8.0
-spot_angle = 60.0
+[node name="LuzCafePB_M2" type="OmniLight3D" parent="PlantaBaja/HabitacionesPB" unique_id=1948536913]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.5, 3.8, -1.3)
 light_color = Color(1, 0.96, 0.88, 1)
 light_energy = 0.28
 omni_range = 12.0
 
-[node name="LuzCafePB_Peronachos" type="SpotLight3D" parent="PlantaBaja/HabitacionesPB" unique_id=1948536914]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 51.1, 3.8, 3.2)
-spot_range = 8.0
-spot_angle = 60.0
+[node name="LuzCafePB_Peronachos" type="OmniLight3D" parent="PlantaBaja/HabitacionesPB" unique_id=1948536914]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.1, 3.8, 3.2)
 light_color = Color(1, 0.96, 0.88, 1)
 light_energy = 0.32
 omni_range = 10.0
@@ -10250,343 +10236,343 @@ shape = SubResource("BoxShape3D_ramp_z")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 3.8, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzN_0_-15" type="OmniLight3D" parent="Iluminacion" unique_id=1758662212]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 3.8, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzN_0_5" type="OmniLight3D" parent="Iluminacion" unique_id=357788118]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 3.8, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzN_0_25" type="OmniLight3D" parent="Iluminacion" unique_id=97557268]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 3.8, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzN_0_42" type="OmniLight3D" parent="Iluminacion" unique_id=2125024479]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 3.8, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzW_0_-20" type="OmniLight3D" parent="Iluminacion" unique_id=80344666]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 3.8, -20)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzW_0_-5" type="OmniLight3D" parent="Iluminacion" unique_id=833110907]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 3.8, -5)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzW_0_10" type="OmniLight3D" parent="Iluminacion" unique_id=1395245080]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 3.8, 10)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzE_0_-35" type="OmniLight3D" parent="Iluminacion" unique_id=1881163511]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 3.8, -35)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzE_0_-20" type="OmniLight3D" parent="Iluminacion" unique_id=1877808653]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 3.8, -20)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzE_0_-5" type="OmniLight3D" parent="Iluminacion" unique_id=942608371]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 3.8, -5)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzE_0_10" type="OmniLight3D" parent="Iluminacion" unique_id=530006498]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 3.8, 10)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzS_0_-55" type="OmniLight3D" parent="Iluminacion" unique_id=1095732532]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55, 3.8, 30)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzS_0_-35" type="OmniLight3D" parent="Iluminacion" unique_id=2024443760]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 3.8, 30)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzS_0_-15" type="OmniLight3D" parent="Iluminacion" unique_id=1599276475]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 3.8, 30)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzS_0_0" type="OmniLight3D" parent="Iluminacion" unique_id=714227564]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.8, 30)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzS_0_15" type="OmniLight3D" parent="Iluminacion" unique_id=342494087]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 3.8, 30)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzS_0_35" type="OmniLight3D" parent="Iluminacion" unique_id=1970482175]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 3.8, 30)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzS_0_55" type="OmniLight3D" parent="Iluminacion" unique_id=110315203]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 3.8, 30)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzN_1_-35" type="OmniLight3D" parent="Iluminacion" unique_id=1212673366]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 8.3, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzN_1_-15" type="OmniLight3D" parent="Iluminacion" unique_id=1790797503]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 8.3, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzN_1_5" type="OmniLight3D" parent="Iluminacion" unique_id=1252096262]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 8.3, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzN_1_25" type="OmniLight3D" parent="Iluminacion" unique_id=1462803328]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 8.3, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzN_1_42" type="OmniLight3D" parent="Iluminacion" unique_id=868027865]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 8.3, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzW_1_-20" type="OmniLight3D" parent="Iluminacion" unique_id=179849245]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 8.3, -20)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzW_1_-5" type="OmniLight3D" parent="Iluminacion" unique_id=1738001090]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 8.3, -5)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzW_1_10" type="OmniLight3D" parent="Iluminacion" unique_id=1540967019]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 8.3, 10)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzE_1_-35" type="OmniLight3D" parent="Iluminacion" unique_id=580595963]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 8.3, -35)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzE_1_-20" type="OmniLight3D" parent="Iluminacion" unique_id=281453490]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 8.3, -20)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzE_1_-5" type="OmniLight3D" parent="Iluminacion" unique_id=99459545]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 8.3, -5)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzE_1_10" type="OmniLight3D" parent="Iluminacion" unique_id=1561895578]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 8.3, 10)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzS_1_-55" type="OmniLight3D" parent="Iluminacion" unique_id=1495636754]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55, 8.3, 30)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzS_1_-35" type="OmniLight3D" parent="Iluminacion" unique_id=211060080]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 8.3, 30)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzS_1_-15" type="OmniLight3D" parent="Iluminacion" unique_id=1932935046]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 8.3, 30)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzS_1_0" type="OmniLight3D" parent="Iluminacion" unique_id=1199289481]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.3, 30)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzS_1_15" type="OmniLight3D" parent="Iluminacion" unique_id=581225423]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 8.3, 30)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzS_1_35" type="OmniLight3D" parent="Iluminacion" unique_id=141507876]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 8.3, 30)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzS_1_55" type="OmniLight3D" parent="Iluminacion" unique_id=322994950]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 8.3, 30)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzN_2_-35" type="OmniLight3D" parent="Iluminacion" unique_id=382267342]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 12.8, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzN_2_-15" type="OmniLight3D" parent="Iluminacion" unique_id=811738981]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 12.8, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzN_2_5" type="OmniLight3D" parent="Iluminacion" unique_id=354021895]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 12.8, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzN_2_25" type="OmniLight3D" parent="Iluminacion" unique_id=1633217193]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 12.8, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzN_2_42" type="OmniLight3D" parent="Iluminacion" unique_id=1573249484]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 12.8, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzW_2_-20" type="OmniLight3D" parent="Iluminacion" unique_id=2049852187]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 12.8, -20)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzW_2_-5" type="OmniLight3D" parent="Iluminacion" unique_id=2116847873]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 12.8, -5)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzW_2_10" type="OmniLight3D" parent="Iluminacion" unique_id=3128950]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 12.8, 10)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzE_2_-35" type="OmniLight3D" parent="Iluminacion" unique_id=1742668598]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 12.8, -35)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzE_2_-20" type="OmniLight3D" parent="Iluminacion" unique_id=1644824378]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 12.8, -20)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzE_2_-5" type="OmniLight3D" parent="Iluminacion" unique_id=969060386]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 12.8, -5)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzE_2_10" type="OmniLight3D" parent="Iluminacion" unique_id=435114014]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 12.8, 10)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzS_2_-55" type="OmniLight3D" parent="Iluminacion" unique_id=1254941893]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55, 12.8, 30)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzS_2_-35" type="OmniLight3D" parent="Iluminacion" unique_id=586556440]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 12.8, 30)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzS_2_-15" type="OmniLight3D" parent="Iluminacion" unique_id=2095872168]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 12.8, 30)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzS_2_0" type="OmniLight3D" parent="Iluminacion" unique_id=444431717]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.8, 30)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzS_2_15" type="OmniLight3D" parent="Iluminacion" unique_id=1376336157]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 12.8, 30)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzS_2_35" type="OmniLight3D" parent="Iluminacion" unique_id=176642427]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 12.8, 30)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzS_2_55" type="OmniLight3D" parent="Iluminacion" unique_id=1086207201]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 12.8, 30)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-omni_range = 8.0
+omni_range = 14.0
 
 [node name="LuzAud_-8_50" type="OmniLight3D" parent="Iluminacion" unique_id=1919949964]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 8, 50)
@@ -10612,495 +10598,495 @@ light_color = Color(1, 0.9, 0.7, 1)
 light_energy = 0.225
 omni_range = 20.0
 
-[node name="LuzAula_101" type="SpotLight3D" parent="Iluminacion" unique_id=780001]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -52.5, 3.79999995231628, -39.7999992370605)
+[node name="LuzAula_101" type="OmniLight3D" parent="Iluminacion" unique_id=780001]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 3.79999995231628, -39.7999992370605)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzAula_102" type="SpotLight3D" parent="Iluminacion" unique_id=780002]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -27.5, 3.79999995231628, -39.7999992370605)
+[node name="LuzAula_102" type="OmniLight3D" parent="Iluminacion" unique_id=780002]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 3.79999995231628, -39.7999992370605)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzAula_103" type="SpotLight3D" parent="Iluminacion" unique_id=780003]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -2.5, 3.79999995231628, -39.7999992370605)
+[node name="LuzAula_103" type="OmniLight3D" parent="Iluminacion" unique_id=780003]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 3.79999995231628, -39.7999992370605)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzAula_104_A" type="SpotLight3D" parent="Iluminacion" unique_id=780004]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 17.0, 3.79999995231628, -39.7999992370605)
+[node name="LuzAula_104_A" type="OmniLight3D" parent="Iluminacion" unique_id=780004]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.0, 3.79999995231628, -39.7999992370605)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzAula_104_B" type="SpotLight3D" parent="Iluminacion" unique_id=780005]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 29.0, 3.79999995231628, -39.7999992370605)
+[node name="LuzAula_104_B" type="OmniLight3D" parent="Iluminacion" unique_id=780005]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.0, 3.79999995231628, -39.7999992370605)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzAula_105" type="SpotLight3D" parent="Iluminacion" unique_id=780006]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -57.2999992370605, 3.79999995231628, -25.7999992370605)
+[node name="LuzAula_105" type="OmniLight3D" parent="Iluminacion" unique_id=780006]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57.2999992370605, 3.79999995231628, -25.7999992370605)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzAula_106" type="SpotLight3D" parent="Iluminacion" unique_id=780007]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -57.2999992370605, 3.79999995231628, -11.8000001907349)
+[node name="LuzAula_106" type="OmniLight3D" parent="Iluminacion" unique_id=780007]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57.2999992370605, 3.79999995231628, -11.8000001907349)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzAula_107" type="SpotLight3D" parent="Iluminacion" unique_id=780008]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -57.2999992370605, 3.79999995231628, 2.20000004768372)
+[node name="LuzAula_107" type="OmniLight3D" parent="Iluminacion" unique_id=780008]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57.2999992370605, 3.79999995231628, 2.20000004768372)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzAula_108" type="SpotLight3D" parent="Iluminacion" unique_id=780009]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -57.2999992370605, 3.79999995231628, 17.2000007629395)
+[node name="LuzAula_108" type="OmniLight3D" parent="Iluminacion" unique_id=780009]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57.2999992370605, 3.79999995231628, 17.2000007629395)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzAula_109" type="SpotLight3D" parent="Iluminacion" unique_id=780010]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -28.5, 3.79999995231628, -16.7999992370605)
+[node name="LuzAula_109" type="OmniLight3D" parent="Iluminacion" unique_id=780010]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.5, 3.79999995231628, -16.7999992370605)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzLab_Electronica" type="SpotLight3D" parent="Iluminacion" unique_id=780011]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -27.0, 3.79999995231628, 0.5)
+[node name="LuzLab_Electronica" type="OmniLight3D" parent="Iluminacion" unique_id=780011]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.0, 3.79999995231628, 0.5)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzAula_110" type="SpotLight3D" parent="Iluminacion" unique_id=780012]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -28.5, 3.79999995231628, 18.2000007629395)
+[node name="LuzAula_110" type="OmniLight3D" parent="Iluminacion" unique_id=780012]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.5, 3.79999995231628, 18.2000007629395)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzAula_111" type="SpotLight3D" parent="Iluminacion" unique_id=780013]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 25.5, 3.79999995231628, -16.7999992370605)
+[node name="LuzAula_111" type="OmniLight3D" parent="Iluminacion" unique_id=780013]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5, 3.79999995231628, -16.7999992370605)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzAula_112" type="SpotLight3D" parent="Iluminacion" unique_id=780014]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 25.5, 3.79999995231628, -0.80000001192093)
+[node name="LuzAula_112" type="OmniLight3D" parent="Iluminacion" unique_id=780014]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5, 3.79999995231628, -0.80000001192093)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzAula_113" type="SpotLight3D" parent="Iluminacion" unique_id=780015]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 25.5, 3.79999995231628, 15.1999998092651)
+[node name="LuzAula_113" type="OmniLight3D" parent="Iluminacion" unique_id=780015]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5, 3.79999995231628, 15.1999998092651)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzAula_114_A" type="SpotLight3D" parent="Iluminacion" unique_id=780016]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 55.9000015258789, 3.79999995231628, -37.0)
+[node name="LuzAula_114_A" type="OmniLight3D" parent="Iluminacion" unique_id=780016]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.9000015258789, 3.79999995231628, -37.0)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzAula_114_B" type="SpotLight3D" parent="Iluminacion" unique_id=780017]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 55.9000015258789, 3.79999995231628, -23.0)
+[node name="LuzAula_114_B" type="OmniLight3D" parent="Iluminacion" unique_id=780017]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.9000015258789, 3.79999995231628, -23.0)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzAula_115" type="SpotLight3D" parent="Iluminacion" unique_id=780018]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 55.5, 3.79999995231628, 17.2000007629395)
+[node name="LuzAula_115" type="OmniLight3D" parent="Iluminacion" unique_id=780018]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.5, 3.79999995231628, 17.2000007629395)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzFoto_Oeste" type="SpotLight3D" parent="Iluminacion" unique_id=780019]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -35.0, 3.79999995231628, 40.0)
+[node name="LuzFoto_Oeste" type="OmniLight3D" parent="Iluminacion" unique_id=780019]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.0, 3.79999995231628, 40.0)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzFoto_Este" type="SpotLight3D" parent="Iluminacion" unique_id=780020]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 35.0, 3.79999995231628, 40.0)
+[node name="LuzFoto_Este" type="OmniLight3D" parent="Iluminacion" unique_id=780020]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.0, 3.79999995231628, 40.0)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzP1_Bedelia_A" type="SpotLight3D" parent="Iluminacion" unique_id=780021]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -47.0, 8.30000019073486, -39.0)
+[node name="LuzP1_Bedelia_A" type="OmniLight3D" parent="Iluminacion" unique_id=780021]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47.0, 8.30000019073486, -39.0)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzP1_Bedelia_B" type="SpotLight3D" parent="Iluminacion" unique_id=780022]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -33.0, 8.30000019073486, -39.0)
+[node name="LuzP1_Bedelia_B" type="OmniLight3D" parent="Iluminacion" unique_id=780022]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.0, 8.30000019073486, -39.0)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzP1_Direccion" type="SpotLight3D" parent="Iluminacion" unique_id=780023]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 10.0, 8.30000019073486, -39.0)
+[node name="LuzP1_Direccion" type="OmniLight3D" parent="Iluminacion" unique_id=780023]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0, 8.30000019073486, -39.0)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzP1_Sistemas" type="SpotLight3D" parent="Iluminacion" unique_id=780024]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -56.0, 8.30000019073486, -19.0)
+[node name="LuzP1_Sistemas" type="OmniLight3D" parent="Iluminacion" unique_id=780024]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.0, 8.30000019073486, -19.0)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzP1_Electronica" type="SpotLight3D" parent="Iluminacion" unique_id=780025]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -56.0, 8.30000019073486, 10.0)
+[node name="LuzP1_Electronica" type="OmniLight3D" parent="Iluminacion" unique_id=780025]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.0, 8.30000019073486, 10.0)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzP1_CETRA" type="SpotLight3D" parent="Iluminacion" unique_id=780026]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 56.0, 8.30000019073486, -27.5)
+[node name="LuzP1_CETRA" type="OmniLight3D" parent="Iluminacion" unique_id=780026]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56.0, 8.30000019073486, -27.5)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzP1_Biblioteca" type="SpotLight3D" parent="Iluminacion" unique_id=780027]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 56.0, 8.30000019073486, 7.5)
+[node name="LuzP1_Biblioteca" type="OmniLight3D" parent="Iluminacion" unique_id=780027]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56.0, 8.30000019073486, 7.5)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzAula_201" type="SpotLight3D" parent="Iluminacion" unique_id=780028]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -52.5, 12.8000001907349, -39.7999992370605)
+[node name="LuzAula_201" type="OmniLight3D" parent="Iluminacion" unique_id=780028]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 12.8000001907349, -39.7999992370605)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzAula_202" type="SpotLight3D" parent="Iluminacion" unique_id=780029]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -27.5, 12.8000001907349, -39.7999992370605)
+[node name="LuzAula_202" type="OmniLight3D" parent="Iluminacion" unique_id=780029]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 12.8000001907349, -39.7999992370605)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzAula_203" type="SpotLight3D" parent="Iluminacion" unique_id=780030]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -2.5, 12.8000001907349, -39.7999992370605)
+[node name="LuzAula_203" type="OmniLight3D" parent="Iluminacion" unique_id=780030]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 12.8000001907349, -39.7999992370605)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzAula_204_A" type="SpotLight3D" parent="Iluminacion" unique_id=780031]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 17.0, 12.8000001907349, -39.7999992370605)
+[node name="LuzAula_204_A" type="OmniLight3D" parent="Iluminacion" unique_id=780031]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.0, 12.8000001907349, -39.7999992370605)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzAula_204_B" type="SpotLight3D" parent="Iluminacion" unique_id=780032]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 29.0, 12.8000001907349, -39.7999992370605)
+[node name="LuzAula_204_B" type="OmniLight3D" parent="Iluminacion" unique_id=780032]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.0, 12.8000001907349, -39.7999992370605)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzAula_205" type="SpotLight3D" parent="Iluminacion" unique_id=780033]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -57.2999992370605, 12.8000001907349, -25.7999992370605)
+[node name="LuzAula_205" type="OmniLight3D" parent="Iluminacion" unique_id=780033]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57.2999992370605, 12.8000001907349, -25.7999992370605)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzAula_206" type="SpotLight3D" parent="Iluminacion" unique_id=780034]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -57.2999992370605, 12.8000001907349, -11.8000001907349)
+[node name="LuzAula_206" type="OmniLight3D" parent="Iluminacion" unique_id=780034]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57.2999992370605, 12.8000001907349, -11.8000001907349)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzAula_207" type="SpotLight3D" parent="Iluminacion" unique_id=780035]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -57.2999992370605, 12.8000001907349, 2.20000004768372)
+[node name="LuzAula_207" type="OmniLight3D" parent="Iluminacion" unique_id=780035]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57.2999992370605, 12.8000001907349, 2.20000004768372)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzAula_208" type="SpotLight3D" parent="Iluminacion" unique_id=780036]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -57.2999992370605, 12.8000001907349, 17.2000007629395)
+[node name="LuzAula_208" type="OmniLight3D" parent="Iluminacion" unique_id=780036]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57.2999992370605, 12.8000001907349, 17.2000007629395)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzAula_209" type="SpotLight3D" parent="Iluminacion" unique_id=780037]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -28.5, 12.8000001907349, -16.7999992370605)
+[node name="LuzAula_209" type="OmniLight3D" parent="Iluminacion" unique_id=780037]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.5, 12.8000001907349, -16.7999992370605)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzAula_210_Magna_A" type="SpotLight3D" parent="Iluminacion" unique_id=780038]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -32.0, 12.8000001907349, 0.40000000596046)
+[node name="LuzAula_210_Magna_A" type="OmniLight3D" parent="Iluminacion" unique_id=780038]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.0, 12.8000001907349, 0.40000000596046)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzAula_210_Magna_B" type="SpotLight3D" parent="Iluminacion" unique_id=780039]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -23.0, 12.8000001907349, 0.40000000596046)
+[node name="LuzAula_210_Magna_B" type="OmniLight3D" parent="Iluminacion" unique_id=780039]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.0, 12.8000001907349, 0.40000000596046)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzAula_211" type="SpotLight3D" parent="Iluminacion" unique_id=780040]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -28.5, 12.8000001907349, 18.2000007629395)
+[node name="LuzAula_211" type="OmniLight3D" parent="Iluminacion" unique_id=780040]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.5, 12.8000001907349, 18.2000007629395)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzAula_212" type="SpotLight3D" parent="Iluminacion" unique_id=780041]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 25.5, 12.8000001907349, -16.7999992370605)
+[node name="LuzAula_212" type="OmniLight3D" parent="Iluminacion" unique_id=780041]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5, 12.8000001907349, -16.7999992370605)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzAula_213" type="SpotLight3D" parent="Iluminacion" unique_id=780042]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 25.5, 12.8000001907349, -0.80000001192093)
+[node name="LuzAula_213" type="OmniLight3D" parent="Iluminacion" unique_id=780042]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5, 12.8000001907349, -0.80000001192093)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzAula_214" type="SpotLight3D" parent="Iluminacion" unique_id=780043]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 25.5, 12.8000001907349, 15.1999998092651)
+[node name="LuzAula_214" type="OmniLight3D" parent="Iluminacion" unique_id=780043]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5, 12.8000001907349, 15.1999998092651)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzAula_215_A" type="SpotLight3D" parent="Iluminacion" unique_id=780044]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 55.9000015258789, 12.8000001907349, -37.0)
+[node name="LuzAula_215_A" type="OmniLight3D" parent="Iluminacion" unique_id=780044]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.9000015258789, 12.8000001907349, -37.0)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzAula_215_B" type="SpotLight3D" parent="Iluminacion" unique_id=780045]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 55.9000015258789, 12.8000001907349, -23.0)
+[node name="LuzAula_215_B" type="OmniLight3D" parent="Iluminacion" unique_id=780045]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.9000015258789, 12.8000001907349, -23.0)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzAula_216" type="SpotLight3D" parent="Iluminacion" unique_id=780046]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 56.0, 12.8000001907349, -3.0)
+[node name="LuzAula_216" type="OmniLight3D" parent="Iluminacion" unique_id=780046]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56.0, 12.8000001907349, -3.0)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzAula_217" type="SpotLight3D" parent="Iluminacion" unique_id=780047]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 56.4000015258789, 12.8000001907349, 17.2000007629395)
+[node name="LuzAula_217" type="OmniLight3D" parent="Iluminacion" unique_id=780047]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56.4000015258789, 12.8000001907349, 17.2000007629395)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzAula_218" type="SpotLight3D" parent="Iluminacion" unique_id=780048]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -36.5, 12.8000001907349, 39.0)
+[node name="LuzAula_218" type="OmniLight3D" parent="Iluminacion" unique_id=780048]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.5, 12.8000001907349, 39.0)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
-[node name="LuzAula_219" type="SpotLight3D" parent="Iluminacion" unique_id=780049]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 36.7000007629395, 12.8000001907349, 36.0)
+[node name="LuzAula_219" type="OmniLight3D" parent="Iluminacion" unique_id=780049]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.7000007629395, 12.8000001907349, 36.0)
 light_color = Color(0.92, 0.95, 1, 1)
-light_energy = 0.7
+light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
+distance_fade_shadow = 24.0
 distance_fade_length = 8.0
-spot_range = 8.5
-spot_angle = 58.0
+omni_range = 15.0
 
 [node name="ExteriorEntrada" type="Node3D" parent="." unique_id=982000]
 
@@ -11227,7 +11213,7 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -52.3,
 light_color = Color(0.85, 0.92, 1, 1)
 light_energy = 3.5
 spot_range = 28.0
-spot_angle = 58.0
+spot_angle = 55.0
 
 [node name="AutoBlanco" type="Node3D" parent="ExteriorEntrada" unique_id=982040]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -64.5, 0, 54.5)
