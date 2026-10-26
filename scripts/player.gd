@@ -218,6 +218,10 @@ func toggle_flashlight() -> void:
 	if flashlight:
 		flashlight.visible = not flashlight.visible
 
+func _process(delta: float) -> void:
+	_update_night_vision_process(delta)
+	_update_heartbeat(delta)
+
 func _physics_process(delta: float) -> void:
 	# Si hay un menú/examen abierto o el jugador está congelado en una cinemática de terror
 	if is_hidden:
@@ -296,9 +300,7 @@ func _physics_process(delta: float) -> void:
 	# Head Bobbing y pasos
 	_apply_head_bob_and_footsteps(delta, is_sprinting)
 	
-	# Latidos cardíacos cuando el peligro acecha
-	_update_heartbeat(delta)
-	_update_night_vision_process(delta)
+
 
 func _setup_audio_players() -> void:
 	footstep_player = AudioStreamPlayer.new()
