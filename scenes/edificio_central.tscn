@@ -10604,8 +10604,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzAula_102" type="OmniLight3D" parent="Iluminacion" unique_id=780002]
@@ -10614,8 +10615,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzAula_103" type="OmniLight3D" parent="Iluminacion" unique_id=780003]
@@ -10624,8 +10626,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzAula_104_A" type="OmniLight3D" parent="Iluminacion" unique_id=780004]
@@ -10634,8 +10637,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzAula_104_B" type="OmniLight3D" parent="Iluminacion" unique_id=780005]
@@ -10644,8 +10648,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzAula_105" type="OmniLight3D" parent="Iluminacion" unique_id=780006]
@@ -10654,8 +10659,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzAula_106" type="OmniLight3D" parent="Iluminacion" unique_id=780007]
@@ -10664,8 +10670,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzAula_107" type="OmniLight3D" parent="Iluminacion" unique_id=780008]
@@ -10674,8 +10681,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzAula_108" type="OmniLight3D" parent="Iluminacion" unique_id=780009]
@@ -10684,8 +10692,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzAula_109" type="OmniLight3D" parent="Iluminacion" unique_id=780010]
@@ -10694,8 +10703,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzLab_Electronica" type="OmniLight3D" parent="Iluminacion" unique_id=780011]
@@ -10704,8 +10714,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzAula_110" type="OmniLight3D" parent="Iluminacion" unique_id=780012]
@@ -10714,8 +10725,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzAula_111" type="OmniLight3D" parent="Iluminacion" unique_id=780013]
@@ -10724,8 +10736,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzAula_112" type="OmniLight3D" parent="Iluminacion" unique_id=780014]
@@ -10734,8 +10747,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzAula_113" type="OmniLight3D" parent="Iluminacion" unique_id=780015]
@@ -10744,8 +10758,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzAula_114_A" type="OmniLight3D" parent="Iluminacion" unique_id=780016]
@@ -10754,8 +10769,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzAula_114_B" type="OmniLight3D" parent="Iluminacion" unique_id=780017]
@@ -10764,8 +10780,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzAula_115" type="OmniLight3D" parent="Iluminacion" unique_id=780018]
@@ -10774,8 +10791,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzFoto_Oeste" type="OmniLight3D" parent="Iluminacion" unique_id=780019]
@@ -10784,8 +10802,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzFoto_Este" type="OmniLight3D" parent="Iluminacion" unique_id=780020]
@@ -10794,8 +10813,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzP1_Bedelia_A" type="OmniLight3D" parent="Iluminacion" unique_id=780021]
@@ -10804,8 +10824,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzP1_Bedelia_B" type="OmniLight3D" parent="Iluminacion" unique_id=780022]
@@ -10814,8 +10835,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzP1_Direccion" type="OmniLight3D" parent="Iluminacion" unique_id=780023]
@@ -10824,8 +10846,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzP1_Sistemas" type="OmniLight3D" parent="Iluminacion" unique_id=780024]
@@ -10834,8 +10857,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzP1_Electronica" type="OmniLight3D" parent="Iluminacion" unique_id=780025]
@@ -10844,8 +10868,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzP1_CETRA" type="OmniLight3D" parent="Iluminacion" unique_id=780026]
@@ -10854,8 +10879,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzP1_Biblioteca" type="OmniLight3D" parent="Iluminacion" unique_id=780027]
@@ -10864,8 +10890,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzAula_201" type="OmniLight3D" parent="Iluminacion" unique_id=780028]
@@ -10874,8 +10901,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzAula_202" type="OmniLight3D" parent="Iluminacion" unique_id=780029]
@@ -10884,8 +10912,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzAula_203" type="OmniLight3D" parent="Iluminacion" unique_id=780030]
@@ -10894,8 +10923,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzAula_204_A" type="OmniLight3D" parent="Iluminacion" unique_id=780031]
@@ -10904,8 +10934,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzAula_204_B" type="OmniLight3D" parent="Iluminacion" unique_id=780032]
@@ -10914,8 +10945,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzAula_205" type="OmniLight3D" parent="Iluminacion" unique_id=780033]
@@ -10924,8 +10956,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzAula_206" type="OmniLight3D" parent="Iluminacion" unique_id=780034]
@@ -10934,8 +10967,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzAula_207" type="OmniLight3D" parent="Iluminacion" unique_id=780035]
@@ -10944,8 +10978,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzAula_208" type="OmniLight3D" parent="Iluminacion" unique_id=780036]
@@ -10954,8 +10989,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzAula_209" type="OmniLight3D" parent="Iluminacion" unique_id=780037]
@@ -10964,8 +11000,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzAula_210_Magna_A" type="OmniLight3D" parent="Iluminacion" unique_id=780038]
@@ -10974,8 +11011,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzAula_210_Magna_B" type="OmniLight3D" parent="Iluminacion" unique_id=780039]
@@ -10984,8 +11022,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzAula_211" type="OmniLight3D" parent="Iluminacion" unique_id=780040]
@@ -10994,8 +11033,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzAula_212" type="OmniLight3D" parent="Iluminacion" unique_id=780041]
@@ -11004,8 +11044,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzAula_213" type="OmniLight3D" parent="Iluminacion" unique_id=780042]
@@ -11014,8 +11055,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzAula_214" type="OmniLight3D" parent="Iluminacion" unique_id=780043]
@@ -11024,8 +11066,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzAula_215_A" type="OmniLight3D" parent="Iluminacion" unique_id=780044]
@@ -11034,8 +11077,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzAula_215_B" type="OmniLight3D" parent="Iluminacion" unique_id=780045]
@@ -11044,8 +11088,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzAula_216" type="OmniLight3D" parent="Iluminacion" unique_id=780046]
@@ -11054,8 +11099,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzAula_217" type="OmniLight3D" parent="Iluminacion" unique_id=780047]
@@ -11064,8 +11110,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzAula_218" type="OmniLight3D" parent="Iluminacion" unique_id=780048]
@@ -11074,8 +11121,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="LuzAula_219" type="OmniLight3D" parent="Iluminacion" unique_id=780049]
@@ -11084,8 +11132,9 @@ light_color = Color(0.92, 0.95, 1, 1)
 light_energy = 0.32
 distance_fade_enabled = true
 distance_fade_begin = 35.0
-distance_fade_shadow = 24.0
-distance_fade_length = 8.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
 omni_range = 15.0
 
 [node name="ExteriorEntrada" type="Node3D" parent="." unique_id=982000]
