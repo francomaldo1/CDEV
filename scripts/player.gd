@@ -69,6 +69,11 @@ func _ready() -> void:
 	floor_max_angle = deg_to_rad(50.0)
 	floor_block_on_wall = false
 
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_APPLICATION_FOCUS_IN:
+		if not _is_ui_active() and not is_frozen:
+			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
 func set_frozen(frozen: bool) -> void:
 	is_frozen = frozen
 	if is_frozen:
@@ -299,7 +304,7 @@ func _setup_audio_players() -> void:
 
 	jumpscare_player = AudioStreamPlayer.new()
 	jumpscare_player.name = "JumpscarePlayer"
-	jumpscare_player.stream = preload("res://audio/sfx/jumpscare_sound_effect.wav")
+	jumpscare_player.stream = load("res://audio/sfx/jumpscare_sound_effect.wav")
 	jumpscare_player.volume_db = 8.0
 	jumpscare_player.bus = &"Master"
 	add_child(jumpscare_player)
@@ -313,7 +318,7 @@ func _setup_audio_players() -> void:
 
 	stinger_player = AudioStreamPlayer.new()
 	stinger_player.name = "StingerPlayer"
-	stinger_player.stream = preload("res://audio/sfx/horror-stinger.mp3")
+	stinger_player.stream = load("res://audio/sfx/horror-stinger.mp3")
 	stinger_player.volume_db = 6.0
 	stinger_player.bus = &"Master"
 	add_child(stinger_player)
@@ -508,7 +513,7 @@ func consume_peronachos() -> bool:
 	time_since_sprint = stamina_regen_delay
 	
 	if snack_audio_player:
-		snack_audio_player.stream = preload("res://audio/sfx/eating-chips.mp3")
+		snack_audio_player.stream = load("res://audio/sfx/eating-chips.mp3")
 		snack_audio_player.pitch_scale = randf_range(0.96, 1.04)
 		snack_audio_player.play()
 		

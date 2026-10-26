@@ -82,7 +82,7 @@ func _try_take_bag() -> void:
 		bag.queue_free()
 		
 	if audio_player:
-		audio_player.stream = preload("res://audio/sfx/freesound_community-closing-a-bag-of-chips-103921.mp3")
+		audio_player.stream = load("res://audio/sfx/freesound_community-closing-a-bag-of-chips-103921.mp3")
 		audio_player.volume_db = 3.0
 		audio_player.pitch_scale = randf_range(0.96, 1.04)
 		audio_player.play()

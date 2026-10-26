@@ -406,7 +406,8 @@ func _setup_peronachos_shelves() -> void:
 			if child is MeshInstance3D and child.name.begins_with("Peronachos_T"):
 				existing_bags.append(child)
 				
-	original_shelf_area.register_external_bags(existing_bags)
+	if original_shelf_area.has_method("register_external_bags"):
+		original_shelf_area.register_external_bags(existing_bags)
 	
 	# 2. Instanciar el nuevo segundo estante al lado en X=51.65
 	var estante_scene = preload("res://scenes/estante_peronachos.tscn")
