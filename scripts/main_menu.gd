@@ -65,12 +65,39 @@ func _setup_audio() -> void:
 	add_child(sfx_player)
 
 func _setup_background_and_crt() -> void:
-	# Fondo oscuro con degradé
+	# Fondo oscuro base
 	var bg = ColorRect.new()
 	bg.name = "Background"
 	bg.set_anchors_preset(Control.PRESET_FULL_RECT)
-	bg.color = Color(0.02, 0.025, 0.035, 1.0)
+	bg.color = Color(0.015, 0.018, 0.025, 1.0)
 	add_child(bg)
+	
+	# Imagen de fondo: vista exterior desde el estacionamiento hacia la entrada
+	if ResourceLoader.exists("res://textures/bg_menu_estacionamiento.png"):
+		var bg_tex = load("res://textures/bg_menu_estacionamiento.png")
+		var bg_rect = TextureRect.new()
+		bg_rect.name = "BackgroundExteriorEstacionamiento"
+		bg_rect.texture = bg_tex
+		bg_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
+		bg_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		bg_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+		bg_rect.modulate = Color(0.72, 0.78, 0.88, 0.82)
+		add_child(bg_rect)
+		
+		# Gradiente oscuro sutil sobre el lado izquierdo para dar máxima legibilidad a los textos y botones
+		var left_scrim = ColorRect.new()
+		left_scrim.name = "LeftMenuScrim"
+		left_scrim.set_anchors_preset(Control.PRESET_LEFT_WIDE)
+		left_scrim.offset_right = 580.0
+		left_scrim.color = Color(0.01, 0.015, 0.025, 0.65)
+		add_child(left_scrim)
+		
+		# Viñeta oscura sutil de videocámara
+		var vignette = ColorRect.new()
+		vignette.name = "VignetteBorder"
+		vignette.set_anchors_preset(Control.PRESET_FULL_RECT)
+		vignette.color = Color(0.0, 0.0, 0.0, 0.22)
+		add_child(vignette)
 	
 	# Overlay sutil de líneas de escaneo (Scanlines CRT)
 	scanline_overlay = Control.new()
