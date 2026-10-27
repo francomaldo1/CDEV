@@ -76,7 +76,8 @@ func _ready() -> void:
 		
 	if instruction_label:
 		instruction_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		instruction_label.text = "[W,A,S,D] Mover | [Shift] Correr | [F] Linterna | [E] Usar/Esconderse | [Q] Peronachos | [F1] Cheats | [F3] Coords | [M] Guia"
+		instruction_label.visible = false
+		instruction_label.text = ""
 	if mic_container:
 		mic_container.visible = is_mic_active_visible
 

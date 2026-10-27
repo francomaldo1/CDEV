@@ -692,6 +692,21 @@ func _process_light_flicker(delta: float) -> void:
 		next_light_flicker_delay = randf_range(2.0, 4.5)
 		_trigger_random_light_flicker()
 		
+	# 1b. Titileo por proximidad al profesor al patrullar con la luz restablecida
+	if is_instance_valid(profesor) and profesor.visible:
+		var prof_pos = profesor.global_position
+		for l in building_lights_base_energy.keys():
+			if is_instance_valid(l) and l.visible and not active_light_flickers.has(l):
+				var d_prof = l.global_position.distance_to(prof_pos)
+				if d_prof < 14.0:
+					if randf() < 0.08:
+						var base_e = building_lights_base_energy.get(l, l.light_energy)
+						active_light_flickers[l] = {
+							"elapsed": 0.0,
+							"duration": randf_range(0.25, 0.70),
+							"base": base_e
+						}
+		
 	# 2. Animar las luces parpadeando activamente
 	var finished_lights: Array = []
 	for l in active_light_flickers.keys():

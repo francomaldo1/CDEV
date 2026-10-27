@@ -446,10 +446,10 @@ func _update_heartbeat(delta: float) -> void:
 			if heartbeat_player.volume_db <= -40.0:
 				heartbeat_player.stop()
 
-	# Proximidad al profesor y efecto pánico analógico (Opción C)
+	# Proximidad al profesor y efecto pánico analógico (Opción C - Distancia ampliada a 7.5m)
 	var prox_panic: float = 0.0
-	if is_instance_valid(prof) and prof.visible and dist < 6.0:
-		prox_panic = clampf(1.0 - (dist / 6.0), 0.0, 1.0)
+	if is_instance_valid(prof) and prof.visible and dist < 7.5:
+		prox_panic = clampf(1.0 - (dist / 7.5), 0.0, 1.0)
 	current_panic_glitch = lerpf(current_panic_glitch, prox_panic, delta * 6.0)
 
 	# Modulación del zumbido subgrave (sub-bass drone)
@@ -645,7 +645,7 @@ func _update_night_vision_process(delta: float) -> void:
 		if night_vision_battery <= 0.0:
 			toggle_night_vision()
 	else:
-		night_vision_battery = minf(100.0, night_vision_battery + delta * NIGHT_VISION_BATTERY_RECHARGE_SPEED)
+		pass # La batería de visión nocturna no se autorregenera al apagarse
 	
 	var target_nv = 1.0 if is_night_vision_on else 0.0
 	night_vision_active_val = lerpf(night_vision_active_val, target_nv, delta * 9.0)

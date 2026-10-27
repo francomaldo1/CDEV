@@ -74,6 +74,8 @@ var creature_col_shape: CollisionShape3D = null
 var scp_spawned: bool = false
 var is_waiting_for_turnaround: bool = false
 var scp_stinger_played: bool = false
+var is_scp_running: bool = false
+var scp_step_timer: float = 0.0
 
 # Materiales reutilizables
 var mat_door: StandardMaterial3D = null
@@ -223,7 +225,13 @@ func _create_fallback_phantom(parent: Node3D) -> void:
 	head.material = mat_phantom
 	parent.add_child(head)
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
+	if is_scp_running and is_instance_valid(phantom_node):
+		scp_step_timer -= delta
+		if scp_step_timer <= 0.0:
+			scp_step_timer = 0.20
+			_play_scp_footstep()
+			
 	if not is_instance_valid(player):
 		_find_player()
 		if not is_instance_valid(player):
@@ -303,23 +311,28 @@ func _trigger_scp_turnaround_scare() -> void:
 		return
 	scp_stinger_played = true
 	
-	# Sonido espectral/stinger que tiene asignado, reproducido recién al darse vuelta
+	# Desactivar colisión sólida para no bloquear el paso del jugador
+	if creature_col_shape:
+		creature_col_shape.set_deferred("disabled", true)
+	
+	# Sonido espectral/stinger con volumen MUCHO más potente e impactante
 	var whisper = AudioStreamPlayer3D.new()
 	whisper.name = "SCP096Stinger3D"
 	whisper.stream = HorrorAudio.get_screamer_stinger()
 	whisper.position = phantom_node.global_position + Vector3(0, 1.8, 0)
-	whisper.volume_db = 6.0
+	whisper.volume_db = 18.0
 	whisper.pitch_scale = 0.55
-	whisper.unit_size = 10.0
-	whisper.max_distance = 45.0
+	whisper.unit_size = 15.0
+	whisper.max_distance = 60.0
 	whisper.bus = &"Master"
 	add_child(whisper)
 	whisper.play()
 	whisper.finished.connect(whisper.queue_free)
 	
+	# Capa 2D directa a auriculares con pegada estéreo
 	var stinger_2d = AudioStreamPlayer.new()
 	stinger_2d.stream = HorrorAudio.get_screamer_stinger()
-	stinger_2d.volume_db = 1.0
+	stinger_2d.volume_db = 8.5
 	stinger_2d.pitch_scale = 0.55
 	stinger_2d.bus = &"Master"
 	add_child(stinger_2d)
@@ -327,11 +340,90 @@ func _trigger_scp_turnaround_scare() -> void:
 	stinger_2d.finished.connect(stinger_2d.queue_free)
 	
 	if player.has_method("shake_camera"):
-		player.shake_camera(0.65, 0.45)
+		player.shake_camera(0.9, 0.6)
 	if player.has_method("trigger_post_screamer_heartbeat"):
-		player.trigger_post_screamer_heartbeat(18.0)
+		player.trigger_post_screamer_heartbeat(22.0)
 		
-	print(">>> ¡SCP-096 REVELADO AL DARSE VUELTA! Sonido espectral ejecutado.")
+	print(">>> ¡SCP-096 REVELADO AL DARSE VUELTA! Sonido espectral ejecutado a máximo volumen.")
+	_start_scp_escape_sequence()
+
+func _play_scp_footstep() -> void:
+	if not is_instance_valid(phantom_node):
+		return
+	var fs = AudioStreamPlayer3D.new()
+	fs.stream = HorrorAudio.get_creepy_footstep()
+	fs.position = phantom_node.global_position
+	fs.volume_db = 14.0
+	fs.pitch_scale = randf_range(0.85, 1.15)
+	fs.unit_size = 12.0
+	fs.max_distance = 50.0
+	fs.bus = &"Master"
+	add_child(fs)
+	fs.play()
+	fs.finished.connect(fs.queue_free)
+
+func _start_scp_escape_sequence() -> void:
+	if not is_instance_valid(phantom_node):
+		return
+		
+	var anim = phantom_node.find_child("AnimationPlayer", true, false) as AnimationPlayer
+	if anim:
+		anim.play("scp096_skeleton|panic")
+		anim.speed_scale = 1.15
+		
+	# Espera de pánico/espasmo de 0.9s frente al jugador
+	var tw = create_tween()
+	tw.tween_interval(0.9)
+	tw.tween_callback(func():
+		_run_scp_along_escape_path()
+	)
+
+func _run_scp_along_escape_path() -> void:
+	if not is_instance_valid(phantom_node):
+		return
+		
+	var anim = phantom_node.find_child("AnimationPlayer", true, false) as AnimationPlayer
+	if anim:
+		anim.play("scp096_skeleton|running")
+		anim.speed_scale = 1.35
+		
+	is_scp_running = true
+	scp_step_timer = 0.05
+	
+	var tw = create_tween()
+	tw.set_trans(Tween.TRANS_LINEAR)
+	
+	# Segmento 1: Gira hacia el pasillo y sale por la puerta de Bedelía
+	tw.tween_callback(func():
+		if is_instance_valid(phantom_node):
+			phantom_node.rotation_degrees = Vector3(0, 0, 0)
+	)
+	tw.tween_property(phantom_node, "position", Vector3(-40.0, 4.7, -29.5), 0.28)
+	
+	# Segmento 2: Dobla a la derecha hacia el pasillo central
+	tw.tween_callback(func():
+		if is_instance_valid(phantom_node):
+			phantom_node.rotation_degrees = Vector3(0, -90, 0)
+	)
+	tw.tween_property(phantom_node, "position", Vector3(-42.5, 4.7, -29.5), 0.22)
+	
+	# Segmento 3: Dobla por el pasillo sur y corre a toda velocidad
+	tw.tween_callback(func():
+		if is_instance_valid(phantom_node):
+			phantom_node.rotation_degrees = Vector3(0, 0, 0)
+	)
+	tw.tween_property(phantom_node, "position", Vector3(-42.5, 4.7, -12.0), 1.25)
+	
+	# Segmento 4: Sigue corriendo por la oscuridad alejándose hacia el final del pasillo
+	tw.tween_property(phantom_node, "position", Vector3(-42.5, 4.7, 8.0), 1.35)
+	
+	# Al finalizar: detener carrera y desvanecer/liberar criatura
+	tw.tween_callback(func():
+		is_scp_running = false
+		if is_instance_valid(phantom_node):
+			phantom_node.queue_free()
+		print(">>> SCP-096 dobló la esquina a toda velocidad y desapareció en el pasillo.")
+	)
 
 func _slam_door(d: Dictionary) -> void:
 	d["is_slammed"] = true
