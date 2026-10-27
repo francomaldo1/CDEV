@@ -31,7 +31,6 @@ func _collect() -> void:
 		hud.has_exit_key = true
 		hud.update_inventory_display()
 		hud.set_interact_prompt("")
-		hud.show_temporary_alert("🎓 ¡CONSEGUISTE TU TÍTULO! La PUERTA DE SALIDA está habilitada. ¡Corré antes de que te atrape el profesor!", Color(0.3, 1.0, 0.5))
 		if hud.has_method("set_objective_text"):
 			hud.set_objective_text("NUEVO OBJETIVO: ¡Escapá de la facultad por la Puerta de Salida Principal!", Color(0.3, 1.0, 0.5))
 

@@ -655,8 +655,6 @@ func consume_peronachos() -> bool:
 	if hud:
 		if hud.has_method("update_inventory_display"):
 			hud.update_inventory_display()
-		if hud.has_method("show_temporary_alert"):
-			hud.show_temporary_alert("⚡ ¡Peronachos crujientes consumidos! ¡Estamina al 100%! ⚡", Color(0.3, 1.0, 0.6))
 			
 	return true
 

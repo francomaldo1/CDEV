@@ -423,6 +423,10 @@ func show_temporary_alert(text_msg: String, color: Color = Color(1.0, 0.3, 0.3))
 	if notification_banner:
 		notification_banner.text = text_msg
 		notification_banner.modulate = color
+		if objective_banner_panel and objective_banner_panel.visible:
+			notification_banner.position.y = 135.0
+		else:
+			notification_banner.position.y = 75.0
 		get_tree().create_timer(4.5).timeout.connect(func():
 			if is_instance_valid(notification_banner) and notification_banner.text == text_msg:
 				notification_banner.text = ""
@@ -944,6 +948,9 @@ func _process_typewriter_objective(delta: float) -> void:
 func _trigger_typewriter_objective(full_text: String, _color: Color = Color(0.96, 0.93, 0.68, 0.98)) -> void:
 	if not objective_banner_panel:
 		return
+		
+	if notification_banner:
+		notification_banner.text = ""
 		
 	var display_body = full_text
 	var header_text = "[ NUEVO OBJETIVO ]"

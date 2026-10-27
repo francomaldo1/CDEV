@@ -287,8 +287,6 @@ func _on_exam_solved(success: bool, cuaderno: Node) -> void:
 			profesor.activate_enraged_final_phase()
 		if hud and hud.has_method("set_objective_text"):
 			hud.set_objective_text("NUEVO OBJETIVO: ¡Corte de luz! Buscá el fusible en Bedelía (P1) para recuperar la luz", Color(1.0, 0.85, 0.2))
-		if hud and hud.has_method("show_temporary_alert"):
-			hud.show_temporary_alert("⚡ ¡APAGON TOTAL! Saltaron los disyuntores. Subi a P1 a buscar el fusible en Bedelia...", Color(1.0, 0.25, 0.25))
 
 func _spawn_profesor() -> void:
 	if not profesor:
@@ -519,9 +517,6 @@ func _trigger_blackout() -> void:
 	if tablero_electrico:
 		tablero_electrico.trigger_blackout()
 		
-	if hud and hud.has_method("show_temporary_alert"):
-		hud.show_temporary_alert("⚡ ¡CORTE GENERAL DE LUZ! Los disyuntores saltaron. Busca el FUSIBLE y llévalo al Depto. de Electrónica.", Color(1.0, 0.25, 0.25))
-		
 	if profesor and profesor.has_method("_say"):
 		profesor._say("¡¿Quién tocó los disyuntores?! ¡Quedaron todos a oscuras!", Color(1.0, 0.3, 0.3))
 		
@@ -551,8 +546,6 @@ func _on_power_restored() -> void:
 				l.light_energy = building_lights_base_energy[l]
 	turned_off_lights.clear()
 			
-	if hud and hud.has_method("show_temporary_alert"):
-		hud.show_temporary_alert("💡 ¡Energía restablecida! Las luces volvieron a encenderse.", Color(0.3, 1.0, 0.5))
 	if hud and hud.has_method("set_objective_text"):
 		hud.set_objective_text("NUEVO OBJETIVO: ¡Luz restablecida! Buscá la Llave del Auditorio en Planta Baja", Color(0.3, 1.0, 0.6))
 		

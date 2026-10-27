@@ -201,8 +201,6 @@ func _execute_fuse_screamer_sequence(hud: Node) -> void:
 		
 	if is_instance_valid(prof):
 		prof._say("¡¡HORARIO DE CONSULTA FINALIZADO, ALUMNO!!", Color(1.0, 0.0, 0.0))
-		
-	hud.show_temporary_alert("⚡ ¡¡EL PROFESOR ESTÁ EN LA PUERTA!!", Color(1.0, 0.1, 0.1))
 	
 	# Bloqueo de cámara fijo en el profesor durante 2.4 segundos de tensión pura
 	await get_tree().create_timer(2.4).timeout
@@ -224,8 +222,6 @@ func _execute_fuse_screamer_sequence(hud: Node) -> void:
 			prof.release_screamer_ambush()
 	if is_instance_valid(player) and player.has_method("start_chase_violins"):
 		player.start_chase_violins(60.0, 5.0)
-			
-	hud.show_temporary_alert("⚡ ¡¡CORRE!! ¡¡ESQUÍVALO POR LAS MESADAS!!", Color(1.0, 0.1, 0.1))
 	
 	# Liberar el movimiento del jugador justo en el instante que arranca la embestida
 	if is_instance_valid(player) and player.has_method("set_frozen"):
