@@ -365,6 +365,10 @@ func _setup_audio_players() -> void:
 	if violins_stream is AudioStreamMP3:
 		(violins_stream as AudioStreamMP3).loop = true
 	chase_violins_player.stream = violins_stream
+	chase_violins_player.finished.connect(func():
+		if is_instance_valid(chase_violins_player) and (chase_violins_timer > 0.0 or not is_hidden):
+			chase_violins_player.play()
+	)
 	add_child(chase_violins_player)
 
 func _apply_head_bob_and_footsteps(delta: float, is_sprinting: bool) -> void:
@@ -410,18 +414,18 @@ func play_jumpscare_screamer() -> void:
 		jumpscare_player.volume_db = 8.0
 		jumpscare_player.play()
 	
-	# Música de persecución frenética con violines aterradores inmediatamente tras el susto
-	start_chase_violins(25.0)
+	# Música de persecución prolongada e intensa con violines aterradores inmediatamente tras el susto
+	start_chase_violins(60.0)
 
-func start_chase_violins(duration: float = 25.0) -> void:
+func start_chase_violins(duration: float = 60.0) -> void:
 	chase_violins_timer = maxf(chase_violins_timer, duration)
 	if not chase_violins_player or not chase_violins_player.stream:
 		return
 	if not chase_violins_player.playing:
-		chase_violins_player.volume_db = -10.0
+		chase_violins_player.volume_db = -8.0
 		chase_violins_player.play()
 	var tw = create_tween()
-	tw.tween_property(chase_violins_player, "volume_db", 0.0, 0.6)
+	tw.tween_property(chase_violins_player, "volume_db", 0.0, 0.5)
 
 func stop_chase_violins(fade_time: float = 1.8) -> void:
 	chase_violins_timer = 0.0
@@ -487,7 +491,8 @@ func _update_heartbeat(delta: float) -> void:
 	if chase_violins_timer > 0.0:
 		chase_violins_timer -= delta
 		
-	var should_play_violins = (chase_violins_timer > 0.0) or (is_chasing and dist < 24.0)
+	var prof_in_pursuit = is_instance_valid(prof) and prof.visible and (prof.get("current_state") == 1 or prof.get("current_state") == 2 or prof.get("is_screamer_charging")) and dist < 32.0
+	var should_play_violins = (chase_violins_timer > 0.0) or prof_in_pursuit
 	if is_hidden:
 		should_play_violins = false
 		chase_violins_timer = 0.0
@@ -495,9 +500,9 @@ func _update_heartbeat(delta: float) -> void:
 	if chase_violins_player:
 		if should_play_violins:
 			if not chase_violins_player.playing:
-				chase_violins_player.volume_db = -10.0
+				chase_violins_player.volume_db = -8.0
 				chase_violins_player.play()
-			var target_v = 0.0 if dist < 12.0 else -4.0
+			var target_v = 0.0 if dist < 12.0 else -3.5
 			chase_violins_player.volume_db = lerpf(chase_violins_player.volume_db, target_v, delta * 3.0)
 		else:
 			if chase_violins_player.playing:

@@ -76,6 +76,7 @@ func _ready() -> void:
 		
 	var crosshair = find_child("Crosshair", true, false) as Control
 	if crosshair:
+		crosshair.visible = false
 		crosshair.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		
 	if instruction_label:
