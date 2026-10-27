@@ -15,7 +15,7 @@ var doors_data: Array[Dictionary] = [
 		"id": "sistemas",
 		"name": "Depto. Sistemas",
 		"hinge_pos": Vector3(-47.0, 4.6, -20.4),
-		"rot_open": deg_to_rad(-55.0),
+		"rot_open": deg_to_rad(-85.0),
 		"rot_closed": 0.0,
 		"trigger_pos": Vector3(-42.0, 4.6, -19.0),
 		"is_slammed": false,
@@ -26,7 +26,7 @@ var doors_data: Array[Dictionary] = [
 		"id": "electronica",
 		"name": "Depto. Electrónica P1",
 		"hinge_pos": Vector3(-47.0, 4.6, 8.6),
-		"rot_open": deg_to_rad(-55.0),
+		"rot_open": deg_to_rad(-85.0),
 		"rot_closed": 0.0,
 		"trigger_pos": Vector3(-42.0, 4.6, 10.0),
 		"is_slammed": false,
@@ -37,7 +37,7 @@ var doors_data: Array[Dictionary] = [
 		"id": "direccion",
 		"name": "Dirección Departamental",
 		"hinge_pos": Vector3(8.6, 4.6, -33.0),
-		"rot_open": deg_to_rad(55.0),
+		"rot_open": deg_to_rad(85.0),
 		"rot_closed": 0.0,
 		"trigger_pos": Vector3(10.0, 4.6, -28.5),
 		"is_slammed": false,
@@ -48,7 +48,7 @@ var doors_data: Array[Dictionary] = [
 		"id": "cetra",
 		"name": "CETRA",
 		"hinge_pos": Vector3(47.0, 4.6, -28.9),
-		"rot_open": deg_to_rad(55.0),
+		"rot_open": deg_to_rad(85.0),
 		"rot_closed": 0.0,
 		"trigger_pos": Vector3(42.0, 4.6, -27.5),
 		"is_slammed": false,
@@ -59,7 +59,7 @@ var doors_data: Array[Dictionary] = [
 		"id": "biblioteca",
 		"name": "Biblioteca",
 		"hinge_pos": Vector3(47.0, 4.6, 6.1),
-		"rot_open": deg_to_rad(55.0),
+		"rot_open": deg_to_rad(85.0),
 		"rot_closed": 0.0,
 		"trigger_pos": Vector3(42.0, 4.6, 7.5),
 		"is_slammed": false,
@@ -145,8 +145,8 @@ func _create_phantom() -> void:
 	# Posición del jumpscare al darse vuelta: X: -40.0, Y: 4.7, Z: -33.2 (puerta de Bedelía P1)
 	phantom_node.position = Vector3(-40.0, 4.7, -33.2)
 	
-	# Mirando directamente hacia el escritorio del fusible (-Z)
-	phantom_node.rotation_degrees = Vector3(0, 0, 0)
+	# Mirando directamente hacia nosotros/interior de Bedelía (giro de 180°)
+	phantom_node.rotation_degrees = Vector3(0, 180, 0)
 	
 	var is_custom_tscn = ResourceLoader.exists("res://scenes/scp_096_guia.tscn")
 	var scp_scene = _load_scp_scene()
@@ -239,7 +239,7 @@ func _process(_delta: float) -> void:
 	for d in doors_data:
 		if not d["is_slammed"]:
 			var dist = p_pos.distance_to(d["trigger_pos"])
-			if dist <= 7.0:
+			if dist <= 4.0:
 				_slam_door(d)
 				
 	# 2. Verificar recolección del fusible para hacer aparecer a SCP-096 esperando en la puerta
@@ -283,9 +283,9 @@ func _spawn_scp_waiting() -> void:
 	scp_spawned = true
 	is_waiting_for_turnaround = true
 	
-	# Parado exactamente en X: -40.0, Y: 4.7, Z: -33.2 (puerta de Bedelía P1) y viendo hacia el fusible (-Z)
+	# Parado en X: -40.0, Y: 4.7, Z: -33.2 viendo hacia nosotros/interior de Bedelía (+Z)
 	phantom_node.position = Vector3(-40.0, 4.7, -33.2)
-	phantom_node.rotation_degrees = Vector3(0, 0, 0)
+	phantom_node.rotation_degrees = Vector3(0, 180, 0)
 	phantom_node.visible = true
 	
 	if creature_col_shape:
@@ -342,8 +342,8 @@ func _slam_door(d: Dictionary) -> void:
 	# Portazo violento con aceleración hacia el marco
 	var tw = create_tween()
 	tw.set_ease(Tween.EASE_IN)
-	tw.set_trans(Tween.TRANS_QUAD)
-	tw.tween_property(hinge, "rotation:y", d["rot_closed"], 0.16)
+	tw.set_trans(Tween.TRANS_EXPO)
+	tw.tween_property(hinge, "rotation:y", d["rot_closed"], 0.12)
 	
 	# Activar colisión al iniciar el cierre
 	var leaf: CSGBox3D = hinge.get_node_or_null("DoorLeaf")
