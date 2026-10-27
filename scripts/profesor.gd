@@ -1521,7 +1521,7 @@ func trigger_screamer_ambush(ambush_pos: Vector3, look_at_pos: Vector3) -> void:
 		ojos_luz.spot_range = 15.0
 		ojos_luz.visible = true
 		
-	current_state = State.CHASE
+	current_state = State.PATROL
 	chase_speed = base_chase_speed + 1.1
 	time_without_sight = 0.0
 	if is_instance_valid(player):
@@ -1549,7 +1549,7 @@ func start_screamer_charge() -> void:
 	if is_instance_valid(player) and player.has_method("play_jumpscare_screamer"):
 		player.play_jumpscare_screamer()
 	if is_instance_valid(player) and player.has_method("start_chase_violins"):
-		player.start_chase_violins(60.0)
+		player.start_chase_violins(60.0, 5.0)
 	if is_instance_valid(player):
 		last_known_player_pos = player.global_position
 		var to_p = player.global_position - global_position

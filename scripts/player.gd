@@ -58,11 +58,13 @@ var chase_violins_player: AudioStreamPlayer = null
 var chase_violins_timer: float = 0.0
 var current_panic_glitch: float = 0.0
 
-## La linterna empieza bloqueada y se habilita con el corte de luz (ver main.gd)
+## La linterna fue reemplazada permanentemente por la visión nocturna de la videocámara
 var flashlight_enabled: bool = false
 
 func enable_flashlight() -> void:
-	flashlight_enabled = true
+	flashlight_enabled = false
+	if flashlight:
+		flashlight.visible = false
 
 func _ready() -> void:
 	add_to_group("player")
@@ -111,19 +113,13 @@ func shake_camera(amount: float = 0.5, duration: float = 0.5) -> void:
 	shake_tween.parallel().tween_property(camera, "v_offset", 0.0, 0.04)
 	shake_tween.parallel().tween_property(camera, "rotation:z", 0.0, 0.04)
 
-func force_flashlight(state: bool) -> void:
+func force_flashlight(_state: bool) -> void:
 	if flashlight:
-		flashlight.visible = state
+		flashlight.visible = false
 
-func flicker_flashlight(times: int = 3, interval: float = 0.08) -> void:
-	if not flashlight:
-		return
-	var tw = create_tween()
-	for i in range(times):
-		tw.tween_callback(func(): if flashlight: flashlight.visible = false)
-		tw.tween_interval(interval)
-		tw.tween_callback(func(): if flashlight: flashlight.visible = true)
-		tw.tween_interval(interval)
+func flicker_flashlight(_times: int = 3, _interval: float = 0.08) -> void:
+	if flashlight:
+		flashlight.visible = false
 
 func force_look_at(target_global_pos: Vector3, duration: float = 0.45) -> Tween:
 	var flat_target = Vector3(target_global_pos.x, global_position.y, target_global_pos.z)
@@ -218,15 +214,8 @@ func _input(event: InputEvent) -> void:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func toggle_flashlight() -> void:
-	if is_hidden:
-		var hud = get_tree().root.find_child("HUD", true, false)
-		if hud and hud.has_method("show_temporary_alert"):
-			hud.show_temporary_alert("🤫 No podés encender la linterna mientras estás escondido.", Color(1.0, 0.8, 0.2))
-		return
-	if is_frozen or not flashlight_enabled:
-		return
 	if flashlight:
-		flashlight.visible = not flashlight.visible
+		flashlight.visible = false
 
 func _process(delta: float) -> void:
 	_update_night_vision_process(delta)
@@ -414,18 +403,18 @@ func play_jumpscare_screamer() -> void:
 		jumpscare_player.volume_db = 8.0
 		jumpscare_player.play()
 	
-	# Música de persecución prolongada e intensa con violines aterradores inmediatamente tras el susto
-	start_chase_violins(60.0)
+	# Música de persecución intensa con violines aterradores a volumen alto (+5.0 dB)
+	start_chase_violins(60.0, 5.0)
 
-func start_chase_violins(duration: float = 60.0) -> void:
+func start_chase_violins(duration: float = 60.0, boost_db: float = 5.0) -> void:
 	chase_violins_timer = maxf(chase_violins_timer, duration)
 	if not chase_violins_player or not chase_violins_player.stream:
 		return
 	if not chase_violins_player.playing:
-		chase_violins_player.volume_db = -8.0
+		chase_violins_player.volume_db = boost_db - 3.0
 		chase_violins_player.play()
 	var tw = create_tween()
-	tw.tween_property(chase_violins_player, "volume_db", 0.0, 0.5)
+	tw.tween_property(chase_violins_player, "volume_db", boost_db, 0.25)
 
 func stop_chase_violins(fade_time: float = 1.8) -> void:
 	chase_violins_timer = 0.0
@@ -491,7 +480,8 @@ func _update_heartbeat(delta: float) -> void:
 	if chase_violins_timer > 0.0:
 		chase_violins_timer -= delta
 		
-	var prof_in_pursuit = is_instance_valid(prof) and prof.visible and (prof.get("current_state") == 1 or prof.get("current_state") == 2 or prof.get("is_screamer_charging")) and dist < 32.0
+	var prof_ambush = is_instance_valid(prof) and (prof.get("is_screamer_ambush") == true)
+	var prof_in_pursuit = is_instance_valid(prof) and prof.visible and not prof_ambush and (prof.get("current_state") == 1 or prof.get("current_state") == 2 or prof.get("is_screamer_charging")) and dist < 32.0
 	var should_play_violins = (chase_violins_timer > 0.0) or prof_in_pursuit
 	if is_hidden:
 		should_play_violins = false
@@ -500,13 +490,13 @@ func _update_heartbeat(delta: float) -> void:
 	if chase_violins_player:
 		if should_play_violins:
 			if not chase_violins_player.playing:
-				chase_violins_player.volume_db = -8.0
+				chase_violins_player.volume_db = 1.0
 				chase_violins_player.play()
-			var target_v = 0.0 if dist < 12.0 else -3.5
-			chase_violins_player.volume_db = lerpf(chase_violins_player.volume_db, target_v, delta * 3.0)
+			var target_v = 5.0 if dist < 12.0 else 2.0
+			chase_violins_player.volume_db = lerpf(chase_violins_player.volume_db, target_v, delta * 3.5)
 		else:
 			if chase_violins_player.playing:
-				chase_violins_player.volume_db = lerpf(chase_violins_player.volume_db, -50.0, delta * 2.0)
+				chase_violins_player.volume_db = lerpf(chase_violins_player.volume_db, -50.0, delta * 2.5)
 				if chase_violins_player.volume_db <= -42.0:
 					chase_violins_player.stop()
 
@@ -629,7 +619,8 @@ func play_horror_stinger() -> void:
 	if stinger_player:
 		stinger_player.stop()
 		stinger_player.play()
-	start_chase_violins(20.0)
+	# Duración reducida para el jumpscare del 4to examen: acompaña únicamente la corrida por el pasillo y se apaga rápido
+	start_chase_violins(3.5, 2.0)
 
 func add_peronachos(amount: int = 1) -> void:
 	peronachos_count += amount

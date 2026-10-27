@@ -362,12 +362,7 @@ func _update_inventory_slots() -> void:
 				if slot.has("icon_rect"):
 					slot["icon_rect"].visible = false
 			
-			if item.has("badge") and item["badge"] != "":
-				slot["badge"].text = item["badge"]
-				slot["badge"].modulate = item.get("color", Color(1.0, 1.0, 1.0))
-				slot["badge"].visible = true
-			else:
-				slot["badge"].visible = false
+			slot["badge"].visible = false
 		else:
 			# Cuadrado vacío
 			var empty_style = StyleBoxFlat.new()

@@ -87,17 +87,6 @@ func _execute_fuse_screamer_sequence(hud: Node) -> void:
 	is_restored = true
 	is_blackout_active = false
 	
-	# 1. Consumir fusible del inventario
-	hud.has_fuse = false
-	hud.update_inventory_display()
-	hud.set_interact_prompt("")
-	
-	if fusible_insertado:
-		fusible_insertado.visible = true
-		
-	# Reproducir sonido de fusible eléctrico conectado
-	_play_fuse_insert_sound()
-		
 	# Obtener referencias al jugador y al profesor
 	var player = player_ref
 	if not is_instance_valid(player):
@@ -110,6 +99,21 @@ func _execute_fuse_screamer_sequence(hud: Node) -> void:
 		var enemies = get_tree().get_nodes_in_group("enemies")
 		if enemies.size() > 0:
 			prof = enemies[0]
+	
+	# Detener violines previos para crear tensión en silencio durante la secuencia
+	if is_instance_valid(player) and player.has_method("stop_chase_violins"):
+		player.stop_chase_violins(0.2)
+	
+	# 1. Consumir fusible del inventario
+	hud.has_fuse = false
+	hud.update_inventory_display()
+	hud.set_interact_prompt("")
+	
+	if fusible_insertado:
+		fusible_insertado.visible = true
+		
+	# Reproducir sonido de fusible eléctrico conectado
+	_play_fuse_insert_sound()
 			
 	# Congelar movimiento del jugador durante la cinemática de sobresalto (puede rotar cámara)
 	if is_instance_valid(player) and player.has_method("set_frozen"):
@@ -137,9 +141,7 @@ func _execute_fuse_screamer_sequence(hud: Node) -> void:
 	# Dejar que el sonido y los chispazos de conexión se aprecien con claridad
 	await get_tree().create_timer(0.85).timeout
 	
-	# 3. MANTENER LINTERNA PRENDIDA Y ENCENDER HILERA DE LUCES DEL LABORATORIO
-	if is_instance_valid(player) and player.has_method("force_flashlight"):
-		player.force_flashlight(true)
+	# 3. ENCENDER HILERA DE LUCES DEL LABORATORIO
 	_turn_on_hilera_luces()
 		
 	# 4. TELETRANSPORTAR AL PROFESOR A LA PUERTA DEL LABORATORIO (X = -36.2, Z = 0.9)
@@ -179,9 +181,6 @@ func _execute_fuse_screamer_sequence(hud: Node) -> void:
 	await get_tree().create_timer(1.2).timeout
 		
 	# 7. ENERGÍA RESTABLECIDA, JUMPSCARE EN LA PUERTA Y PERSECUCIÓN (T = 4.1s a 6.8s)
-	if is_instance_valid(player) and player.has_method("force_flashlight"):
-		player.force_flashlight(true)
-		
 	if luz_indicador:
 		luz_indicador.light_color = Color(0.2, 1.0, 0.4)
 		luz_indicador.light_energy = 1.0
@@ -224,7 +223,7 @@ func _execute_fuse_screamer_sequence(hud: Node) -> void:
 		else:
 			prof.release_screamer_ambush()
 	if is_instance_valid(player) and player.has_method("start_chase_violins"):
-		player.start_chase_violins(60.0)
+		player.start_chase_violins(60.0, 5.0)
 			
 	hud.show_temporary_alert("⚡ ¡¡CORRE!! ¡¡ESQUÍVALO POR LAS MESADAS!!", Color(1.0, 0.1, 0.1))
 	

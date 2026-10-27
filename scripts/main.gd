@@ -501,11 +501,6 @@ func _trigger_blackout() -> void:
 		for l in turned_off_lights:
 			if is_instance_valid(l): l.visible = true
 		await get_tree().create_timer(0.06).timeout
-		
-	# A partir del corte de luz se puede usar la linterna
-	var player_node = find_child("Player", true, false)
-	if player_node and player_node.has_method("enable_flashlight"):
-		player_node.enable_flashlight()
 	
 	# Apagón total en toda la facultad
 	for l in turned_off_lights:
@@ -531,7 +526,7 @@ func _trigger_blackout() -> void:
 		tablero_electrico.trigger_blackout()
 		
 	if hud and hud.has_method("show_temporary_alert"):
-		hud.show_temporary_alert("⚡ ¡CORTE GENERAL DE LUZ! Los disyuntores saltaron. Busca el FUSIBLE y llévalo al Depto. de Electrónica. [F] Linterna", Color(1.0, 0.25, 0.25))
+		hud.show_temporary_alert("⚡ ¡CORTE GENERAL DE LUZ! Los disyuntores saltaron. Busca el FUSIBLE y llévalo al Depto. de Electrónica.", Color(1.0, 0.25, 0.25))
 		
 	if profesor and profesor.has_method("_say"):
 		profesor._say("¡¿Quién tocó los disyuntores?! ¡Quedaron todos a oscuras!", Color(1.0, 0.3, 0.3))
@@ -561,11 +556,6 @@ func _on_power_restored() -> void:
 			if building_lights_base_energy.has(l):
 				l.light_energy = building_lights_base_energy[l]
 	turned_off_lights.clear()
-			
-	# Asegurar que la linterna siga habilitada para ser usada siempre a partir del apagón
-	var player_node = find_child("Player", true, false)
-	if player_node and player_node.has_method("enable_flashlight"):
-		player_node.enable_flashlight()
 			
 	if hud and hud.has_method("show_temporary_alert"):
 		hud.show_temporary_alert("💡 ¡Energía restablecida! Las luces volvieron a encenderse.", Color(0.3, 1.0, 0.5))
@@ -844,8 +834,6 @@ func _debug_teleport_to_p1() -> void:
 		# Ubicar al jugador en el punto de vista con ángulo hacia la esquina y Bedelía
 		player.global_position = Vector3(-39.0, 4.7, -26.5)
 		player.rotation.y = deg_to_rad(-135.0)
-		if player.has_method("enable_flashlight"):
-			player.enable_flashlight()
 	if hud and hud.has_method("show_temporary_alert"):
 		hud.show_temporary_alert("📍 [F4] Teletransporte a P1 (Frente a Bedelía)", Color(0.3, 1.0, 0.6))
 
@@ -858,8 +846,6 @@ func _debug_trigger_blackout_and_fuse() -> void:
 			hud.update_inventory_display()
 		if hud.has_method("show_temporary_alert"):
 			hud.show_temporary_alert("⚡ [F5] Apagón activado y Fusible listo en el inventario", Color(1.0, 0.85, 0.2))
-	if is_instance_valid(player) and player.has_method("enable_flashlight"):
-		player.enable_flashlight()
 
 func _debug_teleport_to_tablero() -> void:
 	if not is_blackout:
@@ -873,8 +859,6 @@ func _debug_teleport_to_tablero() -> void:
 		# Frente al tablero eléctrico en Depto. de Electrónica (X = -18.5, Z = 0.0) mirando al tablero
 		player.global_position = Vector3(-18.5, 0.05, 0.0)
 		player.rotation.y = deg_to_rad(90.0)
-		if player.has_method("enable_flashlight"):
-			player.enable_flashlight()
 	if hud and hud.has_method("show_temporary_alert"):
 		hud.show_temporary_alert("💡 [F6] En Tablero Eléctrico con Fusible listo. ¡Apreta [E]!", Color(0.3, 1.0, 0.6))
 
