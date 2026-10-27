@@ -134,7 +134,7 @@ func _setup_camcorder_overlay() -> void:
 	var cam_name = Label.new()
 	cam_name.set_anchors_preset(Control.PRESET_BOTTOM_LEFT)
 	cam_name.position = Vector2(35, -45)
-	cam_name.text = "CAM 00 - HALL DE INGRESO | OUTLAST REC SYSTEM"
+	cam_name.text = "CAM 00 - HALL DE INGRESO"
 	cam_name.add_theme_color_override("font_color", Color(0.75, 0.82, 0.88, 0.55))
 	cam_name.add_theme_font_size_override("font_size", 13)
 	if typewriter_font:
@@ -350,45 +350,112 @@ func _populate_controls_modal(panel: PanelContainer) -> void:
 	var vbox = panel.get_node("ModalVBox") as VBoxContainer
 	
 	var scroll = ScrollContainer.new()
-	scroll.custom_minimum_size = Vector2(630, 360)
+	scroll.custom_minimum_size = Vector2(640, 365)
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	vbox.add_child(scroll)
 	
 	var content = VBoxContainer.new()
-	content.add_theme_constant_override("separation", 12)
+	content.custom_minimum_size = Vector2(620, 0)
+	content.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	content.add_theme_constant_override("separation", 8)
 	scroll.add_child(content)
 	
-	var controls_text = """▶ TECLAS DE ACCIÓN Y MECÁNICAS:
- • [ W / A / S / D ] : Desplazarse por los pasillos y aulas.
- • [ Shift ] : Correr (Consume estamina).
- • [ Click Der / F ] : Visión Nocturna en la Videocámara (Consume batería).
- • [ E ] : Interactuar / Rendir parciales / Reparar disyuntores.
- • [ Q ] : Consumir Peronachos (Recupera estamina al 100%).
- • [ R ] : Recargar batería de la videocámara con pilas AA recogidas.
- • [ Espacio ] : Ocultarse / Salir de los tachos de basura.
- • [ F1 ] : Abrir menú de guía y objetivos.
-
-▶ REGLAS Y OBJETIVOS DE SUPERVIVENCIA:
- 1. Planta Baja: Buscá y aprobá los 4 parciales matemáticos en los cuadernos.
- 2. Al terminar el 4to examen, saltarán los disyuntores y habrá un apagón general.
- 3. Subí al Piso 1 (P1) hacia Bedelía General para recuperar el Fusible de Alta Tensión.
- 4. Bajá al Departamento de Electrónica (PB Oeste) y colocá el fusible en el tablero eléctrico.
- 5. ¡Cuidado con el Profesor! Escapa y buscá la Llave del Auditorio en PB.
- 6. Abrí el Auditorio, retirá tu Título Universitario del atril y escapá por la Puerta de Salida."""
-	
-	var lbl = Label.new()
-	lbl.text = controls_text
-	lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	lbl.add_theme_font_size_override("font_size", 14)
-	lbl.add_theme_color_override("font_color", Color(0.88, 0.92, 0.96, 0.88))
+	# Encabezado 1: Controles
+	var sec1 = Label.new()
+	sec1.text = "▶  TECLAS DE ACCIÓN Y MECÁNICAS"
+	sec1.add_theme_font_size_override("font_size", 15)
+	sec1.add_theme_color_override("font_color", Color(0.96, 0.93, 0.68, 0.95))
 	if typewriter_font:
-		lbl.add_theme_font_override("font", typewriter_font)
-	content.add_child(lbl)
+		sec1.add_theme_font_override("font", typewriter_font)
+	content.add_child(sec1)
+	
+	_add_control_row(content, " • [ W / A / S / D ]", "Desplazarse por los pasillos y aulas de la facultad.")
+	_add_control_row(content, " • [ Shift ]", "Correr a máxima velocidad (consume estamina).")
+	_add_control_row(content, " • [ Click Der / F ]", "Visión Nocturna en la Videocámara (consume batería).")
+	_add_control_row(content, " • [ E ]", "Interactuar / Rendir parciales / Reparar tablero eléctrico.")
+	_add_control_row(content, " • [ Q ]", "Consumir Peronachos (recupera 100% de estamina al instante).")
+	_add_control_row(content, " • [ R ]", "Insertar pilas AA en la videocámara para recargar batería.")
+	_add_control_row(content, " • [ Espacio ]", "Ocultarse o salir de los tachos de basura.")
+	_add_control_row(content, " • [ F1 ]", "Abrir el menú de objetivos y guía de supervivencia.")
+	
+	# Separador
+	var sep = HSeparator.new()
+	sep.custom_minimum_size = Vector2(600, 14)
+	var sep_style = StyleBoxLine.new()
+	sep_style.color = Color(0.3, 0.35, 0.45, 0.4)
+	sep.add_theme_stylebox_override("separator", sep_style)
+	content.add_child(sep)
+	
+	# Encabezado 2: Guía
+	var sec2 = Label.new()
+	sec2.text = "▶  GUÍA Y REGLAS DE SUPERVIVENCIA"
+	sec2.add_theme_font_size_override("font_size", 15)
+	sec2.add_theme_color_override("font_color", Color(0.96, 0.93, 0.68, 0.95))
+	if typewriter_font:
+		sec2.add_theme_font_override("font", typewriter_font)
+	content.add_child(sec2)
+	
+	_add_step_row(content, "1.", "Rendí los 4 parciales matemáticos en los cuadernos de Planta Baja.")
+	_add_step_row(content, "2.", "Al terminar el 4to examen, saltarán los disyuntores y se cortará la luz.")
+	_add_step_row(content, "3.", "Subí al Piso 1 (P1) hacia Bedelía a recuperar el Fusible de Alta Tensión.")
+	_add_step_row(content, "4.", "Bajá al Depto. de Electrónica (PB Oeste) y colocá el fusible en el tablero.")
+	_add_step_row(content, "5.", "¡Esquivá al Profesor! Escapá del laboratorio y buscá la Llave del Auditorio en PB.")
+	_add_step_row(content, "6.", "Abrí el Auditorio, retirá tu Título Universitario del estrado y escapá por la Salida Principal.")
 	
 	var btn_close = _create_menu_button("◀  VOLVER AL MENÚ")
 	btn_close.alignment = HORIZONTAL_ALIGNMENT_CENTER
 	btn_close.pressed.connect(_close_active_modal)
 	vbox.add_child(btn_close)
+
+func _add_control_row(container: VBoxContainer, key_text: String, desc_text: String) -> void:
+	var hbox = HBoxContainer.new()
+	hbox.add_theme_constant_override("separation", 14)
+	
+	var key_lbl = Label.new()
+	key_lbl.text = key_text
+	key_lbl.custom_minimum_size = Vector2(180, 0)
+	key_lbl.add_theme_font_size_override("font_size", 14)
+	key_lbl.add_theme_color_override("font_color", Color(0.96, 0.93, 0.68, 0.95))
+	if typewriter_font:
+		key_lbl.add_theme_font_override("font", typewriter_font)
+	hbox.add_child(key_lbl)
+	
+	var desc_lbl = Label.new()
+	desc_lbl.text = desc_text
+	desc_lbl.custom_minimum_size = Vector2(430, 0)
+	desc_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	desc_lbl.add_theme_font_size_override("font_size", 14)
+	desc_lbl.add_theme_color_override("font_color", Color(0.88, 0.92, 0.96, 0.9))
+	if typewriter_font:
+		desc_lbl.add_theme_font_override("font", typewriter_font)
+	hbox.add_child(desc_lbl)
+	
+	container.add_child(hbox)
+
+func _add_step_row(container: VBoxContainer, step_num: String, step_text: String) -> void:
+	var hbox = HBoxContainer.new()
+	hbox.add_theme_constant_override("separation", 10)
+	
+	var num_lbl = Label.new()
+	num_lbl.text = step_num
+	num_lbl.custom_minimum_size = Vector2(25, 0)
+	num_lbl.add_theme_font_size_override("font_size", 14)
+	num_lbl.add_theme_color_override("font_color", Color(0.96, 0.93, 0.68, 0.95))
+	if typewriter_font:
+		num_lbl.add_theme_font_override("font", typewriter_font)
+	hbox.add_child(num_lbl)
+	
+	var text_lbl = Label.new()
+	text_lbl.text = step_text
+	text_lbl.custom_minimum_size = Vector2(585, 0)
+	text_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	text_lbl.add_theme_font_size_override("font_size", 14)
+	text_lbl.add_theme_color_override("font_color", Color(0.88, 0.92, 0.96, 0.9))
+	if typewriter_font:
+		text_lbl.add_theme_font_override("font", typewriter_font)
+	hbox.add_child(text_lbl)
+	
+	container.add_child(hbox)
 
 func _populate_settings_modal(panel: PanelContainer) -> void:
 	var vbox = panel.get_node("ModalVBox") as VBoxContainer
@@ -451,37 +518,80 @@ func _populate_settings_modal(panel: PanelContainer) -> void:
 func _populate_credits_modal(panel: PanelContainer) -> void:
 	var vbox = panel.get_node("ModalVBox") as VBoxContainer
 	
+	var scroll = ScrollContainer.new()
+	scroll.custom_minimum_size = Vector2(640, 365)
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	vbox.add_child(scroll)
+	
 	var content = VBoxContainer.new()
-	content.add_theme_constant_override("separation", 14)
-	vbox.add_child(content)
+	content.custom_minimum_size = Vector2(620, 0)
+	content.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	content.add_theme_constant_override("separation", 10)
+	scroll.add_child(content)
 	
-	var credits_text = """PROYECTO:
-UTN FRC: NOCHE DE FINALES (Survival Horror)
-
-DESARROLLO Y DISEÑO:
- • Franco Maldonado
- • Pair-Programming con Antigravity
-
-AMBIENTACIÓN INSTITUCIONAL:
- • Basado en la arquitectura real, pasillos, aulas y leyendas
-   de la Universidad Tecnológica Nacional - Facultad Regional Córdoba (UTN FRC).
-
-TECNOLOGÍA:
- • Godot Engine 4.7
- • Modelos 3D y Audio de la Comunidad de Software Libre (Freesound / CC-BY)."""
-	
-	var lbl = Label.new()
-	lbl.text = credits_text
-	lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	lbl.add_theme_font_size_override("font_size", 14)
-	lbl.add_theme_color_override("font_color", Color(0.88, 0.92, 0.96, 0.9))
+	var title_lbl = Label.new()
+	title_lbl.text = "PROYECTO: UTN FRC: NOCHE DE FINALES"
+	title_lbl.add_theme_font_size_override("font_size", 15)
+	title_lbl.add_theme_color_override("font_color", Color(0.96, 0.93, 0.68, 0.95))
 	if typewriter_font:
-		lbl.add_theme_font_override("font", typewriter_font)
-	content.add_child(lbl)
+		title_lbl.add_theme_font_override("font", typewriter_font)
+	content.add_child(title_lbl)
 	
-	var spacer = Control.new()
-	spacer.custom_minimum_size = Vector2(0, 20)
-	vbox.add_child(spacer)
+	var team_lbl = Label.new()
+	team_lbl.text = "▶  EQUIPO DE DESARROLLO:"
+	team_lbl.add_theme_font_size_override("font_size", 14)
+	team_lbl.add_theme_color_override("font_color", Color(0.96, 0.93, 0.68, 0.95))
+	if typewriter_font:
+		team_lbl.add_theme_font_override("font", typewriter_font)
+	content.add_child(team_lbl)
+	
+	var members = [
+		"Schurrer, Gabriel Nicolas",
+		"Maldonado, Franco Gabriel",
+		"Nobile, Bruno Nicolas",
+		"Imwinkelried, Ivan",
+		"Ranieri, Valentina",
+		"Ramirez, Carlos David",
+		"Grosso Gaspar",
+		"Mottura Mateo"
+	]
+	
+	for m in members:
+		var m_lbl = Label.new()
+		m_lbl.text = " • " + m
+		m_lbl.custom_minimum_size = Vector2(600, 0)
+		m_lbl.add_theme_font_size_override("font_size", 14)
+		m_lbl.add_theme_color_override("font_color", Color(0.88, 0.92, 0.96, 0.95))
+		if typewriter_font:
+			m_lbl.add_theme_font_override("font", typewriter_font)
+		content.add_child(m_lbl)
+		
+	var sep = HSeparator.new()
+	sep.custom_minimum_size = Vector2(600, 10)
+	var sep_style = StyleBoxLine.new()
+	sep_style.color = Color(0.3, 0.35, 0.45, 0.4)
+	sep.add_theme_stylebox_override("separator", sep_style)
+	content.add_child(sep)
+	
+	var inst_lbl = Label.new()
+	inst_lbl.text = "INSTITUCIÓN:\n • Universidad Tecnológica Nacional - Facultad Regional Córdoba (UTN FRC)"
+	inst_lbl.custom_minimum_size = Vector2(600, 0)
+	inst_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	inst_lbl.add_theme_font_size_override("font_size", 13)
+	inst_lbl.add_theme_color_override("font_color", Color(0.75, 0.82, 0.90, 0.8))
+	if typewriter_font:
+		inst_lbl.add_theme_font_override("font", typewriter_font)
+	content.add_child(inst_lbl)
+	
+	var tech_lbl = Label.new()
+	tech_lbl.text = "MOTOR Y TECNOLOGÍA:\n • Godot Engine 4.7\n • Modelos 3D y Sonidos de la Comunidad de Código Abierto (Freesound / CC-BY)"
+	tech_lbl.custom_minimum_size = Vector2(600, 0)
+	tech_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	tech_lbl.add_theme_font_size_override("font_size", 13)
+	tech_lbl.add_theme_color_override("font_color", Color(0.75, 0.82, 0.90, 0.8))
+	if typewriter_font:
+		tech_lbl.add_theme_font_override("font", typewriter_font)
+	content.add_child(tech_lbl)
 	
 	var btn_close = _create_menu_button("◀  VOLVER AL MENÚ")
 	btn_close.alignment = HORIZONTAL_ALIGNMENT_CENTER
