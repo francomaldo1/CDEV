@@ -641,7 +641,7 @@ func _setup_debug_cheats_panel() -> void:
 	lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	lbl.add_theme_font_size_override("font_size", 14)
 	lbl.text = "🛠️ ATAJOS DE TESTING RÁPIDO (MODO DEBUG)\n\n" + \
-		"  [F4]  📍 Teleport a Primer Piso (P1) frente a la Criatura y Bedelía\n" + \
+		"  [F4]  📍 Teleport a Primer Piso (P1) frente a Bedelía\n" + \
 		"  [F5]  ⚡ Activar Apagón inmediato y Obtener Fusible de 10A\n" + \
 		"  [F6]  💡 Teleport a Tablero Eléctrico (con Fusible listo para colocar [E])\n" + \
 		"  [F7]  🍟 Teleport a Cafetería PB (Estantes de Peronachos)\n" + \

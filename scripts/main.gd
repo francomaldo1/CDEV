@@ -803,7 +803,7 @@ func _debug_teleport_to_p1() -> void:
 		if player.has_method("enable_flashlight"):
 			player.enable_flashlight()
 	if hud and hud.has_method("show_temporary_alert"):
-		hud.show_temporary_alert("📍 [F4] Teletransporte a P1 (Frente a la Criatura en la esquina)", Color(0.3, 1.0, 0.6))
+		hud.show_temporary_alert("📍 [F4] Teletransporte a P1 (Frente a Bedelía)", Color(0.3, 1.0, 0.6))
 
 func _debug_trigger_blackout_and_fuse() -> void:
 	if not is_blackout:

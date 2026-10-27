@@ -10,6 +10,7 @@ var is_player_nearby: bool = false
 var player_ref: CharacterBody3D = null
 
 func _ready() -> void:
+	add_to_group("fusibles")
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
 

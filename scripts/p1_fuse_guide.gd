@@ -70,7 +70,10 @@ var doors_data: Array[Dictionary] = [
 
 # Referencia a la criatura del primer piso
 var phantom_node: Node3D = null
-var phantom_triggered: bool = false
+var creature_col_shape: CollisionShape3D = null
+var scp_spawned: bool = false
+var is_waiting_for_turnaround: bool = false
+var scp_stinger_played: bool = false
 
 # Materiales reutilizables
 var mat_door: StandardMaterial3D = null
@@ -81,6 +84,7 @@ func _ready() -> void:
 	_init_materials()
 	_create_doors()
 	_create_phantom()
+	call_deferred("_connect_fuse_signal")
 
 func _init_materials() -> void:
 	mat_door = StandardMaterial3D.new()
@@ -138,11 +142,11 @@ func _create_doors() -> void:
 func _create_phantom() -> void:
 	phantom_node = Node3D.new()
 	phantom_node.name = "CriaturaGuiaP1"
-	# Posición calculada para que la mano derecha agarre exactamente el marco vertical de la puerta de Bedelía (X = -41.45, Z = -32.85)
-	phantom_node.position = Vector3(-43.5, 4.6, -30.8)
+	# Posición del jumpscare al darse vuelta: X: -40.0, Y: 4.7, Z: -33.2 (puerta de Bedelía P1)
+	phantom_node.position = Vector3(-40.0, 4.7, -33.2)
 	
-	# Rotado a 45° mirando fijo al jugador conforme se aproxima por el pasillo
-	phantom_node.rotation.y = deg_to_rad(45.0)
+	# Mirando directamente hacia el escritorio del fusible (-Z)
+	phantom_node.rotation_degrees = Vector3(0, 0, 0)
 	
 	var is_custom_tscn = ResourceLoader.exists("res://scenes/scp_096_guia.tscn")
 	var scp_scene = _load_scp_scene()
@@ -170,81 +174,30 @@ func _create_phantom() -> void:
 						m_dup.albedo_texture = tex
 						mesh.set_surface_override_material(0, m_dup)
 			
-			# Animar un instante para adoptar postura y luego pausar
-			var anim = scp_inst.find_child("AnimationPlayer", true, false) as AnimationPlayer
-			if anim:
-				anim.play("scp096_skeleton|idle2")
-				anim.advance(0.5)
-				anim.pause()
+		var anim = scp_inst.find_child("AnimationPlayer", true, false) as AnimationPlayer
+		if anim:
+			anim.play("scp096_skeleton|idle2")
 			
-			# Articular huesos del esqueleto: postura encorvada, mano agarrando el marco de Bedelía
-			var skel = scp_inst.find_child("Skeleton3D", true, false) as Skeleton3D
-			if skel:
-				# 1. Encorvar torso y cuello hacia adelante mirando al jugador
-				var b_rip = skel.find_bone("ripcage")
-				var b_neck = skel.find_bone("neck")
-				var b_head = skel.find_bone("head")
-				if b_rip >= 0:
-					var cur_rip = skel.get_bone_pose_rotation(b_rip)
-					skel.set_bone_pose_rotation(b_rip, cur_rip * Quaternion(Vector3(1, 0, 0), deg_to_rad(22.0)))
-				if b_neck >= 0:
-					var cur_neck = skel.get_bone_pose_rotation(b_neck)
-					skel.set_bone_pose_rotation(b_neck, cur_neck * Quaternion(Vector3(1, 0, 0), deg_to_rad(12.0)))
-				if b_head >= 0:
-					var cur_head = skel.get_bone_pose_rotation(b_head)
-					skel.set_bone_pose_rotation(b_head, cur_head * Quaternion(Vector3(1, 0, 0), deg_to_rad(-18.0)))
-					
-				# 2. Brazo derecho: hombro y codo extendidos hacia el marco de Bedelía
-				var b_sh = skel.find_bone("Bone_009")
-				var b_el = skel.find_bone("Bone_012")
-				var b_r_wrist = skel.find_bone("Bone_011")
-				var b_r_hand = skel.find_bone("Bone_023")
-				if b_sh >= 0:
-					var cur_sh = skel.get_bone_pose_rotation(b_sh)
-					var q_sh = Quaternion(Vector3(0, 0, 1), deg_to_rad(75.0)) * Quaternion(Vector3(1, 0, 0), deg_to_rad(10.0))
-					skel.set_bone_pose_rotation(b_sh, cur_sh * q_sh)
-				if b_el >= 0:
-					var cur_el = skel.get_bone_pose_rotation(b_el)
-					var q_el = Quaternion(Vector3(0, 0, 1), deg_to_rad(-20.0))
-					skel.set_bone_pose_rotation(b_el, cur_el * q_el)
-				# Muñeca orientada hacia el borde vertical del marco
-				if b_r_wrist >= 0:
-					var cur_wrist = skel.get_bone_pose_rotation(b_r_wrist)
-					var q_w = Quaternion(Vector3(1, 0, 0), deg_to_rad(-20.0)) * Quaternion(Vector3(0, 1, 0), deg_to_rad(-20.0)) * Quaternion(Vector3(0, 0, 1), deg_to_rad(15.0))
-					skel.set_bone_pose_rotation(b_r_wrist, cur_wrist * q_w)
-				# Dedos flexionados envolviendo el canto del marco
-				if b_r_hand >= 0:
-					var cur_hand = skel.get_bone_pose_rotation(b_r_hand)
-					var q_fingers = Quaternion(Vector3(1, 0, 0), deg_to_rad(35.0))
-					skel.set_bone_pose_rotation(b_r_hand, cur_hand * q_fingers)
-					
-				# 3. Brazo izquierdo: flexionar codo y muñeca para que la mano no traspase el suelo
-				var b_l_el = skel.find_bone("Bone_014")
-				var b_l_wrist = skel.find_bone("Bone_013")
-				if b_l_el >= 0:
-					var cur_l_el = skel.get_bone_pose_rotation(b_l_el)
-					skel.set_bone_pose_rotation(b_l_el, cur_l_el * Quaternion(Vector3(1, 0, 0), deg_to_rad(-30.0)))
-				if b_l_wrist >= 0:
-					var cur_l_wrist = skel.get_bone_pose_rotation(b_l_wrist)
-					skel.set_bone_pose_rotation(b_l_wrist, cur_l_wrist * Quaternion(Vector3(1, 0, 0), deg_to_rad(15.0)))
-					
 		phantom_node.add_child(scp_inst)
 	else:
 		# Respaldo si no se encuentra el modelo 3D
 		_create_fallback_phantom(phantom_node)
 	
-	# Colisión sólida física adaptada
+	# Colisión sólida física en el vano de la puerta (deja espacio a los lados para pasar)
 	var col_body = StaticBody3D.new()
 	col_body.name = "CreatureCollision"
-	var col_shape = CollisionShape3D.new()
+	creature_col_shape = CollisionShape3D.new()
 	var cap = CapsuleShape3D.new()
-	cap.radius = 0.70
-	cap.height = 3.40
-	col_shape.shape = cap
-	col_shape.position = Vector3(0.0, 1.70, 0.0)
-	col_body.add_child(col_shape)
+	cap.radius = 0.55
+	cap.height = 3.20
+	creature_col_shape.shape = cap
+	creature_col_shape.position = Vector3(0.0, 1.60, 0.0)
+	creature_col_shape.disabled = true
+	col_body.add_child(creature_col_shape)
 	phantom_node.add_child(col_body)
 	
+	# Permanece invisible e inactivo hasta que se recoja el fusible
+	phantom_node.visible = false
 	add_child(phantom_node)
 
 func _load_scp_scene() -> PackedScene:
@@ -289,19 +242,96 @@ func _process(_delta: float) -> void:
 			if dist <= 7.0:
 				_slam_door(d)
 				
-	# 2. Sonido espectral ambiental sutil la primera vez que el jugador se aproxima a la esquina
-	if not phantom_triggered and is_instance_valid(phantom_node):
-		if p_pos.distance_to(phantom_node.global_position) <= 12.0:
-			phantom_triggered = true
-			var whisper = AudioStreamPlayer3D.new()
-			whisper.stream = HorrorAudio.get_screamer_stinger()
-			whisper.position = phantom_node.position
-			whisper.volume_db = -8.0
-			whisper.pitch_scale = 0.55
-			whisper.max_distance = 25.0
-			add_child(whisper)
-			whisper.play()
-			whisper.finished.connect(whisper.queue_free)
+	# 2. Verificar recolección del fusible para hacer aparecer a SCP-096 esperando en la puerta
+	if not scp_spawned:
+		var hud_node = get_tree().root.find_child("HUD", true, false)
+		if hud_node and "has_fuse" in hud_node and hud_node.has_fuse:
+			_spawn_scp_waiting()
+			
+	# 3. Detectar cuando el jugador se da vuelta para salir y mira hacia SCP-096
+	if is_waiting_for_turnaround and is_instance_valid(phantom_node):
+		var cam: Camera3D = null
+		if player.has_node("CameraPivot/Camera3D"):
+			cam = player.get_node("CameraPivot/Camera3D") as Camera3D
+		elif player.has_node("Camera3D"):
+			cam = player.get_node("Camera3D") as Camera3D
+		else:
+			cam = player.find_child("Camera3D", true, false) as Camera3D
+			
+		if cam:
+			var cam_fwd = -cam.global_transform.basis.z
+			var to_scp = (phantom_node.global_position + Vector3(0, 1.8, 0) - cam.global_position).normalized()
+			var dot = cam_fwd.dot(to_scp)
+			var dist_to_scp = player.global_position.distance_to(phantom_node.global_position)
+			
+			# Cuando el jugador gira su cámara y mira hacia la criatura (cono de ~65°), o si se aproxima a la puerta:
+			if dot > 0.40 or dist_to_scp < 2.8:
+				_trigger_scp_turnaround_scare()
+
+func _connect_fuse_signal() -> void:
+	var fuses = get_tree().get_nodes_in_group("fusibles")
+	for f in fuses:
+		if f.has_signal("fuse_collected") and not f.fuse_collected.is_connected(_on_fuse_collected):
+			f.fuse_collected.connect(_on_fuse_collected)
+
+func _on_fuse_collected() -> void:
+	_spawn_scp_waiting()
+
+func _spawn_scp_waiting() -> void:
+	if scp_spawned or not is_instance_valid(phantom_node):
+		return
+	scp_spawned = true
+	is_waiting_for_turnaround = true
+	
+	# Parado exactamente en X: -40.0, Y: 4.7, Z: -33.2 (puerta de Bedelía P1) y viendo hacia el fusible (-Z)
+	phantom_node.position = Vector3(-40.0, 4.7, -33.2)
+	phantom_node.rotation_degrees = Vector3(0, 0, 0)
+	phantom_node.visible = true
+	
+	if creature_col_shape:
+		creature_col_shape.disabled = false
+		
+	var anim = phantom_node.find_child("AnimationPlayer", true, false) as AnimationPlayer
+	if anim:
+		anim.play("scp096_skeleton|idle2")
+		
+	print(">>> SCP-096 aguardando en la salida de Bedelía (-40.0, 4.7, -33.2) mirando hacia el fusible.")
+
+func _trigger_scp_turnaround_scare() -> void:
+	is_waiting_for_turnaround = false
+	if scp_stinger_played:
+		return
+	scp_stinger_played = true
+	
+	# Sonido espectral/stinger que tiene asignado, reproducido recién al darse vuelta
+	var whisper = AudioStreamPlayer3D.new()
+	whisper.name = "SCP096Stinger3D"
+	whisper.stream = HorrorAudio.get_screamer_stinger()
+	whisper.position = phantom_node.global_position + Vector3(0, 1.8, 0)
+	whisper.volume_db = 6.0
+	whisper.pitch_scale = 0.55
+	whisper.unit_size = 10.0
+	whisper.max_distance = 45.0
+	whisper.bus = &"Master"
+	add_child(whisper)
+	whisper.play()
+	whisper.finished.connect(whisper.queue_free)
+	
+	var stinger_2d = AudioStreamPlayer.new()
+	stinger_2d.stream = HorrorAudio.get_screamer_stinger()
+	stinger_2d.volume_db = 1.0
+	stinger_2d.pitch_scale = 0.55
+	stinger_2d.bus = &"Master"
+	add_child(stinger_2d)
+	stinger_2d.play()
+	stinger_2d.finished.connect(stinger_2d.queue_free)
+	
+	if player.has_method("shake_camera"):
+		player.shake_camera(0.65, 0.45)
+	if player.has_method("trigger_post_screamer_heartbeat"):
+		player.trigger_post_screamer_heartbeat(18.0)
+		
+	print(">>> ¡SCP-096 REVELADO AL DARSE VUELTA! Sonido espectral ejecutado.")
 
 func _slam_door(d: Dictionary) -> void:
 	d["is_slammed"] = true
