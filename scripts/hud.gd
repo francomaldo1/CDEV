@@ -31,9 +31,16 @@ var active_cuaderno: Node = null
 var current_correct_answer: int = 0
 var option_buttons: Array[Button] = []
 
+const ICON_EXAMS = preload("res://textures/inv_parcial.png")
+const ICON_BATTERY = preload("res://textures/inv_pila.png")
+const ICON_FUSE = preload("res://textures/inv_fusible.png")
+const ICON_KEY = preload("res://textures/inv_llave.png")
+const ICON_CHIPS = preload("res://textures/inv_peronachos.png")
+const ICON_TITLE = preload("res://textures/inv_titulo.png")
+
 var debug_coords_panel: PanelContainer = null
 var debug_coords_label: Label = null
-var show_debug_coords: bool = true
+var show_debug_coords: bool = false
 var last_coords_string: String = ""
 var player_cached: CharacterBody3D = null
 
@@ -114,13 +121,10 @@ func _ready() -> void:
 
 func _style_mic_bar() -> void:
 	if mic_icon:
-		var img: Image = null
-		if FileAccess.file_exists("res://textures/mic_icon.png"):
-			img = Image.load_from_file("res://textures/mic_icon.png")
-		elif FileAccess.file_exists("res://textures/mic_icon.svg"):
-			img = Image.load_from_file("res://textures/mic_icon.svg")
-		if img and not img.is_empty():
-			mic_icon.texture = ImageTexture.create_from_image(img)
+		if ResourceLoader.exists("res://textures/mic_icon.png"):
+			mic_icon.texture = load("res://textures/mic_icon.png")
+		elif ResourceLoader.exists("res://textures/mic_icon.svg"):
+			mic_icon.texture = load("res://textures/mic_icon.svg")
 	
 	if mic_progress_bar:
 		# Fondo oscuro con marco blanco nítido tipo juego de terror
@@ -203,6 +207,15 @@ func _setup_inventory_slots() -> void:
 		center.set_anchors_preset(Control.PRESET_FULL_RECT)
 		slot_panel.add_child(center)
 		
+		var icon_rect = TextureRect.new()
+		icon_rect.name = "IconRect"
+		icon_rect.custom_minimum_size = Vector2(36, 36)
+		icon_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		icon_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		icon_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		icon_rect.visible = false
+		center.add_child(icon_rect)
+		
 		var icon_lbl = Label.new()
 		icon_lbl.name = "Icon"
 		icon_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -232,6 +245,7 @@ func _setup_inventory_slots() -> void:
 		inventory_slots_array.append({
 			"panel": slot_panel,
 			"icon": icon_lbl,
+			"icon_rect": icon_rect,
 			"badge": badge_lbl
 		})
 		
@@ -249,6 +263,7 @@ func _update_inventory_slots() -> void:
 		var done = (exams_approved_count >= exams_total_count)
 		active_items.append({
 			"id": "exams",
+			"texture": ICON_EXAMS,
 			"icon": "📝",
 			"badge": "%d/%d ✓" if done else "%d/%d" % [exams_approved_count, exams_total_count],
 			"color": Color(0.2, 1.0, 0.5) if done else Color(0.35, 0.85, 1.0)
@@ -268,6 +283,7 @@ func _update_inventory_slots() -> void:
 	if bat_count > 0:
 		active_items.append({
 			"id": "battery",
+			"texture": ICON_BATTERY,
 			"icon": "🔋",
 			"badge": "x%d [R]" % bat_count,
 			"color": Color(0.3, 1.0, 0.55)
@@ -277,6 +293,7 @@ func _update_inventory_slots() -> void:
 	if has_fuse:
 		active_items.append({
 			"id": "fuse",
+			"texture": ICON_FUSE,
 			"icon": "⚡",
 			"badge": "30A",
 			"color": Color(1.0, 0.9, 0.25)
@@ -286,6 +303,7 @@ func _update_inventory_slots() -> void:
 	if has_auditorium_key:
 		active_items.append({
 			"id": "key",
+			"texture": ICON_KEY,
 			"icon": "🔑",
 			"badge": "Aud.",
 			"color": Color(1.0, 0.85, 0.35)
@@ -305,6 +323,7 @@ func _update_inventory_slots() -> void:
 	if chip_count > 0:
 		active_items.append({
 			"id": "chips",
+			"texture": ICON_CHIPS,
 			"icon": "🍟",
 			"badge": "x%d [Q]" % chip_count,
 			"color": Color(1.0, 0.75, 0.2)
@@ -314,6 +333,7 @@ func _update_inventory_slots() -> void:
 	if has_exit_key:
 		active_items.append({
 			"id": "title",
+			"texture": ICON_TITLE,
 			"icon": "🎓",
 			"badge": "Título",
 			"color": Color(0.3, 1.0, 0.6)
@@ -331,8 +351,16 @@ func _update_inventory_slots() -> void:
 			style.set_corner_radius_all(4)
 			slot["panel"].add_theme_stylebox_override("panel", style)
 			
-			slot["icon"].text = item["icon"]
-			slot["icon"].visible = true
+			if item.has("texture") and item["texture"] != null:
+				slot["icon_rect"].texture = item["texture"]
+				slot["icon_rect"].visible = true
+				if slot.has("icon"):
+					slot["icon"].visible = false
+			elif item.has("icon") and item["icon"] != "":
+				slot["icon"].text = item["icon"]
+				slot["icon"].visible = true
+				if slot.has("icon_rect"):
+					slot["icon_rect"].visible = false
 			
 			if item.has("badge") and item["badge"] != "":
 				slot["badge"].text = item["badge"]
@@ -349,7 +377,10 @@ func _update_inventory_slots() -> void:
 			empty_style.set_corner_radius_all(4)
 			slot["panel"].add_theme_stylebox_override("panel", empty_style)
 			
-			slot["icon"].visible = false
+			if slot.has("icon_rect"):
+				slot["icon_rect"].visible = false
+			if slot.has("icon"):
+				slot["icon"].visible = false
 			slot["badge"].visible = false
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -495,7 +526,8 @@ func _process(delta: float) -> void:
 	_process_mic_bar(delta)
 	_process_camcorder_ui(delta)
 	_process_stamina_bar(delta)
-	_process_debug_coords(delta)
+	if show_debug_coords:
+		_process_debug_coords(delta)
 
 func _setup_stamina_bar() -> void:
 	stamina_container = HBoxContainer.new()
@@ -700,6 +732,7 @@ func _setup_debug_coords() -> void:
 	debug_coords_panel = PanelContainer.new()
 	debug_coords_panel.name = "DebugCoordsPanel"
 	debug_coords_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	debug_coords_panel.visible = false
 	
 	var style = StyleBoxFlat.new()
 	style.bg_color = Color(0.06, 0.08, 0.12, 0.8)
@@ -768,21 +801,13 @@ func _setup_camcorder_ui() -> void:
 	camcorder_objective_label.offset_top = 23.0
 	camcorder_objective_label.offset_bottom = 45.0
 	camcorder_objective_label.offset_left = 180.0
-	camcorder_objective_label.offset_right = -410.0
+	camcorder_objective_label.offset_right = -145.0
 	camcorder_objective_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	camcorder_objective_label.add_theme_color_override("font_color", Color(0.85, 0.92, 0.98, 0.85))
 	camcorder_objective_label.add_theme_font_size_override("font_size", 13)
 	camcorder_container.add_child(camcorder_objective_label)
 	
-	# Top Right: NIGHT VISION + BATERIA (Icono gráfico según referencia)
-	camcorder_nv_label = Label.new()
-	camcorder_nv_label.text = "[Click Der / F] VISIÓN NOCTURNA: OFF"
-	camcorder_nv_label.set_anchors_preset(Control.PRESET_TOP_RIGHT)
-	camcorder_nv_label.position = Vector2(-390, 24)
-	camcorder_nv_label.add_theme_color_override("font_color", Color(0.7, 0.75, 0.8, 0.75))
-	camcorder_nv_label.add_theme_font_size_override("font_size", 13)
-	camcorder_container.add_child(camcorder_nv_label)
-	
+	# Top Right: BATERIA (Icono gráfico según referencia)
 	var battery_box = HBoxContainer.new()
 	battery_box.name = "BatteryBox"
 	battery_box.set_anchors_preset(Control.PRESET_TOP_RIGHT)
@@ -818,13 +843,6 @@ func set_objective_text(text_msg: String, color: Color = Color(0.85, 0.92, 0.98,
 
 func set_night_vision_active(active: bool) -> void:
 	is_nv_active = active
-	if camcorder_nv_label:
-		if is_nv_active:
-			camcorder_nv_label.text = "NIGHT VISION [ ACTIVE ]"
-			camcorder_nv_label.add_theme_color_override("font_color", Color(0.55, 0.92, 0.72, 0.95))
-		else:
-			camcorder_nv_label.text = "[Click Der / F] VISIÓN NOCTURNA: OFF"
-			camcorder_nv_label.add_theme_color_override("font_color", Color(0.7, 0.75, 0.8, 0.65))
 	if camcorder_battery_icon:
 		camcorder_battery_icon.queue_redraw()
 
