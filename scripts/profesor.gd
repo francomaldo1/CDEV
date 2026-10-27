@@ -12,13 +12,13 @@ enum State {
 @export var base_patrol_speed: float = 2.0
 @export var base_chase_speed: float = 2.85
 @export var seek_speed: float = 2.4
-@export var vision_range: float = 18.0
-@export var vision_angle_deg: float = 105.0
-@export var proximity_range: float = 3.5
+@export var vision_range: float = 30.0
+@export var vision_angle_deg: float = 190.0
+@export var proximity_range: float = 5.5
 @export var hearing_range: float = 35.0
 @export var attack_range: float = 1.6
 @export var attack_cooldown: float = 1.3
-@export var lost_sight_timeout: float = 4.5
+@export var lost_sight_timeout: float = 6.0
 
 ## Estado actual
 var current_state: State = State.PATROL
@@ -611,33 +611,41 @@ func _can_see_player() -> bool:
 	var eye_pos = global_position + Vector3(0, 1.5, 0)
 	var player_eye = player.global_position + Vector3(0, 1.3, 0)
 	var player_chest = player.global_position + Vector3(0, 0.75, 0)
+	var player_waist = player.global_position + Vector3(0, 0.45, 0)
 	var to_player = player_eye - eye_pos
 	var dist = to_player.length()
 
 	var current_vision_range = vision_range
+	if current_state == State.CHASE:
+		current_vision_range = maxf(current_vision_range, 38.0)
+		
 	var flashlight = player.find_child("Flashlight", true, false) as SpotLight3D
 	if flashlight and flashlight.visible:
 		current_vision_range *= 1.45
 
-	# Proximidad inmediata
+	# Proximidad inmediata (percepción 360° en distancias cortas por pasos/ruido/presencia)
 	if dist <= proximity_range:
-		return _has_line_of_sight(eye_pos, player_eye) or _has_line_of_sight(eye_pos, player_chest)
+		return _has_line_of_sight(eye_pos, player_eye) or _has_line_of_sight(eye_pos, player_chest) or _has_line_of_sight(eye_pos, player_waist)
 
 	if dist > current_vision_range:
 		return false
 
-	# Cono de visión horizontal
+	# Cono de visión horizontal con visión periférica amplia (190° en patrulla, 220° en persecución activa)
+	var effective_angle_deg = vision_angle_deg
+	if current_state == State.CHASE:
+		effective_angle_deg = maxf(effective_angle_deg, 220.0)
+
 	var forward_h = Vector2(transform.basis.z.x, transform.basis.z.z).normalized()
 	var dir_to_player_h = Vector2(to_player.x, to_player.z).normalized()
 	if forward_h.length() > 0.1 and dir_to_player_h.length() > 0.1:
 		var angle_deg = rad_to_deg(absf(forward_h.angle_to(dir_to_player_h)))
-		if angle_deg > vision_angle_deg * 0.5:
+		if angle_deg > effective_angle_deg * 0.5:
 			return false
 
 	if absf(to_player.y) > 3.8:
 		return false
 
-	return _has_line_of_sight(eye_pos, player_eye) or _has_line_of_sight(eye_pos, player_chest)
+	return _has_line_of_sight(eye_pos, player_eye) or _has_line_of_sight(eye_pos, player_chest) or _has_line_of_sight(eye_pos, player_waist)
 
 func _has_line_of_sight(from_pos: Vector3, to_pos: Vector3) -> bool:
 	if not is_inside_tree() or not get_world_3d():
@@ -910,7 +918,7 @@ func _process_chase_state(delta: float, can_see_player: bool) -> void:
 	var can_rush_direct = (can_see_player or is_trash_rushing) and _is_walk_path_clear(global_position, player.global_position)
 	if can_rush_direct:
 		loop_commit_timer = 0.0
-		var rot_spd = 35.0 if (is_screamer_charging or is_trash_rushing) else 8.0
+		var rot_spd = 35.0 if (is_screamer_charging or is_trash_rushing) else 15.0
 		_move_towards(delta, player.global_position, current_speed, rot_spd)
 		return
 
@@ -1257,7 +1265,7 @@ func boost_speed() -> void:
 	patrol_speed = 2.45
 	chase_speed = 3.4
 	seek_speed = 2.8
-	vision_range = 22.0
+	vision_range = 34.0
 	current_speed = patrol_speed
 	
 	if not is_active:
@@ -1592,9 +1600,9 @@ func activate_enraged_final_phase() -> void:
 	patrol_speed = 2.85
 	chase_speed = 3.9
 	seek_speed = 3.3
-	vision_range = 26.0
-	vision_angle_deg = 85.0
-	proximity_range = 4.2
+	vision_range = 38.0
+	vision_angle_deg = 200.0
+	proximity_range = 6.5
 	
 	if current_state == State.PATROL or current_state == State.SEARCH:
 		current_speed = patrol_speed
