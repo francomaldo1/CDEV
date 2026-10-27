@@ -483,9 +483,6 @@ func _update_heartbeat(delta: float) -> void:
 	var prof_ambush = is_instance_valid(prof) and (prof.get("is_screamer_ambush") == true)
 	var prof_in_pursuit = is_instance_valid(prof) and prof.visible and not prof_ambush and (prof.get("current_state") == 1 or prof.get("current_state") == 2 or prof.get("is_screamer_charging")) and dist < 32.0
 	var should_play_violins = (chase_violins_timer > 0.0) or prof_in_pursuit
-	if is_hidden:
-		should_play_violins = false
-		chase_violins_timer = 0.0
 		
 	if chase_violins_player:
 		if should_play_violins:
@@ -619,8 +616,8 @@ func play_horror_stinger() -> void:
 	if stinger_player:
 		stinger_player.stop()
 		stinger_player.play()
-	# Duración reducida para el jumpscare del 4to examen: acompaña únicamente la corrida por el pasillo y se apaga rápido
-	start_chase_violins(3.5, 2.0)
+	# Duración completa de violines (20s) para mantener el ambiente de tensión tras el susto
+	start_chase_violins(20.0, 3.5)
 
 func add_peronachos(amount: int = 1) -> void:
 	peronachos_count += amount
