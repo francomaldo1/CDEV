@@ -658,6 +658,37 @@ func _update_night_vision_process(delta: float) -> void:
 	if hud and hud.has_method("set_night_vision_battery"):
 		hud.set_night_vision_battery(night_vision_battery)
 
+func recharge_night_vision(amount: float = 50.0) -> float:
+	var prev = night_vision_battery
+	night_vision_battery = minf(100.0, night_vision_battery + amount)
+	var gained = night_vision_battery - prev
+	var hud = get_tree().root.find_child("HUD", true, false)
+	if hud and hud.has_method("set_night_vision_battery"):
+		hud.set_night_vision_battery(night_vision_battery)
+	_play_battery_pickup_sound()
+	return gained
+
+func _play_battery_pickup_sound() -> void:
+	var p = AudioStreamPlayer.new()
+	p.bus = &"Master"
+	p.volume_db = -2.0
+	add_child(p)
+	var gen = AudioStreamGenerator.new()
+	gen.mix_rate = 44100
+	gen.buffer_length = 0.15
+	p.stream = gen
+	p.play()
+	var pb = p.get_stream_playback()
+	if pb:
+		var frames = int(44100 * 0.12)
+		for i in range(frames):
+			var t = float(i) / 44100.0
+			var f = 800.0 + t * 4000.0 if t < 0.05 else 1600.0
+			var env = exp(-t * 22.0)
+			var s = sin(TAU * f * t) * env * 0.4
+			pb.push_frame(Vector2(s, s))
+	p.finished.connect(p.queue_free)
+
 func _play_night_vision_sound(is_on: bool) -> void:
 	var click_player = AudioStreamPlayer.new()
 	click_player.bus = &"Master"

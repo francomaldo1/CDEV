@@ -76,6 +76,9 @@ func _ready() -> void:
 	_spawn_tachos_basura()
 	_spawn_p1_fuse_guide()
 	_setup_peronachos_shelves()
+	_spawn_pilas_aa()
+	if hud and hud.has_method("set_objective_text"):
+		hud.set_objective_text("OBJETIVO: Rendir los 4 parciales en Planta Baja (0/4)")
 	
 	# El profesor no está al principio: aparece con el corte de luz
 	if profesor:
@@ -265,22 +268,30 @@ func _on_exam_solved(success: bool, cuaderno: Node) -> void:
 	if hud and hud.has_method("show_temporary_alert"):
 		hud.show_temporary_alert("✅ ¡PARCIAL APROBADO! (%d/%d)" % [n, total_exams], Color(0.2, 1.0, 0.4))
 	
-	# 2do examen aprobado: aparece el profesor y se corta la luz
-	if n == exams_for_blackout:
+	# Actualizar objetivo segun cantidad de parciales aprobados
+	if n < total_exams:
+		if hud and hud.has_method("set_objective_text"):
+			hud.set_objective_text("OBJETIVO: Rendir los 4 parciales en Planta Baja (%d/%d)" % [n, total_exams])
+	
+	# Al 2do examen aprobado: el profesor comienza a patrullar la Planta Baja
+	if n == 2 and is_instance_valid(profesor) and not profesor.is_active:
 		_spawn_profesor()
-		_trigger_blackout()
 		if hud and hud.has_method("show_temporary_alert"):
-			hud.show_temporary_alert("⚡ ¡SE CORTÓ LA LUZ! Activá la cámara con [Click Derecho] o [F]", Color(1.0, 0.8, 0.2))
+			hud.show_temporary_alert("👁️ ¡El profesor escucho las hojas! Salio a patrullar la Planta Baja...", Color(1.0, 0.4, 0.4))
 	
-	
-	# Todos los exámenes aprobados: se habilita el piso de arriba y entra en FASE FURIA
-	if n == exams_for_upper_floor:
+	# Al 4to examen aprobado: todos listos -> Apagon general, furor del profesor y desbloqueo de escaleras
+	if n >= total_exams:
 		_unlock_upper_floor()
+		if is_instance_valid(profesor) and not profesor.is_active:
+			_spawn_profesor()
+		_trigger_blackout()
 		_prepare_fourth_exam_turnaround_scare(cuaderno)
 		if is_instance_valid(profesor) and profesor.has_method("activate_enraged_final_phase"):
 			profesor.activate_enraged_final_phase()
+		if hud and hud.has_method("set_objective_text"):
+			hud.set_objective_text("OBJETIVO: ¡Corte de luz! Subi al 1er Piso (P1) y busca el fusible en Bedelia", Color(1.0, 0.85, 0.2))
 		if hud and hud.has_method("show_temporary_alert"):
-			hud.show_temporary_alert("⚠️ ¡EL PROFESOR PERDIÓ LA CORDURA! Enfureció tras los 4 parciales. Corré al piso de arriba...", Color(1.0, 0.15, 0.15))
+			hud.show_temporary_alert("⚡ ¡APAGON TOTAL! Saltaron los disyuntores. Subi a P1 a buscar el fusible en Bedelia...", Color(1.0, 0.25, 0.25))
 
 func _spawn_profesor() -> void:
 	if not profesor:
@@ -424,6 +435,22 @@ func _setup_peronachos_shelves() -> void:
 	add_child(second_shelf)
 	print(">>> Estantes de Peronachos configurados e interactivos en Cafetería PB (X: 51.10 y X: 51.65)")
 
+func _spawn_pilas_aa() -> void:
+	var pila_script = preload("res://scripts/pila_aa.gd")
+	var battery_spots = [
+		{"pos": Vector3(-61.0, 4.65, 29.5), "desc": "P1 Escalera Oeste"},
+		{"pos": Vector3(39.0, 4.65, -34.0), "desc": "P1 Escalera Norte"},
+		{"pos": Vector3(-42.0, 4.65, -28.5), "desc": "P1 Pasillo Bedelia"},
+		{"pos": Vector3(-60.0, 0.15, 28.0), "desc": "PB Escalera Oeste"},
+	]
+	for spot in battery_spots:
+		var pila = Area3D.new()
+		pila.set_script(pila_script)
+		pila.name = "PilaAA_" + spot["desc"].replace(" ", "_")
+		pila.position = spot["pos"]
+		add_child(pila)
+		print(">>> Pila AA instalada en: %s (%s)" % [spot["desc"], str(spot["pos"])])
+
 func _collect_all_building_lights() -> Array[Light3D]:
 	var result: Array[Light3D] = []
 	
@@ -445,7 +472,7 @@ func _collect_all_building_lights() -> Array[Light3D]:
 			var is_exempt = false
 			var curr: Node = light
 			while curr != null and curr != get_tree().root:
-				if curr.name == "Player" or curr.name == "Profesor" or curr.name == "TableroElectrico" or curr.name.begins_with("Fusible"):
+				if curr.name == "Player" or curr.name == "Profesor" or curr.name == "TableroElectrico" or curr.name.begins_with("Fusible") or curr.name.begins_with("PilaAA"):
 					is_exempt = true
 					break
 				curr = curr.get_parent()
@@ -542,6 +569,8 @@ func _on_power_restored() -> void:
 			
 	if hud and hud.has_method("show_temporary_alert"):
 		hud.show_temporary_alert("💡 ¡Energía restablecida! Las luces volvieron a encenderse.", Color(0.3, 1.0, 0.5))
+	if hud and hud.has_method("set_objective_text"):
+		hud.set_objective_text("OBJETIVO: ¡Luz restablecida! Buscá la Llave del Auditorio en Planta Baja", Color(0.3, 1.0, 0.6))
 		
 	print(">>> ¡ENERGÍA RESTABLECIDA EN TODA LA FACULTAD!")
 

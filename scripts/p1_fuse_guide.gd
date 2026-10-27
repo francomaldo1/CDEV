@@ -156,9 +156,9 @@ func _create_phantom() -> void:
 		var scp_inst = scp_scene.instantiate()
 		scp_inst.name = "SCP096Model"
 		
-		# Ajuste de escala y postura encorvada para que no atraviese el techo y quede amenazante
-		scp_inst.scale = Vector3(0.72, 0.72, 0.72)
-		scp_inst.position = Vector3(0.0, 0.05, 0.0)
+		# Ajuste de escala y postura encorvada con pies apoyados perfectamente sobre el suelo
+		scp_inst.scale = Vector3(0.70, 0.70, 0.70)
+		scp_inst.position = Vector3(0.0, 0.82, 0.0)
 		scp_inst.rotation_degrees = Vector3(16.0, 0, 0)
 		
 		# Si se carga desde el FBX crudo (no desde la escena editable .tscn), aplicamos textura de respaldo

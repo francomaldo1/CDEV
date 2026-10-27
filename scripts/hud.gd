@@ -49,6 +49,7 @@ var camcorder_nv_label: Label = null
 var camcorder_battery_label: Label = null
 var camcorder_battery_icon: Control = null
 var camcorder_battery_container: Control = null
+var camcorder_objective_label: Label = null
 var camcorder_timecode_label: Label = null
 var camcorder_rec_blink_timer: float = 0.0
 var camcorder_time_elapsed: float = 0.0
@@ -723,6 +724,20 @@ func _setup_camcorder_ui() -> void:
 	camcorder_rec_label.add_theme_font_size_override("font_size", 16)
 	camcorder_container.add_child(camcorder_rec_label)
 	
+	# Top Center: OBJETIVO ACTUAL EN PANTALLA
+	camcorder_objective_label = Label.new()
+	camcorder_objective_label.name = "CamcorderObjectiveLabel"
+	camcorder_objective_label.text = "OBJETIVO: Rendir los 4 parciales en Planta Baja (0/4)"
+	camcorder_objective_label.set_anchors_preset(Control.PRESET_TOP_WIDE)
+	camcorder_objective_label.offset_top = 23.0
+	camcorder_objective_label.offset_bottom = 45.0
+	camcorder_objective_label.offset_left = 180.0
+	camcorder_objective_label.offset_right = -410.0
+	camcorder_objective_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	camcorder_objective_label.add_theme_color_override("font_color", Color(0.85, 0.92, 0.98, 0.85))
+	camcorder_objective_label.add_theme_font_size_override("font_size", 13)
+	camcorder_container.add_child(camcorder_objective_label)
+	
 	# Top Right: NIGHT VISION + BATERIA (Icono gráfico según referencia)
 	camcorder_nv_label = Label.new()
 	camcorder_nv_label.text = "[Click Der / F] VISIÓN NOCTURNA: OFF"
@@ -759,6 +774,11 @@ func _setup_camcorder_ui() -> void:
 	camcorder_timecode_label.add_theme_color_override("font_color", Color(0.8, 0.85, 0.9, 0.6))
 	camcorder_timecode_label.add_theme_font_size_override("font_size", 13)
 	camcorder_container.add_child(camcorder_timecode_label)
+
+func set_objective_text(text_msg: String, color: Color = Color(0.85, 0.92, 0.98, 0.85)) -> void:
+	if camcorder_objective_label:
+		camcorder_objective_label.text = text_msg
+		camcorder_objective_label.add_theme_color_override("font_color", color)
 
 func set_night_vision_active(active: bool) -> void:
 	is_nv_active = active
