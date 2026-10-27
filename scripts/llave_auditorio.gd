@@ -35,7 +35,7 @@ func _collect() -> void:
 		hud.update_inventory_display()
 		hud.show_temporary_alert("🔑 ¡LLAVE DEL AUDITORIO RECOGIDA! Bajá a planta baja y abrí el auditorio.", Color(1.0, 0.85, 0.2))
 		if hud.has_method("set_objective_text"):
-			hud.set_objective_text("OBJETIVO: ¡Llave del Auditorio obtenida! Abrí el Auditorio en PB", Color(0.2, 1.0, 0.7))
+			hud.set_objective_text("NUEVO OBJETIVO: ¡Llave del Auditorio obtenida! Abrí la puerta del Auditorio en PB", Color(0.2, 1.0, 0.7))
 		hud.set_interact_prompt("")
 
 	key_collected.emit()

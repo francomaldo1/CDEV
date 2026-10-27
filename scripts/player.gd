@@ -416,11 +416,11 @@ func start_chase_violins(duration: float = 60.0, boost_db: float = 5.0) -> void:
 	var tw = create_tween()
 	tw.tween_property(chase_violins_player, "volume_db", boost_db, 0.25)
 
-func stop_chase_violins(fade_time: float = 1.8) -> void:
+func stop_chase_violins(fade_time: float = 3.0) -> void:
 	chase_violins_timer = 0.0
 	if chase_violins_player and chase_violins_player.playing:
 		var tw = create_tween()
-		tw.tween_property(chase_violins_player, "volume_db", -50.0, fade_time)
+		tw.tween_property(chase_violins_player, "volume_db", -55.0, fade_time)
 		tw.tween_callback(chase_violins_player.stop)
 
 func stop_jumpscare_screamer(fade_time: float = 0.3) -> void:
@@ -481,8 +481,10 @@ func _update_heartbeat(delta: float) -> void:
 		chase_violins_timer -= delta
 		
 	var prof_ambush = is_instance_valid(prof) and (prof.get("is_screamer_ambush") == true)
-	var prof_in_pursuit = is_instance_valid(prof) and prof.visible and not prof_ambush and (prof.get("current_state") == 1 or prof.get("current_state") == 2 or prof.get("is_screamer_charging")) and dist < 32.0
-	var should_play_violins = (chase_violins_timer > 0.0) or prof_in_pursuit
+	# Solo persecución activa (State.CHASE = 1 o carga screamer), no por simple proximidad ni patrullaje
+	var is_actively_chasing = is_instance_valid(prof) and prof.visible and not prof_ambush and (prof.get("current_state") == 1 or prof.get("is_screamer_charging") == true)
+	var hidden_tension = is_hidden and is_instance_valid(prof) and (prof.get("current_state") == 1 or prof.get("current_state") == 2 or dist < 14.0) and chase_violins_timer > 0.0
+	var should_play_violins = (chase_violins_timer > 0.0 and (is_actively_chasing or hidden_tension)) or is_actively_chasing
 		
 	if chase_violins_player:
 		if should_play_violins:
@@ -493,8 +495,9 @@ func _update_heartbeat(delta: float) -> void:
 			chase_violins_player.volume_db = lerpf(chase_violins_player.volume_db, target_v, delta * 3.5)
 		else:
 			if chase_violins_player.playing:
-				chase_violins_player.volume_db = lerpf(chase_violins_player.volume_db, -50.0, delta * 2.5)
-				if chase_violins_player.volume_db <= -42.0:
+				# Desvanecimiento gradual suave (no frena de golpe)
+				chase_violins_player.volume_db = lerpf(chase_violins_player.volume_db, -55.0, delta * 0.95)
+				if chase_violins_player.volume_db <= -45.0:
 					chase_violins_player.stop()
 
 	# Proximidad al profesor y efecto pánico analógico (Opción C - Distancia ampliada a 7.5m)

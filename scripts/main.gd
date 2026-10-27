@@ -289,7 +289,7 @@ func _on_exam_solved(success: bool, cuaderno: Node) -> void:
 		if is_instance_valid(profesor) and profesor.has_method("activate_enraged_final_phase"):
 			profesor.activate_enraged_final_phase()
 		if hud and hud.has_method("set_objective_text"):
-			hud.set_objective_text("OBJETIVO: ¡Corte de luz! Subi al 1er Piso (P1) y busca el fusible en Bedelia", Color(1.0, 0.85, 0.2))
+			hud.set_objective_text("NUEVO OBJETIVO: ¡Corte de luz! Buscá el fusible en Bedelía (P1) para recuperar la luz", Color(1.0, 0.85, 0.2))
 		if hud and hud.has_method("show_temporary_alert"):
 			hud.show_temporary_alert("⚡ ¡APAGON TOTAL! Saltaron los disyuntores. Subi a P1 a buscar el fusible en Bedelia...", Color(1.0, 0.25, 0.25))
 
@@ -560,7 +560,7 @@ func _on_power_restored() -> void:
 	if hud and hud.has_method("show_temporary_alert"):
 		hud.show_temporary_alert("💡 ¡Energía restablecida! Las luces volvieron a encenderse.", Color(0.3, 1.0, 0.5))
 	if hud and hud.has_method("set_objective_text"):
-		hud.set_objective_text("OBJETIVO: ¡Luz restablecida! Buscá la Llave del Auditorio en Planta Baja", Color(0.3, 1.0, 0.6))
+		hud.set_objective_text("NUEVO OBJETIVO: ¡Luz restablecida! Buscá la Llave del Auditorio en Planta Baja", Color(0.3, 1.0, 0.6))
 		
 	print(">>> ¡ENERGÍA RESTABLECIDA EN TODA LA FACULTAD!")
 

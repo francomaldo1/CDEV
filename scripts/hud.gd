@@ -64,6 +64,22 @@ var camcorder_time_elapsed: float = 0.0
 var is_nv_active: bool = false
 var nv_battery_pct: float = 100.0
 
+## Banner de Objetivos Tipo Máquina de Escribir (Tercio Superior Central)
+var typewriter_font: Font = null
+var typewriter_sfx = preload("res://audio/sfx/typewriter_click.wav")
+var typewriter_audio_player: AudioStreamPlayer = null
+
+var objective_banner_panel: PanelContainer = null
+var objective_banner_header: Label = null
+var objective_banner_label: Label = null
+var objective_target_text: String = ""
+var objective_current_char_idx: int = 0
+var objective_type_timer: float = 0.0
+var objective_hold_timer: float = 0.0
+var is_objective_typing: bool = false
+var is_objective_holding: bool = false
+var objective_tween: Tween = null
+
 func _ready() -> void:
 	if alert_label:
 		alert_label.visible = false
@@ -117,6 +133,7 @@ func _ready() -> void:
 	_setup_stamina_bar()
 	_setup_inventory_slots()
 	_setup_camcorder_ui()
+	_setup_typewriter_objective()
 	_style_mic_bar()
 
 func _style_mic_bar() -> void:
@@ -521,6 +538,7 @@ func _process(delta: float) -> void:
 	_process_mic_bar(delta)
 	_process_camcorder_ui(delta)
 	_process_stamina_bar(delta)
+	_process_typewriter_objective(delta)
 	if show_debug_coords:
 		_process_debug_coords(delta)
 
@@ -831,10 +849,144 @@ func _setup_camcorder_ui() -> void:
 	camcorder_timecode_label.add_theme_font_size_override("font_size", 13)
 	camcorder_container.add_child(camcorder_timecode_label)
 
+func _setup_typewriter_objective() -> void:
+	if ResourceLoader.exists("res://fonts/typewriter.ttf"):
+		typewriter_font = load("res://fonts/typewriter.ttf")
+		
+	typewriter_audio_player = AudioStreamPlayer.new()
+	typewriter_audio_player.name = "TypewriterAudio"
+	typewriter_audio_player.stream = typewriter_sfx
+	typewriter_audio_player.volume_db = -16.0
+	typewriter_audio_player.bus = &"Master"
+	add_child(typewriter_audio_player)
+	
+	objective_banner_panel = PanelContainer.new()
+	objective_banner_panel.name = "ObjectiveTypewriterBanner"
+	objective_banner_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	
+	var style = StyleBoxFlat.new()
+	style.bg_color = Color(0.03, 0.04, 0.07, 0.90)
+	style.border_color = Color(0.22, 0.88, 0.58, 0.85)
+	style.set_border_width_all(1)
+	style.set_corner_radius_all(4)
+	style.content_margin_left = 22
+	style.content_margin_right = 22
+	style.content_margin_top = 8
+	style.content_margin_bottom = 8
+	objective_banner_panel.add_theme_stylebox_override("panel", style)
+	
+	# Tercio superior central: centrado horizontal, Y = 70px
+	objective_banner_panel.set_anchors_preset(Control.PRESET_CENTER_TOP)
+	objective_banner_panel.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	objective_banner_panel.grow_vertical = Control.GROW_DIRECTION_END
+	
+	var vbox = VBoxContainer.new()
+	vbox.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	vbox.alignment = BoxContainer.ALIGNMENT_CENTER
+	vbox.add_theme_constant_override("separation", 2)
+	objective_banner_panel.add_child(vbox)
+	
+	objective_banner_header = Label.new()
+	objective_banner_header.name = "ObjectiveHeader"
+	objective_banner_header.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	if typewriter_font:
+		objective_banner_header.add_theme_font_override("font", typewriter_font)
+	objective_banner_header.add_theme_font_size_override("font_size", 12)
+	objective_banner_header.add_theme_color_override("font_color", Color(0.35, 1.0, 0.65, 0.95))
+	objective_banner_header.text = "[ NUEVO OBJETIVO ]"
+	vbox.add_child(objective_banner_header)
+	
+	objective_banner_label = Label.new()
+	objective_banner_label.name = "ObjectiveText"
+	objective_banner_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	if typewriter_font:
+		objective_banner_label.add_theme_font_override("font", typewriter_font)
+	objective_banner_label.add_theme_font_size_override("font_size", 16)
+	objective_banner_label.add_theme_color_override("font_color", Color(0.95, 0.98, 1.0))
+	objective_banner_label.add_theme_constant_override("outline_size", 3)
+	objective_banner_label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.95))
+	objective_banner_label.text = ""
+	vbox.add_child(objective_banner_label)
+	
+	objective_banner_panel.modulate.a = 0.0
+	objective_banner_panel.visible = false
+	add_child(objective_banner_panel)
+
+func _process_typewriter_objective(delta: float) -> void:
+	if not objective_banner_panel or not objective_banner_panel.visible:
+		return
+		
+	# Centrar en el tercio superior central
+	var vp_size = get_viewport().get_visible_rect().size
+	var panel_size = objective_banner_panel.size
+	objective_banner_panel.position.x = (vp_size.x - panel_size.x) * 0.5
+	objective_banner_panel.position.y = 70.0
+	
+	if is_objective_typing:
+		objective_type_timer += delta
+		if objective_type_timer >= 0.036:
+			objective_type_timer = 0.0
+			objective_current_char_idx += 1
+			if objective_current_char_idx <= objective_target_text.length():
+				var typed_part = objective_target_text.substr(0, objective_current_char_idx)
+				objective_banner_label.text = typed_part + "_"
+				
+				# Sonido de máquina de escribir
+				var current_char = objective_target_text[objective_current_char_idx - 1]
+				if current_char != " " and typewriter_audio_player:
+					typewriter_audio_player.pitch_scale = randf_range(0.95, 1.05)
+					typewriter_audio_player.play()
+			else:
+				objective_banner_label.text = objective_target_text
+				is_objective_typing = false
+				is_objective_holding = true
+				objective_hold_timer = 6.5
+				
+	elif is_objective_holding:
+		objective_hold_timer -= delta
+		if objective_hold_timer <= 0.0:
+			is_objective_holding = false
+			if objective_tween:
+				objective_tween.kill()
+			objective_tween = create_tween()
+			objective_tween.tween_property(objective_banner_panel, "modulate:a", 0.0, 1.2)
+			objective_tween.tween_callback(func():
+				if is_instance_valid(objective_banner_panel):
+					objective_banner_panel.visible = false
+			)
+
+func _trigger_typewriter_objective(full_text: String, color: Color) -> void:
+	if not objective_banner_panel:
+		return
+		
+	var display_body = full_text
+	var header_text = "[ NUEVO OBJETIVO ]"
+	if display_body.begins_with("NUEVO OBJETIVO:"):
+		display_body = display_body.trim_prefix("NUEVO OBJETIVO:").strip_edges()
+	elif display_body.begins_with("OBJETIVO:"):
+		display_body = display_body.trim_prefix("OBJETIVO:").strip_edges()
+		header_text = "[ OBJETIVO ]"
+		
+	objective_target_text = display_body
+	objective_current_char_idx = 0
+	objective_type_timer = 0.0
+	is_objective_typing = true
+	is_objective_holding = false
+	
+	if objective_tween:
+		objective_tween.kill()
+		
+	objective_banner_header.text = header_text
+	objective_banner_header.add_theme_color_override("font_color", color)
+	objective_banner_label.text = "_"
+	objective_banner_panel.visible = true
+	objective_banner_panel.modulate.a = 1.0
+
 func set_objective_text(text_msg: String, color: Color = Color(0.85, 0.92, 0.98, 0.85)) -> void:
 	if camcorder_objective_label:
 		camcorder_objective_label.text = text_msg
 		camcorder_objective_label.add_theme_color_override("font_color", color)
+	_trigger_typewriter_objective(text_msg, color)
 
 func set_night_vision_active(active: bool) -> void:
 	is_nv_active = active

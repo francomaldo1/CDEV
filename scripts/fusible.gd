@@ -29,7 +29,7 @@ func _collect() -> void:
 		hud.update_inventory_display()
 		hud.show_temporary_alert("⚡ ¡FUSIBLE RECOGIDO! Llévalo al Departamento de Ingeniería Electrónica.", Color(1.0, 0.85, 0.2))
 		if hud.has_method("set_objective_text"):
-			hud.set_objective_text("OBJETIVO: Llevá el fusible al Dpto. de Electrónica (PB) para restaurar la luz", Color(1.0, 0.85, 0.2))
+			hud.set_objective_text("NUEVO OBJETIVO: Llevá el fusible al Dpto. de Electrónica (PB) para restaurar la luz", Color(1.0, 0.85, 0.2))
 		hud.set_interact_prompt("")
 		
 	fuse_collected.emit()

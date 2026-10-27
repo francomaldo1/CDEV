@@ -1546,6 +1546,8 @@ func start_screamer_charge() -> void:
 	attack_timer = 0.15
 	last_chase_screamer_time = Time.get_ticks_msec() / 1000.0
 	_say("¡¡NO HAY SALVACIÓN, DIRECTO A MARZO!!", Color(1.0, 0.0, 0.0))
+	if is_instance_valid(player) and player.has_method("play_jumpscare_screamer"):
+		player.play_jumpscare_screamer()
 	if is_instance_valid(player) and player.has_method("start_chase_violins"):
 		player.start_chase_violins(60.0, 5.0)
 	if is_instance_valid(player):

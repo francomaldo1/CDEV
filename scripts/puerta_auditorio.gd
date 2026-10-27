@@ -41,7 +41,7 @@ func _try_open() -> void:
 	_open()
 	hud.show_temporary_alert("🚪 ¡Abriste el AUDITORIO! Tu TÍTULO te espera en el atril del escenario.", Color(0.3, 1.0, 0.5))
 	if hud.has_method("set_objective_text"):
-		hud.set_objective_text("OBJETIVO: ¡Agarrá tu Título Universitario del estrado y escapá!", Color(0.2, 1.0, 0.5))
+		hud.set_objective_text("NUEVO OBJETIVO: Entrá al Auditorio y agarrá tu Título Universitario del estrado", Color(0.2, 1.0, 0.5))
 	hud.set_interact_prompt("")
 
 func _open() -> void:
