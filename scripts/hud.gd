@@ -47,6 +47,8 @@ var camcorder_container: Control = null
 var camcorder_rec_label: Label = null
 var camcorder_nv_label: Label = null
 var camcorder_battery_label: Label = null
+var camcorder_battery_icon: Control = null
+var camcorder_battery_container: Control = null
 var camcorder_timecode_label: Label = null
 var camcorder_rec_blink_timer: float = 0.0
 var camcorder_time_elapsed: float = 0.0
@@ -676,8 +678,8 @@ func _setup_debug_coords() -> void:
 	debug_coords_panel.set_anchors_preset(Control.PRESET_TOP_RIGHT)
 	debug_coords_panel.offset_left = -300.0
 	debug_coords_panel.offset_right = -20.0
-	debug_coords_panel.offset_top = 20.0
-	debug_coords_panel.offset_bottom = 85.0
+	debug_coords_panel.offset_top = 68.0
+	debug_coords_panel.offset_bottom = 133.0
 	debug_coords_panel.grow_horizontal = Control.GROW_DIRECTION_BEGIN
 	
 	debug_coords_label = Label.new()
@@ -721,22 +723,33 @@ func _setup_camcorder_ui() -> void:
 	camcorder_rec_label.add_theme_font_size_override("font_size", 16)
 	camcorder_container.add_child(camcorder_rec_label)
 	
-	# Top Right: NIGHT VISION + BATERIA
+	# Top Right: NIGHT VISION + BATERIA (Icono gráfico según referencia)
 	camcorder_nv_label = Label.new()
 	camcorder_nv_label.text = "[Click Der / F] VISIÓN NOCTURNA: OFF"
 	camcorder_nv_label.set_anchors_preset(Control.PRESET_TOP_RIGHT)
-	camcorder_nv_label.position = Vector2(-360, 25)
+	camcorder_nv_label.position = Vector2(-390, 24)
 	camcorder_nv_label.add_theme_color_override("font_color", Color(0.7, 0.75, 0.8, 0.75))
-	camcorder_nv_label.add_theme_font_size_override("font_size", 14)
+	camcorder_nv_label.add_theme_font_size_override("font_size", 13)
 	camcorder_container.add_child(camcorder_nv_label)
 	
+	var battery_box = HBoxContainer.new()
+	battery_box.name = "BatteryBox"
+	battery_box.set_anchors_preset(Control.PRESET_TOP_RIGHT)
+	battery_box.position = Vector2(-125, 20)
+	battery_box.add_theme_constant_override("separation", 8)
+	
+	camcorder_battery_icon = Control.new()
+	camcorder_battery_icon.custom_minimum_size = Vector2(46, 22)
+	camcorder_battery_icon.draw.connect(_on_battery_icon_draw)
+	battery_box.add_child(camcorder_battery_icon)
+	
 	camcorder_battery_label = Label.new()
-	camcorder_battery_label.text = "BAT [▮▮▮▮] 100%"
-	camcorder_battery_label.set_anchors_preset(Control.PRESET_TOP_RIGHT)
-	camcorder_battery_label.position = Vector2(-160, 48)
-	camcorder_battery_label.add_theme_color_override("font_color", Color(0.3, 1.0, 0.5, 0.9))
-	camcorder_battery_label.add_theme_font_size_override("font_size", 14)
-	camcorder_container.add_child(camcorder_battery_label)
+	camcorder_battery_label.text = "100%"
+	camcorder_battery_label.add_theme_color_override("font_color", Color(0.85, 0.9, 0.95, 0.85))
+	camcorder_battery_label.add_theme_font_size_override("font_size", 13)
+	battery_box.add_child(camcorder_battery_label)
+	
+	camcorder_container.add_child(battery_box)
 	
 	# Bottom Left: Timecode y cámara
 	camcorder_timecode_label = Label.new()
@@ -756,21 +769,60 @@ func set_night_vision_active(active: bool) -> void:
 		else:
 			camcorder_nv_label.text = "[Click Der / F] VISIÓN NOCTURNA: OFF"
 			camcorder_nv_label.add_theme_color_override("font_color", Color(0.7, 0.75, 0.8, 0.65))
+	if camcorder_battery_icon:
+		camcorder_battery_icon.queue_redraw()
 
 func set_night_vision_battery(pct: float) -> void:
 	nv_battery_pct = pct
 	if camcorder_battery_label:
-		var bars = int(pct / 25.0)
-		var bar_str = ""
-		for i in range(4):
-			bar_str += "▮" if i < bars else "▯"
-		camcorder_battery_label.text = "BAT [%s] %d%%" % [bar_str, int(pct)]
+		camcorder_battery_label.text = "%d%%" % int(pct)
 		if pct <= 20.0:
 			camcorder_battery_label.add_theme_color_override("font_color", Color(1.0, 0.25, 0.2, 0.95))
 		elif is_nv_active:
 			camcorder_battery_label.add_theme_color_override("font_color", Color(0.55, 0.92, 0.72, 0.95))
 		else:
 			camcorder_battery_label.add_theme_color_override("font_color", Color(0.7, 0.75, 0.8, 0.7))
+	if camcorder_battery_icon:
+		camcorder_battery_icon.queue_redraw()
+
+func _on_battery_icon_draw() -> void:
+	if not camcorder_battery_icon:
+		return
+		
+	var col = Color(0.85, 0.92, 0.96, 0.88)
+	if nv_battery_pct <= 20.0:
+		var blink = int(camcorder_rec_blink_timer * 3.5) % 2 == 0
+		col = Color(1.0, 0.25, 0.2, 0.95) if blink else Color(0.55, 0.15, 0.15, 0.45)
+	elif is_nv_active:
+		col = Color(0.35, 1.0, 0.55, 0.95)
+		
+	# 1. Contorno principal rectangular de la batería
+	var border_w = 2.5
+	camcorder_battery_icon.draw_rect(Rect2(0, 1, 40, 20), col, false, border_w)
+	
+	# 2. Terminal positivo sobresaliente en el lateral derecho
+	camcorder_battery_icon.draw_rect(Rect2(40, 6, 4, 10), col, true)
+	
+	# 3. Barras de carga internas (3 barras proporcionales según imagen de referencia)
+	var bars = 0
+	if nv_battery_pct > 66.0:
+		bars = 3
+	elif nv_battery_pct > 33.0:
+		bars = 2
+	elif nv_battery_pct > 1.0:
+		bars = 1
+	else:
+		bars = 0
+		
+	var bar_w = 8.5
+	var bar_h = 13.0
+	var bar_y = 4.5
+	var start_x = 4.0
+	var gap = 3.5
+	
+	for i in range(bars):
+		var bx = start_x + i * (bar_w + gap)
+		camcorder_battery_icon.draw_rect(Rect2(bx, bar_y, bar_w, bar_h), col, true)
 
 func _process_camcorder_ui(delta: float) -> void:
 	if not camcorder_container:
@@ -781,6 +833,9 @@ func _process_camcorder_ui(delta: float) -> void:
 	if camcorder_rec_label:
 		var is_rec_vis = fmod(camcorder_rec_blink_timer, 1.2) < 0.75
 		camcorder_rec_label.visible = is_rec_vis
+		
+	if nv_battery_pct <= 20.0 and camcorder_battery_icon:
+		camcorder_battery_icon.queue_redraw()
 	
 	if camcorder_timecode_label:
 		var s = int(camcorder_time_elapsed) % 60

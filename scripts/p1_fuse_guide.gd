@@ -145,7 +145,7 @@ func _create_phantom() -> void:
 	phantom_node = Node3D.new()
 	phantom_node.name = "CriaturaGuiaP1"
 	# Posición del jumpscare al darse vuelta: X: -40.0, Y: 4.7, Z: -33.2 (puerta de Bedelía P1)
-	phantom_node.position = Vector3(-40.0, 4.7, -33.2)
+	phantom_node.position = Vector3(-40.0, 4.65, -33.2)
 	
 	# Mirando directamente hacia nosotros/interior de Bedelía (giro de 180°)
 	phantom_node.rotation_degrees = Vector3(0, 180, 0)
@@ -156,16 +156,13 @@ func _create_phantom() -> void:
 		var scp_inst = scp_scene.instantiate()
 		scp_inst.name = "SCP096Model"
 		
-		# Si se carga desde el FBX crudo (no desde la escena editable .tscn), aplicamos la postura inicial por código
+		# Ajuste de escala y postura encorvada para que no atraviese el techo y quede amenazante
+		scp_inst.scale = Vector3(0.72, 0.72, 0.72)
+		scp_inst.position = Vector3(0.0, 0.05, 0.0)
+		scp_inst.rotation_degrees = Vector3(16.0, 0, 0)
+		
+		# Si se carga desde el FBX crudo (no desde la escena editable .tscn), aplicamos textura de respaldo
 		if not is_custom_tscn:
-			# El FBX importado en Godot ya viene en orientación Y-up con escala natural
-			scp_inst.rotation_degrees = Vector3(0, 0, 0)
-			# Escala ~0.82x que le otorga una altura masiva y proporcionada
-			scp_inst.scale = Vector3(0.82, 0.82, 0.82)
-			# Elevado a Y = 1.02 para que las plantas de los pies apoyen limpiamente arriba del suelo
-			scp_inst.position = Vector3(0.0, 1.02, 0.0)
-			
-			# Asignar textura del cuerpo
 			var mesh = scp_inst.find_child("scp096", true, false) as MeshInstance3D
 			if mesh:
 				var tex = load("res://scpcb-future-horror-mod-scp-096/textures/SCP096_fh_fix.jpg")
@@ -178,6 +175,16 @@ func _create_phantom() -> void:
 			
 		var anim = scp_inst.find_child("AnimationPlayer", true, false) as AnimationPlayer
 		if anim:
+			# Asegurar que las animaciones de carrera y pánico ciclen en bucle continuo sin quedarse estáticas
+			var anim_run = anim.get_animation("scp096_skeleton|running")
+			if anim_run:
+				anim_run.loop_mode = Animation.LOOP_LINEAR
+			var anim_attackrun = anim.get_animation("scp096_skeleton|attackrun")
+			if anim_attackrun:
+				anim_attackrun.loop_mode = Animation.LOOP_LINEAR
+			var anim_panic = anim.get_animation("scp096_skeleton|panic")
+			if anim_panic:
+				anim_panic.loop_mode = Animation.LOOP_LINEAR
 			anim.play("scp096_skeleton|idle2")
 			
 		phantom_node.add_child(scp_inst)
@@ -190,10 +197,10 @@ func _create_phantom() -> void:
 	col_body.name = "CreatureCollision"
 	creature_col_shape = CollisionShape3D.new()
 	var cap = CapsuleShape3D.new()
-	cap.radius = 0.55
-	cap.height = 3.20
+	cap.radius = 0.45
+	cap.height = 2.20
 	creature_col_shape.shape = cap
-	creature_col_shape.position = Vector3(0.0, 1.60, 0.0)
+	creature_col_shape.position = Vector3(0.0, 1.10, 0.0)
 	creature_col_shape.disabled = true
 	col_body.add_child(creature_col_shape)
 	phantom_node.add_child(col_body)
@@ -292,7 +299,7 @@ func _spawn_scp_waiting() -> void:
 	is_waiting_for_turnaround = true
 	
 	# Parado en X: -40.0, Y: 4.7, Z: -33.2 viendo hacia nosotros/interior de Bedelía (+Z)
-	phantom_node.position = Vector3(-40.0, 4.7, -33.2)
+	phantom_node.position = Vector3(-40.0, 4.65, -33.2)
 	phantom_node.rotation_degrees = Vector3(0, 180, 0)
 	phantom_node.visible = true
 	
@@ -368,12 +375,15 @@ func _start_scp_escape_sequence() -> void:
 		
 	var anim = phantom_node.find_child("AnimationPlayer", true, false) as AnimationPlayer
 	if anim:
+		var anim_panic = anim.get_animation("scp096_skeleton|panic")
+		if anim_panic:
+			anim_panic.loop_mode = Animation.LOOP_LINEAR
 		anim.play("scp096_skeleton|panic")
 		anim.speed_scale = 1.15
 		
-	# Espera de pánico/espasmo de 0.9s frente al jugador
+	# Espera de pánico/espasmo prolongado (2.3s) frente al jugador para máximo terror
 	var tw = create_tween()
-	tw.tween_interval(0.9)
+	tw.tween_interval(2.3)
 	tw.tween_callback(func():
 		_run_scp_along_escape_path()
 	)
@@ -384,8 +394,11 @@ func _run_scp_along_escape_path() -> void:
 		
 	var anim = phantom_node.find_child("AnimationPlayer", true, false) as AnimationPlayer
 	if anim:
+		var anim_run = anim.get_animation("scp096_skeleton|running")
+		if anim_run:
+			anim_run.loop_mode = Animation.LOOP_LINEAR
 		anim.play("scp096_skeleton|running")
-		anim.speed_scale = 1.35
+		anim.speed_scale = 1.40
 		
 	is_scp_running = true
 	scp_step_timer = 0.05
@@ -393,36 +406,43 @@ func _run_scp_along_escape_path() -> void:
 	var tw = create_tween()
 	tw.set_trans(Tween.TRANS_LINEAR)
 	
-	# Segmento 1: Gira hacia el pasillo y sale por la puerta de Bedelía
+	# Segmento 1: Gira hacia el pasillo norte y sale velozmente por la puerta de Bedelía
 	tw.tween_callback(func():
 		if is_instance_valid(phantom_node):
 			phantom_node.rotation_degrees = Vector3(0, 0, 0)
 	)
-	tw.tween_property(phantom_node, "position", Vector3(-40.0, 4.7, -29.5), 0.28)
+	tw.tween_property(phantom_node, "position", Vector3(-40.0, 4.65, -28.5), 0.32)
 	
-	# Segmento 2: Dobla a la derecha hacia el pasillo central
+	# Segmento 2: Corre hacia la esquina norte-oeste del pasillo
 	tw.tween_callback(func():
 		if is_instance_valid(phantom_node):
 			phantom_node.rotation_degrees = Vector3(0, -90, 0)
 	)
-	tw.tween_property(phantom_node, "position", Vector3(-42.5, 4.7, -29.5), 0.22)
+	tw.tween_property(phantom_node, "position", Vector3(-44.5, 4.65, -28.5), 0.32)
 	
-	# Segmento 3: Dobla por el pasillo sur y corre a toda velocidad
+	# Segmento 3: Dobla la esquina y corre a toda velocidad hacia el sur por el pasillo oeste
 	tw.tween_callback(func():
 		if is_instance_valid(phantom_node):
 			phantom_node.rotation_degrees = Vector3(0, 0, 0)
 	)
-	tw.tween_property(phantom_node, "position", Vector3(-42.5, 4.7, -12.0), 1.25)
+	tw.tween_property(phantom_node, "position", Vector3(-44.5, 4.65, -10.0), 1.15)
 	
-	# Segmento 4: Sigue corriendo por la oscuridad alejándose hacia el final del pasillo
-	tw.tween_property(phantom_node, "position", Vector3(-42.5, 4.7, 8.0), 1.35)
+	# Segmento 4: Sigue esprintando por el pasillo oeste pasando Electrónica hacia la esquina sur
+	tw.tween_property(phantom_node, "position", Vector3(-44.5, 4.65, 23.5), 2.20)
 	
-	# Al finalizar: detener carrera y desvanecer/liberar criatura
+	# Segmento 5: Dobla a la vuelta de la esquina hacia el pasillo sur en la oscuridad total
+	tw.tween_callback(func():
+		if is_instance_valid(phantom_node):
+			phantom_node.rotation_degrees = Vector3(0, 90, 0)
+	)
+	tw.tween_property(phantom_node, "position", Vector3(-35.0, 4.65, 23.5), 0.65)
+	
+	# Al finalizar: detener carrera y liberar nodo de la criatura
 	tw.tween_callback(func():
 		is_scp_running = false
 		if is_instance_valid(phantom_node):
 			phantom_node.queue_free()
-		print(">>> SCP-096 dobló la esquina a toda velocidad y desapareció en el pasillo.")
+		print(">>> SCP-096 dobló a la vuelta de la esquina hacia la oscuridad y desapareció.")
 	)
 
 func _slam_door(d: Dictionary) -> void:
