@@ -35,6 +35,10 @@ var scare_initial_player_yaw: float = 0.0
 var scare_initial_player_pos: Vector3 = Vector3.ZERO
 var scare_wait_timer: float = 0.0
 
+## Espera de salida del Laboratorio de Electrónica tras restaurar la luz
+var is_waiting_for_lab_exit: bool = false
+var lab_exit_wait_timer: float = 0.0
+
 var tablero_electrico: Area3D = null
 var is_blackout: bool = false
 var original_ambient_energy: float = 0.4
@@ -546,16 +550,18 @@ func _on_power_restored() -> void:
 				l.light_energy = building_lights_base_energy[l]
 	turned_off_lights.clear()
 			
-	if hud and hud.has_method("set_objective_text"):
-		hud.set_objective_text("NUEVO OBJETIVO: ¡Luz restablecida! Buscá la Llave del Auditorio en Planta Baja", Color(0.3, 1.0, 0.6))
-		
-	print(">>> ¡ENERGÍA RESTABLECIDA EN TODA LA FACULTAD!")
+	is_waiting_for_lab_exit = true
+	lab_exit_wait_timer = 0.0
+	print(">>> ¡ENERGÍA RESTABLECIDA EN TODA LA FACULTAD! Esperando que el jugador salga del Laboratorio para mostrar objetivo...")
 
 func _process(delta: float) -> void:
 	_process_light_flicker(delta)
 	
 	if is_waiting_for_turnaround_scare:
 		_check_turnaround_scare(delta)
+		
+	if is_waiting_for_lab_exit:
+		_check_lab_exit(delta)
 	
 	# Crujidos y sonidos espeluznantes periódicos a lo lejos en el edificio
 	spook_interval_timer += delta
@@ -615,6 +621,19 @@ func _check_turnaround_scare(delta: float) -> void:
 	if turned_around or walked_away or timeout:
 		is_waiting_for_turnaround_scare = false
 		_trigger_hallway_dash_scare()
+
+func _check_lab_exit(delta: float) -> void:
+	if not is_instance_valid(player):
+		return
+	lab_exit_wait_timer += delta
+	var p_pos = player.global_position
+	# Salir por la puerta del laboratorio hacia el pasillo oeste (X <= -37.0) o alejarse de la zona del tablero
+	var has_exited = p_pos.x <= -37.0 or p_pos.distance_to(Vector3(-17.22, 0.0, 0.0)) > 21.0 or lab_exit_wait_timer >= 25.0
+	if has_exited:
+		is_waiting_for_lab_exit = false
+		if hud and hud.has_method("set_objective_text"):
+			hud.set_objective_text("NUEVO OBJETIVO: ¡Luz restablecida! Buscá la Llave del Auditorio en Planta Baja")
+		print(">>> Jugador salió del Laboratorio de Electrónica -> Objetivo de la Llave del Auditorio mostrado")
 
 func _trigger_hallway_dash_scare() -> void:
 	if not is_instance_valid(profesor) or not is_instance_valid(player):

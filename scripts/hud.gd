@@ -930,7 +930,7 @@ func _process_typewriter_objective(delta: float) -> void:
 				objective_banner_label.text = objective_target_text
 				is_objective_typing = false
 				is_objective_holding = true
-				objective_hold_timer = 6.5
+				objective_hold_timer = 10.5
 				
 	elif is_objective_holding:
 		objective_hold_timer -= delta
