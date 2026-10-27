@@ -627,8 +627,6 @@ func add_peronachos(amount: int = 1) -> void:
 	var hud = get_tree().root.find_child("HUD", true, false)
 	if hud and hud.has_method("update_inventory_display"):
 		hud.update_inventory_display()
-	if hud and hud.has_method("show_temporary_alert"):
-		hud.show_temporary_alert("🎒 ¡Recogiste una bolsa de Peronachos! Presioná [Q] en emergencia para recuperar estamina.", Color(1.0, 0.85, 0.2))
 
 func consume_peronachos() -> bool:
 	var hud = get_tree().root.find_child("HUD", true, false)

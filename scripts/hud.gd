@@ -503,8 +503,6 @@ func _on_option_selected(btn_index: int) -> void:
 	_close_math_exam()
 	
 	if is_correct:
-		show_temporary_alert("✅ ¡PARCIAL APROBADO!", Color(0.2, 1.0, 0.4))
-		
 		if active_cuaderno and active_cuaderno.has_method("on_exam_result"):
 			active_cuaderno.on_exam_result(true)
 	else:
@@ -806,20 +804,6 @@ func _setup_camcorder_ui() -> void:
 	camcorder_rec_label.add_theme_font_size_override("font_size", 16)
 	camcorder_container.add_child(camcorder_rec_label)
 	
-	# Top Center: OBJETIVO ACTUAL EN PANTALLA
-	camcorder_objective_label = Label.new()
-	camcorder_objective_label.name = "CamcorderObjectiveLabel"
-	camcorder_objective_label.text = "OBJETIVO: Rendir los 4 parciales en Planta Baja (0/4)"
-	camcorder_objective_label.set_anchors_preset(Control.PRESET_TOP_WIDE)
-	camcorder_objective_label.offset_top = 23.0
-	camcorder_objective_label.offset_bottom = 45.0
-	camcorder_objective_label.offset_left = 180.0
-	camcorder_objective_label.offset_right = -145.0
-	camcorder_objective_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	camcorder_objective_label.add_theme_color_override("font_color", Color(0.85, 0.92, 0.98, 0.85))
-	camcorder_objective_label.add_theme_font_size_override("font_size", 13)
-	camcorder_container.add_child(camcorder_objective_label)
-	
 	# Top Right: BATERIA (Icono gráfico según referencia)
 	var battery_box = HBoxContainer.new()
 	battery_box.name = "BatteryBox"
@@ -865,9 +849,9 @@ func _setup_typewriter_objective() -> void:
 	objective_banner_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	
 	var style = StyleBoxFlat.new()
-	style.bg_color = Color(0.03, 0.04, 0.07, 0.90)
-	style.border_color = Color(0.22, 0.88, 0.58, 0.85)
-	style.set_border_width_all(1)
+	style.bg_color = Color(0.02, 0.03, 0.05, 0.65)
+	style.border_color = Color(0, 0, 0, 0)
+	style.set_border_width_all(0)
 	style.set_corner_radius_all(4)
 	style.content_margin_left = 22
 	style.content_margin_right = 22
@@ -892,7 +876,9 @@ func _setup_typewriter_objective() -> void:
 	if typewriter_font:
 		objective_banner_header.add_theme_font_override("font", typewriter_font)
 	objective_banner_header.add_theme_font_size_override("font_size", 12)
-	objective_banner_header.add_theme_color_override("font_color", Color(0.35, 1.0, 0.65, 0.95))
+	objective_banner_header.add_theme_color_override("font_color", Color(0.92, 0.89, 0.65, 0.90))
+	objective_banner_header.add_theme_constant_override("outline_size", 2)
+	objective_banner_header.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.90))
 	objective_banner_header.text = "[ NUEVO OBJETIVO ]"
 	vbox.add_child(objective_banner_header)
 	
@@ -902,7 +888,7 @@ func _setup_typewriter_objective() -> void:
 	if typewriter_font:
 		objective_banner_label.add_theme_font_override("font", typewriter_font)
 	objective_banner_label.add_theme_font_size_override("font_size", 16)
-	objective_banner_label.add_theme_color_override("font_color", Color(0.95, 0.98, 1.0))
+	objective_banner_label.add_theme_color_override("font_color", Color(0.96, 0.93, 0.68, 0.98))
 	objective_banner_label.add_theme_constant_override("outline_size", 3)
 	objective_banner_label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.95))
 	objective_banner_label.text = ""
@@ -955,7 +941,7 @@ func _process_typewriter_objective(delta: float) -> void:
 					objective_banner_panel.visible = false
 			)
 
-func _trigger_typewriter_objective(full_text: String, color: Color) -> void:
+func _trigger_typewriter_objective(full_text: String, _color: Color = Color(0.96, 0.93, 0.68, 0.98)) -> void:
 	if not objective_banner_panel:
 		return
 		
@@ -977,12 +963,13 @@ func _trigger_typewriter_objective(full_text: String, color: Color) -> void:
 		objective_tween.kill()
 		
 	objective_banner_header.text = header_text
-	objective_banner_header.add_theme_color_override("font_color", color)
+	objective_banner_header.add_theme_color_override("font_color", Color(0.92, 0.89, 0.65, 0.90))
+	objective_banner_label.add_theme_color_override("font_color", Color(0.96, 0.93, 0.68, 0.98))
 	objective_banner_label.text = "_"
 	objective_banner_panel.visible = true
 	objective_banner_panel.modulate.a = 1.0
 
-func set_objective_text(text_msg: String, color: Color = Color(0.85, 0.92, 0.98, 0.85)) -> void:
+func set_objective_text(text_msg: String, color: Color = Color(0.96, 0.93, 0.68, 0.98)) -> void:
 	if camcorder_objective_label:
 		camcorder_objective_label.text = text_msg
 		camcorder_objective_label.add_theme_color_override("font_color", color)

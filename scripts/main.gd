@@ -265,9 +265,6 @@ func _on_exam_solved(success: bool, cuaderno: Node) -> void:
 	if hud and hud.has_method("set_exams_progress"):
 		hud.set_exams_progress(n, total_exams)
 	
-	if hud and hud.has_method("show_temporary_alert"):
-		hud.show_temporary_alert("✅ ¡PARCIAL APROBADO! (%d/%d)" % [n, total_exams], Color(0.2, 1.0, 0.4))
-	
 	# Actualizar objetivo segun cantidad de parciales aprobados
 	if n < total_exams:
 		if hud and hud.has_method("set_objective_text"):
@@ -353,9 +350,6 @@ func _unlock_upper_floor() -> void:
 		if is_instance_valid(b):
 			b.queue_free()
 	upper_floor_blockers.clear()
-	
-	if hud and hud.has_method("show_temporary_alert"):
-		hud.show_temporary_alert("🔓 ¡Aprobaste todos los parciales! Se habilitó el PISO DE ARRIBA.", Color(0.3, 0.8, 1.0))
 	print(">>> ¡PISO SUPERIOR HABILITADO!")
 
 func _spawn_tachos_basura() -> void:
