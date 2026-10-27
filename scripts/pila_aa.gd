@@ -18,9 +18,9 @@ func _ready() -> void:
 	# Colisión para interacción por cercanía
 	var col = CollisionShape3D.new()
 	var sphere = SphereShape3D.new()
-	sphere.radius = 1.6
+	sphere.radius = 1.8
 	col.shape = sphere
-	col.position = Vector3(0, 0.2, 0)
+	col.position = Vector3(0, 0.25, 0)
 	add_child(col)
 	
 	_build_visuals()
@@ -28,6 +28,7 @@ func _ready() -> void:
 func _build_visuals() -> void:
 	mesh_container = Node3D.new()
 	mesh_container.name = "BatteryVisual"
+	mesh_container.position = Vector3(0.0, 0.06, 0.0)
 	add_child(mesh_container)
 	
 	var fbx_path = "res://aa-battery/source/AA_Battery.fbx"
@@ -40,21 +41,22 @@ func _build_visuals() -> void:
 				if c.name != "AA_Battery_low":
 					c.queue_free()
 			
-			# Escala visible y realista (~10.5 cm de largo y 2.7 cm de diámetro)
-			inst.scale = Vector3(2.5, 2.5, 2.5)
+			# Escala visible y nítida (~23 cm de largo y 6 cm de diámetro para destacar en el piso)
+			inst.scale = Vector3(5.5, 5.5, 5.5)
 			# Acostada sobre el piso con leve ángulo estético
 			inst.rotation_degrees = Vector3(90.0, 30.0, 0.0)
-			inst.position = Vector3(0.0, 0.025, 0.0)
+			inst.position = Vector3(0.0, 0.03, 0.0)
 			
-			# Material PBR realista con texturas originales (sin emisión deformante)
+			# Material PBR realista con texturas originales y sutil resplandor dorado
 			var mat = StandardMaterial3D.new()
+			mat.cull_mode = BaseMaterial3D.CULL_DISABLED
 			if ResourceLoader.exists("res://aa-battery/textures/AA_Battery_BaseColor.png"):
 				mat.albedo_texture = load("res://aa-battery/textures/AA_Battery_BaseColor.png")
 			if ResourceLoader.exists("res://aa-battery/textures/AA_Battery_Metallic.png"):
 				mat.metallic = 0.95
 				mat.metallic_texture = load("res://aa-battery/textures/AA_Battery_Metallic.png")
 			if ResourceLoader.exists("res://aa-battery/textures/AA_Battery_Roughness.png"):
-				mat.roughness = 0.4
+				mat.roughness = 0.35
 				mat.roughness_texture = load("res://aa-battery/textures/AA_Battery_Roughness.png")
 			if ResourceLoader.exists("res://aa-battery/textures/AA_Battery_Normal.png"):
 				mat.normal_enabled = true
@@ -63,37 +65,49 @@ func _build_visuals() -> void:
 				mat.ao_enabled = true
 				mat.ao_texture = load("res://aa-battery/textures/AA_Battery_AO.png")
 			
+			# Sutil resplandor ámbar/dorado para que sea fácilmente distinguible en la oscuridad
+			mat.emission_enabled = true
+			mat.emission = Color(1.0, 0.85, 0.45)
+			mat.emission_energy_multiplier = 0.35
+			
 			var low_mesh = inst.get_node_or_null("AA_Battery_low") as MeshInstance3D
 			if low_mesh:
-				low_mesh.set_surface_override_material(0, mat)
+				low_mesh.material_override = mat
 				
 			mesh_container.add_child(inst)
 	else:
 		# Fallback geométrico cilíndrico
 		var cyl = CSGCylinder3D.new()
-		cyl.radius = 0.02
-		cyl.height = 0.08
+		cyl.radius = 0.03
+		cyl.height = 0.16
 		cyl.rotation_degrees = Vector3(90, 0, 0)
-		cyl.position = Vector3(0, 0.025, 0)
+		cyl.position = Vector3(0, 0.04, 0)
 		var fb_mat = StandardMaterial3D.new()
-		fb_mat.albedo_color = Color(0.2, 0.5, 0.9)
+		fb_mat.albedo_color = Color(1.0, 0.75, 0.2)
 		fb_mat.metallic = 0.8
+		fb_mat.emission_enabled = true
+		fb_mat.emission = Color(1.0, 0.8, 0.3)
+		fb_mat.emission_energy_multiplier = 0.5
 		cyl.material = fb_mat
 		mesh_container.add_child(cyl)
 		
-	# Luz tenue cálida que resalta el objeto en la oscuridad sin quemar la escena
+	# Luz tenue cálida que resalta el objeto en la oscuridad
 	light = OmniLight3D.new()
 	light.name = "BatteryGlow"
-	light.position = Vector3(0.0, 0.15, 0.0)
+	light.position = Vector3(0.0, 0.25, 0.0)
 	light.light_color = Color(1.0, 0.92, 0.75)
-	light.light_energy = 0.4
-	light.omni_range = 1.2
+	light.light_energy = 0.65
+	light.omni_range = 1.8
 	light.shadow_enabled = false
 	add_child(light)
 
 func _process(_delta: float) -> void:
 	if light:
-		light.light_energy = 0.35 + sin(Time.get_ticks_msec() * 0.004) * 0.1
+		light.light_energy = 0.55 + sin(Time.get_ticks_msec() * 0.004) * 0.15
+		
+	# Leve flotación sutil de 2cm para garantizar que siempre esté por encima del piso
+	if mesh_container:
+		mesh_container.position.y = 0.06 + sin(Time.get_ticks_msec() * 0.003) * 0.02
 		
 	if is_player_nearby and (Input.is_action_just_pressed("interact") or Input.is_key_pressed(KEY_E)):
 		_collect()

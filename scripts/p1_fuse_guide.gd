@@ -403,6 +403,19 @@ func _run_scp_along_escape_path() -> void:
 	is_scp_running = true
 	scp_step_timer = 0.05
 	
+	# Grito espeluznante de SCP-096 mientras escapa corriendo por el pasillo
+	var scream_player = AudioStreamPlayer3D.new()
+	scream_player.name = "SCP096ScreamPlayer"
+	var scream_res = load("res://audio/sfx/scp_096_scream.mp3")
+	if scream_res:
+		scream_player.stream = scream_res
+	scream_player.volume_db = 16.0
+	scream_player.unit_size = 18.0
+	scream_player.max_distance = 65.0
+	scream_player.bus = &"Master"
+	phantom_node.add_child(scream_player)
+	scream_player.play()
+	
 	var tw = create_tween()
 	tw.set_trans(Tween.TRANS_LINEAR)
 	
@@ -437,9 +450,14 @@ func _run_scp_along_escape_path() -> void:
 	)
 	tw.tween_property(phantom_node, "position", Vector3(-35.0, 4.65, 23.5), 0.65)
 	
-	# Al finalizar: detener carrera y liberar nodo de la criatura
+	# Al finalizar: detener carrera, desvanecer eco del grito y liberar nodo de la criatura
 	tw.tween_callback(func():
 		is_scp_running = false
+		if is_instance_valid(scream_player):
+			scream_player.reparent(self)
+			var f_tw = create_tween()
+			f_tw.tween_property(scream_player, "volume_db", -40.0, 1.2)
+			f_tw.tween_callback(scream_player.queue_free)
 		if is_instance_valid(phantom_node):
 			phantom_node.queue_free()
 		print(">>> SCP-096 dobló a la vuelta de la esquina hacia la oscuridad y desapareció.")

@@ -54,6 +54,7 @@ var jumpscare_play_time: float = 0.0
 var heartbeat_timer: float = 0.0
 var post_screamer_heartbeat_timer: float = 0.0
 var panic_drone_player: AudioStreamPlayer = null
+var chase_violins_player: AudioStreamPlayer = null
 var current_panic_glitch: float = 0.0
 
 ## La linterna empieza bloqueada y se habilita con el corte de luz (ver main.gd)
@@ -355,6 +356,16 @@ func _setup_audio_players() -> void:
 	panic_drone_player.stream = HorrorAudio.get_panic_sub_drone()
 	add_child(panic_drone_player)
 
+	chase_violins_player = AudioStreamPlayer.new()
+	chase_violins_player.name = "ChaseViolinsPlayer"
+	chase_violins_player.volume_db = -80.0
+	chase_violins_player.bus = &"Master"
+	var violins_stream = load("res://audio/ambient/freesound_community-scaryviolins-6829.mp3")
+	if violins_stream is AudioStreamMP3:
+		(violins_stream as AudioStreamMP3).loop = true
+	chase_violins_player.stream = violins_stream
+	add_child(chase_violins_player)
+
 func _apply_head_bob_and_footsteps(delta: float, is_sprinting: bool) -> void:
 	if not camera:
 		return
@@ -397,6 +408,28 @@ func play_jumpscare_screamer() -> void:
 		jumpscare_player.stop()
 		jumpscare_player.volume_db = 8.0
 		jumpscare_player.play()
+	
+	# Ambiente de persecución frenético con violines aterradores tras el susto inicial
+	var tw = create_tween()
+	tw.tween_interval(1.2)
+	tw.tween_callback(func():
+		start_chase_violins()
+	)
+
+func start_chase_violins() -> void:
+	if not chase_violins_player or not chase_violins_player.stream:
+		return
+	if not chase_violins_player.playing:
+		chase_violins_player.volume_db = -35.0
+		chase_violins_player.play()
+	var tw = create_tween()
+	tw.tween_property(chase_violins_player, "volume_db", -3.0, 1.5)
+
+func stop_chase_violins(fade_time: float = 1.8) -> void:
+	if chase_violins_player and chase_violins_player.playing:
+		var tw = create_tween()
+		tw.tween_property(chase_violins_player, "volume_db", -50.0, fade_time)
+		tw.tween_callback(chase_violins_player.stop)
 
 func stop_jumpscare_screamer(fade_time: float = 0.3) -> void:
 	if jumpscare_player and jumpscare_player.playing:
@@ -451,6 +484,16 @@ func _update_heartbeat(delta: float) -> void:
 			heartbeat_player.volume_db = lerpf(heartbeat_player.volume_db, -45.0, delta * 2.0)
 			if heartbeat_player.volume_db <= -40.0:
 				heartbeat_player.stop()
+
+	# Música de persecución (violines aterradores) activa mientras el profesor persigue al jugador
+	if chase_violins_player and chase_violins_player.playing:
+		if is_chasing and dist < 24.0:
+			var target_v = -2.0 if dist < 10.0 else -6.0
+			chase_violins_player.volume_db = lerpf(chase_violins_player.volume_db, target_v, delta * 2.0)
+		else:
+			chase_violins_player.volume_db = lerpf(chase_violins_player.volume_db, -50.0, delta * 1.5)
+			if chase_violins_player.volume_db <= -42.0:
+				chase_violins_player.stop()
 
 	# Proximidad al profesor y efecto pánico analógico (Opción C - Distancia ampliada a 7.5m)
 	var prox_panic: float = 0.0
