@@ -829,6 +829,8 @@ func _enter_chase_state() -> void:
 		last_chase_screamer_time = now
 		if is_instance_valid(player) and player.has_method("play_jumpscare_screamer"):
 			player.play_jumpscare_screamer()
+	if is_instance_valid(player) and player.has_method("start_chase_violins"):
+		player.start_chase_violins(20.0)
 
 func _process_chase_state(delta: float, can_see_player: bool) -> void:
 	if is_screamer_ambush:
@@ -1012,6 +1014,8 @@ func _process_attack(delta: float) -> void:
 
 func _hit_player() -> void:
 	_cut_screamer_audio()
+	if is_instance_valid(player) and player.has_method("start_chase_violins"):
+		player.start_chase_violins(25.0)
 	if is_instance_valid(player):
 		var push_dir = (player.global_position - global_position).normalized()
 		player.velocity += push_dir * 9.0 + Vector3(0, 3.2, 0)
@@ -1544,6 +1548,8 @@ func start_screamer_charge() -> void:
 	_say("¡¡NO HAY SALVACIÓN, DIRECTO A MARZO!!", Color(1.0, 0.0, 0.0))
 	if is_instance_valid(player) and player.has_method("play_jumpscare_screamer"):
 		player.play_jumpscare_screamer()
+	if is_instance_valid(player) and player.has_method("start_chase_violins"):
+		player.start_chase_violins(30.0)
 	if is_instance_valid(player):
 		last_known_player_pos = player.global_position
 		var to_p = player.global_position - global_position

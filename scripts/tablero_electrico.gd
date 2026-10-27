@@ -223,6 +223,8 @@ func _execute_fuse_screamer_sequence(hud: Node) -> void:
 			prof.start_screamer_charge()
 		else:
 			prof.release_screamer_ambush()
+	if is_instance_valid(player) and player.has_method("start_chase_violins"):
+		player.start_chase_violins(30.0)
 			
 	hud.show_temporary_alert("⚡ ¡¡CORRE!! ¡¡ESQUÍVALO POR LAS MESADAS!!", Color(1.0, 0.1, 0.1))
 	

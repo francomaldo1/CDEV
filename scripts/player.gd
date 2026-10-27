@@ -55,6 +55,7 @@ var heartbeat_timer: float = 0.0
 var post_screamer_heartbeat_timer: float = 0.0
 var panic_drone_player: AudioStreamPlayer = null
 var chase_violins_player: AudioStreamPlayer = null
+var chase_violins_timer: float = 0.0
 var current_panic_glitch: float = 0.0
 
 ## La linterna empieza bloqueada y se habilita con el corte de luz (ver main.gd)
@@ -409,23 +410,21 @@ func play_jumpscare_screamer() -> void:
 		jumpscare_player.volume_db = 8.0
 		jumpscare_player.play()
 	
-	# Ambiente de persecución frenético con violines aterradores tras el susto inicial
-	var tw = create_tween()
-	tw.tween_interval(1.2)
-	tw.tween_callback(func():
-		start_chase_violins()
-	)
+	# Música de persecución frenética con violines aterradores inmediatamente tras el susto
+	start_chase_violins(25.0)
 
-func start_chase_violins() -> void:
+func start_chase_violins(duration: float = 25.0) -> void:
+	chase_violins_timer = maxf(chase_violins_timer, duration)
 	if not chase_violins_player or not chase_violins_player.stream:
 		return
 	if not chase_violins_player.playing:
-		chase_violins_player.volume_db = -35.0
+		chase_violins_player.volume_db = -10.0
 		chase_violins_player.play()
 	var tw = create_tween()
-	tw.tween_property(chase_violins_player, "volume_db", -3.0, 1.5)
+	tw.tween_property(chase_violins_player, "volume_db", 0.0, 0.6)
 
 func stop_chase_violins(fade_time: float = 1.8) -> void:
+	chase_violins_timer = 0.0
 	if chase_violins_player and chase_violins_player.playing:
 		var tw = create_tween()
 		tw.tween_property(chase_violins_player, "volume_db", -50.0, fade_time)
@@ -485,15 +484,26 @@ func _update_heartbeat(delta: float) -> void:
 			if heartbeat_player.volume_db <= -40.0:
 				heartbeat_player.stop()
 
-	# Música de persecución (violines aterradores) activa mientras el profesor persigue al jugador
-	if chase_violins_player and chase_violins_player.playing:
-		if is_chasing and dist < 24.0:
-			var target_v = -2.0 if dist < 10.0 else -6.0
-			chase_violins_player.volume_db = lerpf(chase_violins_player.volume_db, target_v, delta * 2.0)
+	if chase_violins_timer > 0.0:
+		chase_violins_timer -= delta
+		
+	var should_play_violins = (chase_violins_timer > 0.0) or (is_chasing and dist < 24.0)
+	if is_hidden:
+		should_play_violins = false
+		chase_violins_timer = 0.0
+		
+	if chase_violins_player:
+		if should_play_violins:
+			if not chase_violins_player.playing:
+				chase_violins_player.volume_db = -10.0
+				chase_violins_player.play()
+			var target_v = 0.0 if dist < 12.0 else -4.0
+			chase_violins_player.volume_db = lerpf(chase_violins_player.volume_db, target_v, delta * 3.0)
 		else:
-			chase_violins_player.volume_db = lerpf(chase_violins_player.volume_db, -50.0, delta * 1.5)
-			if chase_violins_player.volume_db <= -42.0:
-				chase_violins_player.stop()
+			if chase_violins_player.playing:
+				chase_violins_player.volume_db = lerpf(chase_violins_player.volume_db, -50.0, delta * 2.0)
+				if chase_violins_player.volume_db <= -42.0:
+					chase_violins_player.stop()
 
 	# Proximidad al profesor y efecto pánico analógico (Opción C - Distancia ampliada a 7.5m)
 	var prox_panic: float = 0.0
@@ -614,6 +624,7 @@ func play_horror_stinger() -> void:
 	if stinger_player:
 		stinger_player.stop()
 		stinger_player.play()
+	start_chase_violins(20.0)
 
 func add_peronachos(amount: int = 1) -> void:
 	peronachos_count += amount
