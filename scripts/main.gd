@@ -634,8 +634,6 @@ func _trigger_hallway_dash_scare() -> void:
 	# Efectos audiovisuales de terror (Stinger estridente del 4to examen)
 	if player.has_method("play_horror_stinger"):
 		player.play_horror_stinger()
-	elif player.has_method("play_jumpscare_screamer"):
-		player.play_jumpscare_screamer()
 	if player.has_method("shake_camera"):
 		player.shake_camera(0.4, 0.6)
 	if player.has_method("trigger_post_screamer_heartbeat"):

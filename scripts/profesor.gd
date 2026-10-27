@@ -569,6 +569,12 @@ func _physics_process(delta: float) -> void:
 		_update_dialogue(delta)
 		return
 
+	if is_screamer_ambush:
+		velocity = Vector3.ZERO
+		move_and_slide()
+		_update_dialogue(delta)
+		return
+
 	if is_hallway_dashing:
 		_process_hallway_dash(delta)
 		_update_dialogue(delta)
@@ -824,11 +830,6 @@ func _enter_chase_state() -> void:
 		
 	_say(phrases_chase[randi() % phrases_chase.size()], Color(1.0, 0.2, 0.2))
 	
-	var now = Time.get_ticks_msec() / 1000.0
-	if now - last_chase_screamer_time > 15.0:
-		last_chase_screamer_time = now
-		if is_instance_valid(player) and player.has_method("play_jumpscare_screamer"):
-			player.play_jumpscare_screamer()
 	if is_instance_valid(player) and player.has_method("start_chase_violins"):
 		player.start_chase_violins(35.0)
 
