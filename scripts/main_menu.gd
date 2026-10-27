@@ -213,16 +213,6 @@ func _setup_main_menu_content() -> void:
 		main_title.add_theme_font_override("font", typewriter_font)
 	title_box.add_child(main_title)
 	
-	var subtitle = Label.new()
-	subtitle.text = "[ En la facultad a oscuras... nadie aprueba, nadie sale ]"
-	subtitle.add_theme_font_size_override("font_size", 14)
-	subtitle.add_theme_color_override("font_color", Color(0.96, 0.93, 0.68, 0.85)) # Amarillo pálido
-	subtitle.add_theme_constant_override("outline_size", 2)
-	subtitle.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.9))
-	if typewriter_font:
-		subtitle.add_theme_font_override("font", typewriter_font)
-	title_box.add_child(subtitle)
-	
 	# Separador estilizado
 	var sep = HSeparator.new()
 	sep.custom_minimum_size = Vector2(400, 10)
