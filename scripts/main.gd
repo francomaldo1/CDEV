@@ -438,10 +438,10 @@ func _setup_peronachos_shelves() -> void:
 func _spawn_pilas_aa() -> void:
 	var pila_script = preload("res://scripts/pila_aa.gd")
 	var battery_spots = [
-		{"pos": Vector3(-61.0, 4.65, 29.5), "desc": "P1 Escalera Oeste"},
+		{"pos": Vector3(-58.5, 4.65, 27.5), "desc": "P1 Escalera Oeste"},
 		{"pos": Vector3(39.0, 4.65, -34.0), "desc": "P1 Escalera Norte"},
-		{"pos": Vector3(-42.0, 4.65, -28.5), "desc": "P1 Pasillo Bedelia"},
-		{"pos": Vector3(-60.0, 0.15, 28.0), "desc": "PB Escalera Oeste"},
+		{"pos": Vector3(57.0, 4.65, 27.5), "desc": "P1 Escalera Este"},
+		{"pos": Vector3(-45.0, 4.65, 12.0), "desc": "P1 Pasillo Oeste"},
 	]
 	for spot in battery_spots:
 		var pila = Area3D.new()

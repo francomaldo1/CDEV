@@ -39,6 +39,7 @@ var player_cached: CharacterBody3D = null
 
 var inventory_container: HBoxContainer = null
 var inventory_slots: Dictionary = {}
+var inventory_slots_array: Array[Dictionary] = []
 var exams_approved_count: int = 0
 var exams_total_count: int = 4
 
@@ -177,144 +178,178 @@ func _setup_inventory_slots() -> void:
 	inventory_container.anchor_right = 0.5
 	inventory_container.anchor_top = 1.0
 	inventory_container.anchor_bottom = 1.0
-	inventory_container.offset_left = -180.0
-	inventory_container.offset_right = 180.0
+	# 6 cuadrados de 48x48 + 5 separaciones de 8px = 328px de ancho total
+	inventory_container.offset_left = -164.0
+	inventory_container.offset_right = 164.0
 	inventory_container.offset_top = -152.0
-	inventory_container.offset_bottom = -102.0
+	inventory_container.offset_bottom = -104.0
 	inventory_container.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	inventory_container.grow_vertical = Control.GROW_DIRECTION_BEGIN
 	inventory_container.alignment = BoxContainer.ALIGNMENT_CENTER
 	inventory_container.add_theme_constant_override("separation", 8)
 	add_child(inventory_container)
 	
-	var slot_defs = [
-		{"key": "exams", "icon": "📝", "title": "PARCIALES", "default_val": "0/4"},
-		{"key": "fuse", "icon": "⚡", "title": "FUSIBLE", "default_val": "VACÍO"},
-		{"key": "key", "icon": "🏛", "title": "AUDITORIO", "default_val": "VACÍO"},
-		{"key": "title", "icon": "🎓", "title": "TÍTULO", "default_val": "VACÍO"},
-		{"key": "chips", "icon": "🍟", "title": "PERONACHOS", "default_val": "0 [Q]"}
-	]
+	inventory_slots_array.clear()
 	
-	for def in slot_defs:
+	for i in range(6):
 		var slot_panel = PanelContainer.new()
-		slot_panel.name = "Slot_" + def["key"]
-		slot_panel.custom_minimum_size = Vector2(64, 62)
+		slot_panel.name = "Slot_%d" % i
+		slot_panel.custom_minimum_size = Vector2(48, 48)
 		slot_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		
-		var margin = MarginContainer.new()
-		margin.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		margin.add_theme_constant_override("margin_left", 4)
-		margin.add_theme_constant_override("margin_right", 4)
-		margin.add_theme_constant_override("margin_top", 4)
-		margin.add_theme_constant_override("margin_bottom", 4)
-		slot_panel.add_child(margin)
-		
-		var vbox = VBoxContainer.new()
-		vbox.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		vbox.alignment = BoxContainer.ALIGNMENT_CENTER
-		vbox.add_theme_constant_override("separation", 1)
-		margin.add_child(vbox)
+		var center = CenterContainer.new()
+		center.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		center.set_anchors_preset(Control.PRESET_FULL_RECT)
+		slot_panel.add_child(center)
 		
 		var icon_lbl = Label.new()
 		icon_lbl.name = "Icon"
-		icon_lbl.text = def["icon"]
 		icon_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		icon_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		icon_lbl.add_theme_font_size_override("font_size", 20)
 		icon_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		vbox.add_child(icon_lbl)
+		icon_lbl.visible = false
+		center.add_child(icon_lbl)
 		
-		var title_lbl = Label.new()
-		title_lbl.name = "Title"
-		title_lbl.text = def["title"]
-		title_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		title_lbl.add_theme_font_size_override("font_size", 8)
-		title_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		vbox.add_child(title_lbl)
+		var badge_margin = MarginContainer.new()
+		badge_margin.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		badge_margin.set_anchors_preset(Control.PRESET_FULL_RECT)
+		badge_margin.add_theme_constant_override("margin_bottom", 2)
+		badge_margin.add_theme_constant_override("margin_right", 3)
+		slot_panel.add_child(badge_margin)
 		
-		var val_lbl = Label.new()
-		val_lbl.name = "Value"
-		val_lbl.text = def["default_val"]
-		val_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		val_lbl.add_theme_font_size_override("font_size", 9)
-		val_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		vbox.add_child(val_lbl)
+		var badge_lbl = Label.new()
+		badge_lbl.name = "Badge"
+		badge_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		badge_lbl.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
+		badge_lbl.add_theme_font_size_override("font_size", 9)
+		badge_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		badge_lbl.visible = false
+		badge_margin.add_child(badge_lbl)
 		
 		inventory_container.add_child(slot_panel)
-		inventory_slots[def["key"]] = {
+		inventory_slots_array.append({
 			"panel": slot_panel,
 			"icon": icon_lbl,
-			"title": title_lbl,
-			"value": val_lbl
-		}
+			"badge": badge_lbl
+		})
 		
 	_update_inventory_slots()
 
 func _update_inventory_slots() -> void:
-	if inventory_slots.is_empty():
+	if inventory_slots_array.is_empty():
 		return
 		
-	# 1. Parciales
-	var s_exams = inventory_slots["exams"]
-	var exams_done = (exams_approved_count >= exams_total_count)
-	s_exams["value"].text = "%d/%d ✓" % [exams_approved_count, exams_total_count] if exams_done else "%d/%d" % [exams_approved_count, exams_total_count]
-	_apply_slot_style(s_exams, exams_approved_count > 0, exams_done, Color(0.2, 1.0, 0.5) if exams_done else Color(0.3, 0.85, 1.0))
-
-	# 2. Fusible
-	var s_fuse = inventory_slots["fuse"]
-	_apply_slot_style(s_fuse, has_fuse, has_fuse, Color(1.0, 0.9, 0.2))
-	s_fuse["value"].text = "30A ✓" if has_fuse else "VACÍO"
-
-	# 3. Llave Auditorio
-	var s_key = inventory_slots["key"]
-	_apply_slot_style(s_key, has_auditorium_key, has_auditorium_key, Color(1.0, 0.85, 0.35))
-	s_key["value"].text = "LLAVE ✓" if has_auditorium_key else "VACÍO"
-
-	# 4. Título Universitario
-	var s_title = inventory_slots["title"]
-	_apply_slot_style(s_title, has_exit_key, has_exit_key, Color(0.3, 1.0, 0.55))
-	s_title["value"].text = "SALIDA ✓" if has_exit_key else "VACÍO"
-
+	# Recolectar lista de items actualmente en posesión
+	var active_items: Array[Dictionary] = []
+	
+	# 1. Parciales (si se rindió al menos 1 examen)
+	if exams_approved_count > 0:
+		var done = (exams_approved_count >= exams_total_count)
+		active_items.append({
+			"id": "exams",
+			"icon": "📝",
+			"badge": "%d/%d ✓" if done else "%d/%d" % [exams_approved_count, exams_total_count],
+			"color": Color(0.2, 1.0, 0.5) if done else Color(0.35, 0.85, 1.0)
+		})
+		
+	# 2. Pilas AA en el inventario
+	var bat_count = 0
+	if is_instance_valid(player_cached) and player_cached.get("battery_count") != null:
+		bat_count = player_cached.battery_count
+	else:
+		var players = get_tree().get_nodes_in_group("player")
+		if not players.is_empty():
+			player_cached = players[0] as CharacterBody3D
+			if player_cached.get("battery_count") != null:
+				bat_count = player_cached.battery_count
+				
+	if bat_count > 0:
+		active_items.append({
+			"id": "battery",
+			"icon": "🔋",
+			"badge": "x%d [R]" % bat_count,
+			"color": Color(0.3, 1.0, 0.55)
+		})
+		
+	# 3. Fusible de 30A
+	if has_fuse:
+		active_items.append({
+			"id": "fuse",
+			"icon": "⚡",
+			"badge": "30A",
+			"color": Color(1.0, 0.9, 0.25)
+		})
+		
+	# 4. Llave del Auditorio
+	if has_auditorium_key:
+		active_items.append({
+			"id": "key",
+			"icon": "🔑",
+			"badge": "Aud.",
+			"color": Color(1.0, 0.85, 0.35)
+		})
+		
 	# 5. Peronachos
-	var s_chips = inventory_slots["chips"]
-	var count = 0
+	var chip_count = 0
 	if is_instance_valid(player_cached) and player_cached.get("peronachos_count") != null:
-		count = player_cached.peronachos_count
+		chip_count = player_cached.peronachos_count
 	else:
 		var players = get_tree().get_nodes_in_group("player")
 		if not players.is_empty():
 			player_cached = players[0] as CharacterBody3D
 			if player_cached.get("peronachos_count") != null:
-				count = player_cached.peronachos_count
+				chip_count = player_cached.peronachos_count
 				
-	var has_chips = (count > 0)
-	_apply_slot_style(s_chips, has_chips, has_chips, Color(1.0, 0.75, 0.2))
-	s_chips["value"].text = "x%d [Q]" % count if has_chips else "0 [Q]"
-
-func _apply_slot_style(slot_data: Dictionary, is_active: bool, is_highlighted: bool, accent_color: Color) -> void:
-	var panel: PanelContainer = slot_data["panel"]
-	var icon: Label = slot_data["icon"]
-	var title: Label = slot_data["title"]
-	var val: Label = slot_data["value"]
-	
-	var style = StyleBoxFlat.new()
-	style.set_corner_radius_all(5)
-	
-	if is_active:
-		style.bg_color = Color(0.08, 0.11, 0.16, 0.92)
-		style.border_color = accent_color if is_highlighted else Color(0.95, 0.95, 1.0, 0.9)
-		style.set_border_width_all(2)
-		icon.modulate = Color(1.0, 1.0, 1.0, 1.0)
-		title.modulate = Color(1.0, 1.0, 1.0, 0.9)
-		val.modulate = accent_color
-	else:
-		style.bg_color = Color(0.04, 0.05, 0.07, 0.65)
-		style.border_color = Color(0.28, 0.32, 0.40, 0.40)
-		style.set_border_width_all(1)
-		icon.modulate = Color(0.5, 0.55, 0.65, 0.30)
-		title.modulate = Color(0.5, 0.55, 0.65, 0.40)
-		val.modulate = Color(0.45, 0.5, 0.6, 0.45)
+	if chip_count > 0:
+		active_items.append({
+			"id": "chips",
+			"icon": "🍟",
+			"badge": "x%d [Q]" % chip_count,
+			"color": Color(1.0, 0.75, 0.2)
+		})
 		
-	panel.add_theme_stylebox_override("panel", style)
+	# 6. Título Universitario
+	if has_exit_key:
+		active_items.append({
+			"id": "title",
+			"icon": "🎓",
+			"badge": "Título",
+			"color": Color(0.3, 1.0, 0.6)
+		})
+		
+	# Asignar a los 6 slots cuadrados
+	for i in range(inventory_slots_array.size()):
+		var slot = inventory_slots_array[i]
+		if i < active_items.size():
+			var item = active_items[i]
+			var style = StyleBoxFlat.new()
+			style.bg_color = Color(0.08, 0.11, 0.16, 0.88)
+			style.border_color = item.get("color", Color(0.85, 0.92, 1.0, 0.9))
+			style.set_border_width_all(2)
+			style.set_corner_radius_all(4)
+			slot["panel"].add_theme_stylebox_override("panel", style)
+			
+			slot["icon"].text = item["icon"]
+			slot["icon"].visible = true
+			
+			if item.has("badge") and item["badge"] != "":
+				slot["badge"].text = item["badge"]
+				slot["badge"].modulate = item.get("color", Color(1.0, 1.0, 1.0))
+				slot["badge"].visible = true
+			else:
+				slot["badge"].visible = false
+		else:
+			# Cuadrado vacío
+			var empty_style = StyleBoxFlat.new()
+			empty_style.bg_color = Color(0.04, 0.05, 0.07, 0.55)
+			empty_style.border_color = Color(0.35, 0.40, 0.48, 0.35)
+			empty_style.set_border_width_all(1)
+			empty_style.set_corner_radius_all(4)
+			slot["panel"].add_theme_stylebox_override("panel", empty_style)
+			
+			slot["icon"].visible = false
+			slot["badge"].visible = false
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel") or (event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE):

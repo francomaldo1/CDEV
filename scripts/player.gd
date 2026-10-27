@@ -43,6 +43,7 @@ var is_sprinting: bool = false
 var stamina_exhausted: bool = false
 var time_since_sprint: float = 0.0
 var peronachos_count: int = 0
+var battery_count: int = 0
 
 var footstep_player: AudioStreamPlayer = null
 var heartbeat_player: AudioStreamPlayer = null
@@ -201,6 +202,11 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_Q:
 		if not is_frozen:
 			consume_peronachos()
+
+	# Recargar Batería de la Videocámara con la tecla R
+	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_R:
+		if not is_frozen:
+			reload_camera_battery()
 
 	# Tecla ESC para liberar o volver a capturar el cursor
 	if event.is_action_pressed("ui_cancel") or (event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE):
@@ -603,6 +609,36 @@ func consume_peronachos() -> bool:
 			hud.update_inventory_display()
 		if hud.has_method("show_temporary_alert"):
 			hud.show_temporary_alert("⚡ ¡Peronachos crujientes consumidos! ¡Estamina al 100%! ⚡", Color(0.3, 1.0, 0.6))
+			
+	return true
+
+func add_battery(amount: int = 1) -> void:
+	battery_count += amount
+	var hud = get_tree().root.find_child("HUD", true, false)
+	if hud and hud.has_method("update_inventory_display"):
+		hud.update_inventory_display()
+
+func reload_camera_battery() -> bool:
+	var hud = get_tree().root.find_child("HUD", true, false)
+	if battery_count <= 0:
+		if hud and hud.has_method("show_temporary_alert"):
+			hud.show_temporary_alert("⚠ No tenés pilas AA en el inventario.", Color(1.0, 0.4, 0.3))
+		return false
+		
+	if night_vision_battery >= 99.5:
+		if hud and hud.has_method("show_temporary_alert"):
+			hud.show_temporary_alert("🔋 La batería de la videocámara ya está al 100%.", Color(0.4, 0.9, 1.0))
+		return false
+		
+	battery_count -= 1
+	var gained = recharge_night_vision(50.0)
+	shake_camera(0.15, 0.2)
+	
+	if hud:
+		if hud.has_method("update_inventory_display"):
+			hud.update_inventory_display()
+		if hud.has_method("show_temporary_alert"):
+			hud.show_temporary_alert("🔋 ¡Batería recargada (+%d%%)! Pilas restantes: %d" % [int(gained), battery_count], Color(0.3, 1.0, 0.55))
 			
 	return true
 
