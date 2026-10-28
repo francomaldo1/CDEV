@@ -81,6 +81,7 @@ func _ready() -> void:
 	_spawn_p1_fuse_guide()
 	_setup_peronachos_shelves()
 	_spawn_pilas_aa()
+	_setup_institutional_plaques()
 	if hud and hud.has_method("set_objective_text"):
 		hud.set_objective_text("OBJETIVO: Rendir los 4 parciales en Planta Baja (0/4)")
 	
@@ -330,15 +331,6 @@ func _spawn_upper_floor_blockers() -> void:
 		mesh_inst.mesh = mesh
 		mesh_inst.material_override = mat
 		body.add_child(mesh_inst)
-		
-		var label = Label3D.new()
-		label.text = "PISO SUPERIOR CERRADO\nAprobá los %d parciales" % exams_for_upper_floor
-		label.billboard = BaseMaterial3D.BILLBOARD_FIXED_Y
-		label.font_size = 48
-		label.outline_size = 10
-		label.modulate = Color(1.0, 0.8, 0.2)
-		label.position = Vector3(0, 0.3, 0)
-		body.add_child(label)
 		
 		add_child(body)
 		upper_floor_blockers.append(body)
@@ -908,3 +900,112 @@ func _debug_toggle_retro_filter() -> void:
 			var msg = "📼 [F10] Filtro Retro Fears to Fathom: " + ("ACTIVADO" if is_on else "DESACTIVADO")
 			var col = Color(0.9, 0.7, 1.0) if is_on else Color(0.7, 0.7, 0.7)
 			hud.show_temporary_alert(msg, col)
+
+func _setup_institutional_plaques() -> void:
+	var edificio = find_child("EdificioCentral", true, false)
+	if not edificio:
+		return
+		
+	var mat_metal = load("res://materials/mat_chain_metal.tres") if ResourceLoader.exists("res://materials/mat_chain_metal.tres") else null
+	var mat_acrylic = load("res://materials/mat_placa_acrilico.tres") if ResourceLoader.exists("res://materials/mat_placa_acrilico.tres") else null
+	var mat_bolt = load("res://materials/mat_padlock_shackle.tres") if ResourceLoader.exists("res://materials/mat_padlock_shackle.tres") else null
+	
+	var carteles: Array[Label3D] = []
+	_gather_carteles_recursive(edificio, carteles)
+	
+	for lbl in carteles:
+		_apply_institutional_plaque(lbl, mat_metal, mat_acrylic, mat_bolt)
+	
+	print(">>> Placas institucionales instaladas en %d aulas y departamentos" % carteles.size())
+
+func _gather_carteles_recursive(node: Node, out_arr: Array[Label3D]) -> void:
+	for child in node.get_children():
+		if child is Label3D:
+			var n = child.name
+			if n.begins_with("Cartel") or n.begins_with("P2_Cartel"):
+				out_arr.append(child)
+		_gather_carteles_recursive(child, out_arr)
+
+func _apply_institutional_plaque(lbl: Label3D, mat_metal: Material, mat_acrylic: Material, mat_bolt: Material) -> void:
+	if not is_instance_valid(lbl):
+		return
+		
+	var text_len = lbl.text.length()
+	var is_multiline = "\n" in lbl.text
+	var plaque_w: float = 1.35
+	var plaque_h: float = 0.42
+	var font_sz: int = 34
+	
+	if is_multiline:
+		plaque_h = 0.58
+		font_sz = 26
+		plaque_w = max(1.8, text_len * 0.065)
+	elif text_len > 24:
+		plaque_w = max(2.2, text_len * 0.075)
+		font_sz = 26
+	elif text_len > 14:
+		plaque_w = max(1.7, text_len * 0.085)
+		font_sz = 30
+	else:
+		plaque_w = max(1.35, text_len * 0.13)
+		font_sz = 36
+		
+	# Estilizar el Label3D para que sea realista y diegético
+	lbl.shaded = true # Reacciona a la iluminación ambiental, linterna y focos (no brilla solo en penumbra)
+	lbl.double_sided = false
+	lbl.alpha_cut = Label3D.ALPHA_CUT_DISCARD
+	lbl.font_size = font_sz
+	lbl.outline_size = 4
+	lbl.modulate = Color(0.94, 0.96, 1.0, 1.0) # Tipografía blanca institucional nítida
+	lbl.outline_modulate = Color(0.02, 0.03, 0.06, 0.95)
+	
+	var plaque = Node3D.new()
+	plaque.name = "PlacaSoporte"
+	lbl.add_child(plaque)
+	
+	# 1. Marco metálico exterior de aluminio / acero pulido
+	var marco = CSGBox3D.new()
+	marco.name = "MarcoMetalico"
+	marco.size = Vector3(plaque_w, plaque_h, 0.020)
+	marco.position = Vector3(0.0, 0.0, -0.016)
+	if mat_metal:
+		marco.material = mat_metal
+	plaque.add_child(marco)
+	
+	# 2. Placa acrílica institucional (azul marino UTN satinado con reflejo tenue)
+	var acrilico = CSGBox3D.new()
+	acrilico.name = "PanelAcrilico"
+	acrilico.size = Vector3(plaque_w - 0.04, plaque_h - 0.04, 0.018)
+	acrilico.position = Vector3(0.0, 0.0, -0.008)
+	if mat_acrylic:
+		acrilico.material = mat_acrylic
+	plaque.add_child(acrilico)
+	
+	# 3. Franja metálica divisoria inferior (estilo institucional)
+	var franja = CSGBox3D.new()
+	franja.name = "FranjaDivision"
+	franja.size = Vector3(plaque_w - 0.12, 0.004, 0.004)
+	franja.position = Vector3(0.0, -plaque_h * 0.32, -0.001)
+	if mat_metal:
+		franja.material = mat_metal
+	plaque.add_child(franja)
+	
+	# 4. Pernos arquitectónicos de fijación en las 4 esquinas
+	var bolt_offsets = [
+		Vector2(-plaque_w * 0.5 + 0.05, plaque_h * 0.5 - 0.05),
+		Vector2(plaque_w * 0.5 - 0.05, plaque_h * 0.5 - 0.05),
+		Vector2(-plaque_w * 0.5 + 0.05, -plaque_h * 0.5 + 0.05),
+		Vector2(plaque_w * 0.5 - 0.05, -plaque_h * 0.5 + 0.05)
+	]
+	for idx in range(bolt_offsets.size()):
+		var b_pos = bolt_offsets[idx]
+		var bolt = CSGCylinder3D.new()
+		bolt.name = "Perno_%d" % idx
+		bolt.radius = 0.011
+		bolt.height = 0.012
+		bolt.position = Vector3(b_pos.x, b_pos.y, 0.003)
+		bolt.rotation_degrees = Vector3(90.0, 0.0, 0.0)
+		if mat_bolt:
+			bolt.material = mat_bolt
+		plaque.add_child(bolt)
+

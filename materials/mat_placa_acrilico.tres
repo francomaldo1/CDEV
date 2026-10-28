@@ -1,0 +1,11 @@
+﻿[gd_resource type="StandardMaterial3D" format=3]
+
+[resource]
+resource_name = "PlacaAcrilicoInstitucional"
+albedo_color = Color(0.06, 0.10, 0.17, 1.0)
+metallic = 0.10
+metallic_specular = 0.80
+roughness = 0.18
+clearcoat_enabled = true
+clearcoat = 0.60
+clearcoat_roughness = 0.20

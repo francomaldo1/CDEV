@@ -6,7 +6,7 @@ const HorrorAudio = preload("res://scripts/horror_audio.gd")
 signal power_restored
 
 @onready var prompt_label: Label3D = get_node_or_null("PromptLabel")
-@onready var estado_label: Label3D = $Visuals/EstadoLabel
+@onready var estado_label: Label3D = get_node_or_null("Visuals/EstadoLabel")
 @onready var luz_indicador: OmniLight3D = $Visuals/LuzIndicador
 @onready var fusible_insertado: Node3D = $Visuals/FusibleInsertado
 

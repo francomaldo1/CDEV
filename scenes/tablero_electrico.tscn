@@ -43,15 +43,6 @@ radius = 0.06
 height = 0.28
 material = ExtResource("4_gold")
 
-[node name="EstadoLabel" type="Label3D" parent="Visuals" unique_id=1363986497]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0.21)
-modulate = Color(0.3, 1, 0.5, 1)
-text = "TABLERO GENERAL 220V
-ING. ELECTRÓNICA
-ESTADO: NORMAL"
-font_size = 22
-outline_size = 6
-
 [node name="LuzIndicador" type="OmniLight3D" parent="Visuals" unique_id=1417779027]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.85, 0.3)
 light_color = Color(0.2, 1, 0.4, 1)
