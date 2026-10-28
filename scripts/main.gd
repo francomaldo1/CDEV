@@ -965,18 +965,42 @@ func _apply_institutional_plaque(lbl: Label3D, mat_metal: Material, mat_acrylic:
 		plaque_w = max(1.35, text_len * 0.13)
 		font_sz = 36
 		
-	# Ajustar posición hacia la pared: los carteles originales flotaban ~15 cm en el aire
+	var n = lbl.name
+	var is_door_cartel = (
+		n.begins_with("CartelN") or n.begins_with("P2_CartelN") or
+		n.begins_with("CartelW") or n.begins_with("P2_CartelW") or
+		n.begins_with("CartelWI") or n.begins_with("P2_CartelWI") or
+		n.begins_with("CartelEI") or n.begins_with("P2_CartelEI") or
+		n.begins_with("CartelE") or n.begins_with("P2_CartelE") or
+		n.begins_with("P2_Cartel210") or
+		n == "CartelBedelia" or n == "CartelDireccion" or n == "CartelSistemas" or
+		n == "CartelDeptoElec" or n == "CartelCETRA" or n == "CartelBiblio" or
+		n == "CartelFotoO" or n == "CartelFotoE" or n == "P2_CartelSO" or n == "P2_CartelSE"
+	)
+	
+	if is_door_cartel:
+		# Mover al lado del marco de la puerta sobre la pared sólida (desplazamiento de 2.2m en tangente de pared)
+		lbl.position += lbl.transform.basis.x * 2.2
+		# Altura estándar arquitectónica a nivel visual (~2.15m desde el suelo de cada piso)
+		if lbl.position.y < 4.0:
+			lbl.position.y = 2.15
+		elif lbl.position.y < 8.0:
+			lbl.position.y = 6.65
+		else:
+			lbl.position.y = 11.15
+			
+	# Ajustar posición hacia la pared para quedar firmemente montada
 	lbl.position -= lbl.transform.basis.z * 0.135
 	
-	# Estilizar el Label3D para que sea completamente legible y optimizado (sin shaded)
-	lbl.shaded = false # Sin shaded: optimizado y legible siempre en penumbra
+	# Estilizar el Label3D para que NO parezca una pantalla iluminada
+	lbl.shaded = true # Sombreado real: reacciona naturalmente a la luz y linterna, oscuro en sombras (no emite luz)
 	lbl.double_sided = false
 	lbl.alpha_cut = Label3D.ALPHA_CUT_DISCARD
-	lbl.render_priority = 3 # Prioridad alta para renderizar delante de la placa
+	lbl.render_priority = 2
 	lbl.font_size = font_sz
-	lbl.outline_size = 5
-	lbl.modulate = Color(1.0, 1.0, 1.0, 1.0) # Blanco nítido
-	lbl.outline_modulate = Color(0.0, 0.0, 0.0, 0.95) # Contorno oscuro definido
+	lbl.outline_size = 3
+	lbl.modulate = Color(0.80, 0.83, 0.88, 1.0) # Blanco grisáceo mate institucional (no blanco flúor)
+	lbl.outline_modulate = Color(0.04, 0.05, 0.07, 0.95)
 	
 	var plaque = Node3D.new()
 	plaque.name = "PlacaSoporte"
@@ -985,8 +1009,8 @@ func _apply_institutional_plaque(lbl: Label3D, mat_metal: Material, mat_acrylic:
 	# 1. Marco metálico exterior de aluminio / acero pulido (apoyado en la pared)
 	var marco = CSGBox3D.new()
 	marco.name = "MarcoMetalico"
-	marco.size = Vector3(plaque_w, plaque_h, 0.014)
-	marco.position = Vector3(0.0, 0.0, -0.010)
+	marco.size = Vector3(plaque_w, plaque_h, 0.012)
+	marco.position = Vector3(0.0, 0.0, -0.008)
 	if mat_metal:
 		marco.material = mat_metal
 	plaque.add_child(marco)
@@ -994,8 +1018,8 @@ func _apply_institutional_plaque(lbl: Label3D, mat_metal: Material, mat_acrylic:
 	# 2. Placa acrílica institucional (rehundida detrás del plano de texto)
 	var acrilico = CSGBox3D.new()
 	acrilico.name = "PanelAcrilico"
-	acrilico.size = Vector3(plaque_w - 0.04, plaque_h - 0.04, 0.008)
-	acrilico.position = Vector3(0.0, 0.0, -0.006)
+	acrilico.size = Vector3(plaque_w - 0.04, plaque_h - 0.04, 0.006)
+	acrilico.position = Vector3(0.0, 0.0, -0.004)
 	if mat_acrylic:
 		acrilico.material = mat_acrylic
 	plaque.add_child(acrilico)
@@ -1021,7 +1045,7 @@ func _apply_institutional_plaque(lbl: Label3D, mat_metal: Material, mat_acrylic:
 		var bolt = CSGCylinder3D.new()
 		bolt.name = "Perno_%d" % idx
 		bolt.radius = 0.011
-		bolt.height = 0.008
+		bolt.height = 0.006
 		bolt.position = Vector3(b_pos.x, b_pos.y, -0.001)
 		bolt.rotation_degrees = Vector3(90.0, 0.0, 0.0)
 		if mat_bolt:

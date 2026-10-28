@@ -32,24 +32,12 @@ var sens_slider: HSlider = null
 var sens_val_label: Label = null
 var fullscreen_chk: CheckBox = null
 
-# Pantalla de Carga
+# Pantalla de Carga Minimalista
 var is_loading_game: bool = false
 var loading_screen: Control = null
 var loading_progress_bar: ProgressBar = null
-var loading_status_lbl: Label = null
-var loading_pct_lbl: Label = null
-var loading_msg_timer: float = 0.0
-var loading_msg_idx: int = 0
 var loading_simulated_progress: float = 0.0
 var loading_target_scene: String = "res://scenes/main.tscn"
-
-const LOADING_MESSAGES: Array[String] = [
-	"INICIALIZANDO EDIFICIO CENTRAL...",
-	"CARGANDO REGISTROS DE BEDELÍA...",
-	"SINCRONIZANDO CÁMARAS DE SEGURIDAD...",
-	"CALIBRANDO SENSORES DE AUDIO Y MICRÓFONO...",
-	"PREPARANDO PARCIALES EN PLANTA BAJA..."
-]
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
@@ -662,120 +650,38 @@ func _setup_loading_screen() -> void:
 	loading_screen.name = "LoadingScreen"
 	loading_screen.set_anchors_preset(Control.PRESET_FULL_RECT)
 	loading_screen.visible = false
-	loading_screen.modulate.a = 0.0
+	loading_screen.modulate.a = 1.0
 	add_child(loading_screen)
 	
-	# Fondo opaco negro
+	# Fondo 100% negro puro
 	var bg = ColorRect.new()
 	bg.set_anchors_preset(Control.PRESET_FULL_RECT)
-	bg.color = Color(0.012, 0.016, 0.024, 1.0)
+	bg.color = Color(0, 0, 0, 1)
 	loading_screen.add_child(bg)
 	
-	# Contenedor central
-	var center_box = VBoxContainer.new()
-	center_box.custom_minimum_size = Vector2(540, 360)
-	center_box.set_anchors_preset(Control.PRESET_CENTER)
-	center_box.offset_left = -270.0
-	center_box.offset_right = 270.0
-	center_box.offset_top = -180.0
-	center_box.offset_bottom = 180.0
-	center_box.add_theme_constant_override("separation", 16)
-	loading_screen.add_child(center_box)
-	
-	# Logo UTN
-	if ResourceLoader.exists("res://textures/tex_utn_frc_glass_logo.png"):
-		var logo_rect = TextureRect.new()
-		logo_rect.texture = load("res://textures/tex_utn_frc_glass_logo.png")
-		logo_rect.custom_minimum_size = Vector2(86, 86)
-		logo_rect.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
-		logo_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		logo_rect.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-		logo_rect.modulate = Color(0.9, 0.95, 1.0, 0.9)
-		center_box.add_child(logo_rect)
-		
-	var title = Label.new()
-	title.text = "UNIVERSIDAD TECNOLÓGICA NACIONAL"
-	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title.add_theme_font_size_override("font_size", 20)
-	title.add_theme_color_override("font_color", Color(0.96, 0.93, 0.68, 0.95))
-	if typewriter_font:
-		title.add_theme_font_override("font", typewriter_font)
-	center_box.add_child(title)
-	
-	var subtitle = Label.new()
-	subtitle.text = "FACULTAD REGIONAL CÓRDOBA • SISTEMA ACADÉMICO"
-	subtitle.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	subtitle.add_theme_font_size_override("font_size", 13)
-	subtitle.add_theme_color_override("font_color", Color(0.7, 0.78, 0.88, 0.7))
-	if typewriter_font:
-		subtitle.add_theme_font_override("font", typewriter_font)
-	center_box.add_child(subtitle)
-	
-	var sep = HSeparator.new()
-	sep.custom_minimum_size = Vector2(400, 10)
-	sep.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	var sep_style = StyleBoxLine.new()
-	sep_style.color = Color(0.3, 0.35, 0.45, 0.4)
-	sep_style.thickness = 1
-	sep.add_theme_stylebox_override("separator", sep_style)
-	center_box.add_child(sep)
-	
-	# Estado dinámico
-	loading_status_lbl = Label.new()
-	loading_status_lbl.text = LOADING_MESSAGES[0]
-	loading_status_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	loading_status_lbl.add_theme_font_size_override("font_size", 14)
-	loading_status_lbl.add_theme_color_override("font_color", Color(0.85, 0.9, 0.98, 0.85))
-	if typewriter_font:
-		loading_status_lbl.add_theme_font_override("font", typewriter_font)
-	center_box.add_child(loading_status_lbl)
-	
-	# Barra de progreso estilizada
-	var bar_container = VBoxContainer.new()
-	bar_container.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	bar_container.add_theme_constant_override("separation", 6)
-	center_box.add_child(bar_container)
-	
+	# Barra de carga minimalista y sobria en el centro
 	loading_progress_bar = ProgressBar.new()
-	loading_progress_bar.custom_minimum_size = Vector2(440, 10)
+	loading_progress_bar.custom_minimum_size = Vector2(320, 4)
+	loading_progress_bar.set_anchors_preset(Control.PRESET_CENTER)
+	loading_progress_bar.offset_left = -160.0
+	loading_progress_bar.offset_right = 160.0
+	loading_progress_bar.offset_top = -2.0
+	loading_progress_bar.offset_bottom = 2.0
 	loading_progress_bar.min_value = 0.0
 	loading_progress_bar.max_value = 100.0
 	loading_progress_bar.value = 0.0
 	loading_progress_bar.show_percentage = false
 	
 	var bar_bg = StyleBoxFlat.new()
-	bar_bg.bg_color = Color(0.04, 0.06, 0.10, 0.85)
-	bar_bg.border_color = Color(0.25, 0.32, 0.42, 0.6)
-	bar_bg.set_border_width_all(1)
-	bar_bg.set_corner_radius_all(3)
+	bar_bg.bg_color = Color(0.12, 0.14, 0.18, 0.95)
+	bar_bg.set_corner_radius_all(2)
 	loading_progress_bar.add_theme_stylebox_override("background", bar_bg)
 	
 	var bar_fg = StyleBoxFlat.new()
-	bar_fg.bg_color = Color(0.35, 0.78, 0.95, 0.92)
-	bar_fg.set_corner_radius_all(3)
+	bar_fg.bg_color = Color(0.85, 0.88, 0.92, 0.95)
+	bar_fg.set_corner_radius_all(2)
 	loading_progress_bar.add_theme_stylebox_override("fill", bar_fg)
-	bar_container.add_child(loading_progress_bar)
-	
-	loading_pct_lbl = Label.new()
-	loading_pct_lbl.text = "0%"
-	loading_pct_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	loading_pct_lbl.add_theme_font_size_override("font_size", 12)
-	loading_pct_lbl.add_theme_color_override("font_color", Color(0.65, 0.75, 0.85, 0.75))
-	if typewriter_font:
-		loading_pct_lbl.add_theme_font_override("font", typewriter_font)
-	bar_container.add_child(loading_pct_lbl)
-	
-	# Mensaje atmosférico inferior
-	var hint_lbl = Label.new()
-	hint_lbl.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
-	hint_lbl.position = Vector2(0, -60)
-	hint_lbl.text = "[ INGRESO NOCTURNO: Mantenga la calma y conserve el silencio ]"
-	hint_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	hint_lbl.add_theme_font_size_override("font_size", 13)
-	hint_lbl.add_theme_color_override("font_color", Color(0.6, 0.65, 0.75, 0.5))
-	if typewriter_font:
-		hint_lbl.add_theme_font_override("font", typewriter_font)
-	loading_screen.add_child(hint_lbl)
+	loading_screen.add_child(loading_progress_bar)
 
 func _process(delta: float) -> void:
 	session_time += delta
@@ -792,15 +698,8 @@ func _process(delta: float) -> void:
 		var frames = int(fmod(session_time * 30.0, 30.0))
 		timecode_label.text = "00:%02d:%02d:%02d" % [mins, secs, frames]
 		
-	# Lógica de Pantalla de Carga y Carga en Segundo Plano
+	# Carga minimalista en segundo plano
 	if is_loading_game:
-		loading_msg_timer += delta
-		if loading_msg_timer > 0.8:
-			loading_msg_timer = 0.0
-			loading_msg_idx = (loading_msg_idx + 1) % LOADING_MESSAGES.size()
-			if loading_status_lbl:
-				loading_status_lbl.text = LOADING_MESSAGES[loading_msg_idx]
-				
 		var progress: Array = []
 		var status = ResourceLoader.load_threaded_get_status(loading_target_scene, progress)
 		
@@ -808,31 +707,18 @@ func _process(delta: float) -> void:
 		if progress.size() > 0:
 			real_pct = progress[0] * 100.0
 			
-		loading_simulated_progress = maxf(loading_simulated_progress + delta * 25.0, real_pct)
+		loading_simulated_progress = maxf(loading_simulated_progress + delta * 45.0, real_pct)
 		loading_simulated_progress = clampf(loading_simulated_progress, 0.0, 99.0)
 		
 		if loading_progress_bar:
 			loading_progress_bar.value = loading_simulated_progress
-		if loading_pct_lbl:
-			loading_pct_lbl.text = "%d%%" % int(loading_simulated_progress)
 			
-		if status == ResourceLoader.THREAD_LOAD_LOADED and loading_simulated_progress >= 40.0:
+		if status == ResourceLoader.THREAD_LOAD_LOADED:
 			is_loading_game = false
 			if loading_progress_bar:
 				loading_progress_bar.value = 100.0
-			if loading_pct_lbl:
-				loading_pct_lbl.text = "100%"
-			if loading_status_lbl:
-				loading_status_lbl.text = "¡INGRESO AUTORIZADO!"
-				loading_status_lbl.add_theme_color_override("font_color", Color(0.3, 1.0, 0.5))
-				
-			var tw_out = create_tween()
-			tw_out.tween_interval(0.3)
-			tw_out.tween_property(loading_screen, "modulate:a", 0.0, 0.4)
-			tw_out.tween_callback(func():
-				var packed = ResourceLoader.load_threaded_get(loading_target_scene)
-				get_tree().change_scene_to_packed(packed)
-			)
+			var packed = ResourceLoader.load_threaded_get(loading_target_scene)
+			get_tree().change_scene_to_packed(packed)
 		elif status == ResourceLoader.THREAD_LOAD_FAILED:
 			is_loading_game = false
 			get_tree().change_scene_to_file(loading_target_scene)
@@ -866,23 +752,14 @@ func _close_active_modal() -> void:
 func _on_play_pressed() -> void:
 	if is_loading_game:
 		return
+	is_loading_game = true
 	
 	if loading_screen:
 		loading_screen.visible = true
-		loading_screen.modulate.a = 0.0
-		var tw = create_tween()
-		tw.tween_property(loading_screen, "modulate:a", 1.0, 0.45)
-		tw.tween_callback(func():
-			_start_loading()
-		)
-	else:
-		get_tree().change_scene_to_file(loading_target_scene)
-
-func _start_loading() -> void:
-	is_loading_game = true
+		loading_screen.modulate.a = 1.0
+	if loading_progress_bar:
+		loading_progress_bar.value = 5.0
 	loading_simulated_progress = 5.0
-	loading_msg_timer = 0.0
-	loading_msg_idx = 0
 	ResourceLoader.load_threaded_request(loading_target_scene)
 
 func _on_volume_changed(val: float) -> void:
