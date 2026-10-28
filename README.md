@@ -3,7 +3,7 @@
 **Juego de terror psicológico y supervivencia en primera persona** desarrollado en **Godot Engine 4.7** (Forward Plus), ambientado en una recreación a escala del Edificio Central de la **Universidad Tecnológica Nacional - Facultad Regional Córdoba (UTN FRC)**.
 
 > 📄 **Documento de Solución de Diseño (SDD) para Cátedra CDEV:**
-> Para consultar la sistematización completa del proceso creativo según los lineamientos de la cátedra CDEV (dimensiones técnica, estética, narrativa y experiencial, marco teórico de Janet Murray y guión de trailer), consultar el archivo [`resumen_proyecto.md`](./resumen_proyecto.md).
+> Para consultar la sistematización completa del proceso creativo según los lineamientos de la cátedra CDEV (dimensiones técnica, estética, narrativa y experiencial, marco teórico de Janet Murray, guión del trailer y anexos), consultar el archivo [`resumen_proyecto.md`](./resumen_proyecto.md).
 
 ---
 
@@ -11,31 +11,32 @@
 
 El jugador encarna a un estudiante rezagado que ha quedado atrapado de noche en el edificio central de la UTN FRC durante el turno de exámenes finales. Para escapar con vida y obtener su libertad, deberá rendir sus parciales pendientes, sobrevivir al acecho de "El Profesor" y conseguir su Título Universitario:
 
-1. **Exploración Inicial (Planta Baja):**
+1. **Exploración Inicial (Planta Baja con Luz):**
    * El jugador comienza en el Hall de Entrada de Planta Baja (PB).
    * Los accesos a las escaleras que conducen a los pisos superiores están sellados con barreras energéticas institucionales: *"PISO SUPERIOR CERRADO - Aprobá los 4 parciales"*.
    * El objetivo inmediato es recorrer las aulas y sectores de PB buscando los **4 cuadernos de parciales de matemáticas** repartidos estratégicamente (Aula 106, Fotocopiadora CEIT, Cafetería PB y Patio del Estudiante).
 
-2. **El Corte de Luz & Despertar del Profesor:**
-   * Al aprobar el **segundo examen**, se produce un apagón general programado: la iluminación principal colapsa, la luz ambiental cae a la penumbra total y se habilita la **linterna (`F`)**.
-   * Con el corte de energía, hace su aparición en el edificio el temible **Profesor**, comenzando su patrullaje implacable con su clásica regla de madera en mano.
+2. **El Despertar del Profesor (Segundo Parcial):**
+   * Al aprobar el **segundo examen**, el Profesor escucha el pase de las hojas y sale a patrullar la Planta Baja con su clásica regla de madera en mano (*"¡El profesor escuchó las hojas! Salió a patrullar la Planta Baja..."*).
+   * **La luz sigue encendida**: el jugador debe buscar y resolver el 3er y 4to examen con el profesor acechando activamente en los pasillos de PB.
 
-3. **Desbloqueo de los Pisos Superiores:**
-   * Al resolver y aprobar los **4 exámenes de matemáticas**, las barreras de las tres torres de escaleras (Oeste, Este y Norte) se desactivan automáticamente, desbloqueando el acceso al Primer y Segundo Piso.
+3. **El Corte de Luz & Desbloqueo de Pisos Superiores (Cuarto Parcial):**
+   * Al resolver y aprobar los **4 exámenes de matemáticas**, saltan los disyuntores y se produce el **Apagón General**: la iluminación principal colapsa, la luz ambiental cae a la penumbra total y se vuelve indispensable la **linterna (`F`)**.
+   * Se ejecuta el susto cinemático de giro de 180° en el pasillo, el profesor entra en fase enfurecida y las barreras de las tres torres de escaleras (Oeste, Este y Norte) se desactivan automáticamente, desbloqueando el acceso al Primer y Segundo Piso.
 
 4. **Búsqueda del Fusible de Alta Tensión (Primer Piso):**
    * El jugador asciende las escaleras, consulta la pizarra didáctica con el esquema de la subestación en el Primer Piso y explora las oficinas (Bedelía) para hallar el **Fusible de Alta Tensión (30A)** necesario para reanimar el sistema eléctrico.
 
 5. **Restauración Eléctrica & Evento del Tablero:**
    * Con el fusible en mano, desciende nuevamente a PB al **Departamento de Ingeniería Electrónica**, donde se encuentra el **Tablero Eléctrico General de 220V**.
-   * Al colocar el fusible, la energía se restablece en el edificio, desencadenando tensión y alertas sonoras.
+   * Al colocar el fusible, la energía se restablece en el edificio con encendido secuencial de luminarias fluorescentes.
 
 6. **La Llave del Auditorio y el Título Universitario:**
    * Con la energía restaurada, el jugador sube a la Cafetería del 2do Piso para obtener la **Llave Maestra del Auditorio**.
-   * Se dirige al **Auditorio Central**, cuyas puertas están fuertemente aseguradas con cadenas metálicas cruzadas y candados estilo *Silent Hill 4*. Al usar la llave, las cadenas caen y se accede al estrado principal para recoger el ansiado **Título Universitario (Diploma)**.
+   * Se dirige al **Auditorio Central**, cuyas puertas están selladas con un entramado tridimensional de cadenas metálicas cruzadas y candados dorados estilo *Silent Hill 4*. Al usar la llave, las cadenas caen y se accede al estrado principal para recoger el ansiado **Título Universitario (Diploma)**.
 
 7. **Escape de la Facultad:**
-   * Con el título en su poder, el jugador debe correr a la puerta principal vidriada de salida (clausurada con el comunicado oficial de las Autoridades FRC), exhibir su diploma y escapar victorioso del campus.
+   * Con el título en su poder, el jugador corre a la puerta principal vidriada de salida (clausurada por las Autoridades FRC), exhibe su diploma y escapa victorioso del campus.
 
 ---
 
@@ -68,7 +69,7 @@ El jugador encarna a un estudiante rezagado que ha quedado atrapado de noche en 
   * Postprocesado analógico con grano fílmico, aberración cromática, viñeta CRT, indicador de batería, parpadeo de grabación REC y reloj con timestamp oficial.
 
 * 👨‍🏫 **Inteligencia Artificial del Profesor (`scripts/profesor.gd`):**
-  * Máquina de estados (`PATROL`, `SEARCH`, `CHASE`, `ATTACK`, `INVESTIGATE`).
+  * Máquina de estados (`PATROL`, `SEARCH`, `CHASE`, `ATTACK`).
   * Grafo de navegación multinivel con **91 waypoints** interconectados en Planta Baja, Primer Piso, Segundo Piso y las 3 torres de escaleras en U.
   * Rutinas de prevención de atascamiento (*watchdog*), visión por conos de sombra y audición direccional.
 
