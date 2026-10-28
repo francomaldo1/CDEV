@@ -75,24 +75,26 @@ func _build_ui() -> void:
 	top_hud.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(top_hud)
 	
-	var pause_rec_label = Label.new()
-	pause_rec_label.text = "⏸ PAUSA  [ GRABACIÓN DETENIDA ]"
-	pause_rec_label.position = Vector2(35, 25)
-	pause_rec_label.add_theme_font_size_override("font_size", 16)
-	pause_rec_label.add_theme_color_override("font_color", Color(1.0, 0.35, 0.35, 0.95))
-	if typewriter_font:
-		pause_rec_label.add_theme_font_override("font", typewriter_font)
-	top_hud.add_child(pause_rec_label)
+	# Ícono de pausa superior izquierdo (dos barras grises grandes)
+	var pause_icon_box = HBoxContainer.new()
+	pause_icon_box.name = "PauseIcon"
+	pause_icon_box.position = Vector2(40, 26)
+	pause_icon_box.add_theme_constant_override("separation", 10)
+	top_hud.add_child(pause_icon_box)
 	
-	var cam_name = Label.new()
-	cam_name.text = "SISTEMA DE SEGURIDAD UTN FRC"
-	cam_name.set_anchors_preset(Control.PRESET_TOP_RIGHT)
-	cam_name.position = Vector2(-280, 25)
-	cam_name.add_theme_font_size_override("font_size", 14)
-	cam_name.add_theme_color_override("font_color", Color(0.7, 0.78, 0.85, 0.6))
-	if typewriter_font:
-		cam_name.add_theme_font_override("font", typewriter_font)
-	top_hud.add_child(cam_name)
+	var bar_style = StyleBoxFlat.new()
+	bar_style.bg_color = Color(0.72, 0.75, 0.80, 0.90)
+	bar_style.set_corner_radius_all(2)
+	
+	var bar1 = Panel.new()
+	bar1.custom_minimum_size = Vector2(10, 32)
+	bar1.add_theme_stylebox_override("panel", bar_style)
+	pause_icon_box.add_child(bar1)
+	
+	var bar2 = Panel.new()
+	bar2.custom_minimum_size = Vector2(10, 32)
+	bar2.add_theme_stylebox_override("panel", bar_style)
+	pause_icon_box.add_child(bar2)
 	
 	# Contenedor Central
 	main_container = VBoxContainer.new()
@@ -117,15 +119,6 @@ func _build_ui() -> void:
 	if typewriter_font:
 		title_lbl.add_theme_font_override("font", typewriter_font)
 	main_container.add_child(title_lbl)
-	
-	var sub_lbl = Label.new()
-	sub_lbl.text = "[ La facultad aguarda en silencio... ]"
-	sub_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	sub_lbl.add_theme_font_size_override("font_size", 13)
-	sub_lbl.add_theme_color_override("font_color", Color(0.7, 0.75, 0.85, 0.65))
-	if typewriter_font:
-		sub_lbl.add_theme_font_override("font", typewriter_font)
-	main_container.add_child(sub_lbl)
 	
 	# Separador
 	var sep = HSeparator.new()
