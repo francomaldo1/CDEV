@@ -116,51 +116,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.01, 0.97)
 size = Vector3(0.08, 0.04, 0.04)
 material = ExtResource("2_metal")
 
-[node name="Cadena_Horizontal_Sup" type="CSGBox3D" parent="CadenasAuditorio"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0.92)
-size = Vector3(3.28, 0.08, 0.05)
-material = ExtResource("2_metal")
-
-[node name="Cadena_Horizontal_Med" type="CSGBox3D" parent="CadenasAuditorio"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.92)
-size = Vector3(3.28, 0.09, 0.06)
-material = ExtResource("2_metal")
-
-[node name="Cadena_Horizontal_Inf" type="CSGBox3D" parent="CadenasAuditorio"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45, 0.92)
-size = Vector3(3.28, 0.08, 0.05)
-material = ExtResource("2_metal")
-
-[node name="Cadena_Diagonal_1" type="CSGBox3D" parent="CadenasAuditorio"]
-transform = Transform3D(0.9176357, 0.3974256, 0, -0.3974256, 0.9176357, 0, 0, 0, 1, 0, 0, 0.9)
-size = Vector3(3.55, 0.085, 0.055)
-material = ExtResource("2_metal")
-
-[node name="Cadena_Diagonal_2" type="CSGBox3D" parent="CadenasAuditorio"]
-transform = Transform3D(0.9176357, -0.3974256, 0, 0.3974256, 0.9176357, 0, 0, 0, 1, 0, 0, 0.89)
-size = Vector3(3.55, 0.085, 0.055)
-material = ExtResource("2_metal")
-
-[node name="Cadena_Diagonal_3" type="CSGBox3D" parent="CadenasAuditorio"]
-transform = Transform3D(0.78043, -0.62524, 0, 0.62524, 0.78043, 0, 0, 0, 1, -0.81, 0.4, 0.88)
-size = Vector3(2.08, 0.075, 0.05)
-material = ExtResource("2_metal")
-
-[node name="Cadena_Diagonal_4" type="CSGBox3D" parent="CadenasAuditorio"]
-transform = Transform3D(0.78043, 0.62524, 0, -0.62524, 0.78043, 0, 0, 0, 1, 0.81, 0.4, 0.88)
-size = Vector3(2.08, 0.075, 0.05)
-material = ExtResource("2_metal")
-
-[node name="Cadena_Colgante_1" type="CSGBox3D" parent="CadenasAuditorio"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.22, 0.87)
-size = Vector3(0.06, 0.44, 0.05)
-material = ExtResource("2_metal")
-
-[node name="Cadena_Colgante_2" type="CSGBox3D" parent="CadenasAuditorio"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7, -0.65, 0.87)
-size = Vector3(0.06, 0.42, 0.05)
-material = ExtResource("2_metal")
-
 [node name="Candado_Central" type="Node3D" parent="CadenasAuditorio"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.04, -0.05, 0.84)
 

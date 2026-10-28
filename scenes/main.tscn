@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" path="res://scenes/llave_auditorio.tscn" id="9_llave"]
 [ext_resource type="PackedScene" path="res://scenes/puerta_auditorio.tscn" id="10_paud"]
 [ext_resource type="PackedScene" path="res://scenes/titulo_universitario.tscn" id="11_titulo"]
+[ext_resource type="PackedScene" path="res://scenes/pause_menu.tscn" id="12_pause"]
 
 [sub_resource type="Environment" id="Environment_eb6dy"]
 background_mode = 1
@@ -52,3 +53,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 34)
 
 [node name="TituloUniversitario" parent="." unique_id=1037980237 instance=ExtResource("11_titulo")]
 transform = Transform3D(-0.99831235, -0.04994778, 0.029628899, -0.022239406, 0.80009806, 0.599457, -0.05364757, 0.59778637, -0.79985845, 0.07622, 1.96383, 75.24)
+
+[node name="PauseMenu" parent="." unique_id=99281002 instance=ExtResource("12_pause")]

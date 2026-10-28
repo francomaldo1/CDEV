@@ -206,12 +206,16 @@ func _input(event: InputEvent) -> void:
 		if not is_frozen:
 			reload_camera_battery()
 
-	# Tecla ESC para liberar o volver a capturar el cursor
+	# Tecla ESC para menú de pausa o liberar cursor
 	if event.is_action_pressed("ui_cancel") or (event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE):
-		if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		var pause_menu = get_tree().root.find_child("PauseMenu", true, false)
+		if pause_menu and pause_menu.has_method("toggle_pause"):
+			pause_menu.toggle_pause(!pause_menu.is_paused)
 		else:
-			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+			if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+				Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+			else:
+				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func toggle_flashlight() -> void:
 	if flashlight:

@@ -182,14 +182,18 @@ func _setup_camcorder_overlay() -> void:
 func _setup_main_menu_content() -> void:
 	var main_box = VBoxContainer.new()
 	main_box.name = "MainMenuContent"
-	main_box.position = Vector2(70, 95)
-	main_box.custom_minimum_size = Vector2(500, 520)
-	main_box.add_theme_constant_override("separation", 24)
+	main_box.set_anchors_preset(Control.PRESET_CENTER)
+	main_box.custom_minimum_size = Vector2(480, 520)
+	main_box.offset_left = -240.0
+	main_box.offset_right = 240.0
+	main_box.offset_top = -220.0
+	main_box.offset_bottom = 300.0
+	main_box.add_theme_constant_override("separation", 22)
 	add_child(main_box)
 	
 	# Encabezado con Logo y Título
 	var title_box = VBoxContainer.new()
-	title_box.add_theme_constant_override("separation", 6)
+	title_box.add_theme_constant_override("separation", 8)
 	main_box.add_child(title_box)
 	
 	# Logo UTN
@@ -197,15 +201,17 @@ func _setup_main_menu_content() -> void:
 		var logo_tex = load("res://textures/tex_utn_frc_glass_logo.png")
 		var logo_rect = TextureRect.new()
 		logo_rect.texture = logo_tex
-		logo_rect.custom_minimum_size = Vector2(70, 70)
+		logo_rect.custom_minimum_size = Vector2(74, 74)
 		logo_rect.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
 		logo_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		logo_rect.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 		logo_rect.modulate = Color(0.9, 0.95, 1.0, 0.85)
 		title_box.add_child(logo_rect)
 		
 	var main_title = Label.new()
 	main_title.text = "UTN FRC: NOCHE DE FINALES"
-	main_title.add_theme_font_size_override("font_size", 34)
+	main_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	main_title.add_theme_font_size_override("font_size", 32)
 	main_title.add_theme_color_override("font_color", Color(0.98, 0.98, 1.0, 0.95))
 	main_title.add_theme_constant_override("outline_size", 4)
 	main_title.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.95))
@@ -216,6 +222,7 @@ func _setup_main_menu_content() -> void:
 	# Separador estilizado
 	var sep = HSeparator.new()
 	sep.custom_minimum_size = Vector2(400, 10)
+	sep.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	var sep_style = StyleBoxLine.new()
 	sep_style.color = Color(0.3, 0.35, 0.45, 0.4)
 	sep_style.thickness = 1
@@ -225,6 +232,7 @@ func _setup_main_menu_content() -> void:
 	# Lista de Botones del Menú
 	var btn_box = VBoxContainer.new()
 	btn_box.name = "MenuButtons"
+	btn_box.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	btn_box.add_theme_constant_override("separation", 14)
 	main_box.add_child(btn_box)
 	
@@ -251,8 +259,8 @@ func _setup_main_menu_content() -> void:
 func _create_menu_button(label_text: String) -> Button:
 	var btn = Button.new()
 	btn.text = label_text
-	btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
-	btn.custom_minimum_size = Vector2(360, 44)
+	btn.alignment = HORIZONTAL_ALIGNMENT_CENTER
+	btn.custom_minimum_size = Vector2(380, 46)
 	
 	if typewriter_font:
 		btn.add_theme_font_override("font", typewriter_font)
@@ -264,24 +272,24 @@ func _create_menu_button(label_text: String) -> Button:
 	
 	# Estilo normal
 	var normal_style = StyleBoxFlat.new()
-	normal_style.bg_color = Color(0.04, 0.05, 0.08, 0.65)
-	normal_style.border_color = Color(0.2, 0.25, 0.35, 0.5)
+	normal_style.bg_color = Color(0.04, 0.05, 0.08, 0.70)
+	normal_style.border_color = Color(0.25, 0.30, 0.42, 0.6)
 	normal_style.set_border_width_all(1)
 	normal_style.set_corner_radius_all(3)
-	normal_style.content_margin_left = 18
-	normal_style.content_margin_right = 18
+	normal_style.content_margin_left = 14
+	normal_style.content_margin_right = 14
 	normal_style.content_margin_top = 8
 	normal_style.content_margin_bottom = 8
 	btn.add_theme_stylebox_override("normal", normal_style)
 	
 	# Estilo hover
 	var hover_style = StyleBoxFlat.new()
-	hover_style.bg_color = Color(0.08, 0.10, 0.15, 0.85)
-	hover_style.border_color = Color(0.96, 0.93, 0.68, 0.8) # Borde sutil amarillo pálido
+	hover_style.bg_color = Color(0.08, 0.12, 0.18, 0.90)
+	hover_style.border_color = Color(0.96, 0.93, 0.68, 0.85) # Borde sutil amarillo pálido
 	hover_style.set_border_width_all(1)
 	hover_style.set_corner_radius_all(3)
-	hover_style.content_margin_left = 24 # Efecto desplazamiento hacia la derecha
-	hover_style.content_margin_right = 18
+	hover_style.content_margin_left = 14
+	hover_style.content_margin_right = 14
 	hover_style.content_margin_top = 8
 	hover_style.content_margin_bottom = 8
 	btn.add_theme_stylebox_override("hover", hover_style)
@@ -289,12 +297,12 @@ func _create_menu_button(label_text: String) -> Button:
 	
 	# Estilo presionado
 	var pressed_style = StyleBoxFlat.new()
-	pressed_style.bg_color = Color(0.12, 0.14, 0.20, 0.95)
+	pressed_style.bg_color = Color(0.14, 0.16, 0.24, 0.98)
 	pressed_style.border_color = Color(1.0, 1.0, 1.0, 0.9)
 	pressed_style.set_border_width_all(1)
 	pressed_style.set_corner_radius_all(3)
-	pressed_style.content_margin_left = 26
-	pressed_style.content_margin_right = 18
+	pressed_style.content_margin_left = 14
+	pressed_style.content_margin_right = 14
 	pressed_style.content_margin_top = 8
 	pressed_style.content_margin_bottom = 8
 	btn.add_theme_stylebox_override("pressed", pressed_style)

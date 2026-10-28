@@ -25,6 +25,79 @@ var is_open: bool = false
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
+	_build_3d_chains()
+
+func _build_3d_chains() -> void:
+	if not cadenas:
+		return
+	
+	var mm_instance = MultiMeshInstance3D.new()
+	mm_instance.name = "EslabonesCadenas"
+	
+	var mm = MultiMesh.new()
+	mm.transform_format = MultiMesh.TRANSFORM_3D
+	
+	var torus = TorusMesh.new()
+	torus.inner_radius = 0.024
+	torus.outer_radius = 0.052
+	torus.rings = 14
+	torus.ring_segments = 8
+	if ResourceLoader.exists("res://materials/mat_bench_metal.tres"):
+		torus.material = load("res://materials/mat_bench_metal.tres")
+	mm.mesh = torus
+	
+	var transforms: Array[Transform3D] = []
+	
+	# Segmentos de cadenas estilo Silent Hill 4
+	# Horizontales
+	_add_chain_segment(transforms, Vector3(-1.62, 0.45, 0.93), Vector3(1.62, 0.45, 0.93), 0.035)
+	_add_chain_segment(transforms, Vector3(-1.62, 0.0, 0.93), Vector3(1.62, 0.0, 0.93), 0.045)
+	_add_chain_segment(transforms, Vector3(-1.62, -0.45, 0.93), Vector3(1.62, -0.45, 0.93), 0.035)
+	
+	# Diagonales cruzadas en X
+	_add_chain_segment(transforms, Vector3(-1.62, 0.70, 0.91), Vector3(1.62, -0.70, 0.91), 0.05)
+	_add_chain_segment(transforms, Vector3(-1.62, -0.70, 0.90), Vector3(1.62, 0.70, 0.90), 0.05)
+	
+	# Diagonales desde anclaje superior
+	_add_chain_segment(transforms, Vector3(0.0, 1.05, 0.89), Vector3(-1.62, -0.25, 0.89), 0.03)
+	_add_chain_segment(transforms, Vector3(0.0, 1.05, 0.89), Vector3(1.62, -0.25, 0.89), 0.03)
+	
+	# Cadenas colgantes sueltas
+	_add_chain_segment(transforms, Vector3(0.04, -0.05, 0.87), Vector3(0.04, -0.55, 0.87), 0.0)
+	_add_chain_segment(transforms, Vector3(-0.65, 0.28, 0.87), Vector3(-0.65, -0.20, 0.87), 0.0)
+	_add_chain_segment(transforms, Vector3(0.65, -0.22, 0.87), Vector3(0.65, -0.68, 0.87), 0.0)
+	
+	mm.instance_count = transforms.size()
+	for i in range(transforms.size()):
+		mm.set_instance_transform(i, transforms[i])
+		
+	mm_instance.multimesh = mm
+	cadenas.add_child(mm_instance)
+
+func _add_chain_segment(transforms: Array[Transform3D], p_start: Vector3, p_end: Vector3, max_sag: float = 0.04, step: float = 0.062) -> void:
+	var total_dist = p_start.distance_to(p_end)
+	if total_dist < step:
+		return
+	var dir = (p_end - p_start).normalized()
+	var num_links = int(ceil(total_dist / step))
+	
+	var ref_up = Vector3.UP
+	if abs(dir.dot(ref_up)) > 0.92:
+		ref_up = Vector3.FORWARD
+	var right = dir.cross(ref_up).normalized()
+	var up = right.cross(dir).normalized()
+	
+	for i in range(num_links + 1):
+		var t = float(i) / float(num_links)
+		var pos = p_start.lerp(p_end, t)
+		if max_sag > 0.0:
+			pos.y -= sin(t * PI) * max_sag
+			
+		var twist_angle = 0.0 if (i % 2 == 0) else (PI * 0.5)
+		var rot_basis = Basis(dir, twist_angle) * Basis(right, up, dir)
+		var link_basis = rot_basis.scaled(Vector3(1.0, 1.0, 1.4))
+		
+		transforms.append(Transform3D(link_basis, pos))
 
 func _process(_delta: float) -> void:
 	if is_open or not is_player_nearby:
