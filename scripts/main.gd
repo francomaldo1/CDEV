@@ -973,14 +973,16 @@ func _apply_institutional_plaque(lbl: Label3D, mat_metal: Material, mat_acrylic:
 		n.begins_with("CartelEI") or n.begins_with("P2_CartelEI") or
 		n.begins_with("CartelE") or n.begins_with("P2_CartelE") or
 		n.begins_with("P2_Cartel210") or
+		n == "CartelCafe" or
 		n == "CartelBedelia" or n == "CartelDireccion" or n == "CartelSistemas" or
 		n == "CartelDeptoElec" or n == "CartelCETRA" or n == "CartelBiblio" or
 		n == "CartelFotoO" or n == "CartelFotoE" or n == "P2_CartelSO" or n == "P2_CartelSE"
 	)
 	
 	if is_door_cartel:
-		# Mover al lado del marco de la puerta sobre la pared sólida (desplazamiento de 2.2m en tangente de pared)
-		lbl.position += lbl.transform.basis.x * 2.2
+		# Mover al lado del marco de la puerta sobre la pared sólida (desplazamiento en tangente de pared)
+		var shift = 2.5 if n == "CartelCafe" else 2.2
+		lbl.position += lbl.transform.basis.x * shift
 		# Altura estándar arquitectónica a nivel visual (~2.15m desde el suelo de cada piso)
 		if lbl.position.y < 4.0:
 			lbl.position.y = 2.15
@@ -988,9 +990,14 @@ func _apply_institutional_plaque(lbl: Label3D, mat_metal: Material, mat_acrylic:
 			lbl.position.y = 6.65
 		else:
 			lbl.position.y = 11.15
-			
-	# Ajustar posición hacia la pared para quedar firmemente montada
-	lbl.position -= lbl.transform.basis.z * 0.135
+		lbl.position -= lbl.transform.basis.z * 0.135
+	elif n == "CartelEntradaCafe":
+		# Montar directamente contra la pared del dintel de entrada en P2 (Z = 34.91, Y = 13.1)
+		lbl.position = Vector3(0.0, 13.1, 34.91)
+	elif n == "CartelAudEntrada":
+		lbl.position -= lbl.transform.basis.z * 0.12
+	else:
+		lbl.position -= lbl.transform.basis.z * 0.135
 	
 	# Estilizar el Label3D para que NO parezca una pantalla iluminada
 	lbl.shaded = true # Sombreado real: reacciona naturalmente a la luz y linterna, oscuro en sombras (no emite luz)
