@@ -205,10 +205,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0.02)
 size = Vector3(0.12, 0.1, 0.03)
 material = ExtResource("5_metal")
 
-[node name="PromptLabel" type="Label3D" parent="." unique_id=1129266043]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.1, -0.2)
-billboard = 1
-double_sided = false
-modulate = Color(1, 0.8, 0.4, 1)
-text = "[E] Puerta Principal (Cerrada)"
-outline_size = 8
+[node name="PapelClausura" type="CSGBox3D" parent="Visuals/HojaDer" unique_id=9831001]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7, 1.45, -0.04)
+size = Vector3(0.55, 0.72, 0.01)
+material = ExtResource("4_frost")
+
+[node name="TextoClausura" type="Label3D" parent="Visuals/HojaDer" unique_id=9831002]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7, 1.45, -0.03)
+modulate = Color(0.85, 0.15, 0.15, 1)
+text = "CLAUSURADO
+---
+PROTOCOLO NOCTURNO
+PROHIBIDO EL EGRESO
+SIN TÍTULO HABILITANTE"
+font_size = 20
+outline_size = 4

@@ -3,7 +3,7 @@ class_name PuertaSalida
 
 signal player_escaped
 
-@onready var prompt_label: Label3D = $PromptLabel
+@onready var prompt_label: Label3D = get_node_or_null("PromptLabel")
 @onready var candado: Node3D = $Candado
 @onready var collision_blocker: CollisionShape3D = $BloqueoFisico/CollisionShape3D
 @onready var hoja_izq: Node3D = $Visuals/HojaIzq

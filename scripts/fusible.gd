@@ -3,7 +3,7 @@ class_name Fusible
 
 signal fuse_collected
 
-@onready var prompt_label: Label3D = $PromptLabel
+@onready var prompt_label: Label3D = get_node_or_null("PromptLabel")
 @onready var light: OmniLight3D = $OmniLight3D
 
 var is_player_nearby: bool = false

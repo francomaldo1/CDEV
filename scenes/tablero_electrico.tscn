@@ -60,11 +60,4 @@ light_indirect_energy = 0.2
 light_specular = 0.2
 omni_range = 0.93509114
 
-[node name="PromptLabel" type="Label3D" parent="." unique_id=742948295]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3, 0.7550526)
-billboard = 1
-double_sided = false
-modulate = Color(0.5, 0.9, 0.6, 1)
-text = "Tablero Eléctrico: Operando"
-font_size = 30
-outline_size = 8
+
