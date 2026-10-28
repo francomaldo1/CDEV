@@ -82,6 +82,7 @@ func _ready() -> void:
 	_setup_peronachos_shelves()
 	_spawn_pilas_aa()
 	_setup_institutional_plaques()
+	_setup_intro_fade()
 	if hud and hud.has_method("set_objective_text"):
 		hud.set_objective_text("OBJETIVO: Rendir los 4 parciales en Planta Baja (0/4)")
 	
@@ -926,6 +927,20 @@ func _gather_carteles_recursive(node: Node, out_arr: Array[Label3D]) -> void:
 				out_arr.append(child)
 		_gather_carteles_recursive(child, out_arr)
 
+func _setup_intro_fade() -> void:
+	var fade_canvas = CanvasLayer.new()
+	fade_canvas.layer = 100
+	var fade_rect = ColorRect.new()
+	fade_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
+	fade_rect.color = Color(0, 0, 0, 1)
+	fade_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	fade_canvas.add_child(fade_rect)
+	add_child(fade_canvas)
+	
+	var fade_tw = create_tween()
+	fade_tw.tween_property(fade_rect, "modulate:a", 0.0, 1.4).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	fade_tw.tween_callback(fade_canvas.queue_free)
+
 func _apply_institutional_plaque(lbl: Label3D, mat_metal: Material, mat_acrylic: Material, mat_bolt: Material) -> void:
 	if not is_instance_valid(lbl):
 		return
@@ -950,41 +965,45 @@ func _apply_institutional_plaque(lbl: Label3D, mat_metal: Material, mat_acrylic:
 		plaque_w = max(1.35, text_len * 0.13)
 		font_sz = 36
 		
-	# Estilizar el Label3D para que sea realista y diegético
-	lbl.shaded = true # Reacciona a la iluminación ambiental, linterna y focos (no brilla solo en penumbra)
+	# Ajustar posición hacia la pared: los carteles originales flotaban ~15 cm en el aire
+	lbl.position -= lbl.transform.basis.z * 0.135
+	
+	# Estilizar el Label3D para que sea completamente legible y optimizado (sin shaded)
+	lbl.shaded = false # Sin shaded: optimizado y legible siempre en penumbra
 	lbl.double_sided = false
 	lbl.alpha_cut = Label3D.ALPHA_CUT_DISCARD
+	lbl.render_priority = 3 # Prioridad alta para renderizar delante de la placa
 	lbl.font_size = font_sz
-	lbl.outline_size = 4
-	lbl.modulate = Color(0.94, 0.96, 1.0, 1.0) # Tipografía blanca institucional nítida
-	lbl.outline_modulate = Color(0.02, 0.03, 0.06, 0.95)
+	lbl.outline_size = 5
+	lbl.modulate = Color(1.0, 1.0, 1.0, 1.0) # Blanco nítido
+	lbl.outline_modulate = Color(0.0, 0.0, 0.0, 0.95) # Contorno oscuro definido
 	
 	var plaque = Node3D.new()
 	plaque.name = "PlacaSoporte"
 	lbl.add_child(plaque)
 	
-	# 1. Marco metálico exterior de aluminio / acero pulido
+	# 1. Marco metálico exterior de aluminio / acero pulido (apoyado en la pared)
 	var marco = CSGBox3D.new()
 	marco.name = "MarcoMetalico"
-	marco.size = Vector3(plaque_w, plaque_h, 0.020)
-	marco.position = Vector3(0.0, 0.0, -0.016)
+	marco.size = Vector3(plaque_w, plaque_h, 0.014)
+	marco.position = Vector3(0.0, 0.0, -0.010)
 	if mat_metal:
 		marco.material = mat_metal
 	plaque.add_child(marco)
 	
-	# 2. Placa acrílica institucional (azul marino UTN satinado con reflejo tenue)
+	# 2. Placa acrílica institucional (rehundida detrás del plano de texto)
 	var acrilico = CSGBox3D.new()
 	acrilico.name = "PanelAcrilico"
-	acrilico.size = Vector3(plaque_w - 0.04, plaque_h - 0.04, 0.018)
-	acrilico.position = Vector3(0.0, 0.0, -0.008)
+	acrilico.size = Vector3(plaque_w - 0.04, plaque_h - 0.04, 0.008)
+	acrilico.position = Vector3(0.0, 0.0, -0.006)
 	if mat_acrylic:
 		acrilico.material = mat_acrylic
 	plaque.add_child(acrilico)
 	
-	# 3. Franja metálica divisoria inferior (estilo institucional)
+	# 3. Franja metálica divisoria inferior
 	var franja = CSGBox3D.new()
 	franja.name = "FranjaDivision"
-	franja.size = Vector3(plaque_w - 0.12, 0.004, 0.004)
+	franja.size = Vector3(plaque_w - 0.12, 0.003, 0.002)
 	franja.position = Vector3(0.0, -plaque_h * 0.32, -0.001)
 	if mat_metal:
 		franja.material = mat_metal
@@ -1002,8 +1021,8 @@ func _apply_institutional_plaque(lbl: Label3D, mat_metal: Material, mat_acrylic:
 		var bolt = CSGCylinder3D.new()
 		bolt.name = "Perno_%d" % idx
 		bolt.radius = 0.011
-		bolt.height = 0.012
-		bolt.position = Vector3(b_pos.x, b_pos.y, 0.003)
+		bolt.height = 0.008
+		bolt.position = Vector3(b_pos.x, b_pos.y, -0.001)
 		bolt.rotation_degrees = Vector3(90.0, 0.0, 0.0)
 		if mat_bolt:
 			bolt.material = mat_bolt
