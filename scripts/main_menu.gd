@@ -416,7 +416,7 @@ func _populate_controls_modal(panel: PanelContainer) -> void:
 	_add_step_row(content, "2.", "Al terminar el 4to examen, saltarán los disyuntores y se cortará la luz.")
 	_add_step_row(content, "3.", "Subí al Piso 1 (P1) hacia Bedelía a recuperar el Fusible de Alta Tensión.")
 	_add_step_row(content, "4.", "Bajá al Depto. de Electrónica (PB Oeste) y colocá el fusible en el tablero.")
-	_add_step_row(content, "5.", "¡Esquivá al Profesor! Escapá del laboratorio y buscá la Llave del Auditorio en PB.")
+	_add_step_row(content, "5.", "¡Esquivá al Profesor! Escapá del laboratorio y buscá la Llave del Auditorio en el 2do Piso.")
 	_add_step_row(content, "6.", "Abrí el Auditorio, retirá tu Título Universitario del estrado y escapá por la Salida Principal.")
 	
 	var btn_close = _create_menu_button("◀  VOLVER AL MENÚ")

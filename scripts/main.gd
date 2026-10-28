@@ -632,7 +632,7 @@ func _check_lab_exit(delta: float) -> void:
 	if has_exited:
 		is_waiting_for_lab_exit = false
 		if hud and hud.has_method("set_objective_text"):
-			hud.set_objective_text("NUEVO OBJETIVO: ¡Luz restablecida! Buscá la Llave del Auditorio en Planta Baja")
+			hud.set_objective_text("NUEVO OBJETIVO: ¡Luz restablecida! Buscá la Llave del Auditorio en el 2do Piso (Cafetería)")
 		print(">>> Jugador salió del Laboratorio de Electrónica -> Objetivo de la Llave del Auditorio mostrado")
 
 func _trigger_hallway_dash_scare() -> void:

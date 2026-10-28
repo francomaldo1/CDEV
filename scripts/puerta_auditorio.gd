@@ -15,7 +15,8 @@ signal auditorium_opened
 	"Aud_Puerta2_ManijonR",
 ]
 
-@onready var prompt_label: Label3D = $PromptLabel
+@onready var cadenas: Node3D = get_node_or_null("CadenasAuditorio")
+@onready var audio_unlock: AudioStreamPlayer3D = get_node_or_null("AudioUnlock")
 
 var is_player_nearby: bool = false
 var player_ref: CharacterBody3D = null
@@ -53,10 +54,16 @@ func _open() -> void:
 				node.queue_free()
 			else:
 				push_warning("PuertaAuditorio: no se encontró el nodo " + n)
-	if prompt_label:
-		prompt_label.visible = false
+	if audio_unlock:
+		audio_unlock.play()
+	if cadenas:
+		var tween = create_tween()
+		tween.set_parallel(true)
+		tween.tween_property(cadenas, "position:y", cadenas.position.y - 0.5, 0.4).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
+		tween.tween_property(cadenas, "scale", Vector3(0.01, 0.01, 0.01), 0.4)
+		tween.chain().tween_callback(cadenas.queue_free)
 	auditorium_opened.emit()
-	print(">>> ¡AUDITORIO ABIERTO!")
+	print(">>> ¡AUDITORIO ABIERTO! Cadenas retiradas.")
 
 func _on_body_entered(body: Node3D) -> void:
 	if is_open:
