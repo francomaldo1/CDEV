@@ -1,4 +1,4 @@
-extends Area3D
+﻿extends Area3D
 class_name PuertaAuditorio
 
 ## Puerta central del auditorio (planta baja). Se abre solo con la llave del auditorio.
@@ -37,18 +37,17 @@ func _build_3d_chains() -> void:
 	var mm = MultiMesh.new()
 	mm.transform_format = MultiMesh.TRANSFORM_3D
 	
-	var torus = TorusMesh.new()
-	torus.inner_radius = 0.024
-	torus.outer_radius = 0.052
-	torus.rings = 14
-	torus.ring_segments = 8
-	if ResourceLoader.exists("res://materials/mat_bench_metal.tres"):
-		torus.material = load("res://materials/mat_bench_metal.tres")
-	mm.mesh = torus
+	var mat: Material = null
+	if ResourceLoader.exists("res://materials/mat_chain_metal.tres"):
+		mat = load("res://materials/mat_chain_metal.tres")
+	elif ResourceLoader.exists("res://materials/mat_bench_metal.tres"):
+		mat = load("res://materials/mat_bench_metal.tres")
+		
+	mm.mesh = _create_oval_chain_link_mesh(mat)
 	
 	var transforms: Array[Transform3D] = []
 	
-	# Segmentos de cadenas estilo Silent Hill 4
+	# Segmentos de cadenas estilo Silent Hill 4 con eslabones ovalados interconectados
 	# Horizontales
 	_add_chain_segment(transforms, Vector3(-1.62, 0.45, 0.93), Vector3(1.62, 0.45, 0.93), 0.035)
 	_add_chain_segment(transforms, Vector3(-1.62, 0.0, 0.93), Vector3(1.62, 0.0, 0.93), 0.045)
@@ -74,7 +73,94 @@ func _build_3d_chains() -> void:
 	mm_instance.multimesh = mm
 	cadenas.add_child(mm_instance)
 
-func _add_chain_segment(transforms: Array[Transform3D], p_start: Vector3, p_end: Vector3, max_sag: float = 0.04, step: float = 0.062) -> void:
+## Genera un eslabón ovalado auténtico (forma stadium: lados rectos paralelos y extremos semicirculares)
+func _create_oval_chain_link_mesh(material: Material) -> ArrayMesh:
+	var st = SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	
+	var l_straight: float = 0.038
+	var r_curve: float = 0.022
+	var r_wire: float = 0.0075
+	
+	var spine_points: Array[Vector3] = []
+	var spine_tangents: Array[Vector3] = []
+	var spine_normals: Array[Vector3] = []
+	
+	var n_straight: int = 4
+	var n_curve: int = 10
+	
+	# 1. Tramo recto lateral 1 (+X, recorriendo de -l/2 a +l/2)
+	for i in range(n_straight):
+		var t = float(i) / float(n_straight)
+		var z = -l_straight * 0.5 + t * l_straight
+		spine_points.append(Vector3(r_curve, 0.0, z))
+		spine_tangents.append(Vector3(0.0, 0.0, 1.0))
+		spine_normals.append(Vector3(1.0, 0.0, 0.0))
+		
+	# 2. Semicírculo frontal (+Z, theta de 0 a PI)
+	for i in range(n_curve):
+		var theta = float(i) / float(n_curve) * PI
+		var x = r_curve * cos(theta)
+		var z = l_straight * 0.5 + r_curve * sin(theta)
+		spine_points.append(Vector3(x, 0.0, z))
+		spine_tangents.append(Vector3(-sin(theta), 0.0, cos(theta)).normalized())
+		spine_normals.append(Vector3(cos(theta), 0.0, sin(theta)).normalized())
+		
+	# 3. Tramo recto lateral 2 (-X, recorriendo de +l/2 a -l/2)
+	for i in range(n_straight):
+		var t = float(i) / float(n_straight)
+		var z = l_straight * 0.5 - t * l_straight
+		spine_points.append(Vector3(-r_curve, 0.0, z))
+		spine_tangents.append(Vector3(0.0, 0.0, -1.0))
+		spine_normals.append(Vector3(-1.0, 0.0, 0.0))
+		
+	# 4. Semicírculo posterior (-Z, theta de PI a 2*PI)
+	for i in range(n_curve):
+		var theta = PI + float(i) / float(n_curve) * PI
+		var x = r_curve * cos(theta)
+		var z = -l_straight * 0.5 + r_curve * sin(theta)
+		spine_points.append(Vector3(x, 0.0, z))
+		spine_tangents.append(Vector3(-sin(theta), 0.0, cos(theta)).normalized())
+		spine_normals.append(Vector3(cos(theta), 0.0, sin(theta)).normalized())
+		
+	var n_spine = spine_points.size()
+	var n_ring: int = 8
+	
+	for k in range(n_spine):
+		var pos = spine_points[k]
+		var tang = spine_tangents[k]
+		var norm = spine_normals[k]
+		var binorm = tang.cross(norm).normalized()
+		
+		for j in range(n_ring):
+			var phi = float(j) / float(n_ring) * TAU
+			var dir_out = (norm * cos(phi) + binorm * sin(phi)).normalized()
+			var vpos = pos + dir_out * r_wire
+			var uv = Vector2(float(k) / float(n_spine) * 4.0, float(j) / float(n_ring))
+			st.set_normal(dir_out)
+			st.set_uv(uv)
+			st.add_vertex(vpos)
+			
+	for k in range(n_spine):
+		var next_k = (k + 1) % n_spine
+		for j in range(n_ring):
+			var next_j = (j + 1) % n_ring
+			var v0 = k * n_ring + j
+			var v1 = k * n_ring + next_j
+			var v2 = next_k * n_ring + next_j
+			var v3 = next_k * n_ring + j
+			st.add_index(v0)
+			st.add_index(v1)
+			st.add_index(v2)
+			st.add_index(v0)
+			st.add_index(v2)
+			st.add_index(v3)
+			
+	if material:
+		st.set_material(material)
+	return st.commit()
+
+func _add_chain_segment(transforms: Array[Transform3D], p_start: Vector3, p_end: Vector3, max_sag: float = 0.04, step: float = 0.052) -> void:
 	var total_dist = p_start.distance_to(p_end)
 	if total_dist < step:
 		return
@@ -95,9 +181,7 @@ func _add_chain_segment(transforms: Array[Transform3D], p_start: Vector3, p_end:
 			
 		var twist_angle = 0.0 if (i % 2 == 0) else (PI * 0.5)
 		var rot_basis = Basis(dir, twist_angle) * Basis(right, up, dir)
-		var link_basis = rot_basis.scaled(Vector3(1.0, 1.0, 1.4))
-		
-		transforms.append(Transform3D(link_basis, pos))
+		transforms.append(Transform3D(rot_basis, pos))
 
 func _process(_delta: float) -> void:
 	if is_open or not is_player_nearby:
@@ -149,10 +233,10 @@ func _on_body_entered(body: Node3D) -> void:
 			if hud.has_auditorium_key:
 				hud.set_interact_prompt("[E] Abrir Auditorio con la llave")
 			else:
-				hud.set_interact_prompt("[E] Auditorio cerrado (requiere llave)")
+				hud.set_interact_prompt("Auditorio cerrado con cadenas y candados")
 
 func _on_body_exited(body: Node3D) -> void:
-	if body == player_ref:
+	if body is Player or body.is_in_group("player") or body.name == "Player":
 		is_player_nearby = false
 		player_ref = null
 		var hud = get_tree().root.find_child("HUD", true, false)

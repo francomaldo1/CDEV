@@ -180,15 +180,16 @@ func _setup_camcorder_overlay() -> void:
 	cam_hud.add_child(timecode_label)
 
 func _setup_main_menu_content() -> void:
+	# Centrado exacto respecto a la banda negra izquierda (scrim ancho 580px, centro en X = 290px)
+	var scrim_w = 580.0
+	var box_w = 440.0
+	var box_x = (scrim_w - box_w) / 2.0 # 70.0 px de margen simétrico
+	
 	var main_box = VBoxContainer.new()
 	main_box.name = "MainMenuContent"
-	main_box.set_anchors_preset(Control.PRESET_CENTER)
-	main_box.custom_minimum_size = Vector2(480, 520)
-	main_box.offset_left = -240.0
-	main_box.offset_right = 240.0
-	main_box.offset_top = -220.0
-	main_box.offset_bottom = 300.0
-	main_box.add_theme_constant_override("separation", 22)
+	main_box.position = Vector2(box_x, 100.0)
+	main_box.custom_minimum_size = Vector2(box_w, 520.0)
+	main_box.add_theme_constant_override("separation", 20)
 	add_child(main_box)
 	
 	# Encabezado con Logo y Título
@@ -211,7 +212,7 @@ func _setup_main_menu_content() -> void:
 	var main_title = Label.new()
 	main_title.text = "UTN FRC: NOCHE DE FINALES"
 	main_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	main_title.add_theme_font_size_override("font_size", 32)
+	main_title.add_theme_font_size_override("font_size", 28)
 	main_title.add_theme_color_override("font_color", Color(0.98, 0.98, 1.0, 0.95))
 	main_title.add_theme_constant_override("outline_size", 4)
 	main_title.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.95))
@@ -221,7 +222,7 @@ func _setup_main_menu_content() -> void:
 	
 	# Separador estilizado
 	var sep = HSeparator.new()
-	sep.custom_minimum_size = Vector2(400, 10)
+	sep.custom_minimum_size = Vector2(360, 10)
 	sep.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	var sep_style = StyleBoxLine.new()
 	sep_style.color = Color(0.3, 0.35, 0.45, 0.4)
