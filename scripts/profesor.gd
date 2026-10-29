@@ -293,7 +293,18 @@ func set_active(active: bool) -> void:
 	is_active = active
 	visible = active
 	process_mode = Node.PROCESS_MODE_INHERIT if active else Node.PROCESS_MODE_DISABLED
-	if active and is_inside_tree():
+	if not active:
+		velocity = Vector3.ZERO
+		if step_audio:
+			step_audio.stop()
+		if slam_audio:
+			slam_audio.stop()
+		_cut_screamer_audio()
+		for ch in find_children("*", "AudioStreamPlayer3D", true, false):
+			(ch as AudioStreamPlayer3D).stop()
+		for ch in find_children("*", "AudioStreamPlayer", true, false):
+			(ch as AudioStreamPlayer).stop()
+	elif active and is_inside_tree():
 		velocity = Vector3.ZERO
 		current_state = State.PATROL
 		current_speed = patrol_speed

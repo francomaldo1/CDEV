@@ -82,6 +82,18 @@ func _try_open_door() -> void:
 			hud.show_temporary_alert("🔒 ¡PUERTA BLOQUEADA! Sin el TÍTULO no salís. Buscalo en el atril del AUDITORIO.", Color(1.0, 0.3, 0.3))
 
 func _trigger_cinematic_fade_to_black() -> void:
+	# 0. Desactivar y silenciar por completo al profesor y la música de persecución
+	var prof = get_tree().root.find_child("Profesor", true, false)
+	if prof:
+		if prof.has_method("set_active"):
+			prof.set_active(false)
+		prof.visible = false
+		prof.velocity = Vector3.ZERO
+		prof.process_mode = Node.PROCESS_MODE_DISABLED
+		
+	if is_instance_valid(player_ref) and player_ref.has_method("stop_chase_violins"):
+		player_ref.stop_chase_violins(0.1)
+
 	var hud = get_tree().root.find_child("HUD", true, false)
 	if hud:
 		hud.set_interact_prompt("")
