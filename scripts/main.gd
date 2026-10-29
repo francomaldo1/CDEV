@@ -309,32 +309,34 @@ func _setup_p2_safe_and_chalkboards() -> void:
 	# Aula Oeste 201: P2_PizW1 -> [ d0 - X - X ]
 	var piz_w = find_child("P2_PizW1", true, false)
 	if piz_w:
-		_add_chalk_clue_to_blackboard(piz_w, "CÓDIGO BUFET\n[ %d - X - X ]" % d0)
+		_add_chalk_clue_to_blackboard(piz_w, "[ %d - X - X ]" % d0)
 		
 	# Aula Magna 210: P2_Piz210 -> [ X - d1 - X ]
 	var piz_210 = find_child("P2_Piz210", true, false)
 	if piz_210:
-		_add_chalk_clue_to_blackboard(piz_210, "CÓDIGO BUFET\n[ X - %d - X ]" % d1)
+		_add_chalk_clue_to_blackboard(piz_210, "[ X - %d - X ]" % d1)
 		
 	# Aula Este 216: P2_PizE1 -> [ X - X - d2 ]
 	var piz_e = find_child("P2_PizE1", true, false)
 	if piz_e:
-		_add_chalk_clue_to_blackboard(piz_e, "CÓDIGO BUFET\n[ X - X - %d ]" % d2)
+		_add_chalk_clue_to_blackboard(piz_e, "[ X - X - %d ]" % d2)
 
 func _add_chalk_clue_to_blackboard(blackboard: Node3D, clue_text: String) -> void:
 	var lbl = Label3D.new()
 	lbl.name = "ChalkClue"
-	lbl.position = Vector3(0.0, 0.05, 0.08)
-	lbl.pixel_size = 0.0034
-	lbl.modulate = Color(0.92, 0.95, 0.98, 0.90) # Tiza blanca suave
+	lbl.position = Vector3(0.0, 0.02, 0.08)
+	lbl.font = load("res://fonts/typewriter.ttf")
+	lbl.font_size = 56
+	lbl.pixel_size = 0.0035
+	lbl.modulate = Color(0.88, 0.90, 0.88, 0.82) # Tiza blanca suave y opaca
 	lbl.text = clue_text
-	lbl.font_size = 46
-	lbl.outline_size = 3
-	lbl.outline_modulate = Color(0.18, 0.22, 0.22, 0.6)
+	lbl.outline_size = 1
+	lbl.outline_modulate = Color(0.82, 0.85, 0.82, 0.22) # Halo tenue de polvillo de tiza
 	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	lbl.shaded = false
+	lbl.shaded = true # Reacciona naturalmente a la luz de la linterna y oscuridad
 	lbl.double_sided = false
+	lbl.alpha_cut = Label3D.ALPHA_CUT_DISCARD
 	blackboard.add_child(lbl)
 
 func _spawn_p1_fuse_guide() -> void:
