@@ -94,6 +94,8 @@ func _trigger_cinematic_fade_to_black() -> void:
 		
 	var canvas = CanvasLayer.new()
 	canvas.layer = 200
+	
+	# 1. Fondo 100% negro puro para el fade out
 	var black_rect = ColorRect.new()
 	black_rect.name = "EscapeFadeRect"
 	black_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -101,21 +103,53 @@ func _trigger_cinematic_fade_to_black() -> void:
 	black_rect.modulate.a = 0.0
 	black_rect.mouse_filter = Control.MOUSE_FILTER_STOP
 	canvas.add_child(black_rect)
-	get_tree().root.add_child(canvas)
+	
+	# 2. Texto cinemático de victoria "LOGRASTE ESCAPAR"
+	var escape_label = Label.new()
+	escape_label.name = "EscapeLabel"
+	escape_label.text = "LOGRASTE ESCAPAR"
+	escape_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	escape_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	escape_label.set_anchors_preset(Control.PRESET_CENTER)
+	escape_label.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	escape_label.grow_vertical = Control.GROW_DIRECTION_BOTH
+	escape_label.modulate.a = 0.0 # Comienza invisible hasta que la pantalla esté en negro
+	
+	if ResourceLoader.exists("res://fonts/typewriter.ttf"):
+		escape_label.add_theme_font_override("font", load("res://fonts/typewriter.ttf"))
+	escape_label.add_theme_font_size_override("font_size", 44)
+	escape_label.add_theme_color_override("font_color", Color(0.92, 0.94, 0.96, 1.0))
+	escape_label.add_theme_color_override("font_shadow_color", Color(0.0, 0.0, 0.0, 0.9))
+	escape_label.add_theme_constant_override("shadow_offset_x", 2)
+	escape_label.add_theme_constant_override("shadow_offset_y", 2)
+	canvas.add_child(escape_label)
+	get_tree().root.add_child.call_deferred(canvas)
 	
 	if is_instance_valid(player_ref) and "can_move" in player_ref:
 		player_ref.can_move = false
 		
-	var fade_tw = create_tween()
-	fade_tw.tween_property(black_rect, "modulate:a", 1.0, 2.2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
-	
 	var master_bus = AudioServer.get_bus_index("Master")
 	if master_bus != -1:
 		var current_vol = AudioServer.get_bus_volume_db(master_bus)
 		var audio_tw = create_tween()
-		audio_tw.tween_method(func(v: float): AudioServer.set_bus_volume_db(master_bus, v), current_vol, -60.0, 2.0)
+		audio_tw.tween_method(func(v: float): AudioServer.set_bus_volume_db(master_bus, v), current_vol, -60.0, 1.8)
 		
-	fade_tw.tween_interval(2.0)
+	# Secuencia de animación cinemática:
+	# A) Fade a negro de la escena (1.8s)
+	var fade_tw = create_tween()
+	fade_tw.tween_property(black_rect, "modulate:a", 1.0, 1.8).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	
+	# B) Fade in del mensaje "LOGRASTE ESCAPAR" una vez en negro (1.2s)
+	fade_tw.tween_property(escape_label, "modulate:a", 1.0, 1.2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	
+	# C) Mantener en pantalla durante 3 segundos
+	fade_tw.tween_interval(3.0)
+	
+	# D) Segundo fade: Fade out del texto hacia negro absoluto (1.0s)
+	fade_tw.tween_property(escape_label, "modulate:a", 0.0, 1.0).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	fade_tw.tween_interval(0.5)
+	
+	# E) Transición limpia al menú principal
 	fade_tw.tween_callback(func():
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		if master_bus != -1:
