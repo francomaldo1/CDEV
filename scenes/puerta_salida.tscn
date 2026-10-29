@@ -232,7 +232,7 @@ double_sided = false
 shaded = true
 
 [node name="TextoFirma" type="Label3D" parent="Visuals/HojaDer" unique_id=9831003]
-transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -0.7, 1.14, -0.046)
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -0.7, 1.13, -0.046)
 pixel_size = 0.002
 modulate = Color(0.08, 0.08, 0.08, 1)
 text = "AUTORIDADES FRC"

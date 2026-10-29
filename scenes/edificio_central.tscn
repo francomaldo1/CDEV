@@ -1,4 +1,4 @@
-﻿[gd_scene format=4 uid="uid://d1eynjjox8ec"]
+[gd_scene format=4 uid="uid://d1eynjjox8ec"]
 
 [ext_resource type="Material" path="res://materials/mat_floor_granito.tres" id="1_2hdtu"]
 [ext_resource type="Material" path="res://materials/mat_patio.tres" id="2_pu2gp"]
@@ -32,6 +32,8 @@
 [ext_resource type="PackedScene" path="res://scenes/aula_pupitre.tscn" id="31_pupitre"]
 [ext_resource type="PackedScene" path="res://scenes/aula_pizarron.tscn" id="32_pizarron"]
 [ext_resource type="PackedScene" path="res://scenes/commercial_drink_fridge.tscn" id="33_drink_fridge"]
+[ext_resource type="PackedScene" path="res://scenes/auto_suv.tscn" id="34_auto_suv"]
+[ext_resource type="PackedScene" path="res://scenes/auto_suspicious.tscn" id="35_auto_suspicious"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_nwxjt"]
 _surfaces = [{
@@ -502,42 +504,42 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.5, 0, -37.8)
 
 [node name="CartelN1" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=1364649239]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -49.5, 2.15, -32.84)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 101"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="CartelN2" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=1080808390]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.5, 2.15, -32.84)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 102"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="CartelN3" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=2025261282]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 2.15, -32.84)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 103"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="CartelN4" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=1378147422]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.5, 2.15, -32.84)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 104"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="AulaW1_Este_F" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1661430058]
@@ -758,42 +760,42 @@ transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 0, 20.4)
 
 [node name="CartelW1" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=673107816]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -46.83, 2.15, -23.0)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 105"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="CartelW2" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=1527013993]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -46.83, 2.15, -9.0)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 106"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="CartelW3" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=1530679552]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -46.83, 2.15, 5.5)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 107"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="CartelW4" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=563844637]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -46.83, 2.15, 20.5)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 108"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="BloqueWI_Norte" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=303529623]
@@ -867,12 +869,12 @@ transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 0, -13.6)
 
 [node name="CartelWI1" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=1963864206]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -37.17, 2.15, -14.0)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 109"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="Lab_Oeste_F" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=185162271]
@@ -900,15 +902,15 @@ size = Vector3(0.08, 2.2, 5)
 material = ExtResource("5_68yaw")
 
 [node name="CartelLabOficial" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=254501636]
-transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -37.17, 2.15, -1.5)
-modulate = Color(0.85, 0.88, 0.92, 1)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -37.3, 2.2, -4.5)
+modulate = Color(1, 1, 1, 1)
 text = "LABORATORIO CENTRAL
 DEPARTAMENTO
 INGENIERÍA ELECTRÓNICA"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="MesadaLab_0" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1363707429]
@@ -979,12 +981,12 @@ transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 0, 21.4)
 
 [node name="CartelWI2" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=737835908]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -37.17, 2.15, 15.0)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 110"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="BloqueEI_Norte" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=515037942]
@@ -1058,12 +1060,12 @@ transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 0, -13.6)
 
 [node name="CartelEI1" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=311098536]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 37.17, 2.15, -14.0)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 111"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="AulaEI2_Este_F" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=929343910]
@@ -1119,12 +1121,12 @@ transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 0, 2.4)
 
 [node name="CartelEI2" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=1980685760]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 37.17, 2.15, 3.5)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 112"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="AulaEI3_Este_F" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1680706358]
@@ -1174,12 +1176,12 @@ transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 0, 18.4)
 
 [node name="CartelEI3" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=1487175149]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 37.17, 2.15, 21.0)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 113"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="AulaE1_Oeste_F" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1684146918]
@@ -1283,12 +1285,12 @@ transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 0, -18.6)
 
 [node name="CartelE1" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=522957053]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 46.83, 2.15, -27.0)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 114"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="Cafe_Oeste_F" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=2109783227]
@@ -2348,12 +2350,12 @@ omni_range = 10.0
 
 [node name="CartelCafe" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=1587177937]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 46.83, 2.15, -5.2)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "CAFETERÍA"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="AulaE2_Oeste_F" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=526246925]
@@ -2409,12 +2411,12 @@ transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 0, 20.4)
 
 [node name="CartelE2" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=2011378913]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 46.83, 2.15, 20.0)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 115"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="FotoO_Norte_L" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=773060415]
@@ -2455,12 +2457,12 @@ material = ExtResource("7_oluwi")
 
 [node name="CartelFotoO" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=1679944869]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -17.0, 2.15, 34.84)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "FOTOCOPIADORA 1"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="FotoE_Norte_L" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1987202399]
@@ -2501,12 +2503,12 @@ material = ExtResource("7_oluwi")
 
 [node name="CartelFotoE" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=1124235771]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 23.0, 2.15, 34.84)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "FOTOCOPIADORA 2"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="Aud_ZocaloBase" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=980001]
@@ -2863,14 +2865,14 @@ size = Vector3(3.6, 0.88, 0.04)
 material = ExtResource("5_68yaw")
 
 [node name="CartelAudEntrada" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=939616532]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 2.15, 25.16)
-modulate = Color(0.85, 0.88, 0.92, 1)
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 3.95, 34.78)
+modulate = Color(1, 1, 1, 1)
 text = "AUDITORIO CENTRAL"
 font_size = 44
-outline_size = 2
+outline_size = 5
 metadata/_edit_group_ = true
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="PrimerPiso" type="Node3D" parent="." unique_id=1653019584]
@@ -3910,22 +3912,22 @@ material = ExtResource("4_0kga5")
 
 [node name="CartelBedelia" type="Label3D" parent="PrimerPiso/OficinasP1" unique_id=502832218]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37.0, 6.65, -32.84)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "BEDELÍA GENERAL"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="CartelDireccion" type="Label3D" parent="PrimerPiso/OficinasP1" unique_id=274687750]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0, 6.65, -32.84)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "DIRECCIÓN DEPARTAMENTAL"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="P1_Sistemas_Este_F" type="CSGBox3D" parent="PrimerPiso/OficinasP1" unique_id=511118115]
@@ -3978,22 +3980,22 @@ material = ExtResource("4_0kga5")
 
 [node name="CartelSistemas" type="Label3D" parent="PrimerPiso/OficinasP1" unique_id=583866495]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -46.83, 6.65, -16.0)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "DEPTO. ING. EN SISTEMAS"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="CartelDeptoElec" type="Label3D" parent="PrimerPiso/OficinasP1" unique_id=568587588]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -46.83, 6.65, 13.0)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "DEPTO. ING. ELECTRÓNICA"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="P1_CETRA_Oeste_F" type="CSGBox3D" parent="PrimerPiso/OficinasP1" unique_id=1168312267]
@@ -4046,22 +4048,22 @@ material = ExtResource("4_0kga5")
 
 [node name="CartelCETRA" type="Label3D" parent="PrimerPiso/OficinasP1" unique_id=1703765751]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 46.83, 6.65, -24.5)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "CETRA (TRÁMITES)"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="CartelBiblio" type="Label3D" parent="PrimerPiso/OficinasP1" unique_id=1627306111]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 46.83, 6.65, 10.5)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "BIBLIOTECA CENTRAL"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="SegundoPiso" type="Node3D" parent="." unique_id=1386208084]
@@ -4406,42 +4408,42 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.5, 9, -37.8)
 
 [node name="P2_CartelN1" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=930347462]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -49.5, 11.15, -32.84)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 201"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="P2_CartelN2" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=607472082]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.5, 11.15, -32.84)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 202"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="P2_CartelN3" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1341745902]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 11.15, -32.84)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 203"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="P2_CartelN4" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=464825755]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.5, 11.15, -32.84)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 204"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="P2_AulaW1_Este_F" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=103871910]
@@ -4662,42 +4664,42 @@ transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 9, 20.4)
 
 [node name="P2_CartelW1" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2141046590]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -46.83, 11.15, -23.0)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 205"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="P2_CartelW2" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1832643124]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -46.83, 11.15, -9.0)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 206"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="P2_CartelW3" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=759002997]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -46.83, 11.15, 5.5)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 207"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="P2_CartelW4" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=585389521]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -46.83, 11.15, 20.5)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 208"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="P2_BloqueWI_Norte" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1559363433]
@@ -4771,12 +4773,12 @@ transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 9, -13.6)
 
 [node name="P2_CartelWI1" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1445370967]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -37.17, 11.15, -14.0)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 209"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="P2_Aula210_Oeste_F" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1738076687]
@@ -4853,12 +4855,12 @@ transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 9, 6.8)
 
 [node name="P2_Cartel210" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2000244830]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -37.17, 11.15, 3.5)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 210 (MAGNA)"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="P2_AulaWI2_Oeste_F" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1056908651]
@@ -4908,12 +4910,12 @@ transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 9, 21.4)
 
 [node name="P2_CartelWI2" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1988506699]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -37.17, 11.15, 15.0)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 211"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="P2_BloqueEI_Norte" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=836973512]
@@ -4987,12 +4989,12 @@ transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 9, -13.6)
 
 [node name="P2_CartelEI1" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1359062122]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 37.17, 11.15, -14.0)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 212"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="P2_AulaEI2_Este_F" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=608322139]
@@ -5048,12 +5050,12 @@ transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 9, 2.4)
 
 [node name="P2_CartelEI2" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=921895025]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 37.17, 11.15, 3.5)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 213"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="P2_AulaEI3_Este_F" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=287616990]
@@ -5103,12 +5105,12 @@ transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 9, 18.4)
 
 [node name="P2_CartelEI3" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=491143860]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 37.17, 11.15, 21.0)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 214"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="P2_AulaE1_Oeste_F" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=45887338]
@@ -5212,12 +5214,12 @@ transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9, -18.6)
 
 [node name="P2_CartelE1" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1595651857]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 46.83, 11.15, -27.0)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 215"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="P2_AulaE2_Oeste_F" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1684144666]
@@ -5303,12 +5305,12 @@ transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9, 5)
 
 [node name="P2_CartelE2" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1654052261]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 46.83, 11.15, -5.2)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 216"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="P2_AulaE3_Oeste_F" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1239467232]
@@ -5367,12 +5369,12 @@ transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9, 20.4)
 
 [node name="P2_CartelE3" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1165130565]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 46.83, 11.15, 20.0)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 217"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="P2_SalasO_Norte_L" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1218112198]
@@ -5431,12 +5433,12 @@ transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -22.5, 9, 39)
 
 [node name="P2_CartelSO" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=893475807]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -33.0, 11.15, 34.84)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 218"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="P2_SalasE_Norte_L" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=884275788]
@@ -5486,12 +5488,12 @@ transform = Transform3D(-2.0000002, 0, -1.7484557e-07, 0, 2, 0, 1.7484557e-07, 0
 
 [node name="P2_CartelSE" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=641378739]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 33.0, 11.15, 34.84)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 219"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="CafeteriaP2" type="Node3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=855030323]
@@ -5504,13 +5506,13 @@ material = ExtResource("4_0kga5")
 
 [node name="CartelEntradaCafe" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria/CafeteriaP2" unique_id=1567671210]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 13.1, 34.91)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "CAFETERÍA Y COMEDOR
 PISO 2"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="CafeParedO" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria/CafeteriaP2" unique_id=719710771]
@@ -5575,13 +5577,13 @@ material = ExtResource("9_t4cw7")
 
 [node name="CartelMonumento" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria/CafeteriaP2" unique_id=1744917134]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.85, 58.22)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "AETI
 UTN"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="BancoNorte" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria/CafeteriaP2" unique_id=1514950839]
@@ -6498,12 +6500,12 @@ material = ExtResource("5_68yaw")
 
 [node name="CartelBufet" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria/CafeteriaP2" unique_id=645449573]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 11.8, 80.8)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "BAR Y COMEDOR - RETIRO DE BANDEJAS"
 font_size = 42
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="LuzCafeP2_-12_44" type="OmniLight3D" parent="SegundoPiso/Piso2_AulasYCafeteria/CafeteriaP2" unique_id=68466299]
@@ -7042,20 +7044,20 @@ mesh = SubResource("ArrayMesh_nwxjt")
 
 [node name="CartelPatioEntrada" type="Label3D" parent="PatioEstudiante" unique_id=1156114551]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.8, 22.3)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "PATIO DEL ESTUDIANTE"
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="CartelPatioEntradaRev" type="Label3D" parent="PatioEstudiante" unique_id=1635500870]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 3.8, 21.7)
-modulate = Color(0.85, 0.88, 0.92, 1)
+modulate = Color(1, 1, 1, 1)
 text = "PATIO DEL ESTUDIANTE"
-outline_size = 2
+outline_size = 5
 
-shaded = true
+shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="BancoPatio_NO_Asiento" type="CSGBox3D" parent="PatioEstudiante" unique_id=1794454957]
@@ -12181,152 +12183,11 @@ light_energy = 3.5
 spot_range = 28.0
 spot_angle = 55.0
 
-[node name="AutoBlanco" type="Node3D" parent="ExteriorEntrada" unique_id=982040]
+[node name="AutoSUV_1" parent="ExteriorEntrada" unique_id=982040 instance=ExtResource("34_auto_suv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -64.5, 0, 54.5)
 
-[node name="Chasis" type="CSGBox3D" parent="ExteriorEntrada/AutoBlanco" unique_id=982041]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0)
-use_collision = true
-size = Vector3(2, 0.55, 4.4)
-material = ExtResource("23_alum")
-
-[node name="Cabina" type="CSGBox3D" parent="ExteriorEntrada/AutoBlanco" unique_id=982042]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, -0.2)
-use_collision = true
-size = Vector3(1.75, 0.65, 2.2)
-material = ExtResource("23_alum")
-
-[node name="Vidrios" type="CSGBox3D" parent="ExteriorEntrada/AutoBlanco" unique_id=982043]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, -0.2)
-size = Vector3(1.78, 0.6, 2.15)
-material = ExtResource("5_68yaw")
-
-[node name="RuedaFL" type="CSGBox3D" parent="ExteriorEntrada/AutoBlanco" unique_id=982044]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.32, -1.3)
-size = Vector3(0.25, 0.64, 0.64)
-material = ExtResource("26_zocalo")
-
-[node name="RuedaFR" type="CSGBox3D" parent="ExteriorEntrada/AutoBlanco" unique_id=982045]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.32, -1.3)
-size = Vector3(0.25, 0.64, 0.64)
-material = ExtResource("26_zocalo")
-
-[node name="RuedaRL" type="CSGBox3D" parent="ExteriorEntrada/AutoBlanco" unique_id=982046]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.32, 1.3)
-size = Vector3(0.25, 0.64, 0.64)
-material = ExtResource("26_zocalo")
-
-[node name="RuedaRR" type="CSGBox3D" parent="ExteriorEntrada/AutoBlanco" unique_id=982047]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.32, 1.3)
-size = Vector3(0.25, 0.64, 0.64)
-material = ExtResource("26_zocalo")
-
-[node name="LucesFrente" type="CSGBox3D" parent="ExteriorEntrada/AutoBlanco" unique_id=982048]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -2.21)
-size = Vector3(1.6, 0.16, 0.05)
-material = ExtResource("12_uwdqk")
-
-[node name="LucesAtras" type="CSGBox3D" parent="ExteriorEntrada/AutoBlanco" unique_id=982049]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 2.21)
-size = Vector3(1.6, 0.16, 0.05)
-material = ExtResource("10_teuvw")
-
-[node name="AutoAzul" type="Node3D" parent="ExteriorEntrada" unique_id=982050]
+[node name="AutoSuspicious" parent="ExteriorEntrada" unique_id=982050 instance=ExtResource("35_auto_suspicious")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -58.5, 0, 54.5)
 
-[node name="ChasisAzul" type="CSGBox3D" parent="ExteriorEntrada/AutoAzul" unique_id=982051]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0)
-use_collision = true
-size = Vector3(2, 0.55, 4.4)
-material = ExtResource("9_t4cw7")
-
-[node name="CabinaAzul" type="CSGBox3D" parent="ExteriorEntrada/AutoAzul" unique_id=982052]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, -0.2)
-use_collision = true
-size = Vector3(1.75, 0.65, 2.2)
-material = ExtResource("9_t4cw7")
-
-[node name="VidriosAzul" type="CSGBox3D" parent="ExteriorEntrada/AutoAzul" unique_id=982053]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, -0.2)
-size = Vector3(1.78, 0.6, 2.15)
-material = ExtResource("5_68yaw")
-
-[node name="RuedaFL_A" type="CSGBox3D" parent="ExteriorEntrada/AutoAzul" unique_id=982054]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.32, -1.3)
-size = Vector3(0.25, 0.64, 0.64)
-material = ExtResource("26_zocalo")
-
-[node name="RuedaFR_A" type="CSGBox3D" parent="ExteriorEntrada/AutoAzul" unique_id=982055]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.32, -1.3)
-size = Vector3(0.25, 0.64, 0.64)
-material = ExtResource("26_zocalo")
-
-[node name="RuedaRL_A" type="CSGBox3D" parent="ExteriorEntrada/AutoAzul" unique_id=982056]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.32, 1.3)
-size = Vector3(0.25, 0.64, 0.64)
-material = ExtResource("26_zocalo")
-
-[node name="RuedaRR_A" type="CSGBox3D" parent="ExteriorEntrada/AutoAzul" unique_id=982057]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.32, 1.3)
-size = Vector3(0.25, 0.64, 0.64)
-material = ExtResource("26_zocalo")
-
-[node name="LucesFrente_A" type="CSGBox3D" parent="ExteriorEntrada/AutoAzul" unique_id=982058]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -2.21)
-size = Vector3(1.6, 0.16, 0.05)
-material = ExtResource("12_uwdqk")
-
-[node name="LucesAtras_A" type="CSGBox3D" parent="ExteriorEntrada/AutoAzul" unique_id=982059]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 2.21)
-size = Vector3(1.6, 0.16, 0.05)
-material = ExtResource("10_teuvw")
-
-[node name="AutoGris" type="Node3D" parent="ExteriorEntrada" unique_id=982060]
+[node name="AutoSUV_2" parent="ExteriorEntrada" unique_id=982060 instance=ExtResource("34_auto_suv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 0, 54.5)
-
-[node name="ChasisGris" type="CSGBox3D" parent="ExteriorEntrada/AutoGris" unique_id=982061]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0)
-use_collision = true
-size = Vector3(2, 0.55, 4.4)
-material = ExtResource("16_bm001")
-
-[node name="CabinaGris" type="CSGBox3D" parent="ExteriorEntrada/AutoGris" unique_id=982062]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, -0.2)
-use_collision = true
-size = Vector3(1.75, 0.65, 2.2)
-material = ExtResource("16_bm001")
-
-[node name="VidriosGris" type="CSGBox3D" parent="ExteriorEntrada/AutoGris" unique_id=982063]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, -0.2)
-size = Vector3(1.78, 0.6, 2.15)
-material = ExtResource("5_68yaw")
-
-[node name="RuedaFL_G" type="CSGBox3D" parent="ExteriorEntrada/AutoGris" unique_id=982064]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.32, -1.3)
-size = Vector3(0.25, 0.64, 0.64)
-material = ExtResource("26_zocalo")
-
-[node name="RuedaFR_G" type="CSGBox3D" parent="ExteriorEntrada/AutoGris" unique_id=982065]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.32, -1.3)
-size = Vector3(0.25, 0.64, 0.64)
-material = ExtResource("26_zocalo")
-
-[node name="RuedaRL_G" type="CSGBox3D" parent="ExteriorEntrada/AutoGris" unique_id=982066]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.32, 1.3)
-size = Vector3(0.25, 0.64, 0.64)
-material = ExtResource("26_zocalo")
-
-[node name="RuedaRR_G" type="CSGBox3D" parent="ExteriorEntrada/AutoGris" unique_id=982067]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.32, 1.3)
-size = Vector3(0.25, 0.64, 0.64)
-material = ExtResource("26_zocalo")
-
-[node name="LucesFrente_G" type="CSGBox3D" parent="ExteriorEntrada/AutoGris" unique_id=982068]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -2.21)
-size = Vector3(1.6, 0.16, 0.05)
-material = ExtResource("12_uwdqk")
-
-[node name="LucesAtras_G" type="CSGBox3D" parent="ExteriorEntrada/AutoGris" unique_id=982069]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 2.21)
-size = Vector3(1.6, 0.16, 0.05)
-material = ExtResource("10_teuvw")

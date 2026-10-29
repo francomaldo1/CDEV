@@ -1,4 +1,4 @@
-﻿extends Area3D
+extends Area3D
 class_name PuertaAuditorio
 
 ## Puerta central del auditorio (planta baja). Se abre solo con la llave del auditorio.
@@ -17,6 +17,7 @@ signal auditorium_opened
 
 @onready var cadenas: Node3D = get_node_or_null("CadenasAuditorio")
 @onready var audio_unlock: AudioStreamPlayer3D = get_node_or_null("AudioUnlock")
+@onready var audio_locked: AudioStreamPlayer3D = get_node_or_null("AudioLocked")
 
 var is_player_nearby: bool = false
 var player_ref: CharacterBody3D = null
@@ -26,6 +27,14 @@ func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
 	_build_3d_chains()
+	
+	if audio_locked and not audio_locked.stream:
+		var path1 = "res://audio/sfx/forzando_puerta.mp3"
+		var path2 = "res://Forzando puerta 🔊- Efecto de Sonido 🚪.mp3"
+		if ResourceLoader.exists(path1):
+			audio_locked.stream = load(path1)
+		elif ResourceLoader.exists(path2):
+			audio_locked.stream = load(path2)
 
 func _build_3d_chains() -> void:
 	if not cadenas:
@@ -194,7 +203,9 @@ func _try_open() -> void:
 	if not hud:
 		return
 	if not hud.has_auditorium_key:
-		hud.show_temporary_alert("🔒 El auditorio está cerrado. Necesitás la LLAVE DEL AUDITORIO.", Color(1.0, 0.3, 0.3))
+		if audio_locked and not audio_locked.playing:
+			audio_locked.play()
+		hud.show_temporary_alert("🔒 El auditorio está cerrado con cadenas y candados. Necesitás la LLAVE DEL AUDITORIO.", Color(1.0, 0.3, 0.3))
 		return
 	_open()
 	if hud.has_method("set_objective_text"):

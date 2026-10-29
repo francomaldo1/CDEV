@@ -1076,15 +1076,15 @@ func _apply_institutional_plaque(lbl: Label3D, mat_metal: Material, mat_acrylic:
 		plaque_w = max(1.35, text_len * 0.13)
 		font_sz = 36
 		
-	# Estilizar el Label3D para que NO parezca una pantalla iluminada (sombreado real físico)
-	lbl.shaded = true # Sombreado real: reacciona naturalmente a la luz y linterna, oscuro en sombras (no emite luz)
+	# Estilizar el Label3D para que sea completamente legible y nítido (sin shaded para evitar letras negras)
+	lbl.shaded = false
 	lbl.double_sided = false
 	lbl.alpha_cut = Label3D.ALPHA_CUT_DISCARD
-	lbl.render_priority = 2
+	lbl.render_priority = 3
 	lbl.font_size = font_sz
-	lbl.outline_size = 2
-	lbl.modulate = Color(0.82, 0.85, 0.90, 1.0) # Blanco grisáceo mate institucional (no blanco flúor)
-	lbl.outline_modulate = Color(0.04, 0.05, 0.07, 0.95)
+	lbl.outline_size = 5
+	lbl.modulate = Color(1.0, 1.0, 1.0, 1.0) # Blanco nítido
+	lbl.outline_modulate = Color(0.0, 0.0, 0.0, 0.95) # Contorno oscuro definido
 	
 	var plaque = Node3D.new()
 	plaque.name = "PlacaSoporte"
@@ -1135,4 +1135,3 @@ func _apply_institutional_plaque(lbl: Label3D, mat_metal: Material, mat_acrylic:
 		if mat_bolt:
 			bolt.material = mat_bolt
 		plaque.add_child(bolt)
-

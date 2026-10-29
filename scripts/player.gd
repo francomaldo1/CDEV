@@ -152,6 +152,9 @@ func _is_ui_active() -> bool:
 	var hud = get_tree().root.find_child("HUD", true, false)
 	if hud and hud.has_method("is_modal_active") and hud.is_modal_active():
 		return true
+	var ui_candado = get_tree().root.find_child("UICandado", true, false)
+	if ui_candado and ui_candado.visible:
+		return true
 	return false
 
 func _input(event: InputEvent) -> void:

@@ -1,4 +1,4 @@
-﻿[gd_scene format=3 uid="uid://df24810paud01"]
+[gd_scene format=3 uid="uid://df24810paud01"]
 
 [ext_resource type="Script" path="res://scripts/puerta_auditorio.gd" id="1_paud"]
 [ext_resource type="Material" path="res://materials/mat_chain_metal.tres" id="2_metal"]
@@ -238,3 +238,7 @@ material = ExtResource("2_metal")
 stream = ExtResource("5_sfx_open")
 unit_size = 12.0
 max_distance = 30.0
+
+[node name="AudioLocked" type="AudioStreamPlayer3D" parent="."]
+unit_size = 10.0
+max_distance = 25.0

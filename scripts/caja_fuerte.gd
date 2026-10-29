@@ -58,8 +58,20 @@ func _open_keypad_ui() -> void:
 		for conn in ui_candado_instance.code_entered.get_connections():
 			ui_candado_instance.code_entered.disconnect(conn.callable)
 		ui_candado_instance.code_entered.connect(_on_code_result)
+		
+		for conn in ui_candado_instance.ui_closed.get_connections():
+			ui_candado_instance.ui_closed.disconnect(conn.callable)
+		ui_candado_instance.ui_closed.connect(_on_ui_closed)
+		
+		if player_ref and player_ref.has_method("set_frozen"):
+			player_ref.set_frozen(true)
+			
 		if ui_candado_instance.has_method("open_lock"):
 			ui_candado_instance.open_lock(safe_code)
+
+func _on_ui_closed() -> void:
+	if player_ref and player_ref.has_method("set_frozen"):
+		player_ref.set_frozen(false)
 
 func _on_code_result(success: bool) -> void:
 	if success and not is_unlocked:
