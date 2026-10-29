@@ -63,15 +63,17 @@ func _open_keypad_ui() -> void:
 			ui_candado_instance.ui_closed.disconnect(conn.callable)
 		ui_candado_instance.ui_closed.connect(_on_ui_closed)
 		
-		if player_ref and player_ref.has_method("set_frozen"):
-			player_ref.set_frozen(true)
+		var pl = player_ref if is_instance_valid(player_ref) else get_tree().get_first_node_in_group("player")
+		if is_instance_valid(pl) and pl.has_method("set_frozen"):
+			pl.set_frozen(true)
 			
 		if ui_candado_instance.has_method("open_lock"):
 			ui_candado_instance.open_lock(safe_code)
 
 func _on_ui_closed() -> void:
-	if player_ref and player_ref.has_method("set_frozen"):
-		player_ref.set_frozen(false)
+	var pl = player_ref if is_instance_valid(player_ref) else get_tree().get_first_node_in_group("player")
+	if is_instance_valid(pl) and pl.has_method("set_frozen"):
+		pl.set_frozen(false)
 
 func _on_code_result(success: bool) -> void:
 	if success and not is_unlocked:

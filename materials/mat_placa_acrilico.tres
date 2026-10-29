@@ -2,7 +2,7 @@
 
 [resource]
 resource_name = "PlacaAcrilicoInstitucional"
-albedo_color = Color(0.06, 0.10, 0.17, 1.0)
+albedo_color = Color(0.08, 0.18, 0.32, 1.0)
 metallic = 0.10
 metallic_specular = 0.80
 roughness = 0.18

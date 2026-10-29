@@ -138,6 +138,9 @@ func _shake_panel() -> void:
 func _close_ui() -> void:
 	visible = false
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	var player = get_tree().get_first_node_in_group("player")
+	if is_instance_valid(player) and player.has_method("set_frozen"):
+		player.set_frozen(false)
 	ui_closed.emit()
 
 func _play_click_sfx() -> void:

@@ -281,7 +281,7 @@ func _spawn_nota_tablero() -> void:
 	lbl.outline_size = 0
 	lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	lbl.width = 280.0
-	lbl.shaded = true
+	lbl.shaded = false
 	lbl.double_sided = false
 	root_nota.add_child(lbl)
 
@@ -333,7 +333,7 @@ func _add_chalk_clue_to_blackboard(blackboard: Node3D, clue_text: String) -> voi
 	lbl.outline_modulate = Color(0.18, 0.22, 0.22, 0.6)
 	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	lbl.shaded = true
+	lbl.shaded = false
 	lbl.double_sided = false
 	blackboard.add_child(lbl)
 
@@ -1078,7 +1078,7 @@ func _apply_institutional_plaque(lbl: Label3D, mat_metal: Material, mat_acrylic:
 		
 	# Estilizar el Label3D para que sea completamente legible y nítido (sin shaded para evitar letras negras)
 	lbl.shaded = false
-	lbl.double_sided = false
+	lbl.double_sided = true
 	lbl.alpha_cut = Label3D.ALPHA_CUT_DISCARD
 	lbl.render_priority = 3
 	lbl.font_size = font_sz
