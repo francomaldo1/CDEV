@@ -941,7 +941,7 @@ func _process_chase_state(delta: float, can_see_player: bool) -> void:
 		_end_screamer_charge()
 
 	# Si el profesor está en PB y el jugador huyó por la escalera a P1/P2:
-	if ONLY_PATROL_PB:
+	if ONLY_PATROL_PB and not is_devour_rage:
 		var p_floor = get_floor(player.global_position.y)
 		var p_in_stairs = get_stair_tower_name(player.global_position) != ""
 		if p_floor > 0 or p_in_stairs:
@@ -955,6 +955,10 @@ func _process_chase_state(delta: float, can_see_player: bool) -> void:
 	elif is_trash_rushing:
 		time_without_sight = 0.0
 		last_known_player_pos = player.global_position
+	elif is_devour_rage:
+		time_without_sight = 0.0
+		if is_instance_valid(player):
+			last_known_player_pos = player.global_position
 	else:
 		time_without_sight += delta
 		if time_without_sight >= lost_sight_timeout:
@@ -1781,10 +1785,15 @@ func activate_enraged_final_phase() -> void:
 	_say("¡¡SE TERMINÓ EL TIEMPO!! ¡NADIE SE VA DE ACÁ SIN ENTREGAR!!", Color(1.0, 0.0, 0.0))
 
 func activate_devour_rage_mode(target_player: Node3D = null) -> void:
+	set_active(true)
 	is_devour_rage = true
 	is_enraged_final = true
+	is_screamer_ambush = false
+	is_hallway_dashing = false
+	is_inspecting_trash_suspense = false
 	is_active = true
 	visible = true
+	process_mode = Node.PROCESS_MODE_INHERIT
 	
 	if not is_inside_tree():
 		return
@@ -1795,16 +1804,31 @@ func activate_devour_rage_mode(target_player: Node3D = null) -> void:
 	base_chase_speed = 6.95 # El jugador sprintea a 7.0: requiere huir a toda velocidad
 	chase_speed = 6.95
 	seek_speed = 5.8
-	vision_range = 45.0
-	vision_angle_deg = 240.0
-	proximity_range = 9.0
+	vision_range = 50.0
+	vision_angle_deg = 270.0
+	proximity_range = 12.0
 	current_speed = chase_speed
 	
-	# Reposicionamiento estratégico en Planta Baja frente a la salida del Auditorio
-	if global_position.y > 3.0 or global_position.distance_to(Vector3(0.0, 0.2, 34.0)) > 35.0:
-		global_position = Vector3(0.0, 0.2, 22.0)
-		rotation.y = deg_to_rad(180.0) # Esperando en el pasillo sur de espaldas a PB, de cara al auditorio
-		velocity = Vector3.ZERO
+	if target_player:
+		player = target_player as CharacterBody3D
+	elif not is_instance_valid(player):
+		_find_player()
+	
+	# Spawn dramático en el umbral del Auditorio de cara al escenario y al jugador
+	global_position = Vector3(0.0, 0.2, 36.5)
+	rotation.y = deg_to_rad(0.0) # Mirando directamente al frente hacia el escenario
+	velocity = Vector3.ZERO
+	
+	time_without_sight = 0.0
+	repath_timer = 0.0
+	current_state = State.CHASE
+	
+	if is_instance_valid(player):
+		last_known_player_pos = player.global_position
+		current_path = _get_astar_path_to(last_known_player_pos)
+		current_path_idx = 0
+		if player.has_method("start_chase_violins"):
+			player.start_chase_violins(45.0)
 	
 	# Efectos lumínicos de furia total demoníaca
 	if ojos_luz:
@@ -1828,14 +1852,6 @@ func activate_devour_rage_mode(target_player: Node3D = null) -> void:
 		add_child(scream_player)
 		scream_player.play()
 		scream_player.finished.connect(scream_player.queue_free)
-		
-	if target_player:
-		player = target_player as CharacterBody3D
-	if player:
-		current_state = State.CHASE
-		last_known_player_pos = player.global_position
-		if player.has_method("start_chase_violins"):
-			player.start_chase_violins()
 			
 	_say(phrases_devour_rage[randi() % phrases_devour_rage.size()], Color(1.0, 0.05, 0.05))
 
