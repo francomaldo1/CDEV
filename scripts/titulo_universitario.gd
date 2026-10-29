@@ -32,14 +32,19 @@ func _collect() -> void:
 		hud.update_inventory_display()
 		hud.set_interact_prompt("")
 		if hud.has_method("set_objective_text"):
-			hud.set_objective_text("NUEVO OBJETIVO: ¡Escapá de la facultad por la Puerta de Salida Principal!", Color(0.3, 1.0, 0.5))
+			hud.set_objective_text("¡¡CORRÉ!! ¡EL PROFESOR ESTÁ EN CÓLERA TOTAL! ¡ESCAPÁ POR LA SALIDA PRINCIPAL!", Color(1.0, 0.15, 0.15))
+		if hud.has_method("show_temporary_alert"):
+			hud.show_temporary_alert("⚠️ ¡EL PROFESOR SE VOLVIÓ ULTRA RÁPIDO! ¡HUI A LA SALIDA PRINCIPAL!", Color(1.0, 0.2, 0.2))
 
 	var prof = get_tree().root.find_child("Profesor", true, false)
-	if prof and prof.visible and prof.has_method("_say"):
-		prof._say("¡¿QUIÉN TE DIO ESE TÍTULO?! ¡DEVOLVELO!", Color(1.0, 0.2, 0.2))
+	if prof:
+		if prof.has_method("activate_devour_rage_mode"):
+			prof.activate_devour_rage_mode(player_ref)
+		elif prof.visible and prof.has_method("_say"):
+			prof._say("¡¿QUIÉN TE DIO ESE TÍTULO?! ¡DEVOLVELO!", Color(1.0, 0.2, 0.2))
 
 	title_collected.emit()
-	print(">>> ¡TÍTULO RECOGIDO! Puerta de salida habilitada")
+	print(">>> ¡TÍTULO RECOGIDO! Modo Devour/Pacify activado para el profesor.")
 	queue_free()
 
 func _on_body_entered(body: Node3D) -> void:

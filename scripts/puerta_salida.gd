@@ -66,11 +66,9 @@ func _try_open_door() -> void:
 			tw.tween_property(hoja_der, "rotation:y", deg_to_rad(78.0), 1.4).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 			
 		if prompt_label:
-			prompt_label.text = "¡PUERTA DESBLOQUEADA!"
-			prompt_label.modulate = Color(0.2, 1.0, 0.4)
+			prompt_label.visible = false
 			
-		hud.show_temporary_alert("🎓 ¡HAS ESCAPADO DE LA UTN FRC! Aprobaste la materia.", Color(0.2, 1.0, 0.4))
-		hud.trigger_victory_screen()
+		_trigger_cinematic_fade_to_black()
 	else:
 		if audio_player:
 			audio_player.stream = HorrorAudio.get_door_rattle_sound()
@@ -82,6 +80,48 @@ func _try_open_door() -> void:
 			
 		if hud.has_method("show_temporary_alert"):
 			hud.show_temporary_alert("🔒 ¡PUERTA BLOQUEADA! Sin el TÍTULO no salís. Buscalo en el atril del AUDITORIO.", Color(1.0, 0.3, 0.3))
+
+func _trigger_cinematic_fade_to_black() -> void:
+	var hud = get_tree().root.find_child("HUD", true, false)
+	if hud:
+		hud.set_interact_prompt("")
+		var obj = hud.find_child("ObjectiveContainer", true, false)
+		if obj: obj.visible = false
+		var instr = hud.find_child("InstructionLabel", true, false)
+		if instr: instr.visible = false
+		var alert = hud.find_child("AlertLabel", true, false)
+		if alert: alert.visible = false
+		
+	var canvas = CanvasLayer.new()
+	canvas.layer = 200
+	var black_rect = ColorRect.new()
+	black_rect.name = "EscapeFadeRect"
+	black_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
+	black_rect.color = Color(0, 0, 0, 1)
+	black_rect.modulate.a = 0.0
+	black_rect.mouse_filter = Control.MOUSE_FILTER_STOP
+	canvas.add_child(black_rect)
+	get_tree().root.add_child(canvas)
+	
+	if is_instance_valid(player_ref) and "can_move" in player_ref:
+		player_ref.can_move = false
+		
+	var fade_tw = create_tween()
+	fade_tw.tween_property(black_rect, "modulate:a", 1.0, 2.2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	
+	var master_bus = AudioServer.get_bus_index("Master")
+	if master_bus != -1:
+		var current_vol = AudioServer.get_bus_volume_db(master_bus)
+		var audio_tw = create_tween()
+		audio_tw.tween_method(func(v: float): AudioServer.set_bus_volume_db(master_bus, v), current_vol, -60.0, 2.0)
+		
+	fade_tw.tween_interval(2.0)
+	fade_tw.tween_callback(func():
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		if master_bus != -1:
+			AudioServer.set_bus_volume_db(master_bus, 0.0)
+		get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+	)
 
 func _on_body_entered(body: Node3D) -> void:
 	if body is Player or body.is_in_group("player") or body.name == "Player":

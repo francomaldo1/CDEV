@@ -31,9 +31,13 @@ var speed_boost_count: int = 0
 @onready var visual_root: Node3D = $Visuals
 @onready var pierna_izq: Node3D = $Visuals/PiernaIzq
 @onready var pierna_der: Node3D = $Visuals/PiernaDer
+@onready var rodilla_izq: Node3D = get_node_or_null("Visuals/PiernaIzq/RodillaIzq")
+@onready var rodilla_der: Node3D = get_node_or_null("Visuals/PiernaDer/RodillaDer")
 @onready var brazo_izq: Node3D = $Visuals/BrazoIzq
 @onready var brazo_der: Node3D = $Visuals/BrazoDer
-@onready var regla: Node3D = $Visuals/BrazoDer/ManoDer/ReglaPivot
+@onready var codo_izq: Node3D = get_node_or_null("Visuals/BrazoIzq/CodoIzq")
+@onready var codo_der: Node3D = get_node_or_null("Visuals/BrazoDer/CodoDer")
+@onready var regla: Node3D = find_child("ReglaPivot", true, false)
 @onready var cabeza: Node3D = $Visuals/Torso/Cabeza
 @onready var cartel_dialogo: Label3D = $Visuals/DialogoLabel
 @onready var ojos_luz: SpotLight3D = $Visuals/Torso/Cabeza/OjosLuz
@@ -72,6 +76,8 @@ var hallway_dash_callback: Callable = Callable()
 
 ## Fase enfurecida final (al resolver los 4 parciales de PB)
 var is_enraged_final: bool = false
+## Modo Devour/Pacify extremo al agarrar el Título en el Auditorio
+var is_devour_rage: bool = false
 
 ## Terror procedimental: balanceo de linterna y espasmos de cabeza
 var lantern_sway_timer: float = 0.0
@@ -222,6 +228,13 @@ var phrases_enraged: Array[String] = [
 	"¡¡DESAPROBADO!! ¡¡EL PARCIAL ESTÁ LLENO DE ERRORES!!",
 	"¡¡COPIARSE ES CAUSAL DE EXPULSIÓN INMEDIATA!!",
 	"¡¡NO TIENEN NIVEL PARA LA FACULTAD!!"
+]
+var phrases_devour_rage: Array[String] = [
+	"¡¡NO TE VAS A RECIBIR NUNCA!!",
+	"¡¡ESE TÍTULO NO ES TUYO!! ¡¡DEVUÉLVELO!!",
+	"¡¡ESTÁS EXPULSADO DE POR VIDA!!",
+	"¡¡DE ESTA FACULTAD NO SALE NADIE VIVO!!",
+	"¡¡JAMÁS VAS A CRUZAR ESA PUERTA!!"
 ]
 var phrases_seek: Array[String] = [
 	"¿Dónde se metió este alumno? Parecía haber alguien acá...",
@@ -1327,6 +1340,14 @@ func _animate_walk(delta: float, is_moving: bool) -> void:
 		if pierna_der: pierna_der.rotation.x = -swing_legs
 		if brazo_izq: brazo_izq.rotation.x = -swing_arms
 		
+		# Flexión orgánica humanoide de rodillas y codos
+		if rodilla_izq:
+			rodilla_izq.rotation.x = maxf(0.0, sin(walk_anim_time)) * deg_to_rad(32.0)
+		if rodilla_der:
+			rodilla_der.rotation.x = maxf(0.0, -sin(walk_anim_time)) * deg_to_rad(32.0)
+		if codo_izq:
+			codo_izq.rotation.x = deg_to_rad(18.0) + maxf(0.0, cos(walk_anim_time)) * deg_to_rad(15.0)
+		
 		if not is_attacking and brazo_der:
 			brazo_der.rotation.x = deg_to_rad(-35.0) + sin(walk_anim_time * 0.8) * deg_to_rad(15.0)
 			brazo_der.rotation.z = deg_to_rad(-10.0)
@@ -1339,7 +1360,10 @@ func _animate_walk(delta: float, is_moving: bool) -> void:
 		step_phase = 1.0
 		if pierna_izq: pierna_izq.rotation.x = lerpf(pierna_izq.rotation.x, 0.0, delta * 6.0)
 		if pierna_der: pierna_der.rotation.x = lerpf(pierna_der.rotation.x, 0.0, delta * 6.0)
+		if rodilla_izq: rodilla_izq.rotation.x = lerpf(rodilla_izq.rotation.x, 0.0, delta * 6.0)
+		if rodilla_der: rodilla_der.rotation.x = lerpf(rodilla_der.rotation.x, 0.0, delta * 6.0)
 		if brazo_izq: brazo_izq.rotation.x = lerpf(brazo_izq.rotation.x, 0.0, delta * 6.0)
+		if codo_izq: codo_izq.rotation.x = lerpf(codo_izq.rotation.x, deg_to_rad(18.0), delta * 6.0)
 		if not is_attacking and not is_screamer_ambush and brazo_der:
 			brazo_der.rotation.x = lerpf(brazo_der.rotation.x, deg_to_rad(-40.0), delta * 5.0)
 			brazo_der.rotation.z = lerpf(brazo_der.rotation.z, deg_to_rad(-10.0), delta * 5.0)
@@ -1347,8 +1371,9 @@ func _animate_walk(delta: float, is_moving: bool) -> void:
 	# Animación procedimental de cabeza (balanceo de linterna + espasmos tenebrosos)
 	if cabeza:
 		if current_state == State.CHASE:
-			var jitter_x = randf_range(-0.02, 0.02) if is_enraged_final else 0.0
-			var jitter_y = randf_range(-0.02, 0.02) if is_enraged_final else 0.0
+			var jitter_val = 0.07 if is_devour_rage else (0.02 if is_enraged_final else 0.0)
+			var jitter_x = randf_range(-jitter_val, jitter_val)
+			var jitter_y = randf_range(-jitter_val, jitter_val)
 			cabeza.rotation = Vector3(jitter_x, jitter_y, 0.0)
 		else:
 			lantern_sway_timer += delta * (2.2 if current_state == State.SEARCH else 1.3)
@@ -1621,6 +1646,65 @@ func activate_enraged_final_phase() -> void:
 		step_audio.volume_db = 14.5
 		
 	_say("¡¡SE TERMINÓ EL TIEMPO!! ¡NADIE SE VA DE ACÁ SIN ENTREGAR!!", Color(1.0, 0.0, 0.0))
+
+func activate_devour_rage_mode(target_player: Node3D = null) -> void:
+	is_devour_rage = true
+	is_enraged_final = true
+	is_active = true
+	visible = true
+	
+	if not is_inside_tree():
+		return
+	
+	# Velocidades extremas estilo Devour / Pacify: el demonio se vuelve super rápido
+	base_patrol_speed = 4.4
+	patrol_speed = 4.4
+	base_chase_speed = 6.95 # El jugador sprintea a 7.0: requiere huir a toda velocidad
+	chase_speed = 6.95
+	seek_speed = 5.8
+	vision_range = 45.0
+	vision_angle_deg = 240.0
+	proximity_range = 9.0
+	current_speed = chase_speed
+	
+	# Reposicionamiento estratégico en Planta Baja frente a la salida del Auditorio
+	if global_position.y > 3.0 or global_position.distance_to(Vector3(0.0, 0.2, 34.0)) > 35.0:
+		global_position = Vector3(0.0, 0.2, 22.0)
+		rotation.y = deg_to_rad(180.0) # Esperando en el pasillo sur de espaldas a PB, de cara al auditorio
+		velocity = Vector3.ZERO
+	
+	# Efectos lumínicos de furia total demoníaca
+	if ojos_luz:
+		ojos_luz.light_color = Color(1.0, 0.0, 0.0)
+		ojos_luz.light_energy = 3.6
+		ojos_luz.spot_range = 16.0
+	if aura_luz:
+		aura_luz.light_color = Color(1.0, 0.02, 0.02)
+		aura_luz.light_energy = 1.4
+		aura_luz.omni_range = 7.0
+	if step_audio:
+		step_audio.volume_db = 16.0
+		
+	# Sonido inicial de alarido aterrador
+	var scream_snd = load("res://audio/sfx/scp_096_scream.mp3")
+	if scream_snd:
+		var scream_player = AudioStreamPlayer.new()
+		scream_player.stream = scream_snd
+		scream_player.volume_db = 4.0
+		scream_player.bus = "Master"
+		add_child(scream_player)
+		scream_player.play()
+		scream_player.finished.connect(scream_player.queue_free)
+		
+	if target_player:
+		player = target_player as CharacterBody3D
+	if player:
+		current_state = State.CHASE
+		last_known_player_pos = player.global_position
+		if player.has_method("start_chase_violins"):
+			player.start_chase_violins()
+			
+	_say(phrases_devour_rage[randi() % phrases_devour_rage.size()], Color(1.0, 0.05, 0.05))
 
 func _trigger_trash_suspense() -> void:
 	is_inspecting_trash_suspense = true
