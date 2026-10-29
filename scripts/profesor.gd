@@ -29,26 +29,32 @@ var speed_boost_count: int = 0
 
 ## Referencias al modelo
 @onready var visual_root: Node3D = $Visuals
-@onready var pierna_izq: Node3D = $Visuals/PiernaIzq
-@onready var pierna_der: Node3D = $Visuals/PiernaDer
-@onready var rodilla_izq: Node3D = get_node_or_null("Visuals/PiernaIzq/RodillaIzq")
-@onready var rodilla_der: Node3D = get_node_or_null("Visuals/PiernaDer/RodillaDer")
-@onready var brazo_izq: Node3D = $Visuals/BrazoIzq
-@onready var brazo_der: Node3D = $Visuals/BrazoDer
-@onready var codo_izq: Node3D = get_node_or_null("Visuals/BrazoIzq/CodoIzq")
-@onready var codo_der: Node3D = get_node_or_null("Visuals/BrazoDer/CodoDer")
+@onready var torso: Node3D = find_child("Torso", true, false)
+@onready var pierna_izq: Node3D = find_child("PiernaIzq", true, false)
+@onready var pierna_der: Node3D = find_child("PiernaDer", true, false)
+@onready var rodilla_izq: Node3D = find_child("RodillaIzq", true, false)
+@onready var rodilla_der: Node3D = find_child("RodillaDer", true, false)
+@onready var tobillo_izq: Node3D = find_child("TobilloIzq", true, false)
+@onready var tobillo_der: Node3D = find_child("TobilloDer", true, false)
+@onready var brazo_izq: Node3D = find_child("BrazoIzq", true, false)
+@onready var brazo_der: Node3D = find_child("BrazoDer", true, false)
+@onready var codo_izq: Node3D = find_child("CodoIzq", true, false)
+@onready var codo_der: Node3D = find_child("CodoDer", true, false)
+@onready var mano_izq: Node3D = find_child("ManoIzq", true, false)
+@onready var mano_der: Node3D = find_child("ManoDer", true, false)
 @onready var regla: Node3D = find_child("ReglaPivot", true, false)
-@onready var cabeza: Node3D = $Visuals/Torso/Cabeza
-@onready var cartel_dialogo: Label3D = $Visuals/DialogoLabel
-@onready var ojos_luz: SpotLight3D = $Visuals/Torso/Cabeza/OjosLuz
-@onready var aura_luz: OmniLight3D = get_node_or_null("Visuals/Torso/AuraProfesor")
-@onready var ojo_izq: GeometryInstance3D = get_node_or_null("Visuals/Torso/Cabeza/OjoBrilloIzq")
-@onready var ojo_der: GeometryInstance3D = get_node_or_null("Visuals/Torso/Cabeza/OjoBrilloDer")
+@onready var cabeza: Node3D = find_child("Cabeza", true, false)
+@onready var cartel_dialogo: Label3D = find_child("DialogoLabel", true, false)
+@onready var ojos_luz: SpotLight3D = find_child("OjosLuz", true, false)
+@onready var aura_luz: OmniLight3D = find_child("AuraProfesor", true, false)
+@onready var ojo_izq: GeometryInstance3D = find_child("OjoBrilloIzq", true, false)
+@onready var ojo_der: GeometryInstance3D = find_child("OjoBrilloDer", true, false)
 
 var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity", 9.8)
 var player: CharacterBody3D = null
 
 var walk_anim_time: float = 0.0
+var idle_anim_time: float = 0.0
 var is_attacking: bool = false
 var attack_timer: float = 0.0
 var attack_anim_time: float = 0.0
@@ -401,7 +407,38 @@ func _build_astar_pb_network() -> void:
 		"LAB_E_01": Vector3(-18.5, 0.2, -3.5),
 		"LAB_E_PANEL": Vector3(-18.5, 0.2, 0.0),
 		"LAB_E_12": Vector3(-18.5, 0.2, 1.5),
-		"LAB_E_S": Vector3(-18.5, 0.2, 7.5)
+		"LAB_E_S": Vector3(-18.5, 0.2, 7.5),
+		# Auditorio Principal (Malla completa de pasillos para evitar atascamiento en butacas)
+		"AUD_DOOR": Vector3(0.0, 0.2, 35.0),
+		"AUD_BACK_W": Vector3(-14.5, 0.2, 39.5),
+		"AUD_BACK_C": Vector3(0.0, 0.2, 39.5),
+		"AUD_BACK_E": Vector3(13.8, 0.2, 39.5),
+		# Pasillo Central del Auditorio (ancho 5.5m entre X=-3.35 y X=2.20)
+		"AUD_C_1": Vector3(0.0, 0.2, 44.0),
+		"AUD_C_2": Vector3(0.0, 0.2, 49.0),
+		"AUD_C_3": Vector3(0.0, 0.2, 54.0),
+		"AUD_C_MID": Vector3(0.0, 0.2, 59.0),
+		"AUD_C_4": Vector3(0.0, 0.2, 64.0),
+		"AUD_C_5": Vector3(0.0, 0.2, 68.0),
+		"AUD_C_STAGE": Vector3(0.0, 0.2, 72.5),
+		# Pasillo Lateral Oeste del Auditorio (X = -14.5)
+		"AUD_W_1": Vector3(-14.5, 0.2, 44.0),
+		"AUD_W_2": Vector3(-14.5, 0.2, 51.0),
+		"AUD_W_MID": Vector3(-14.5, 0.2, 59.0),
+		"AUD_W_3": Vector3(-14.5, 0.2, 66.0),
+		"AUD_W_STAGE": Vector3(-14.5, 0.2, 72.5),
+		# Pasillo Lateral Este del Auditorio (X = 13.8)
+		"AUD_E_1": Vector3(13.8, 0.2, 44.0),
+		"AUD_E_2": Vector3(13.8, 0.2, 51.0),
+		"AUD_E_MID": Vector3(13.8, 0.2, 59.0),
+		"AUD_E_3": Vector3(13.8, 0.2, 66.0),
+		"AUD_E_STAGE": Vector3(13.8, 0.2, 72.5),
+		# Escenario del Auditorio (Ubicación del Título Universitario)
+		"AUD_STAGE_FRONT": Vector3(0.0, 0.2, 74.0),
+		"AUD_STAGE_RAMP_L": Vector3(-3.5, 0.4, 74.8),
+		"AUD_STAGE_RAMP_R": Vector3(3.5, 0.4, 74.8),
+		"AUD_STAGE_TITLE": Vector3(0.0, 0.9, 77.5),
+		"AUD_STAGE_BACK": Vector3(0.0, 0.9, 81.0)
 	}
 	
 	var name_to_id = {}
@@ -457,7 +494,29 @@ func _build_astar_pb_network() -> void:
 		["LAB_W_01", "LAB_MID_01"], ["LAB_MID_01", "LAB_E_01"],
 		["LAB_W_12", "LAB_MID_12"], ["LAB_MID_12", "LAB_E_12"],
 		["LAB_W_S", "LAB_MID_S"], ["LAB_MID_S", "LAB_E_S"],
-		["LAB_E_N", "LAB_E_01"], ["LAB_E_01", "LAB_E_PANEL"], ["LAB_E_PANEL", "LAB_E_12"], ["LAB_E_12", "LAB_E_S"]
+		["LAB_E_N", "LAB_E_01"], ["LAB_E_01", "LAB_E_PANEL"], ["LAB_E_PANEL", "LAB_E_12"], ["LAB_E_12", "LAB_E_S"],
+		# Auditorio Principal (Conexiones fluidas por pasillos)
+		["S_4", "AUD_DOOR"], ["AUD_DOOR", "AUD_BACK_C"],
+		["AUD_BACK_W", "AUD_BACK_C"], ["AUD_BACK_C", "AUD_BACK_E"],
+		# Pasillo Central
+		["AUD_BACK_C", "AUD_C_1"], ["AUD_C_1", "AUD_C_2"], ["AUD_C_2", "AUD_C_3"],
+		["AUD_C_3", "AUD_C_MID"], ["AUD_C_MID", "AUD_C_4"], ["AUD_C_4", "AUD_C_5"],
+		["AUD_C_5", "AUD_C_STAGE"],
+		# Pasillo Lateral Oeste
+		["AUD_BACK_W", "AUD_W_1"], ["AUD_W_1", "AUD_W_2"], ["AUD_W_2", "AUD_W_MID"],
+		["AUD_W_MID", "AUD_W_3"], ["AUD_W_3", "AUD_W_STAGE"],
+		# Pasillo Lateral Este
+		["AUD_BACK_E", "AUD_E_1"], ["AUD_E_1", "AUD_E_2"], ["AUD_E_2", "AUD_E_MID"],
+		["AUD_E_MID", "AUD_E_3"], ["AUD_E_3", "AUD_E_STAGE"],
+		# Cruce medio (Z = 59.0 entre filas 4 y 5)
+		["AUD_W_MID", "AUD_C_MID"], ["AUD_C_MID", "AUD_E_MID"],
+		# Cruce frente a escenario (Z = 72.5)
+		["AUD_W_STAGE", "AUD_C_STAGE"], ["AUD_C_STAGE", "AUD_E_STAGE"],
+		# Acceso y plataforma de Escenario
+		["AUD_C_STAGE", "AUD_STAGE_FRONT"],
+		["AUD_STAGE_FRONT", "AUD_STAGE_RAMP_L"], ["AUD_STAGE_FRONT", "AUD_STAGE_RAMP_R"],
+		["AUD_STAGE_RAMP_L", "AUD_STAGE_TITLE"], ["AUD_STAGE_RAMP_R", "AUD_STAGE_TITLE"],
+		["AUD_STAGE_TITLE", "AUD_STAGE_BACK"]
 	]
 	
 	for conn in connections:
@@ -1020,10 +1079,14 @@ func _process_attack(delta: float) -> void:
 		var p = attack_anim_time / 0.22
 		brazo_der.rotation.x = lerpf(deg_to_rad(-40.0), deg_to_rad(-125.0), p)
 		brazo_der.rotation.y = lerpf(0.0, deg_to_rad(-20.0), p)
+		if codo_der: codo_der.rotation.x = lerpf(deg_to_rad(20.0), deg_to_rad(55.0), p)
+		if torso: torso.rotation.x = lerpf(deg_to_rad(14.0), deg_to_rad(-5.0), p)
 		regla.rotation.x = lerpf(0.0, deg_to_rad(-45.0), p)
 	elif attack_anim_time < 0.38:
 		var p = (attack_anim_time - 0.22) / 0.16
 		brazo_der.rotation.x = lerpf(deg_to_rad(-125.0), deg_to_rad(45.0), p)
+		if codo_der: codo_der.rotation.x = lerpf(deg_to_rad(55.0), deg_to_rad(15.0), p)
+		if torso: torso.rotation.x = lerpf(deg_to_rad(-5.0), deg_to_rad(26.0), p)
 		regla.rotation.x = lerpf(deg_to_rad(-45.0), deg_to_rad(70.0), p)
 		
 		if p > 0.6 and is_instance_valid(player):
@@ -1034,6 +1097,8 @@ func _process_attack(delta: float) -> void:
 		var p = (attack_anim_time - 0.38) / 0.27
 		brazo_der.rotation.x = lerpf(deg_to_rad(45.0), deg_to_rad(-40.0), p)
 		brazo_der.rotation.y = lerpf(deg_to_rad(-20.0), 0.0, p)
+		if codo_der: codo_der.rotation.x = lerpf(deg_to_rad(15.0), deg_to_rad(25.0), p)
+		if torso: torso.rotation.x = lerpf(deg_to_rad(26.0), deg_to_rad(14.0), p)
 		regla.rotation.x = lerpf(deg_to_rad(70.0), 0.0, p)
 	else:
 		is_attacking = false
@@ -1172,15 +1237,15 @@ func _move_towards(delta: float, target_pos: Vector3, speed_to_use: float, rot_s
 				var target_rot_y = atan2(slide_vec.x, slide_vec.z)
 				rotation.y = lerp_angle(rotation.y, target_rot_y, rot_speed * delta)
 
-	# Step-up suave si toca bordes bajos
+	# Step-up suave si toca bordes bajos o asientos del auditorio (asientos miden 0.42m)
 	if was_on_floor and is_on_wall() and move_vec != Vector3.ZERO:
-		var step_h: float = 0.25
+		var step_h: float = 0.52
 		var step_transform: Transform3D = global_transform
 		step_transform.origin.y += step_h
 		if not test_move(global_transform, Vector3(0, step_h, 0)):
-			var fwd: Vector3 = move_vec * (speed_to_use * delta + 0.06)
+			var fwd: Vector3 = move_vec * (speed_to_use * delta + 0.08)
 			if not test_move(step_transform, fwd):
-				global_position = pre_pos + Vector3(0, step_h * 0.5, 0)
+				global_position = pre_pos + Vector3(0, step_h * 0.45, 0)
 				move_and_slide()
 
 	# Watchdog antitraba: SIN TELETRANSPORTE FANTASMA
@@ -1322,8 +1387,14 @@ func _play_prof_step() -> void:
 	step_audio.play()
 
 func _animate_walk(delta: float, is_moving: bool) -> void:
+	# Lean y postura de la columna (Spine pitch)
+	var target_pitch: float = deg_to_rad(6.0)
+	if current_state == State.CHASE or is_trash_rushing or is_screamer_charging:
+		target_pitch = deg_to_rad(20.0) if is_devour_rage else (deg_to_rad(16.0) if is_enraged_final else deg_to_rad(14.0))
+	
 	if is_moving and is_on_floor():
-		var step_mult = 3.6 if (is_trash_rushing or is_screamer_charging) else (2.8 if current_state == State.CHASE else 2.2)
+		idle_anim_time = 0.0
+		var step_mult = 3.6 if (is_trash_rushing or is_screamer_charging) else (2.85 if current_state == State.CHASE else 2.2)
 		var anim_delta = delta * (current_speed * step_mult)
 		var prev_sin = sin(walk_anim_time)
 		walk_anim_time += anim_delta
@@ -1333,48 +1404,110 @@ func _animate_walk(delta: float, is_moving: bool) -> void:
 		if (prev_sin <= 0.0 and curr_sin > 0.0) or (prev_sin >= 0.0 and curr_sin < 0.0):
 			_play_prof_step()
 			
-		var swing_legs = sin(walk_anim_time) * deg_to_rad(28.0)
-		var swing_arms = cos(walk_anim_time) * deg_to_rad(25.0)
+		var is_chasing = (current_state == State.CHASE or is_trash_rushing or is_screamer_charging)
+		var leg_amp = deg_to_rad(36.0) if is_chasing else deg_to_rad(25.0)
+		var knee_amp = deg_to_rad(48.0) if is_chasing else deg_to_rad(32.0)
+		var arm_amp = deg_to_rad(32.0) if is_chasing else deg_to_rad(22.0)
 		
+		var swing_legs = sin(walk_anim_time) * leg_amp
+		var swing_arms = cos(walk_anim_time) * arm_amp
+		
+		# 1. Articulación de Cadera y Muslos
 		if pierna_izq: pierna_izq.rotation.x = swing_legs
 		if pierna_der: pierna_der.rotation.x = -swing_legs
-		if brazo_izq: brazo_izq.rotation.x = -swing_arms
 		
-		# Flexión orgánica humanoide de rodillas y codos
+		# 2. Articulación de Rodillas (flexión natural hacia atrás al avanzar)
 		if rodilla_izq:
-			rodilla_izq.rotation.x = maxf(0.0, sin(walk_anim_time)) * deg_to_rad(32.0)
+			rodilla_izq.rotation.x = maxf(0.0, sin(walk_anim_time)) * knee_amp
 		if rodilla_der:
-			rodilla_der.rotation.x = maxf(0.0, -sin(walk_anim_time)) * deg_to_rad(32.0)
-		if codo_izq:
-			codo_izq.rotation.x = deg_to_rad(18.0) + maxf(0.0, cos(walk_anim_time)) * deg_to_rad(15.0)
+			rodilla_der.rotation.x = maxf(0.0, -sin(walk_anim_time)) * knee_amp
+			
+		# 3. Articulación de Tobillos / Pies (dorsiflexión y flexión plantar)
+		if tobillo_izq:
+			tobillo_izq.rotation.x = -sin(walk_anim_time) * deg_to_rad(18.0)
+		if tobillo_der:
+			tobillo_der.rotation.x = sin(walk_anim_time) * deg_to_rad(18.0)
+			
+		# 4. Articulación de Torso y Columna: Inclinación hacia adelante + Balanceo lateral y Torsión
+		if torso:
+			torso.rotation.x = lerpf(torso.rotation.x, target_pitch, delta * 7.0)
+			torso.rotation.z = -sin(walk_anim_time) * deg_to_rad(3.5) # Balanceo pélvico
+			torso.rotation.y = sin(walk_anim_time) * deg_to_rad(4.5)  # Torsión espinal
+			# Bobbing vertical sincronizado con cada paso (impacto de peso físico)
+			var bob_val = absf(sin(walk_anim_time)) * 0.045
+			torso.position.y = 1.15 - bob_val
 		
+		# 5. Articulación de Brazos, Codos y Muñecas
+		if brazo_izq:
+			brazo_izq.rotation.x = -swing_arms
+			brazo_izq.rotation.z = deg_to_rad(4.0) + sin(walk_anim_time) * deg_to_rad(3.0)
+		if codo_izq:
+			codo_izq.rotation.x = deg_to_rad(20.0) + maxf(0.0, cos(walk_anim_time)) * deg_to_rad(24.0)
+			codo_izq.rotation.y = deg_to_rad(8.0)
+		if mano_izq:
+			mano_izq.rotation.x = sin(walk_anim_time) * deg_to_rad(12.0)
+			
 		if not is_attacking and brazo_der:
-			brazo_der.rotation.x = deg_to_rad(-35.0) + sin(walk_anim_time * 0.8) * deg_to_rad(15.0)
-			brazo_der.rotation.z = deg_to_rad(-10.0)
-			if regla:
-				regla.rotation.x = deg_to_rad(20.0) + cos(walk_anim_time * 1.5) * deg_to_rad(10.0)
+			if is_chasing:
+				# Postura amenazante de persecución con la regla en alto
+				brazo_der.rotation.x = deg_to_rad(-55.0) + sin(walk_anim_time * 0.85) * deg_to_rad(18.0)
+				brazo_der.rotation.y = deg_to_rad(-12.0)
+				brazo_der.rotation.z = deg_to_rad(-14.0)
+				if codo_der:
+					codo_der.rotation.x = deg_to_rad(35.0) + cos(walk_anim_time) * deg_to_rad(14.0)
+				if regla:
+					regla.rotation.x = deg_to_rad(30.0) + sin(walk_anim_time * 1.4) * deg_to_rad(15.0)
+			else:
+				# Postura de patrulla: brazo derecho oscilando suave con la regla lista
+				brazo_der.rotation.x = deg_to_rad(-30.0) + sin(walk_anim_time * 0.7) * deg_to_rad(10.0)
+				brazo_der.rotation.y = deg_to_rad(-8.0)
+				brazo_der.rotation.z = deg_to_rad(-8.0)
+				if codo_der:
+					codo_der.rotation.x = deg_to_rad(18.0)
+				if regla:
+					regla.rotation.x = deg_to_rad(15.0) + cos(walk_anim_time * 0.7) * deg_to_rad(8.0)
 	else:
 		walk_anim_time = 0.0
+		idle_anim_time += delta
 		if step_audio and step_audio.playing:
 			step_audio.stop()
 		step_phase = 1.0
+		
+		# Respiración orgánica del torso en reposo
+		if torso:
+			torso.rotation.x = lerpf(torso.rotation.x, target_pitch, delta * 5.0)
+			torso.rotation.z = lerpf(torso.rotation.z, 0.0, delta * 5.0)
+			torso.rotation.y = lerpf(torso.rotation.y, 0.0, delta * 5.0)
+			torso.position.y = lerpf(torso.position.y, 1.15 + sin(idle_anim_time * 2.2) * 0.012, delta * 4.0)
+			
 		if pierna_izq: pierna_izq.rotation.x = lerpf(pierna_izq.rotation.x, 0.0, delta * 6.0)
 		if pierna_der: pierna_der.rotation.x = lerpf(pierna_der.rotation.x, 0.0, delta * 6.0)
 		if rodilla_izq: rodilla_izq.rotation.x = lerpf(rodilla_izq.rotation.x, 0.0, delta * 6.0)
 		if rodilla_der: rodilla_der.rotation.x = lerpf(rodilla_der.rotation.x, 0.0, delta * 6.0)
-		if brazo_izq: brazo_izq.rotation.x = lerpf(brazo_izq.rotation.x, 0.0, delta * 6.0)
-		if codo_izq: codo_izq.rotation.x = lerpf(codo_izq.rotation.x, deg_to_rad(18.0), delta * 6.0)
+		if tobillo_izq: tobillo_izq.rotation.x = lerpf(tobillo_izq.rotation.x, 0.0, delta * 6.0)
+		if tobillo_der: tobillo_der.rotation.x = lerpf(tobillo_der.rotation.x, 0.0, delta * 6.0)
+		if brazo_izq:
+			brazo_izq.rotation.x = lerpf(brazo_izq.rotation.x, 0.0, delta * 6.0)
+			brazo_izq.rotation.z = lerpf(brazo_izq.rotation.z, 0.0, delta * 6.0)
+		if codo_izq:
+			codo_izq.rotation.x = lerpf(codo_izq.rotation.x, deg_to_rad(18.0), delta * 6.0)
+			codo_izq.rotation.y = lerpf(codo_izq.rotation.y, 0.0, delta * 6.0)
+		if mano_izq: mano_izq.rotation.x = lerpf(mano_izq.rotation.x, 0.0, delta * 6.0)
 		if not is_attacking and not is_screamer_ambush and brazo_der:
 			brazo_der.rotation.x = lerpf(brazo_der.rotation.x, deg_to_rad(-40.0), delta * 5.0)
+			brazo_der.rotation.y = lerpf(brazo_der.rotation.y, deg_to_rad(-8.0), delta * 5.0)
 			brazo_der.rotation.z = lerpf(brazo_der.rotation.z, deg_to_rad(-10.0), delta * 5.0)
+			if codo_der: codo_der.rotation.x = lerpf(codo_der.rotation.x, deg_to_rad(20.0), delta * 5.0)
+			if regla: regla.rotation.x = lerpf(regla.rotation.x, deg_to_rad(15.0), delta * 5.0)
 
 	# Animación procedimental de cabeza (balanceo de linterna + espasmos tenebrosos)
 	if cabeza:
+		var spine_compensation = -torso.rotation.x * 0.4 if torso else 0.0
 		if current_state == State.CHASE:
 			var jitter_val = 0.07 if is_devour_rage else (0.02 if is_enraged_final else 0.0)
 			var jitter_x = randf_range(-jitter_val, jitter_val)
 			var jitter_y = randf_range(-jitter_val, jitter_val)
-			cabeza.rotation = Vector3(jitter_x, jitter_y, 0.0)
+			cabeza.rotation = Vector3(spine_compensation + jitter_x, jitter_y, 0.0)
 		else:
 			lantern_sway_timer += delta * (2.2 if current_state == State.SEARCH else 1.3)
 			var sway_yaw = sin(lantern_sway_timer) * deg_to_rad(28.0)
@@ -1392,7 +1525,7 @@ func _animate_walk(delta: float, is_moving: bool) -> void:
 				twitch_active_timer -= delta
 				cabeza.rotation = twitch_offset
 			else:
-				cabeza.rotation = Vector3(sway_pitch, sway_yaw, 0.0)
+				cabeza.rotation = Vector3(spine_compensation + sway_pitch, sway_yaw, 0.0)
 
 func _update_dialogue(delta: float) -> void:
 	phrase_timer -= delta

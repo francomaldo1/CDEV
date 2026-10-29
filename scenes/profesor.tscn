@@ -12,7 +12,7 @@
 [ext_resource type="Material" path="res://materials/mat_prof_ruler.tres" id="10_3ve4c"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ael3a"]
-radius = 0.38
+radius = 0.33
 height = 1.95
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ih820"]
@@ -154,6 +154,91 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.075, 0.02, 0.21)
 radius = 0.024
 material = SubResource("StandardMaterial3D_ih820")
 
+[node name="BrazoIzq" type="Node3D" parent="Visuals/Torso" unique_id=1284204187]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.34, 0.25, 0)
+
+[node name="BrazoSupIzq" type="CSGCylinder3D" parent="Visuals/Torso/BrazoIzq" unique_id=1691943728]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.17, 0)
+radius = 0.075
+height = 0.34
+sides = 12
+material = ExtResource("2_il520")
+
+[node name="CodoIzq" type="Node3D" parent="Visuals/Torso/BrazoIzq" unique_id=1359588870]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.34, 0)
+
+[node name="AntebrazoIzq" type="CSGCylinder3D" parent="Visuals/Torso/BrazoIzq/CodoIzq" unique_id=1995040213]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.16, 0)
+radius = 0.065
+height = 0.32
+sides = 12
+material = ExtResource("2_il520")
+
+[node name="PunoIzq" type="CSGCylinder3D" parent="Visuals/Torso/BrazoIzq/CodoIzq" unique_id=291196449]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.31, 0)
+radius = 0.068
+height = 0.035
+sides = 12
+material = ExtResource("3_im4db")
+
+[node name="ManoIzq" type="Node3D" parent="Visuals/Torso/BrazoIzq/CodoIzq" unique_id=478483678]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.36, 0)
+
+[node name="ManoIzqMesh" type="CSGBox3D" parent="Visuals/Torso/BrazoIzq/CodoIzq/ManoIzq" unique_id=478483679]
+size = Vector3(0.065, 0.08, 0.04)
+material = ExtResource("5_riryx")
+
+[node name="BrazoDer" type="Node3D" parent="Visuals/Torso" unique_id=1245048429]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.34, 0.25, 0)
+
+[node name="BrazoSupDer" type="CSGCylinder3D" parent="Visuals/Torso/BrazoDer" unique_id=149262985]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.17, 0)
+radius = 0.075
+height = 0.34
+sides = 12
+material = ExtResource("2_il520")
+
+[node name="CodoDer" type="Node3D" parent="Visuals/Torso/BrazoDer" unique_id=39016812]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.34, 0)
+
+[node name="AntebrazoDer" type="CSGCylinder3D" parent="Visuals/Torso/BrazoDer/CodoDer" unique_id=781179527]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.16, 0)
+radius = 0.065
+height = 0.32
+sides = 12
+material = ExtResource("2_il520")
+
+[node name="PunoDer" type="CSGCylinder3D" parent="Visuals/Torso/BrazoDer/CodoDer" unique_id=1906289713]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.31, 0)
+radius = 0.068
+height = 0.035
+sides = 12
+material = ExtResource("3_im4db")
+
+[node name="ManoDer" type="Node3D" parent="Visuals/Torso/BrazoDer/CodoDer" unique_id=1273477609]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.36, 0)
+
+[node name="ManoDerMesh" type="CSGBox3D" parent="Visuals/Torso/BrazoDer/CodoDer/ManoDer" unique_id=1652170366]
+size = Vector3(0.065, 0.08, 0.04)
+material = ExtResource("5_riryx")
+
+[node name="ReglaPivot" type="Node3D" parent="Visuals/Torso/BrazoDer/CodoDer/ManoDer" unique_id=1690524358]
+
+[node name="ReglaCuerpo" type="CSGBox3D" parent="Visuals/Torso/BrazoDer/CodoDer/ManoDer/ReglaPivot" unique_id=658747368]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0.1)
+size = Vector3(0.05, 1.05, 0.016)
+material = ExtResource("10_3ve4c")
+
+[node name="ReglaBorde" type="CSGBox3D" parent="Visuals/Torso/BrazoDer/CodoDer/ManoDer/ReglaPivot" unique_id=1670608817]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.026, 0.45, 0.1)
+size = Vector3(0.008, 1.05, 0.018)
+material = ExtResource("9_i8iwx")
+
+[node name="ReglaMango" type="CSGBox3D" parent="Visuals/Torso/BrazoDer/CodoDer/ManoDer/ReglaPivot" unique_id=167610679]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0.1)
+size = Vector3(0.065, 0.15, 0.03)
+material = ExtResource("2_il520")
+
 [node name="PiernaIzq" type="Node3D" parent="Visuals" unique_id=1685322383]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.16, 0.9, 0)
 
@@ -174,13 +259,16 @@ height = 0.42
 sides = 12
 material = ExtResource("8_h0qdq")
 
-[node name="ZapatoIzq" type="CSGBox3D" parent="Visuals/PiernaIzq/RodillaIzq" unique_id=2141974162]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.42, 0.04)
+[node name="TobilloIzq" type="Node3D" parent="Visuals/PiernaIzq/RodillaIzq" unique_id=2141974160]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0.04)
+
+[node name="ZapatoIzq" type="CSGBox3D" parent="Visuals/PiernaIzq/RodillaIzq/TobilloIzq" unique_id=2141974162]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.02, 0)
 size = Vector3(0.12, 0.07, 0.26)
 material = ExtResource("9_i8iwx")
 
-[node name="ZapatoPuntaIzq" type="CSGSphere3D" parent="Visuals/PiernaIzq/RodillaIzq" unique_id=674433311]
-transform = Transform3D(0.95, 0, 0, 0, 0.5, 0, 0, 0, 1.25, 0, -0.41, 0.16)
+[node name="ZapatoPuntaIzq" type="CSGSphere3D" parent="Visuals/PiernaIzq/RodillaIzq/TobilloIzq" unique_id=674433311]
+transform = Transform3D(0.95, 0, 0, 0, 0.5, 0, 0, 0, 1.25, 0, -0.01, 0.12)
 radius = 0.062
 material = ExtResource("9_i8iwx")
 
@@ -204,95 +292,15 @@ height = 0.42
 sides = 12
 material = ExtResource("8_h0qdq")
 
-[node name="ZapatoDer" type="CSGBox3D" parent="Visuals/PiernaDer/RodillaDer" unique_id=76708379]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.42, 0.04)
+[node name="TobilloDer" type="Node3D" parent="Visuals/PiernaDer/RodillaDer" unique_id=76708370]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0.04)
+
+[node name="ZapatoDer" type="CSGBox3D" parent="Visuals/PiernaDer/RodillaDer/TobilloDer" unique_id=76708379]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.02, 0)
 size = Vector3(0.12, 0.07, 0.26)
 material = ExtResource("9_i8iwx")
 
-[node name="ZapatoPuntaDer" type="CSGSphere3D" parent="Visuals/PiernaDer/RodillaDer" unique_id=473827399]
-transform = Transform3D(0.95, 0, 0, 0, 0.5, 0, 0, 0, 1.25, 0, -0.41, 0.16)
+[node name="ZapatoPuntaDer" type="CSGSphere3D" parent="Visuals/PiernaDer/RodillaDer/TobilloDer" unique_id=473827399]
+transform = Transform3D(0.95, 0, 0, 0, 0.5, 0, 0, 0, 1.25, 0, -0.01, 0.12)
 radius = 0.062
 material = ExtResource("9_i8iwx")
-
-[node name="BrazoIzq" type="Node3D" parent="Visuals" unique_id=1284204187]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.34, 1.4, 0)
-
-[node name="BrazoSupIzq" type="CSGCylinder3D" parent="Visuals/BrazoIzq" unique_id=1691943728]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.17, 0)
-radius = 0.075
-height = 0.34
-sides = 12
-material = ExtResource("2_il520")
-
-[node name="CodoIzq" type="Node3D" parent="Visuals/BrazoIzq" unique_id=1359588870]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.34, 0)
-
-[node name="AntebrazoIzq" type="CSGCylinder3D" parent="Visuals/BrazoIzq/CodoIzq" unique_id=1995040213]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.16, 0)
-radius = 0.065
-height = 0.32
-sides = 12
-material = ExtResource("2_il520")
-
-[node name="PunoIzq" type="CSGCylinder3D" parent="Visuals/BrazoIzq/CodoIzq" unique_id=291196449]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.31, 0)
-radius = 0.068
-height = 0.035
-sides = 12
-material = ExtResource("3_im4db")
-
-[node name="ManoIzq" type="CSGBox3D" parent="Visuals/BrazoIzq/CodoIzq" unique_id=478483678]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.36, 0)
-size = Vector3(0.065, 0.08, 0.04)
-material = ExtResource("5_riryx")
-
-[node name="BrazoDer" type="Node3D" parent="Visuals" unique_id=1245048429]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.34, 1.4, 0)
-
-[node name="BrazoSupDer" type="CSGCylinder3D" parent="Visuals/BrazoDer" unique_id=149262985]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.17, 0)
-radius = 0.075
-height = 0.34
-sides = 12
-material = ExtResource("2_il520")
-
-[node name="CodoDer" type="Node3D" parent="Visuals/BrazoDer" unique_id=39016812]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.34, 0)
-
-[node name="AntebrazoDer" type="CSGCylinder3D" parent="Visuals/BrazoDer/CodoDer" unique_id=781179527]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.16, 0)
-radius = 0.065
-height = 0.32
-sides = 12
-material = ExtResource("2_il520")
-
-[node name="PunoDer" type="CSGCylinder3D" parent="Visuals/BrazoDer/CodoDer" unique_id=1906289713]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.31, 0)
-radius = 0.068
-height = 0.035
-sides = 12
-material = ExtResource("3_im4db")
-
-[node name="ManoDer" type="Node3D" parent="Visuals/BrazoDer/CodoDer" unique_id=1273477609]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.36, 0)
-
-[node name="ManoDerMesh" type="CSGBox3D" parent="Visuals/BrazoDer/CodoDer/ManoDer" unique_id=1652170366]
-size = Vector3(0.065, 0.08, 0.04)
-material = ExtResource("5_riryx")
-
-[node name="ReglaPivot" type="Node3D" parent="Visuals/BrazoDer/CodoDer/ManoDer" unique_id=1690524358]
-
-[node name="ReglaCuerpo" type="CSGBox3D" parent="Visuals/BrazoDer/CodoDer/ManoDer/ReglaPivot" unique_id=658747368]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0.1)
-size = Vector3(0.05, 1.05, 0.016)
-material = ExtResource("10_3ve4c")
-
-[node name="ReglaBorde" type="CSGBox3D" parent="Visuals/BrazoDer/CodoDer/ManoDer/ReglaPivot" unique_id=1670608817]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.026, 0.45, 0.1)
-size = Vector3(0.008, 1.05, 0.018)
-material = ExtResource("9_i8iwx")
-
-[node name="ReglaMango" type="CSGBox3D" parent="Visuals/BrazoDer/CodoDer/ManoDer/ReglaPivot" unique_id=167610679]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0.1)
-size = Vector3(0.065, 0.15, 0.03)
-material = ExtResource("2_il520")
