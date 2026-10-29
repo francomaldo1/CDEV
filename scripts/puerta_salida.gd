@@ -154,6 +154,8 @@ func _trigger_cinematic_fade_to_black() -> void:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		if master_bus != -1:
 			AudioServer.set_bus_volume_db(master_bus, 0.0)
+		if is_instance_valid(canvas):
+			canvas.queue_free()
 		get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
 	)
 
