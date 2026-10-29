@@ -54,6 +54,19 @@ func _ready() -> void:
 	_setup_loading_screen()
 
 func _setup_audio() -> void:
+	# Si venimos de completar y escapar del juego, el piano de victoria continúa sonando desde root
+	if HorrorAudio.has_completed_game:
+		sfx_player = AudioStreamPlayer.new()
+		sfx_player.name = "MenuSFX"
+		sfx_player.stream = typewriter_click_sfx
+		sfx_player.volume_db = -10.0
+		sfx_player.bus = &"Master"
+		add_child(sfx_player)
+		return
+
+	# Si es una sesión estándar o tras salir de una partida en curso, asegurar que el piano esté apagado
+	HorrorAudio.stop_ending_piano()
+
 	# Drone ambiental tenebroso
 	ambient_player = AudioStreamPlayer.new()
 	ambient_player.name = "MenuAmbientAudio"
@@ -753,6 +766,9 @@ func _on_play_pressed() -> void:
 	if is_loading_game:
 		return
 	is_loading_game = true
+	
+	# Detener y reiniciar estado del piano de victoria al iniciar una nueva partida
+	HorrorAudio.stop_ending_piano()
 	
 	if loading_screen:
 		loading_screen.visible = true

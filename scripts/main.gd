@@ -75,6 +75,9 @@ func _ready() -> void:
 	if moon_light:
 		original_moon_energy = moon_light.light_energy
 		
+	# Reiniciar música de final si venía sonando desde el menú
+	HorrorAudio.stop_ending_piano()
+		
 	_spawn_exit_door()
 	_spawn_tablero_electronica()
 	_spawn_nota_tablero()

@@ -24,6 +24,45 @@ static var _cached_creepy_steps: Array[AudioStream] = []
 static var _creepy_step_idx: int = 0
 static var _cached_panic_drone: AudioStreamWAV = null
 
+## Estado y reproductor de música de piano al terminar el juego (persiste en menú principal)
+static var has_completed_game: bool = false
+static var ending_piano_player: AudioStreamPlayer = null
+
+static func start_ending_piano(tree: SceneTree) -> void:
+	has_completed_game = true
+	if ending_piano_player != null and is_instance_valid(ending_piano_player):
+		if not ending_piano_player.playing:
+			ending_piano_player.play()
+		return
+		
+	var path = "res://321146__benpm__ambient-piano-music-5.mp3"
+	if not ResourceLoader.exists(path):
+		return
+		
+	var stream = load(path) as AudioStream
+	if not stream:
+		return
+		
+	ending_piano_player = AudioStreamPlayer.new()
+	ending_piano_player.name = "EndingPianoPlayer"
+	ending_piano_player.stream = stream
+	ending_piano_player.volume_db = -5.0
+	ending_piano_player.bus = &"Master"
+	ending_piano_player.finished.connect(func():
+		if is_instance_valid(ending_piano_player):
+			ending_piano_player.play()
+	)
+	if tree and tree.root:
+		tree.root.add_child(ending_piano_player)
+	ending_piano_player.play()
+
+static func stop_ending_piano() -> void:
+	has_completed_game = false
+	if ending_piano_player != null and is_instance_valid(ending_piano_player):
+		ending_piano_player.stop()
+		ending_piano_player.queue_free()
+		ending_piano_player = null
+
 static func get_spark_sound() -> AudioStreamWAV:
 	if _cached_spark == null:
 		_cached_spark = _generate_spark()

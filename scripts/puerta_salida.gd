@@ -135,9 +135,16 @@ func _trigger_cinematic_fade_to_black() -> void:
 		audio_tw.tween_method(func(v: float): AudioServer.set_bus_volume_db(master_bus, v), current_vol, -60.0, 1.8)
 		
 	# Secuencia de animación cinemática:
-	# A) Fade a negro de la escena (1.8s)
+	# A) Fade a negro de la escena y desvanecimiento del audio de juego (1.8s)
 	var fade_tw = create_tween()
 	fade_tw.tween_property(black_rect, "modulate:a", 1.0, 1.8).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	
+	# Al completarse el fade a negro: restaurar volumen maestro e iniciar música de piano
+	fade_tw.tween_callback(func():
+		if master_bus != -1:
+			AudioServer.set_bus_volume_db(master_bus, 0.0)
+		HorrorAudio.start_ending_piano(get_tree())
+	)
 	
 	# B) Fade in del mensaje "LOGRASTE ESCAPAR" una vez en negro (1.2s)
 	fade_tw.tween_property(escape_label, "modulate:a", 1.0, 1.2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
@@ -149,11 +156,9 @@ func _trigger_cinematic_fade_to_black() -> void:
 	fade_tw.tween_property(escape_label, "modulate:a", 0.0, 1.0).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 	fade_tw.tween_interval(0.5)
 	
-	# E) Transición limpia al menú principal
+	# E) Transición limpia al menú principal (el piano persiste en root)
 	fade_tw.tween_callback(func():
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		if master_bus != -1:
-			AudioServer.set_bus_volume_db(master_bus, 0.0)
 		if is_instance_valid(canvas):
 			canvas.queue_free()
 		get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
