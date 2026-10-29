@@ -71,13 +71,16 @@ func _update_display() -> void:
 		if i < digit_labels.size() and digit_labels[i]:
 			digit_labels[i].text = str(current_digits[i])
 
-func _unhandled_input(event: InputEvent) -> void:
-	if not visible or is_busy:
+func _input(event: InputEvent) -> void:
+	if not visible:
 		return
 		
-	if event.is_action_pressed("ui_cancel") or (event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE):
+	if event.is_action_pressed("ui_cancel") or (event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_ESCAPE):
 		_close_ui()
 		get_viewport().set_input_as_handled()
+		return
+		
+	if is_busy:
 		return
 		
 	if event is InputEventKey and event.pressed and not event.echo:

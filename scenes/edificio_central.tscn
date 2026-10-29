@@ -34,6 +34,7 @@
 [ext_resource type="PackedScene" path="res://scenes/commercial_drink_fridge.tscn" id="33_drink_fridge"]
 [ext_resource type="PackedScene" path="res://scenes/auto_suv.tscn" id="34_auto_suv"]
 [ext_resource type="PackedScene" path="res://scenes/auto_suspicious.tscn" id="35_auto_suspicious"]
+[ext_resource type="Material" path="res://materials/mat_suv_blue.tres" id="36_mat_suv_blue"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_nwxjt"]
 _surfaces = [{
@@ -503,7 +504,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.5, 0, -41)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.5, 0, -37.8)
 
 [node name="CartelN1" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=1364649239]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -49.5, 2.15, -32.84)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50.4, 2.15, -32.84)
 modulate = Color(1, 1, 1, 1)
 text = "AULA 101"
 font_size = 42
@@ -513,7 +514,7 @@ shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="CartelN2" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=1080808390]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.5, 2.15, -32.84)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.5, 2.15, -32.84)
 modulate = Color(1, 1, 1, 1)
 text = "AULA 102"
 font_size = 42
@@ -523,7 +524,7 @@ shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="CartelN3" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=2025261282]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 2.15, -32.84)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 2.15, -32.84)
 modulate = Color(1, 1, 1, 1)
 text = "AULA 103"
 font_size = 42
@@ -533,7 +534,7 @@ shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="CartelN4" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=1378147422]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.5, 2.15, -32.84)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5, 2.15, -32.84)
 modulate = Color(1, 1, 1, 1)
 text = "AULA 104"
 font_size = 42
@@ -759,7 +760,7 @@ transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 0, 17.2)
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 0, 20.4)
 
 [node name="CartelW1" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=673107816]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.8, 2.15, -23)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.8, 2.15, -24)
 modulate = Color(1, 1, 1, 1)
 text = "AULA 105"
 font_size = 42
@@ -769,7 +770,7 @@ shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="CartelW2" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=1527013993]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.8, 2.15, -9)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.8, 2.15, -10)
 modulate = Color(1, 1, 1, 1)
 text = "AULA 106"
 font_size = 42
@@ -779,7 +780,7 @@ shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="CartelW3" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=1530679552]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.8, 2.15, 5.5)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.8, 2.15, 4.5)
 modulate = Color(1, 1, 1, 1)
 text = "AULA 107"
 font_size = 42
@@ -789,7 +790,7 @@ shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="CartelW4" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=563844637]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.8, 2.15, 20.5)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.8, 2.15, 19.5)
 modulate = Color(1, 1, 1, 1)
 text = "AULA 108"
 font_size = 42
@@ -868,7 +869,7 @@ transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 0, -16.8)
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 0, -13.6)
 
 [node name="CartelWI1" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=1963864206]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -37.2, 2.15, -14)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -37.2, 2.15, -15)
 modulate = Color(1, 1, 1, 1)
 text = "AULA 109"
 font_size = 42
@@ -906,7 +907,7 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -37.
 modulate = Color(1, 1, 1, 1)
 text = "LABORATORIO CENTRAL
 DEPARTAMENTO
-INGENIERÍA ELECTRÓNICA"
+INGENIERÃA ELECTRÃ“NICA"
 font_size = 42
 outline_size = 5
 
@@ -980,7 +981,7 @@ transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 0, 18.2)
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 0, 21.4)
 
 [node name="CartelWI2" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=737835908]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -37.2, 2.15, 15)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -37.2, 2.15, 16)
 modulate = Color(1, 1, 1, 1)
 text = "AULA 110"
 font_size = 42
@@ -1059,7 +1060,7 @@ transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 0, -16.8)
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 0, -13.6)
 
 [node name="CartelEI1" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=311098536]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 37.2, 2.15, -14)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 37.2, 2.15, -15)
 modulate = Color(1, 1, 1, 1)
 text = "AULA 111"
 font_size = 42
@@ -1120,7 +1121,7 @@ transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 0, -0.8)
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 0, 2.4)
 
 [node name="CartelEI2" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=1980685760]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 37.2, 2.15, 3.5)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 37.2, 2.15, 2)
 modulate = Color(1, 1, 1, 1)
 text = "AULA 112"
 font_size = 42
@@ -1175,7 +1176,7 @@ transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 0, 15.2)
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 0, 18.4)
 
 [node name="CartelEI3" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=1487175149]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 37.2, 2.15, 21)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 37.2, 2.15, 18.5)
 modulate = Color(1, 1, 1, 1)
 text = "AULA 113"
 font_size = 42
@@ -1284,7 +1285,7 @@ transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 0, -21.8)
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 0, -18.6)
 
 [node name="CartelE1" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=522957053]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 46.8, 2.15, -27)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 46.8, 2.15, -28)
 modulate = Color(1, 1, 1, 1)
 text = "AULA 114"
 font_size = 42
@@ -2351,7 +2352,7 @@ omni_range = 10.0
 [node name="CartelCafe" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=1587177937]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 46.83, 2.15, -5.2)
 modulate = Color(1, 1, 1, 1)
-text = "CAFETERÍA"
+text = "CAFETERÃA"
 font_size = 42
 outline_size = 5
 
@@ -2410,7 +2411,7 @@ transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 0, 17.2)
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 0, 20.4)
 
 [node name="CartelE2" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=2011378913]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 46.8, 2.15, 20)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 46.8, 2.15, 19.5)
 modulate = Color(1, 1, 1, 1)
 text = "AULA 115"
 font_size = 42
@@ -2456,7 +2457,7 @@ size = Vector3(6, 1.1, 1.5)
 material = ExtResource("7_oluwi")
 
 [node name="CartelFotoO" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=1679944869]
-transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -17.0, 2.15, 34.84)
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -32.8, 2.15, 34.84)
 modulate = Color(1, 1, 1, 1)
 text = "FOTOCOPIADORA 1"
 font_size = 42
@@ -2502,7 +2503,7 @@ size = Vector3(6, 1.1, 1.5)
 material = ExtResource("7_oluwi")
 
 [node name="CartelFotoE" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=1124235771]
-transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 23.0, 2.15, 34.84)
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 32.8, 2.15, 34.84)
 modulate = Color(1, 1, 1, 1)
 text = "FOTOCOPIADORA 2"
 font_size = 42
@@ -3911,9 +3912,9 @@ size = Vector3(0.3, 4.5, 12)
 material = ExtResource("4_0kga5")
 
 [node name="CartelBedelia" type="Label3D" parent="PrimerPiso/OficinasP1" unique_id=502832218]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37.0, 6.65, -32.84)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.0, 6.65, -32.84)
 modulate = Color(1, 1, 1, 1)
-text = "BEDELÍA GENERAL"
+text = "BEDELÃA GENERAL"
 font_size = 42
 outline_size = 5
 
@@ -3921,9 +3922,9 @@ shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="CartelDireccion" type="Label3D" parent="PrimerPiso/OficinasP1" unique_id=274687750]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0, 6.65, -32.84)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0, 6.65, -32.84)
 modulate = Color(1, 1, 1, 1)
-text = "DIRECCIÓN DEPARTAMENTAL"
+text = "DIRECCIÃ“N DEPARTAMENTAL"
 font_size = 42
 outline_size = 5
 
@@ -3979,7 +3980,7 @@ size = Vector3(18, 4.5, 0.3)
 material = ExtResource("4_0kga5")
 
 [node name="CartelSistemas" type="Label3D" parent="PrimerPiso/OficinasP1" unique_id=583866495]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.8, 6.65, -9)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.8, 6.65, -17)
 modulate = Color(1, 1, 1, 1)
 text = "DEPTO. ING. EN SISTEMAS"
 font_size = 42
@@ -3989,9 +3990,9 @@ shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="CartelDeptoElec" type="Label3D" parent="PrimerPiso/OficinasP1" unique_id=568587588]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.8, 6.65, 20.5)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.8, 6.65, 12)
 modulate = Color(1, 1, 1, 1)
-text = "DEPTO. ING. ELECTRÓNICA"
+text = "DEPTO. ING. ELECTRÃ“NICA"
 font_size = 42
 outline_size = 5
 
@@ -4047,9 +4048,9 @@ size = Vector3(18, 4.5, 0.3)
 material = ExtResource("4_0kga5")
 
 [node name="CartelCETRA" type="Label3D" parent="PrimerPiso/OficinasP1" unique_id=1703765751]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 46.8, 6.65, -18)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 46.8, 6.65, -25.5)
 modulate = Color(1, 1, 1, 1)
-text = "CETRA (TRÁMITES)"
+text = "CETRA (TRÃMITES)"
 font_size = 42
 outline_size = 5
 
@@ -4057,7 +4058,7 @@ shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="CartelBiblio" type="Label3D" parent="PrimerPiso/OficinasP1" unique_id=1627306111]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 46.8, 6.65, 18)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 46.8, 6.65, 9.5)
 modulate = Color(1, 1, 1, 1)
 text = "BIBLIOTECA CENTRAL"
 font_size = 42
@@ -4407,7 +4408,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.5, 9, -41)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.5, 9, -37.8)
 
 [node name="P2_CartelN1" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=930347462]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -49.5, 11.15, -32.84)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50.4, 11.15, -32.84)
 modulate = Color(1, 1, 1, 1)
 text = "AULA 201"
 font_size = 42
@@ -4417,7 +4418,7 @@ shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="P2_CartelN2" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=607472082]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.5, 11.15, -32.84)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.5, 11.15, -32.84)
 modulate = Color(1, 1, 1, 1)
 text = "AULA 202"
 font_size = 42
@@ -4427,7 +4428,7 @@ shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="P2_CartelN3" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1341745902]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 11.15, -32.84)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 11.15, -32.84)
 modulate = Color(1, 1, 1, 1)
 text = "AULA 203"
 font_size = 42
@@ -4437,7 +4438,7 @@ shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="P2_CartelN4" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=464825755]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.5, 11.15, -32.84)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5, 11.15, -32.84)
 modulate = Color(1, 1, 1, 1)
 text = "AULA 204"
 font_size = 42
@@ -4663,7 +4664,7 @@ transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 9, 17.2)
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 9, 20.4)
 
 [node name="P2_CartelW1" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2141046590]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.8, 11.15, -23)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.8, 11.15, -24)
 modulate = Color(1, 1, 1, 1)
 text = "AULA 205"
 font_size = 42
@@ -4673,7 +4674,7 @@ shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="P2_CartelW2" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1832643124]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.8, 11.15, -9)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.8, 11.15, -10)
 modulate = Color(1, 1, 1, 1)
 text = "AULA 206"
 font_size = 42
@@ -4683,7 +4684,7 @@ shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="P2_CartelW3" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=759002997]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.8, 11.15, 5.5)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.8, 11.15, 4.5)
 modulate = Color(1, 1, 1, 1)
 text = "AULA 207"
 font_size = 42
@@ -4693,7 +4694,7 @@ shaded = false
 double_sided = false
 alpha_cut = 1
 [node name="P2_CartelW4" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=585389521]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.8, 11.15, 20.5)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.8, 11.15, 19.5)
 modulate = Color(1, 1, 1, 1)
 text = "AULA 208"
 font_size = 42
@@ -4772,7 +4773,7 @@ transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 9, -16.8)
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 9, -13.6)
 
 [node name="P2_CartelWI1" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1445370967]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -37.2, 11.15, -14)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -37.2, 11.15, -15)
 modulate = Color(1, 1, 1, 1)
 text = "AULA 209"
 font_size = 42
@@ -4854,7 +4855,7 @@ transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 9, 3.6)
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 9, 6.8)
 
 [node name="P2_Cartel210" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2000244830]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -37.2, 11.15, 3.5)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -37.2, 11.15, 2.4)
 modulate = Color(1, 1, 1, 1)
 text = "AULA 210 (MAGNA)"
 font_size = 42
@@ -4909,7 +4910,7 @@ transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 9, 18.2)
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 9, 21.4)
 
 [node name="P2_CartelWI2" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1988506699]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -37.2, 11.15, 15)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -37.2, 11.15, 16)
 modulate = Color(1, 1, 1, 1)
 text = "AULA 211"
 font_size = 42
@@ -4988,7 +4989,7 @@ transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 9, -16.8)
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 9, -13.6)
 
 [node name="P2_CartelEI1" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1359062122]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 37.2, 11.15, -14)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 37.2, 11.15, -15)
 modulate = Color(1, 1, 1, 1)
 text = "AULA 212"
 font_size = 42
@@ -5049,7 +5050,7 @@ transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 9, -0.8)
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 9, 2.4)
 
 [node name="P2_CartelEI2" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=921895025]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 37.2, 11.15, 3.5)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 37.2, 11.15, 2)
 modulate = Color(1, 1, 1, 1)
 text = "AULA 213"
 font_size = 42
@@ -5104,7 +5105,7 @@ transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 9, 15.2)
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 9, 18.4)
 
 [node name="P2_CartelEI3" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=491143860]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 37.2, 11.15, 21)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 37.2, 11.15, 18.5)
 modulate = Color(1, 1, 1, 1)
 text = "AULA 214"
 font_size = 42
@@ -5213,7 +5214,7 @@ transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9, -21.8)
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9, -18.6)
 
 [node name="P2_CartelE1" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1595651857]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 46.8, 11.15, -27)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 46.8, 11.15, -28)
 modulate = Color(1, 1, 1, 1)
 text = "AULA 215"
 font_size = 42
@@ -5304,7 +5305,7 @@ transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9, 1.8)
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9, 5)
 
 [node name="P2_CartelE2" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1654052261]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 46.8, 11.15, -5.2)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 46.8, 11.15, -4.5)
 modulate = Color(1, 1, 1, 1)
 text = "AULA 216"
 font_size = 42
@@ -5368,7 +5369,7 @@ transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9, 17.2)
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9, 20.4)
 
 [node name="P2_CartelE3" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1165130565]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 46.8, 11.15, 20)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 46.8, 11.15, 19.5)
 modulate = Color(1, 1, 1, 1)
 text = "AULA 217"
 font_size = 42
@@ -5432,7 +5433,7 @@ transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -26.5, 9, 39)
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -22.5, 9, 39)
 
 [node name="P2_CartelSO" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=893475807]
-transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -33.0, 11.15, 34.84)
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -34.2, 11.15, 34.84)
 modulate = Color(1, 1, 1, 1)
 text = "AULA 218"
 font_size = 42
@@ -5487,7 +5488,7 @@ transform = Transform3D(-2.0000002, 0, -1.7484557e-07, 0, 2, 0, 1.7484557e-07, 0
 transform = Transform3D(-2.0000002, 0, -1.7484557e-07, 0, 2, 0, 1.7484557e-07, 0, -2.0000002, 47.40239, 9.115855, 39.3736)
 
 [node name="P2_CartelSE" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=641378739]
-transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 33.0, 11.15, 34.84)
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 34.2, 11.15, 34.84)
 modulate = Color(1, 1, 1, 1)
 text = "AULA 219"
 font_size = 42
@@ -5507,7 +5508,7 @@ material = ExtResource("4_0kga5")
 [node name="CartelEntradaCafe" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria/CafeteriaP2" unique_id=1567671210]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 13.1, 34.91)
 modulate = Color(1, 1, 1, 1)
-text = "CAFETERÍA Y COMEDOR
+text = "CAFETERÃA Y COMEDOR
 PISO 2"
 font_size = 42
 outline_size = 5
@@ -12191,3 +12192,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -58.5, 0, 54.5)
 
 [node name="AutoSUV_2" parent="ExteriorEntrada" unique_id=982060 instance=ExtResource("34_auto_suv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 0, 54.5)
+custom_material = ExtResource("36_mat_suv_blue")

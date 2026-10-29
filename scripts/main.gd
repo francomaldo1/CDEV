@@ -299,7 +299,7 @@ func _setup_p2_safe_and_chalkboards() -> void:
 		var caja_scene = preload("res://scenes/caja_fuerte.tscn")
 		caja = caja_scene.instantiate()
 		caja.name = "CajaFuerte"
-		caja.position = Vector3(2.15, 10.10, 81.0)
+		caja.position = Vector3(2.15, 10.10, 80.20)
 		caja.rotation_degrees = Vector3(0, 180, 0)
 		add_child(caja)
 	if caja and "safe_code" in caja:

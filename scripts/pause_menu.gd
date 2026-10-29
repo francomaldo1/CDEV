@@ -32,19 +32,33 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel") or (event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_ESCAPE):
-		# Si hay un modal secundario abierto, cerrarlo primero
+		# Si la interfaz del candado/caja fuerte está abierta, cerrarla y NO abrir pausa
+		var ui_candado = get_tree().root.find_child("UICandado", true, false)
+		if ui_candado and ui_candado.visible:
+			if ui_candado.has_method("_close_ui"):
+				ui_candado._close_ui()
+			else:
+				ui_candado.visible = false
+			get_viewport().set_input_as_handled()
+			return
+
+		# Si hay un modal secundario del menú de pausa abierto, cerrarlo primero
 		if active_modal and active_modal.visible:
 			_close_modal()
 			get_viewport().set_input_as_handled()
 			return
 			
-		# Verificar si el jugador está vivo o si el juego no terminó
+		# Verificar si el HUD tiene modal activo o si el juego terminó
 		var hud = get_tree().root.find_child("HUD", true, false)
 		if hud:
-			# Si el panel de victoria está visible, ignorar
 			var vic = hud.get_node_or_null("VictoryPanel")
 			if vic and vic.visible:
 				return
+			if hud.has_method("is_modal_active") and hud.is_modal_active():
+				if hud.has_method("close_active_modal"):
+					hud.close_active_modal()
+					get_viewport().set_input_as_handled()
+					return
 		
 		toggle_pause(!is_paused)
 		get_viewport().set_input_as_handled()
@@ -59,7 +73,13 @@ func toggle_pause(enable: bool) -> void:
 		if active_modal:
 			_close_modal()
 	else:
+		var ui_candado = get_tree().root.find_child("UICandado", true, false)
+		if ui_candado and ui_candado.visible:
+			ui_candado._close_ui()
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		var player = get_tree().get_first_node_in_group("player")
+		if is_instance_valid(player) and player.has_method("set_frozen"):
+			player.set_frozen(false)
 
 func _build_ui() -> void:
 	# Fondo oscurecido con viñeta
