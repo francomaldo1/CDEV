@@ -1572,8 +1572,6 @@ func _cut_screamer_audio() -> void:
 	if is_instance_valid(player):
 		if player.has_method("fade_jumpscare_screamer"):
 			player.fade_jumpscare_screamer(1.0)
-		if player.has_method("trigger_post_screamer_heartbeat"):
-			player.trigger_post_screamer_heartbeat(25.0)
 
 ## =====================================================================
 ## SUSTO CINEMÁTICO: CORRIDA POR EL PASILLO (4TO EXAMEN)
@@ -1748,6 +1746,9 @@ func start_screamer_charge() -> void:
 			velocity.z = dir_p.z * 42.0
 
 func _end_screamer_charge() -> void:
+	if is_screamer_charging:
+		if is_instance_valid(player) and player.has_method("trigger_post_screamer_heartbeat"):
+			player.trigger_post_screamer_heartbeat(25.0)
 	is_screamer_charging = false
 	screamer_charge_timer = 0.0
 	chase_speed = base_chase_speed + (speed_boost_count * 0.85)
