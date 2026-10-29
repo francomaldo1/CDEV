@@ -31,6 +31,10 @@
 [ext_resource type="ArrayMesh" path="res://models/mesh_peronachos.tres" id="30_mesh_peronachos"]
 [ext_resource type="PackedScene" path="res://scenes/aula_pupitre.tscn" id="31_pupitre"]
 [ext_resource type="PackedScene" path="res://scenes/aula_pizarron.tscn" id="32_pizarron"]
+[ext_resource type="PackedScene" path="res://scenes/commercial_drink_fridge.tscn" id="33_drink_fridge"]
+[ext_resource type="PackedScene" path="res://scenes/auto_suv.tscn" id="34_auto_suv"]
+[ext_resource type="PackedScene" path="res://scenes/auto_suspicious.tscn" id="35_auto_suspicious"]
+[ext_resource type="Material" path="res://materials/mat_suv_blue.tres" id="36_mat_suv_blue"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_nwxjt"]
 _surfaces = [{
@@ -500,33 +504,45 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.5, 0, -41)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.5, 0, -37.8)
 
 [node name="CartelN1" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=1364649239]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 3.2, -32.7)
-modulate = Color(1, 0.9, 0.45, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50.2, 2.15, -32.84)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 101"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="CartelN2" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=1080808390]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 3.2, -32.7)
-modulate = Color(1, 0.9, 0.45, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.2, 2.15, -32.84)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 102"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="CartelN3" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=2025261282]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 3.2, -32.7)
-modulate = Color(1, 0.9, 0.45, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 2.15, -32.84)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 103"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="CartelN4" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=1378147422]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.5, 3.2, -32.7)
-modulate = Color(1, 0.9, 0.45, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.8, 2.15, -32.84)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 104"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="AulaW1_Este_F" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1661430058]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 2.25, -30.2)
 use_collision = true
@@ -744,33 +760,45 @@ transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 0, 17.2)
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 0, 20.4)
 
 [node name="CartelW1" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=673107816]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.7, 3.2, -26)
-modulate = Color(1, 0.9, 0.45, 1)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.8, 2.15, -23.7)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 105"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="CartelW2" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=1527013993]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.7, 3.2, -12)
-modulate = Color(1, 0.9, 0.45, 1)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.8, 2.15, -9.7)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 106"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="CartelW3" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=1530679552]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.7, 3.2, 2.5)
-modulate = Color(1, 0.9, 0.45, 1)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.8, 2.15, 4.8)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 107"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="CartelW4" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=563844637]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.7, 3.2, 17.5)
-modulate = Color(1, 0.9, 0.45, 1)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.8, 2.15, 19.8)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 108"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="BloqueWI_Norte" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=303529623]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 2.25, -24)
 use_collision = true
@@ -841,12 +869,15 @@ transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 0, -16.8)
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 0, -13.6)
 
 [node name="CartelWI1" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=1963864206]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -37.3, 3.2, -17)
-modulate = Color(1, 0.9, 0.45, 1)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -37.2, 2.15, -14.7)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 109"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="Lab_Oeste_F" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=185162271]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 2.25, -5.45)
 use_collision = true
@@ -873,55 +904,16 @@ material = ExtResource("5_68yaw")
 
 [node name="CartelLabOficial" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=254501636]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -37.3, 2.2, -4.5)
-modulate = Color(1, 0.9, 0.45, 1)
+modulate = Color(1, 1, 1, 1)
 text = "LABORATORIO CENTRAL
 DEPARTAMENTO
-INGENIERÍA ELECTRÓNICA"
+INGENIERÃA ELECTRÃ“NICA"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
-[node name="LabLocker" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=830065084]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37.6, 0.9, -8)
-use_collision = true
-size = Vector3(0.6, 1.8, 0.8)
-material = ExtResource("6_rgebg")
-
-[node name="LabLocker2" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=151536376]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37.6, 0.9, -32.41532)
-use_collision = true
-size = Vector3(0.6, 1.8, 0.8)
-material = ExtResource("6_rgebg")
-
-[node name="LabLocker3" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=219589177]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.9473, 0.9, -32.41532)
-use_collision = true
-size = Vector3(0.6, 1.8, 0.8)
-material = ExtResource("6_rgebg")
-
-[node name="LabLocker4" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1348302844]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.042897, 0.9, -32.41532)
-use_collision = true
-size = Vector3(0.6, 1.8, 0.8)
-material = ExtResource("6_rgebg")
-
-[node name="LabLocker5" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1766295888]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.042897, 10.084568, -32.527336)
-use_collision = true
-size = Vector3(0.6, 1.8, 0.8)
-material = ExtResource("6_rgebg")
-
-[node name="LabLocker6" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1106993960]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.3105545, 10.084568, -32.527336)
-use_collision = true
-size = Vector3(0.6, 1.8, 0.8)
-material = ExtResource("6_rgebg")
-
-[node name="LabLocker7" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=791847616]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.664997, 10.084568, -32.527336)
-use_collision = true
-size = Vector3(0.6, 1.8, 0.8)
-material = ExtResource("6_rgebg")
-
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="MesadaLab_0" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1363707429]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 0.45, -6)
 use_collision = true
@@ -989,12 +981,15 @@ transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 0, 18.2)
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 0, 21.4)
 
 [node name="CartelWI2" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=737835908]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -37.3, 3.2, 18)
-modulate = Color(1, 0.9, 0.45, 1)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -37.2, 2.15, 15.7)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 110"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="BloqueEI_Norte" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=515037942]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 2.25, -24)
 use_collision = true
@@ -1065,12 +1060,15 @@ transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 0, -16.8)
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 0, -13.6)
 
 [node name="CartelEI1" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=311098536]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 37.3, 3.2, -16)
-modulate = Color(1, 0.9, 0.45, 1)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 37.2, 2.15, -13.7)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 111"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="AulaEI2_Este_F" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=929343910]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37, 2.25, -4.7)
 use_collision = true
@@ -1123,12 +1121,15 @@ transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 0, -0.8)
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 0, 2.4)
 
 [node name="CartelEI2" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=1980685760]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 37.3, 3.2, 0)
-modulate = Color(1, 0.9, 0.45, 1)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 37.2, 2.15, 2.3)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 112"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="AulaEI3_Este_F" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1680706358]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37, 2.25, 11.55)
 use_collision = true
@@ -1175,12 +1176,15 @@ transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 0, 15.2)
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 0, 18.4)
 
 [node name="CartelEI3" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=1487175149]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 37.3, 3.2, 16.5)
-modulate = Color(1, 0.9, 0.45, 1)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 37.2, 2.15, 18.8)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 113"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="AulaE1_Oeste_F" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1684146918]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47, 2.25, -38.2)
 use_collision = true
@@ -1281,12 +1285,15 @@ transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 0, -21.8)
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 0, -18.6)
 
 [node name="CartelE1" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=522957053]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 46.7, 3.2, -30)
-modulate = Color(1, 0.9, 0.45, 1)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 46.8, 2.15, -27.7)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 114"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="Cafe_Oeste_F" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=2109783227]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47, 2.25, -9.45)
 use_collision = true
@@ -1359,29 +1366,11 @@ use_collision = true
 size = Vector3(4.5, 0.3, 0.4)
 material = ExtResource("15_bw001")
 
-[node name="CafePB_Heladera_CocaCola" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1668240514]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 1.15, 9.4)
-use_collision = true
-size = Vector3(1.1, 2.3, 0.75)
-material = ExtResource("10_teuvw")
+[node name="CafePB_Heladera_1" parent="PlantaBaja/HabitacionesPB" unique_id=1668240514 instance=ExtResource("33_drink_fridge")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 48.1, 1.08, 9.39)
 
-[node name="CafePB_Heladera_CocaCola_Vidrio" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1260163248]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 1.15, 9)
-use_collision = true
-size = Vector3(0.95, 2, 0.05)
-material = ExtResource("5_68yaw")
-
-[node name="CafePB_Heladera_Bebidas" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=250752880]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 49.4, 1.15, 9.4)
-use_collision = true
-size = Vector3(1.1, 2.3, 0.75)
-material = ExtResource("9_t4cw7")
-
-[node name="CafePB_Heladera_Bebidas_Vidrio" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=416992238]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 49.4, 1.15, 9)
-use_collision = true
-size = Vector3(0.95, 2, 0.05)
-material = ExtResource("5_68yaw")
+[node name="CafePB_Heladera_2" parent="PlantaBaja/HabitacionesPB" unique_id=250752880 instance=ExtResource("33_drink_fridge")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 49.4, 1.08, 9.39)
 
 [node name="CafePB_Estanteria_PosteIzq" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1252760980]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50.89, 0.7, 4.05)
@@ -2322,37 +2311,54 @@ material = ExtResource("11_g4jqe")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53, 3.8, -9)
 light_color = Color(1, 0.96, 0.88, 1)
 light_energy = 0.28
-shadow_enabled = true
 omni_range = 12.0
 
 [node name="LuzCafePB_N2" type="OmniLight3D" parent="PlantaBaja/HabitacionesPB" unique_id=1548536911]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 3.8, -9)
 light_color = Color(1, 0.96, 0.88, 1)
 light_energy = 0.28
-shadow_enabled = true
 omni_range = 12.0
 
 [node name="LuzCafePB_S1" type="OmniLight3D" parent="PlantaBaja/HabitacionesPB" unique_id=1965485496]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 52, 3.8, 6.5)
 light_color = Color(1, 0.96, 0.88, 1)
 light_energy = 0.28
-shadow_enabled = true
 omni_range = 12.0
 
 [node name="LuzCafePB_S2" type="OmniLight3D" parent="PlantaBaja/HabitacionesPB" unique_id=2135417584]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 3.8, 6.5)
 light_color = Color(1, 0.96, 0.88, 1)
 light_energy = 0.25
-shadow_enabled = true
 omni_range = 12.0
 
-[node name="CartelCafe" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=1587177937]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 46.7, 3.2, -2.5)
-modulate = Color(1, 0.9, 0.45, 1)
-text = "CAFETERÍA"
-font_size = 42
-outline_size = 10
+[node name="LuzCafePB_M1" type="OmniLight3D" parent="PlantaBaja/HabitacionesPB" unique_id=1948536912]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.5, 3.8, -1.3)
+light_color = Color(1, 0.96, 0.88, 1)
+light_energy = 0.28
+omni_range = 12.0
 
+[node name="LuzCafePB_M2" type="OmniLight3D" parent="PlantaBaja/HabitacionesPB" unique_id=1948536913]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.5, 3.8, -1.3)
+light_color = Color(1, 0.96, 0.88, 1)
+light_energy = 0.28
+omni_range = 12.0
+
+[node name="LuzCafePB_Peronachos" type="OmniLight3D" parent="PlantaBaja/HabitacionesPB" unique_id=1948536914]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.1, 3.8, 3.2)
+light_color = Color(1, 0.96, 0.88, 1)
+light_energy = 0.32
+omni_range = 10.0
+
+[node name="CartelCafe" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=1587177937]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 46.83, 2.15, -5.2)
+modulate = Color(1, 1, 1, 1)
+text = "CAFETERÃA"
+font_size = 42
+outline_size = 5
+
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="AulaE2_Oeste_F" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=526246925]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47, 2.25, 13.05)
 use_collision = true
@@ -2405,12 +2411,15 @@ transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 0, 17.2)
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 0, 20.4)
 
 [node name="CartelE2" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=2011378913]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 46.7, 3.2, 17.5)
-modulate = Color(1, 0.9, 0.45, 1)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 46.8, 2.15, 19.8)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 115"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="FotoO_Norte_L" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=773060415]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.7, 2.25, 35)
 use_collision = true
@@ -2448,12 +2457,15 @@ size = Vector3(6, 1.1, 1.5)
 material = ExtResource("7_oluwi")
 
 [node name="CartelFotoO" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=1679944869]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -35, 3.2, 34.7)
-modulate = Color(1, 0.9, 0.45, 1)
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -32.0, 2.15, 34.84)
+modulate = Color(1, 1, 1, 1)
 text = "FOTOCOPIADORA 1"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="FotoE_Norte_L" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=1987202399]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.8, 2.25, 35)
 use_collision = true
@@ -2491,12 +2503,15 @@ size = Vector3(6, 1.1, 1.5)
 material = ExtResource("7_oluwi")
 
 [node name="CartelFotoE" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=1124235771]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 35, 3.2, 34.7)
-modulate = Color(1, 0.9, 0.45, 1)
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 32.0, 2.15, 34.84)
+modulate = Color(1, 1, 1, 1)
 text = "FOTOCOPIADORA 2"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="Aud_ZocaloBase" type="CSGBox3D" parent="PlantaBaja/HabitacionesPB" unique_id=980001]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.06, 35)
 use_collision = true
@@ -2851,13 +2866,16 @@ size = Vector3(3.6, 0.88, 0.04)
 material = ExtResource("5_68yaw")
 
 [node name="CartelAudEntrada" type="Label3D" parent="PlantaBaja/HabitacionesPB" unique_id=939616532]
-transform = Transform3D(-1, 0, -8.281776e-08, 0, 1, 0, 8.742278e-08, 0, -0.9473248, 0, 3.95, 34.78)
-modulate = Color(1, 0.9, 0.45, 1)
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 3.95, 34.78)
+modulate = Color(1, 1, 1, 1)
 text = "AUDITORIO CENTRAL"
 font_size = 44
-outline_size = 10
+outline_size = 5
 metadata/_edit_group_ = true
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="PrimerPiso" type="Node3D" parent="." unique_id=1653019584]
 
 [node name="PisoNorte" type="CSGBox3D" parent="PrimerPiso" unique_id=2133062301]
@@ -2908,17 +2926,373 @@ use_collision = true
 size = Vector3(48, 0.2, 49)
 material = ExtResource("3_t6nnw")
 
-[node name="ExtNorteOeste" type="CSGBox3D" parent="PrimerPiso" unique_id=330799928]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 6.75, -45)
+[node name="VentanasNorteP1" type="Node3D" parent="PrimerPiso" unique_id=711000]
+
+[node name="P1_NorteOeste_Antepecho" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711001]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 5.05, -45)
 use_collision = true
-size = Vector3(102, 4.5, 0.3)
+size = Vector3(102, 1.1, 0.3)
 material = ExtResource("4_0kga5")
 
-[node name="ExtNorteEste" type="CSGBox3D" parent="PrimerPiso" unique_id=1703796201]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56, 6.75, -45)
+[node name="P1_NorteOeste_SillTrim" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711002]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 5.61, -45)
 use_collision = true
-size = Vector3(18, 4.5, 0.3)
+size = Vector3(102, 0.04, 0.36)
+material = ExtResource("26_zocalo")
+
+[node name="P1_NorteOeste_Dintel" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711003]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 8.3, -45)
+use_collision = true
+size = Vector3(102, 1.2, 0.3)
 material = ExtResource("4_0kga5")
+
+[node name="P1_Norte_CornerW" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711004]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -62.5, 6.665, -45)
+use_collision = true
+size = Vector3(5, 2.07, 0.3)
+material = ExtResource("4_0kga5")
+
+[node name="P1_Norte_DivBedDir" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711005]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 6.665, -45)
+use_collision = true
+size = Vector3(2, 2.07, 0.32)
+material = ExtResource("4_0kga5")
+
+[node name="P1_Norte_CornerE" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711006]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 6.665, -45)
+use_collision = true
+size = Vector3(4, 2.07, 0.3)
+material = ExtResource("4_0kga5")
+
+[node name="P1_Norte_Pilar_0" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711010]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 6.665, -45)
+use_collision = true
+size = Vector3(1.2, 2.07, 0.32)
+material = ExtResource("4_0kga5")
+
+[node name="P1_Norte_Pilar_1" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711011]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39, 6.665, -45)
+use_collision = true
+size = Vector3(1.2, 2.07, 0.32)
+material = ExtResource("4_0kga5")
+
+[node name="P1_Norte_Pilar_2" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711012]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 6.665, -45)
+use_collision = true
+size = Vector3(1.2, 2.07, 0.32)
+material = ExtResource("4_0kga5")
+
+[node name="P1_Norte_Pilar_3" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711013]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 6.665, -45)
+use_collision = true
+size = Vector3(1.2, 2.07, 0.32)
+material = ExtResource("4_0kga5")
+
+[node name="P1_Norte_Pilar_4" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711014]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 6.665, -45)
+use_collision = true
+size = Vector3(1.2, 2.07, 0.32)
+material = ExtResource("4_0kga5")
+
+[node name="P1_Norte_Pilar_5" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711015]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 6.665, -45)
+use_collision = true
+size = Vector3(1.2, 2.07, 0.32)
+material = ExtResource("4_0kga5")
+
+[node name="P1_Norte_Vidrio_0" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711016]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55.3, 6.665, -45)
+use_collision = true
+size = Vector3(8.2, 2.05, 0.06)
+material = ExtResource("5_68yaw")
+
+[node name="P1_Norte_RailInf_0" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711017]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55.3, 5.65, -45)
+use_collision = true
+size = Vector3(8.2, 0.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Norte_RailSup_0" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711018]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55.3, 7.68, -45)
+use_collision = true
+size = Vector3(8.2, 0.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Norte_Parteluz1_0" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711019]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57.35, 6.665, -45)
+use_collision = true
+size = Vector3(0.06, 2.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Norte_Parteluz2_0" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711020]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -53.25, 6.665, -45)
+use_collision = true
+size = Vector3(0.06, 2.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Norte_Vidrio_1" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711021]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.5, 6.665, -45)
+use_collision = true
+size = Vector3(9.8, 2.05, 0.06)
+material = ExtResource("5_68yaw")
+
+[node name="P1_Norte_RailInf_1" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711022]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.5, 5.65, -45)
+use_collision = true
+size = Vector3(9.8, 0.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Norte_RailSup_1" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711023]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.5, 7.68, -45)
+use_collision = true
+size = Vector3(9.8, 0.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Norte_Parteluz1_1" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711024]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46.95, 6.665, -45)
+use_collision = true
+size = Vector3(0.06, 2.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Norte_Parteluz2_1" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711025]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42.05, 6.665, -45)
+use_collision = true
+size = Vector3(0.06, 2.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Norte_Vidrio_2" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711026]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33, 6.665, -45)
+use_collision = true
+size = Vector3(10.8, 2.05, 0.06)
+material = ExtResource("5_68yaw")
+
+[node name="P1_Norte_RailInf_2" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711027]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33, 5.65, -45)
+use_collision = true
+size = Vector3(10.8, 0.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Norte_RailSup_2" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711028]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33, 7.68, -45)
+use_collision = true
+size = Vector3(10.8, 0.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Norte_Parteluz1_2" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711029]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.7, 6.665, -45)
+use_collision = true
+size = Vector3(0.06, 2.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Norte_Parteluz2_2" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711030]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.3, 6.665, -45)
+use_collision = true
+size = Vector3(0.06, 2.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Norte_Vidrio_3" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711031]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 6.665, -45)
+use_collision = true
+size = Vector3(10.8, 2.05, 0.06)
+material = ExtResource("5_68yaw")
+
+[node name="P1_Norte_RailInf_3" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711032]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 5.65, -45)
+use_collision = true
+size = Vector3(10.8, 0.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Norte_RailSup_3" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711033]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 7.68, -45)
+use_collision = true
+size = Vector3(10.8, 0.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Norte_Parteluz1_3" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711034]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.7, 6.665, -45)
+use_collision = true
+size = Vector3(0.06, 2.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Norte_Parteluz2_3" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711035]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.3, 6.665, -45)
+use_collision = true
+size = Vector3(0.06, 2.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Norte_Vidrio_4" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711036]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 6.665, -45)
+use_collision = true
+size = Vector3(8.8, 2.05, 0.06)
+material = ExtResource("5_68yaw")
+
+[node name="P1_Norte_RailInf_4" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711037]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 5.65, -45)
+use_collision = true
+size = Vector3(8.8, 0.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Norte_RailSup_4" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711038]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 7.68, -45)
+use_collision = true
+size = Vector3(8.8, 0.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Norte_Parteluz1_4" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711039]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.2, 6.665, -45)
+use_collision = true
+size = Vector3(0.06, 2.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Norte_Parteluz2_4" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711040]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.8, 6.665, -45)
+use_collision = true
+size = Vector3(0.06, 2.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Norte_Vidrio_5" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711041]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 6.665, -45)
+use_collision = true
+size = Vector3(10.8, 2.05, 0.06)
+material = ExtResource("5_68yaw")
+
+[node name="P1_Norte_RailInf_5" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711042]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 5.65, -45)
+use_collision = true
+size = Vector3(10.8, 0.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Norte_RailSup_5" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711043]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 7.68, -45)
+use_collision = true
+size = Vector3(10.8, 0.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Norte_Parteluz1_5" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711044]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7, 6.665, -45)
+use_collision = true
+size = Vector3(0.06, 2.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Norte_Parteluz2_5" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711045]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.7, 6.665, -45)
+use_collision = true
+size = Vector3(0.06, 2.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Norte_Vidrio_6" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711046]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 6.665, -45)
+use_collision = true
+size = Vector3(10.8, 2.05, 0.06)
+material = ExtResource("5_68yaw")
+
+[node name="P1_Norte_RailInf_6" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711047]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 5.65, -45)
+use_collision = true
+size = Vector3(10.8, 0.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Norte_RailSup_6" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711048]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 7.68, -45)
+use_collision = true
+size = Vector3(10.8, 0.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Norte_Parteluz1_6" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711049]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.3, 6.665, -45)
+use_collision = true
+size = Vector3(0.06, 2.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Norte_Parteluz2_6" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711050]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.7, 6.665, -45)
+use_collision = true
+size = Vector3(0.06, 2.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Norte_Vidrio_7" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711051]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 6.665, -45)
+use_collision = true
+size = Vector3(12.8, 2.05, 0.06)
+material = ExtResource("5_68yaw")
+
+[node name="P1_Norte_RailInf_7" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711052]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 5.65, -45)
+use_collision = true
+size = Vector3(12.8, 0.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Norte_RailSup_7" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711053]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 7.68, -45)
+use_collision = true
+size = Vector3(12.8, 0.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Norte_Parteluz1_7" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711054]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.8, 6.665, -45)
+use_collision = true
+size = Vector3(0.06, 2.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Norte_Parteluz2_7" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711055]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.2, 6.665, -45)
+use_collision = true
+size = Vector3(0.06, 2.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_NorteEste_Antepecho" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711090]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56, 5.05, -45)
+use_collision = true
+size = Vector3(18, 1.1, 0.3)
+material = ExtResource("4_0kga5")
+
+[node name="P1_NorteEste_Dintel" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711091]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56, 8.3, -45)
+use_collision = true
+size = Vector3(18, 1.2, 0.3)
+material = ExtResource("4_0kga5")
+
+[node name="P1_NorteEste_CornerW" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711092]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.5, 6.665, -45)
+use_collision = true
+size = Vector3(3, 2.07, 0.3)
+material = ExtResource("4_0kga5")
+
+[node name="P1_NorteEste_CornerE" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711093]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 63.5, 6.665, -45)
+use_collision = true
+size = Vector3(3, 2.07, 0.3)
+material = ExtResource("4_0kga5")
+
+[node name="P1_NorteEste_Vidrio" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711094]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56, 6.665, -45)
+use_collision = true
+size = Vector3(12, 2.05, 0.06)
+material = ExtResource("5_68yaw")
+
+[node name="P1_NorteEste_RailInf" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711095]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56, 5.65, -45)
+use_collision = true
+size = Vector3(12, 0.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_NorteEste_RailSup" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711096]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56, 7.68, -45)
+use_collision = true
+size = Vector3(12, 0.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_NorteEste_Parteluz1" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711097]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 52, 6.665, -45)
+use_collision = true
+size = Vector3(0.06, 2.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_NorteEste_Parteluz2" type="CSGBox3D" parent="PrimerPiso/VentanasNorteP1" unique_id=711098]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 6.665, -45)
+use_collision = true
+size = Vector3(0.06, 2.05, 0.12)
+material = ExtResource("23_alum")
 
 [node name="ExtOesteNorte" type="CSGBox3D" parent="PrimerPiso" unique_id=617595347]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65, 6.75, -10)
@@ -2926,35 +3300,566 @@ use_collision = true
 size = Vector3(0.3, 4.5, 70)
 material = ExtResource("4_0kga5")
 
-[node name="ExtOesteSur" type="CSGBox3D" parent="PrimerPiso" unique_id=360825614]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65, 6.75, 40)
-use_collision = true
-size = Vector3(0.3, 4.5, 10)
-material = ExtResource("4_0kga5")
-
 [node name="ExtEsteNorte" type="CSGBox3D" parent="PrimerPiso" unique_id=945230243]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, 6.75, -10)
 use_collision = true
 size = Vector3(0.3, 4.5, 70)
 material = ExtResource("4_0kga5")
+[node name="VentanasSurP1" type="Node3D" parent="PrimerPiso" unique_id=710000]
 
-[node name="ExtEsteSur" type="CSGBox3D" parent="PrimerPiso" unique_id=1914104382]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, 6.75, 40)
+[node name="P1_Sur_Antepecho" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710001]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.05, 45)
 use_collision = true
-size = Vector3(0.3, 4.5, 10)
+size = Vector3(130, 1.1, 0.3)
 material = ExtResource("4_0kga5")
 
-[node name="ExtSurOeste" type="CSGBox3D" parent="PrimerPiso" unique_id=1117253433]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.225388, 6.75, 45)
+[node name="P1_Sur_SillTrim" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710002]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.61, 45)
 use_collision = true
-size = Vector3(65.549225, 4.5, 0.3)
+size = Vector3(130, 0.04, 0.36)
+material = ExtResource("26_zocalo")
+
+[node name="P1_Sur_Dintel" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710003]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.3, 45)
+use_collision = true
+size = Vector3(130, 1.2, 0.3)
 material = ExtResource("4_0kga5")
 
-[node name="ExtSurEste" type="CSGBox3D" parent="PrimerPiso" unique_id=1889577522]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.71295, 6.75, 45)
+[node name="P1_Sur_CornerW" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710004]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -62.5, 6.665, 45)
 use_collision = true
-size = Vector3(64.5741, 4.5, 0.3)
+size = Vector3(5, 2.07, 0.3)
 material = ExtResource("4_0kga5")
+
+[node name="P1_Sur_CornerE" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710005]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 62.5, 6.665, 45)
+use_collision = true
+size = Vector3(5, 2.07, 0.3)
+material = ExtResource("4_0kga5")
+
+[node name="P1_Sur_Pilar_0" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710010]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 6.665, 45)
+use_collision = true
+size = Vector3(1.2, 2.07, 0.32)
+material = ExtResource("4_0kga5")
+
+[node name="P1_Sur_Pilar_1" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710011]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 6.665, 45)
+use_collision = true
+size = Vector3(1.2, 2.07, 0.32)
+material = ExtResource("4_0kga5")
+
+[node name="P1_Sur_Pilar_2" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710012]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 6.665, 45)
+use_collision = true
+size = Vector3(1.2, 2.07, 0.32)
+material = ExtResource("4_0kga5")
+
+[node name="P1_Sur_Pilar_3" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710013]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 6.665, 45)
+use_collision = true
+size = Vector3(1.2, 2.07, 0.32)
+material = ExtResource("4_0kga5")
+
+[node name="P1_Sur_Pilar_4" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710014]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 6.665, 45)
+use_collision = true
+size = Vector3(1.2, 2.07, 0.32)
+material = ExtResource("4_0kga5")
+
+[node name="P1_Sur_Pilar_5" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710015]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.665, 45)
+use_collision = true
+size = Vector3(1.2, 2.07, 0.32)
+material = ExtResource("4_0kga5")
+
+[node name="P1_Sur_Pilar_6" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710016]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 6.665, 45)
+use_collision = true
+size = Vector3(1.2, 2.07, 0.32)
+material = ExtResource("4_0kga5")
+
+[node name="P1_Sur_Pilar_7" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710017]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 6.665, 45)
+use_collision = true
+size = Vector3(1.2, 2.07, 0.32)
+material = ExtResource("4_0kga5")
+
+[node name="P1_Sur_Pilar_8" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710018]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 6.665, 45)
+use_collision = true
+size = Vector3(1.2, 2.07, 0.32)
+material = ExtResource("4_0kga5")
+
+[node name="P1_Sur_Pilar_9" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710019]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 6.665, 45)
+use_collision = true
+size = Vector3(1.2, 2.07, 0.32)
+material = ExtResource("4_0kga5")
+
+[node name="P1_Sur_Pilar_10" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710020]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 6.665, 45)
+use_collision = true
+size = Vector3(1.2, 2.07, 0.32)
+material = ExtResource("4_0kga5")
+
+[node name="P1_Sur_Vidrio_0" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710021]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55.3, 6.665, 45)
+use_collision = true
+size = Vector3(9.4, 2.05, 0.06)
+material = ExtResource("5_68yaw")
+
+[node name="P1_Sur_RailInf_0" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710022]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55.3, 5.65, 45)
+use_collision = true
+size = Vector3(9.4, 0.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_RailSup_0" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710023]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55.3, 7.68, 45)
+use_collision = true
+size = Vector3(9.4, 0.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_Parteluz1_0" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710024]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -58.433, 6.665, 45)
+use_collision = true
+size = Vector3(0.06, 2.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_Parteluz2_0" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710025]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.167, 6.665, 45)
+use_collision = true
+size = Vector3(0.06, 2.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_Vidrio_1" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710026]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, 6.665, 45)
+use_collision = true
+size = Vector3(8.8, 2.05, 0.06)
+material = ExtResource("5_68yaw")
+
+[node name="P1_Sur_RailInf_1" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710027]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, 5.65, 45)
+use_collision = true
+size = Vector3(8.8, 0.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_RailSup_1" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710028]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, 7.68, 45)
+use_collision = true
+size = Vector3(8.8, 0.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_Parteluz1_1" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710029]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47.933, 6.665, 45)
+use_collision = true
+size = Vector3(0.06, 2.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_Parteluz2_1" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710030]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42.067, 6.665, 45)
+use_collision = true
+size = Vector3(0.06, 2.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_Vidrio_2" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710031]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 6.665, 45)
+use_collision = true
+size = Vector3(8.8, 2.05, 0.06)
+material = ExtResource("5_68yaw")
+
+[node name="P1_Sur_RailInf_2" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710032]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 5.65, 45)
+use_collision = true
+size = Vector3(8.8, 0.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_RailSup_2" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710033]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 7.68, 45)
+use_collision = true
+size = Vector3(8.8, 0.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_Parteluz1_2" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710034]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37.933, 6.665, 45)
+use_collision = true
+size = Vector3(0.06, 2.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_Parteluz2_2" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710035]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.067, 6.665, 45)
+use_collision = true
+size = Vector3(0.06, 2.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_Vidrio_3" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710036]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 6.665, 45)
+use_collision = true
+size = Vector3(8.8, 2.05, 0.06)
+material = ExtResource("5_68yaw")
+
+[node name="P1_Sur_RailInf_3" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710037]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 5.65, 45)
+use_collision = true
+size = Vector3(8.8, 0.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_RailSup_3" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710038]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 7.68, 45)
+use_collision = true
+size = Vector3(8.8, 0.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_Parteluz1_3" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710039]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.933, 6.665, 45)
+use_collision = true
+size = Vector3(0.06, 2.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_Parteluz2_3" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710040]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.067, 6.665, 45)
+use_collision = true
+size = Vector3(0.06, 2.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_Vidrio_4" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710041]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 6.665, 45)
+use_collision = true
+size = Vector3(8.8, 2.05, 0.06)
+material = ExtResource("5_68yaw")
+
+[node name="P1_Sur_RailInf_4" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710042]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 5.65, 45)
+use_collision = true
+size = Vector3(8.8, 0.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_RailSup_4" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710043]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 7.68, 45)
+use_collision = true
+size = Vector3(8.8, 0.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_Parteluz1_4" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710044]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.933, 6.665, 45)
+use_collision = true
+size = Vector3(0.06, 2.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_Parteluz2_4" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710045]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.067, 6.665, 45)
+use_collision = true
+size = Vector3(0.06, 2.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_Vidrio_5" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710046]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 6.665, 45)
+use_collision = true
+size = Vector3(8.8, 2.05, 0.06)
+material = ExtResource("5_68yaw")
+
+[node name="P1_Sur_RailInf_5" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710047]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 5.65, 45)
+use_collision = true
+size = Vector3(8.8, 0.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_RailSup_5" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710048]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 7.68, 45)
+use_collision = true
+size = Vector3(8.8, 0.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_Parteluz1_5" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710049]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.933, 6.665, 45)
+use_collision = true
+size = Vector3(0.06, 2.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_Parteluz2_5" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710050]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.067, 6.665, 45)
+use_collision = true
+size = Vector3(0.06, 2.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_Vidrio_6" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710051]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 6.665, 45)
+use_collision = true
+size = Vector3(8.8, 2.05, 0.06)
+material = ExtResource("5_68yaw")
+
+[node name="P1_Sur_RailInf_6" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710052]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 5.65, 45)
+use_collision = true
+size = Vector3(8.8, 0.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_RailSup_6" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710053]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 7.68, 45)
+use_collision = true
+size = Vector3(8.8, 0.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_Parteluz1_6" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710054]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.067, 6.665, 45)
+use_collision = true
+size = Vector3(0.06, 2.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_Parteluz2_6" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710055]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.933, 6.665, 45)
+use_collision = true
+size = Vector3(0.06, 2.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_Vidrio_7" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710056]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 6.665, 45)
+use_collision = true
+size = Vector3(8.8, 2.05, 0.06)
+material = ExtResource("5_68yaw")
+
+[node name="P1_Sur_RailInf_7" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710057]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 5.65, 45)
+use_collision = true
+size = Vector3(8.8, 0.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_RailSup_7" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710058]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 7.68, 45)
+use_collision = true
+size = Vector3(8.8, 0.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_Parteluz1_7" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710059]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.067, 6.665, 45)
+use_collision = true
+size = Vector3(0.06, 2.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_Parteluz2_7" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710060]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.933, 6.665, 45)
+use_collision = true
+size = Vector3(0.06, 2.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_Vidrio_8" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710061]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 6.665, 45)
+use_collision = true
+size = Vector3(8.8, 2.05, 0.06)
+material = ExtResource("5_68yaw")
+
+[node name="P1_Sur_RailInf_8" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710062]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 5.65, 45)
+use_collision = true
+size = Vector3(8.8, 0.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_RailSup_8" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710063]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 7.68, 45)
+use_collision = true
+size = Vector3(8.8, 0.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_Parteluz1_8" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710064]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.067, 6.665, 45)
+use_collision = true
+size = Vector3(0.06, 2.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_Parteluz2_8" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710065]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.933, 6.665, 45)
+use_collision = true
+size = Vector3(0.06, 2.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_Vidrio_9" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710066]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 6.665, 45)
+use_collision = true
+size = Vector3(8.8, 2.05, 0.06)
+material = ExtResource("5_68yaw")
+
+[node name="P1_Sur_RailInf_9" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710067]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 5.65, 45)
+use_collision = true
+size = Vector3(8.8, 0.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_RailSup_9" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710068]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 7.68, 45)
+use_collision = true
+size = Vector3(8.8, 0.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_Parteluz1_9" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710069]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.067, 6.665, 45)
+use_collision = true
+size = Vector3(0.06, 2.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_Parteluz2_9" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710070]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.933, 6.665, 45)
+use_collision = true
+size = Vector3(0.06, 2.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_Vidrio_10" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710071]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 6.665, 45)
+use_collision = true
+size = Vector3(8.8, 2.05, 0.06)
+material = ExtResource("5_68yaw")
+
+[node name="P1_Sur_RailInf_10" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710072]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 5.65, 45)
+use_collision = true
+size = Vector3(8.8, 0.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_RailSup_10" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710073]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 7.68, 45)
+use_collision = true
+size = Vector3(8.8, 0.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_Parteluz1_10" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710074]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.067, 6.665, 45)
+use_collision = true
+size = Vector3(0.06, 2.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_Parteluz2_10" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710075]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.933, 6.665, 45)
+use_collision = true
+size = Vector3(0.06, 2.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_Vidrio_11" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710076]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.3, 6.665, 45)
+use_collision = true
+size = Vector3(9.4, 2.05, 0.06)
+material = ExtResource("5_68yaw")
+
+[node name="P1_Sur_RailInf_11" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710077]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.3, 5.65, 45)
+use_collision = true
+size = Vector3(9.4, 0.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_RailSup_11" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710078]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.3, 7.68, 45)
+use_collision = true
+size = Vector3(9.4, 0.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_Parteluz1_11" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710079]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 52.167, 6.665, 45)
+use_collision = true
+size = Vector3(0.06, 2.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_Sur_Parteluz2_11" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710080]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58.433, 6.665, 45)
+use_collision = true
+size = Vector3(0.06, 2.05, 0.12)
+material = ExtResource("23_alum")
+
+[node name="P1_OesteSur_Antepecho" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710082]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65, 5.05, 40)
+use_collision = true
+size = Vector3(0.3, 1.1, 10)
+material = ExtResource("4_0kga5")
+
+[node name="P1_OesteSur_Dintel" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710083]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65, 8.3, 40)
+use_collision = true
+size = Vector3(0.3, 1.2, 10)
+material = ExtResource("4_0kga5")
+
+[node name="P1_OesteSur_CornerN" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710084]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65, 6.665, 35.75)
+use_collision = true
+size = Vector3(0.3, 2.07, 1.5)
+material = ExtResource("4_0kga5")
+
+[node name="P1_OesteSur_CornerS" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710085]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65, 6.665, 44.25)
+use_collision = true
+size = Vector3(0.3, 2.07, 1.5)
+material = ExtResource("4_0kga5")
+
+[node name="P1_OesteSur_Vidrio" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710086]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65, 6.665, 40)
+use_collision = true
+size = Vector3(0.06, 2.05, 7.0)
+material = ExtResource("5_68yaw")
+
+[node name="P1_OesteSur_RailInf" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710087]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65, 5.65, 40)
+use_collision = true
+size = Vector3(0.12, 0.05, 7.0)
+material = ExtResource("23_alum")
+
+[node name="P1_OesteSur_RailSup" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710088]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65, 7.68, 40)
+use_collision = true
+size = Vector3(0.12, 0.05, 7.0)
+material = ExtResource("23_alum")
+
+[node name="P1_OesteSur_Parteluz" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710089]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65, 6.665, 40)
+use_collision = true
+size = Vector3(0.12, 2.05, 0.06)
+material = ExtResource("23_alum")
+
+[node name="P1_EsteSur_Antepecho" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710090]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, 5.05, 40)
+use_collision = true
+size = Vector3(0.3, 1.1, 10)
+material = ExtResource("4_0kga5")
+
+[node name="P1_EsteSur_Dintel" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710091]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, 8.3, 40)
+use_collision = true
+size = Vector3(0.3, 1.2, 10)
+material = ExtResource("4_0kga5")
+
+[node name="P1_EsteSur_CornerN" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710092]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, 6.665, 35.75)
+use_collision = true
+size = Vector3(0.3, 2.07, 1.5)
+material = ExtResource("4_0kga5")
+
+[node name="P1_EsteSur_CornerS" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710093]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, 6.665, 44.25)
+use_collision = true
+size = Vector3(0.3, 2.07, 1.5)
+material = ExtResource("4_0kga5")
+
+[node name="P1_EsteSur_Vidrio" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710094]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, 6.665, 40)
+use_collision = true
+size = Vector3(0.06, 2.05, 7.0)
+material = ExtResource("5_68yaw")
+
+[node name="P1_EsteSur_RailInf" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710095]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, 5.65, 40)
+use_collision = true
+size = Vector3(0.12, 0.05, 7.0)
+material = ExtResource("23_alum")
+
+[node name="P1_EsteSur_RailSup" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710096]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, 7.68, 40)
+use_collision = true
+size = Vector3(0.12, 0.05, 7.0)
+material = ExtResource("23_alum")
+
+[node name="P1_EsteSur_Parteluz" type="CSGBox3D" parent="PrimerPiso/VentanasSurP1" unique_id=710097]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, 6.665, 40)
+use_collision = true
+size = Vector3(0.12, 2.05, 0.06)
+material = ExtResource("23_alum")
+
+
 
 [node name="OficinasP1" type="Node3D" parent="PrimerPiso" unique_id=1146135319]
 
@@ -3007,19 +3912,25 @@ size = Vector3(0.3, 4.5, 12)
 material = ExtResource("4_0kga5")
 
 [node name="CartelBedelia" type="Label3D" parent="PrimerPiso/OficinasP1" unique_id=502832218]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 7.7, -32.7)
-modulate = Color(1, 0.9, 0.45, 1)
-text = "BEDELÍA GENERAL"
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.0, 6.65, -32.84)
+modulate = Color(1, 1, 1, 1)
+text = "BEDELÃA GENERAL"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="CartelDireccion" type="Label3D" parent="PrimerPiso/OficinasP1" unique_id=274687750]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 7.7, -32.7)
-modulate = Color(1, 0.9, 0.45, 1)
-text = "DIRECCIÓN DEPARTAMENTAL"
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0, 6.65, -32.84)
+modulate = Color(1, 1, 1, 1)
+text = "DIRECCIÃ“N DEPARTAMENTAL"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="P1_Sistemas_Este_F" type="CSGBox3D" parent="PrimerPiso/OficinasP1" unique_id=511118115]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 6.75, -26.7)
 use_collision = true
@@ -3069,19 +3980,25 @@ size = Vector3(18, 4.5, 0.3)
 material = ExtResource("4_0kga5")
 
 [node name="CartelSistemas" type="Label3D" parent="PrimerPiso/OficinasP1" unique_id=583866495]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.7, 7.7, -19)
-modulate = Color(1, 0.9, 0.45, 1)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.8, 6.65, -17)
+modulate = Color(1, 1, 1, 1)
 text = "DEPTO. ING. EN SISTEMAS"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="CartelDeptoElec" type="Label3D" parent="PrimerPiso/OficinasP1" unique_id=568587588]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.7, 7.7, 10)
-modulate = Color(1, 0.9, 0.45, 1)
-text = "DEPTO. ING. ELECTRÓNICA"
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.8, 6.65, 12)
+modulate = Color(1, 1, 1, 1)
+text = "DEPTO. ING. ELECTRÃ“NICA"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="P1_CETRA_Oeste_F" type="CSGBox3D" parent="PrimerPiso/OficinasP1" unique_id=1168312267]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47, 6.75, -36.95)
 use_collision = true
@@ -3131,19 +4048,25 @@ size = Vector3(18, 4.5, 0.3)
 material = ExtResource("4_0kga5")
 
 [node name="CartelCETRA" type="Label3D" parent="PrimerPiso/OficinasP1" unique_id=1703765751]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 46.7, 7.7, -27.5)
-modulate = Color(1, 0.9, 0.45, 1)
-text = "CETRA (TRÁMITES)"
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 46.8, 6.65, -25.5)
+modulate = Color(1, 1, 1, 1)
+text = "CETRA (TRÃMITES)"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="CartelBiblio" type="Label3D" parent="PrimerPiso/OficinasP1" unique_id=1627306111]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 46.7, 7.7, 7.5)
-modulate = Color(1, 0.9, 0.45, 1)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 46.8, 6.65, 9.5)
+modulate = Color(1, 1, 1, 1)
 text = "BIBLIOTECA CENTRAL"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="SegundoPiso" type="Node3D" parent="." unique_id=1386208084]
 
 [node name="PisoNorte" type="CSGBox3D" parent="SegundoPiso" unique_id=1749737553]
@@ -3485,33 +4408,45 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.5, 9, -41)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.5, 9, -37.8)
 
 [node name="P2_CartelN1" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=930347462]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -52.5, 12.2, -32.7)
-modulate = Color(1, 0.9, 0.45, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50.2, 11.15, -32.84)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 201"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="P2_CartelN2" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=607472082]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 12.2, -32.7)
-modulate = Color(1, 0.9, 0.45, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.2, 11.15, -32.84)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 202"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="P2_CartelN3" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1341745902]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 12.2, -32.7)
-modulate = Color(1, 0.9, 0.45, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 11.15, -32.84)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 203"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="P2_CartelN4" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=464825755]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.5, 12.2, -32.7)
-modulate = Color(1, 0.9, 0.45, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.8, 11.15, -32.84)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 204"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="P2_AulaW1_Este_F" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=103871910]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 11.25, -30.2)
 use_collision = true
@@ -3729,33 +4664,45 @@ transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 9, 17.2)
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -52.5, 9, 20.4)
 
 [node name="P2_CartelW1" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2141046590]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.7, 12.2, -26)
-modulate = Color(1, 0.9, 0.45, 1)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.8, 11.15, -23.7)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 205"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="P2_CartelW2" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1832643124]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.7, 12.2, -12)
-modulate = Color(1, 0.9, 0.45, 1)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.8, 11.15, -9.7)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 206"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="P2_CartelW3" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=759002997]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.7, 12.2, 2.5)
-modulate = Color(1, 0.9, 0.45, 1)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.8, 11.15, 4.8)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 207"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="P2_CartelW4" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=585389521]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.7, 12.2, 17.5)
-modulate = Color(1, 0.9, 0.45, 1)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -46.8, 11.15, 19.8)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 208"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="P2_BloqueWI_Norte" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1559363433]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 11.25, -24)
 use_collision = true
@@ -3826,12 +4773,15 @@ transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 9, -16.8)
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 9, -13.6)
 
 [node name="P2_CartelWI1" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1445370967]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -37.3, 12.2, -17)
-modulate = Color(1, 0.9, 0.45, 1)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -37.2, 11.15, -13.7)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 209"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="P2_Aula210_Oeste_F" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1738076687]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 11.25, -5.45)
 use_collision = true
@@ -3905,12 +4855,15 @@ transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 9, 3.6)
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 9, 6.8)
 
 [node name="P2_Cartel210" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=2000244830]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -37.3, 12.2, 0.5)
-modulate = Color(1, 0.9, 0.45, 1)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -37.2, 11.15, 3.5)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 210 (MAGNA)"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="P2_AulaWI2_Oeste_F" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1056908651]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 11.25, 13.8)
 use_collision = true
@@ -3957,12 +4910,15 @@ transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 9, 18.2)
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -24.5, 9, 21.4)
 
 [node name="P2_CartelWI2" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1988506699]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -37.3, 12.2, 18)
-modulate = Color(1, 0.9, 0.45, 1)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -37.2, 11.15, 15.7)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 211"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="P2_BloqueEI_Norte" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=836973512]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 11.25, -24)
 use_collision = true
@@ -4033,12 +4989,15 @@ transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 9, -16.8)
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 9, -13.6)
 
 [node name="P2_CartelEI1" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1359062122]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 37.3, 12.2, -16)
-modulate = Color(1, 0.9, 0.45, 1)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 37.2, 11.15, -13.7)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 212"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="P2_AulaEI2_Este_F" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=608322139]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37, 11.25, -4.7)
 use_collision = true
@@ -4091,12 +5050,15 @@ transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 9, -0.8)
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 9, 2.4)
 
 [node name="P2_CartelEI2" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=921895025]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 37.3, 12.2, 0)
-modulate = Color(1, 0.9, 0.45, 1)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 37.2, 11.15, 2.3)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 213"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="P2_AulaEI3_Este_F" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=287616990]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37, 11.25, 11.55)
 use_collision = true
@@ -4143,12 +5105,15 @@ transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 9, 15.2)
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 29.5, 9, 18.4)
 
 [node name="P2_CartelEI3" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=491143860]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 37.3, 12.2, 16.5)
-modulate = Color(1, 0.9, 0.45, 1)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 37.2, 11.15, 18.8)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 214"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="P2_AulaE1_Oeste_F" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=45887338]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47, 11.25, -38.2)
 use_collision = true
@@ -4249,12 +5214,15 @@ transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9, -21.8)
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9, -18.6)
 
 [node name="P2_CartelE1" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1595651857]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 46.7, 12.2, -30)
-modulate = Color(1, 0.9, 0.45, 1)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 46.8, 11.15, -27.7)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 215"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="P2_AulaE2_Oeste_F" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1684144666]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47, 11.25, -9.45)
 use_collision = true
@@ -4337,12 +5305,15 @@ transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9, 1.8)
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9, 5)
 
 [node name="P2_CartelE2" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1654052261]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 46.7, 12.2, -2.5)
-modulate = Color(1, 0.9, 0.45, 1)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 46.8, 11.15, -4.8)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 216"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="P2_AulaE3_Oeste_F" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1239467232]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47, 11.25, 13.05)
 use_collision = true
@@ -4398,12 +5369,15 @@ transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9, 17.2)
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 59.5, 9, 20.4)
 
 [node name="P2_CartelE3" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1165130565]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 46.7, 12.2, 17.5)
-modulate = Color(1, 0.9, 0.45, 1)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 46.8, 11.15, 19.8)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 217"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="P2_SalasO_Norte_L" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=1218112198]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.7, 11.25, 35)
 use_collision = true
@@ -4459,12 +5433,15 @@ transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -26.5, 9, 39)
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -22.5, 9, 39)
 
 [node name="P2_CartelSO" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=893475807]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -35, 12.2, 34.7)
-modulate = Color(1, 0.9, 0.45, 1)
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -32.2, 11.15, 34.84)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 218"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="P2_SalasE_Norte_L" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=884275788]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.532078, 11.25, 35)
 use_collision = true
@@ -4511,12 +5488,15 @@ transform = Transform3D(-2.0000002, 0, -1.7484557e-07, 0, 2, 0, 1.7484557e-07, 0
 transform = Transform3D(-2.0000002, 0, -1.7484557e-07, 0, 2, 0, 1.7484557e-07, 0, -2.0000002, 47.40239, 9.115855, 39.3736)
 
 [node name="P2_CartelSE" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=641378739]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 36.394897, 12.2, 34.7)
-modulate = Color(1, 0.9, 0.45, 1)
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 32.2, 11.15, 34.84)
+modulate = Color(1, 1, 1, 1)
 text = "AULA 219"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="CafeteriaP2" type="Node3D" parent="SegundoPiso/Piso2_AulasYCafeteria" unique_id=855030323]
 
 [node name="CafeDintel" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria/CafeteriaP2" unique_id=1719414301]
@@ -4526,13 +5506,16 @@ size = Vector3(6.2, 0.8, 0.15)
 material = ExtResource("4_0kga5")
 
 [node name="CartelEntradaCafe" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria/CafeteriaP2" unique_id=1567671210]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 12.5, 34.8)
-modulate = Color(1, 0.9, 0.45, 1)
-text = "CAFETERÍA Y COMEDOR
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 13.1, 34.91)
+modulate = Color(1, 1, 1, 1)
+text = "CAFETERÃA Y COMEDOR
 PISO 2"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="CafeParedO" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria/CafeteriaP2" unique_id=719710771]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 11.25, 60)
 use_collision = true
@@ -4581,26 +5564,29 @@ use_collision = true
 size = Vector3(0.65, 2.6, 0.35)
 material = ExtResource("9_t4cw7")
 
-[node name="MonBrazoL" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria/CafeteriaP2" unique_id=969260415]
-transform = Transform3D(0.90630776, -0.42261827, 0, 0.42261827, 0.90630776, 0, 0, 0, 1, -1.45, 11.2, 58)
+[node name="MonBrazoR" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria/CafeteriaP2" unique_id=1481116997]
+transform = Transform3D(0.90630776, 0.42261827, 0, -0.42261827, 0.90630776, 0, 0, 0, 1, 0.95813763, 11.193119, 58)
 use_collision = true
-size = Vector3(2.3, 1.8, 0.35)
+size = Vector3(1.6319336, 1.2690918, 0.35)
 material = ExtResource("9_t4cw7")
 
-[node name="MonBrazoR" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria/CafeteriaP2" unique_id=1481116997]
-transform = Transform3D(0.90630776, 0.42261827, 0, -0.42261827, 0.90630776, 0, 0, 0, 1, 1.45, 11.2, 58)
+[node name="MonBrazoR2" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria/CafeteriaP2" unique_id=1315474902]
+transform = Transform3D(0.9063079, -0.42261833, 0, 0.42261833, 0.9063079, 0, 0, 0, 1, -0.93427473, 11.193119, 58)
 use_collision = true
-size = Vector3(2.3, 1.8, 0.35)
+size = Vector3(1.6319336, 1.2690918, 0.35)
 material = ExtResource("9_t4cw7")
 
 [node name="CartelMonumento" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria/CafeteriaP2" unique_id=1744917134]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.85, 58.22)
-modulate = Color(1, 0.9, 0.45, 1)
+modulate = Color(1, 1, 1, 1)
 text = "AETI
 UTN"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="BancoNorte" type="CSGBox3D" parent="SegundoPiso/Piso2_AulasYCafeteria/CafeteriaP2" unique_id=1514950839]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.25, 52.5)
 use_collision = true
@@ -5515,72 +6501,66 @@ material = ExtResource("5_68yaw")
 
 [node name="CartelBufet" type="Label3D" parent="SegundoPiso/Piso2_AulasYCafeteria/CafeteriaP2" unique_id=645449573]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 11.8, 80.8)
-modulate = Color(1, 0.9, 0.45, 1)
+modulate = Color(1, 1, 1, 1)
 text = "BAR Y COMEDOR - RETIRO DE BANDEJAS"
 font_size = 42
-outline_size = 10
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="LuzCafeP2_-12_44" type="OmniLight3D" parent="SegundoPiso/Piso2_AulasYCafeteria/CafeteriaP2" unique_id=68466299]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 12.8, 44)
 light_color = Color(1, 0.98, 0.92, 1)
 light_energy = 0.22
-shadow_enabled = true
 omni_range = 16.0
 
 [node name="LuzCafeP2_-12_58" type="OmniLight3D" parent="SegundoPiso/Piso2_AulasYCafeteria/CafeteriaP2" unique_id=1004367659]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 12.8, 58)
 light_color = Color(1, 0.98, 0.92, 1)
 light_energy = 0.22
-shadow_enabled = true
 omni_range = 16.0
 
 [node name="LuzCafeP2_-12_72" type="OmniLight3D" parent="SegundoPiso/Piso2_AulasYCafeteria/CafeteriaP2" unique_id=749465687]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 12.8, 72)
 light_color = Color(1, 0.98, 0.92, 1)
 light_energy = 0.22
-shadow_enabled = true
 omni_range = 16.0
 
 [node name="LuzCafeP2_0_44" type="OmniLight3D" parent="SegundoPiso/Piso2_AulasYCafeteria/CafeteriaP2" unique_id=668893000]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.8, 44)
 light_color = Color(1, 0.98, 0.92, 1)
 light_energy = 0.22
-shadow_enabled = true
 omni_range = 16.0
 
 [node name="LuzCafeP2_0_58" type="OmniLight3D" parent="SegundoPiso/Piso2_AulasYCafeteria/CafeteriaP2" unique_id=2038837504]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.8, 58)
 light_color = Color(1, 0.98, 0.92, 1)
 light_energy = 0.22
-shadow_enabled = true
 omni_range = 16.0
 
 [node name="LuzCafeP2_0_72" type="OmniLight3D" parent="SegundoPiso/Piso2_AulasYCafeteria/CafeteriaP2" unique_id=1148502963]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.8, 72)
 light_color = Color(1, 0.98, 0.92, 1)
 light_energy = 0.22
-shadow_enabled = true
 omni_range = 16.0
 
 [node name="LuzCafeP2_12_44" type="OmniLight3D" parent="SegundoPiso/Piso2_AulasYCafeteria/CafeteriaP2" unique_id=1713366509]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 12.8, 44)
 light_color = Color(1, 0.98, 0.92, 1)
 light_energy = 0.22
-shadow_enabled = true
 omni_range = 16.0
 
 [node name="LuzCafeP2_12_58" type="OmniLight3D" parent="SegundoPiso/Piso2_AulasYCafeteria/CafeteriaP2" unique_id=1770253734]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 12.8, 58)
 light_color = Color(1, 0.98, 0.92, 1)
 light_energy = 0.22
-shadow_enabled = true
 omni_range = 16.0
 
 [node name="LuzCafeP2_12_72" type="OmniLight3D" parent="SegundoPiso/Piso2_AulasYCafeteria/CafeteriaP2" unique_id=1825692980]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 12.8, 72)
 light_color = Color(1, 0.98, 0.92, 1)
 light_energy = 0.22
-shadow_enabled = true
 omni_range = 16.0
 
 [node name="PatioEstudiante" type="Node3D" parent="." unique_id=199124533]
@@ -6065,231 +7045,117 @@ mesh = SubResource("ArrayMesh_nwxjt")
 
 [node name="CartelPatioEntrada" type="Label3D" parent="PatioEstudiante" unique_id=1156114551]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.8, 22.3)
-modulate = Color(0.85, 0.75, 0.35, 1)
+modulate = Color(1, 1, 1, 1)
 text = "PATIO DEL ESTUDIANTE"
-outline_size = 8
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="CartelPatioEntradaRev" type="Label3D" parent="PatioEstudiante" unique_id=1635500870]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 3.8, 21.7)
-modulate = Color(0.85, 0.75, 0.35, 1)
+modulate = Color(1, 1, 1, 1)
 text = "PATIO DEL ESTUDIANTE"
-outline_size = 8
+outline_size = 5
 
+shaded = false
+double_sided = false
+alpha_cut = 1
 [node name="BancoPatio_NO_Asiento" type="CSGBox3D" parent="PatioEstudiante" unique_id=1794454957]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0.5, -16)
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -16.5, 0.5, -16)
 use_collision = true
 size = Vector3(3, 0.1, 0.7)
 material = ExtResource("15_bw001")
 
 [node name="BancoPatio_NO_Respaldo" type="CSGBox3D" parent="PatioEstudiante" unique_id=911583875]
-transform = Transform3D(1, 0, 0, 0, 0.96593, -0.25882, 0, 0.25882, 0.96593, -14, 0.9, -16.35)
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -16.85, 0.9, -16)
 use_collision = true
 size = Vector3(3, 0.7, 0.08)
 material = ExtResource("15_bw001")
 
 [node name="BancoPatio_NO_PataL" type="CSGBox3D" parent="PatioEstudiante" unique_id=101389180]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.2, 0.25, -16)
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -16.5, 0.25, -14.55)
 use_collision = true
 size = Vector3(0.08, 0.5, 0.7)
 material = ExtResource("16_bm001")
 
 [node name="BancoPatio_NO_PataR" type="CSGBox3D" parent="PatioEstudiante" unique_id=1833211083]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.8, 0.25, -16)
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -16.5, 0.25, -17.45)
 use_collision = true
 size = Vector3(0.08, 0.5, 0.7)
 material = ExtResource("16_bm001")
 
 [node name="BancoPatio_NE_Asiento" type="CSGBox3D" parent="PatioEstudiante" unique_id=775634950]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0.5, -16)
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 16.5, 0.5, -16)
 use_collision = true
 size = Vector3(3, 0.1, 0.7)
 material = ExtResource("15_bw001")
 
 [node name="BancoPatio_NE_Respaldo" type="CSGBox3D" parent="PatioEstudiante" unique_id=944380457]
-transform = Transform3D(1, 0, 0, 0, 0.96593, -0.25882, 0, 0.25882, 0.96593, 14, 0.9, -16.35)
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 16.85, 0.9, -16)
 use_collision = true
 size = Vector3(3, 0.7, 0.08)
 material = ExtResource("15_bw001")
 
 [node name="BancoPatio_NE_PataL" type="CSGBox3D" parent="PatioEstudiante" unique_id=830528046]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.8, 0.25, -16)
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 16.5, 0.25, -17.45)
 use_collision = true
 size = Vector3(0.08, 0.5, 0.7)
 material = ExtResource("16_bm001")
 
 [node name="BancoPatio_NE_PataR" type="CSGBox3D" parent="PatioEstudiante" unique_id=1400135875]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.2, 0.25, -16)
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 16.5, 0.25, -14.55)
 use_collision = true
 size = Vector3(0.08, 0.5, 0.7)
 material = ExtResource("16_bm001")
 
 [node name="BancoPatio_SO_Asiento" type="CSGBox3D" parent="PatioEstudiante" unique_id=278586407]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.118239, 0.5, 16)
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -16.5, 0.5, 16)
 use_collision = true
 size = Vector3(3, 0.1, 0.7)
 material = ExtResource("15_bw001")
 
 [node name="BancoPatio_SO_Respaldo" type="CSGBox3D" parent="PatioEstudiante" unique_id=1843462568]
-transform = Transform3D(1, 0, 0, 0, 0.99990296, -0.014247552, 0, 0.014247552, 0.99990296, -11.167665, 0.9, 16.35)
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -16.85, 0.9, 16)
 use_collision = true
 size = Vector3(3, 0.7, 0.08)
 material = ExtResource("15_bw001")
 
 [node name="BancoPatio_SO_PataL" type="CSGBox3D" parent="PatioEstudiante" unique_id=1561925594]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5696335, 0.25, 16)
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -16.5, 0.25, 17.45)
 use_collision = true
 size = Vector3(0.08, 0.5, 0.7)
 material = ExtResource("16_bm001")
 
 [node name="BancoPatio_SO_PataR" type="CSGBox3D" parent="PatioEstudiante" unique_id=271800141]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.706028, 0.25, 16)
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -16.5, 0.25, 14.55)
 use_collision = true
 size = Vector3(0.08, 0.5, 0.7)
 material = ExtResource("16_bm001")
 
 [node name="BancoPatio_SE_Asiento" type="CSGBox3D" parent="PatioEstudiante" unique_id=1755850402]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.909678, 0.5, 16)
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 16.5, 0.5, 16)
 use_collision = true
 size = Vector3(3, 0.1, 0.7)
 material = ExtResource("15_bw001")
 
 [node name="BancoPatio_SE_Respaldo" type="CSGBox3D" parent="PatioEstudiante" unique_id=1317861557]
-transform = Transform3D(0.99992883, -0.0009332322, -0.011891978, 0.0008722189, 0.9999909, -0.0051335134, 0.011896539, 0.005122789, 0.99992037, 10.947991, 0.91133916, 16.277254)
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 16.85, 0.9, 16)
 use_collision = true
-size = Vector3(3, 0.6596924, 0.08)
+size = Vector3(3, 0.7, 0.08)
 material = ExtResource("15_bw001")
 
 [node name="BancoPatio_SE_PataL" type="CSGBox3D" parent="PatioEstudiante" unique_id=760512806]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.473023, 0.25, 16)
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 16.5, 0.25, 14.55)
 use_collision = true
 size = Vector3(0.08, 0.5, 0.7)
 material = ExtResource("16_bm001")
 
 [node name="BancoPatio_SE_PataR" type="CSGBox3D" parent="PatioEstudiante" unique_id=148997243]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.397731, 0.25, 16)
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 16.5, 0.25, 17.45)
 use_collision = true
 size = Vector3(0.08, 0.5, 0.7)
 material = ExtResource("16_bm001")
-
-[node name="VentanaO_P1_1" type="CSGBox3D" parent="PatioEstudiante" unique_id=876906631]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.8, 2.5, -16)
-use_collision = true
-size = Vector3(0.05, 1.8, 3.5)
-material = ExtResource("5_68yaw")
-
-[node name="VentanaO_P1_2" type="CSGBox3D" parent="PatioEstudiante" unique_id=156834138]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.8, 2.5, -8)
-use_collision = true
-size = Vector3(0.05, 1.8, 3.5)
-material = ExtResource("5_68yaw")
-
-[node name="VentanaO_P1_3" type="CSGBox3D" parent="PatioEstudiante" unique_id=901518739]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.8, 2.5, 0)
-use_collision = true
-size = Vector3(0.05, 1.8, 3.5)
-material = ExtResource("5_68yaw")
-
-[node name="VentanaO_P1_4" type="CSGBox3D" parent="PatioEstudiante" unique_id=260328907]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.8, 2.5, 8)
-use_collision = true
-size = Vector3(0.05, 1.8, 3.5)
-material = ExtResource("5_68yaw")
-
-[node name="VentanaO_P1_5" type="CSGBox3D" parent="PatioEstudiante" unique_id=1318867846]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.8, 2.5, 16)
-use_collision = true
-size = Vector3(0.05, 1.8, 3.5)
-material = ExtResource("5_68yaw")
-
-[node name="VentanaE_P1_1" type="CSGBox3D" parent="PatioEstudiante" unique_id=532526062]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.8, 2.5, -16)
-use_collision = true
-size = Vector3(0.05, 1.8, 3.5)
-material = ExtResource("5_68yaw")
-
-[node name="VentanaE_P1_2" type="CSGBox3D" parent="PatioEstudiante" unique_id=1667839820]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.8, 2.5, -8)
-use_collision = true
-size = Vector3(0.05, 1.8, 3.5)
-material = ExtResource("5_68yaw")
-
-[node name="VentanaE_P1_3" type="CSGBox3D" parent="PatioEstudiante" unique_id=1836703052]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.8, 2.5, 0)
-use_collision = true
-size = Vector3(0.05, 1.8, 3.5)
-material = ExtResource("5_68yaw")
-
-[node name="VentanaE_P1_4" type="CSGBox3D" parent="PatioEstudiante" unique_id=1987981196]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.8, 2.5, 8)
-use_collision = true
-size = Vector3(0.05, 1.8, 3.5)
-material = ExtResource("5_68yaw")
-
-[node name="VentanaE_P1_5" type="CSGBox3D" parent="PatioEstudiante" unique_id=1788993802]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.8, 2.5, 16)
-use_collision = true
-size = Vector3(0.05, 1.8, 3.5)
-material = ExtResource("5_68yaw")
-
-[node name="VentanaO_P2_1" type="CSGBox3D" parent="PatioEstudiante" unique_id=356064762]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.8, 7, -16)
-use_collision = true
-size = Vector3(0.05, 1.8, 3.5)
-material = ExtResource("5_68yaw")
-
-[node name="VentanaO_P2_2" type="CSGBox3D" parent="PatioEstudiante" unique_id=700226124]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.8, 7, -8)
-use_collision = true
-size = Vector3(0.05, 1.8, 3.5)
-material = ExtResource("5_68yaw")
-
-[node name="VentanaO_P2_3" type="CSGBox3D" parent="PatioEstudiante" unique_id=713980287]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.8, 7, 0)
-use_collision = true
-size = Vector3(0.05, 1.8, 3.5)
-material = ExtResource("5_68yaw")
-
-[node name="VentanaO_P2_4" type="CSGBox3D" parent="PatioEstudiante" unique_id=921962140]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.8, 7, 8)
-use_collision = true
-size = Vector3(0.05, 1.8, 3.5)
-material = ExtResource("5_68yaw")
-
-[node name="VentanaO_P2_5" type="CSGBox3D" parent="PatioEstudiante" unique_id=541686843]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.8, 7, 16)
-use_collision = true
-size = Vector3(0.05, 1.8, 3.5)
-material = ExtResource("5_68yaw")
-
-[node name="VentanaE_P2_1" type="CSGBox3D" parent="PatioEstudiante" unique_id=1855946365]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.8, 7, -16)
-use_collision = true
-size = Vector3(0.05, 1.8, 3.5)
-material = ExtResource("5_68yaw")
-
-[node name="VentanaE_P2_2" type="CSGBox3D" parent="PatioEstudiante" unique_id=1394838876]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.8, 7, -8)
-use_collision = true
-size = Vector3(0.05, 1.8, 3.5)
-material = ExtResource("5_68yaw")
-
-[node name="VentanaE_P2_3" type="CSGBox3D" parent="PatioEstudiante" unique_id=228555708]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.8, 7, 0)
-use_collision = true
-size = Vector3(0.05, 1.8, 3.5)
-material = ExtResource("5_68yaw")
-
-[node name="VentanaE_P2_4" type="CSGBox3D" parent="PatioEstudiante" unique_id=176943752]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.8, 7, 8)
-use_collision = true
-size = Vector3(0.05, 1.8, 3.5)
-material = ExtResource("5_68yaw")
-
-[node name="VentanaE_P2_5" type="CSGBox3D" parent="PatioEstudiante" unique_id=1848451395]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.8, 7, 16)
-use_collision = true
-size = Vector3(0.05, 1.8, 3.5)
-material = ExtResource("5_68yaw")
 
 [node name="AC_O_PB_1" type="CSGBox3D" parent="PatioEstudiante" unique_id=825948548]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.6, 1.2, -12)
@@ -6367,60 +7233,29 @@ material = ExtResource("20_ac001")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -0.5)
 light_color = Color(0.3, 0.5, 0.4, 1)
 light_energy = 0.18
-shadow_enabled = true
 omni_range = 8.0
 
 [node name="LuzSendero1" type="OmniLight3D" parent="PatioEstudiante" unique_id=743354972]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -10)
 light_color = Color(0.4, 0.45, 0.6, 1)
 light_energy = 0.18
-shadow_enabled = true
 omni_range = 6.0
 
 [node name="LuzSendero2" type="OmniLight3D" parent="PatioEstudiante" unique_id=186008396]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 10)
 light_color = Color(0.4, 0.45, 0.6, 1)
 light_energy = 0.18
-shadow_enabled = true
 omni_range = 6.0
 
 [node name="LuzGaleriaO" type="OmniLight3D" parent="PatioEstudiante" unique_id=791712050]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 4.2, 0)
 light_color = Color(0.8, 0.7, 0.5, 1)
 light_energy = 0.22
-shadow_enabled = true
 
 [node name="LuzGaleriaE" type="OmniLight3D" parent="PatioEstudiante" unique_id=2039056389]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 4.2, 0)
 light_color = Color(0.8, 0.7, 0.5, 1)
 light_energy = 0.22
-shadow_enabled = true
-
-[node name="Farol1_Poste" type="CSGCylinder3D" parent="PatioEstudiante" unique_id=1844373328]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.11952305, 1.0473552, -3.0495183)
-use_collision = true
-radius = 0.06
-material = ExtResource("16_bm001")
-
-[node name="Farol1_Luz" type="OmniLight3D" parent="PatioEstudiante" unique_id=662438180]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2.1, -2)
-light_color = Color(0.9, 0.6, 0.3, 1)
-light_energy = 0.25
-shadow_enabled = true
-omni_range = 3.5
-
-[node name="Farol2_Poste" type="CSGCylinder3D" parent="PatioEstudiante" unique_id=1294570341]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.07501984, 0.95740676, 2.0268054)
-use_collision = true
-radius = 0.06
-material = ExtResource("16_bm001")
-
-[node name="Farol2_Luz" type="OmniLight3D" parent="PatioEstudiante" unique_id=290988016]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2.1, 10)
-light_color = Color(0.9, 0.6, 0.3, 1)
-light_energy = 0.25
-shadow_enabled = true
-omni_range = 3.5
 
 [node name="ParedIntO_PB" type="CSGBox3D" parent="PatioEstudiante" unique_id=651308043]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 2.25, 0.5)
@@ -6504,13 +7339,13 @@ size = Vector3(40, 9, 0.3)
 material = ExtResource("4_0kga5")
 
 [node name="Escenario" type="CSGBox3D" parent="AuditorioPrincipal" unique_id=1136695806]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 78)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4552002, 78)
 use_collision = true
-size = Vector3(26, 1, 10)
+size = Vector3(26, 0.9104004, 10)
 material = ExtResource("8_ro3b1")
 
 [node name="PodioEscenario" type="CSGBox3D" parent="AuditorioPrincipal" unique_id=487167957]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 74.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 75.23623)
 use_collision = true
 size = Vector3(1.2, 0.9, 0.8)
 material = ExtResource("4_0kga5")
@@ -6522,9 +7357,9 @@ size = Vector3(1.6, 0.5, 2)
 material = ExtResource("8_ro3b1")
 
 [node name="EscalonEscenarioR" type="CSGBox3D" parent="AuditorioPrincipal" unique_id=2030788904]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.8, 0.25, 74)
+transform = Transform3D(0.9521838, 0.30552587, 0, -0.30552587, 0.9521838, 0, 0, 0, 1, 13.667475, 0.3809319, 74)
 use_collision = true
-size = Vector3(1.6, 0.5, 2)
+size = Vector3(1.8780273, 0.5, 2)
 material = ExtResource("8_ro3b1")
 
 [node name="ButacaL_0_0_Asiento" type="CSGBox3D" parent="AuditorioPrincipal" unique_id=1634323071]
@@ -9293,21 +10128,18 @@ material = SubResource("StandardMaterial3D_oluwi")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69.5, 3.2, 30)
 light_color = Color(0.9, 0.95, 1, 1)
 light_energy = 0.22
-shadow_enabled = true
 omni_range = 10.0
 
 [node name="TorreOeste_Luz_1" type="OmniLight3D" parent="TorresEscaleras/TorreOeste" unique_id=1101904172]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69.5, 7.7, 30)
 light_color = Color(0.9, 0.95, 1, 1)
 light_energy = 0.22
-shadow_enabled = true
 omni_range = 10.0
 
 [node name="TorreOeste_Luz_2" type="OmniLight3D" parent="TorresEscaleras/TorreOeste" unique_id=1073076958]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69.5, 12.2, 30)
 light_color = Color(0.9, 0.95, 1, 1)
 light_energy = 0.22
-shadow_enabled = true
 omni_range = 10.0
 
 [node name="TorreOeste_P0_T1_Ramp" type="StaticBody3D" parent="TorresEscaleras/TorreOeste" unique_id=439924761]
@@ -9788,21 +10620,18 @@ material = SubResource("StandardMaterial3D_oluwi")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69.5, 3.2, 30)
 light_color = Color(0.9, 0.95, 1, 1)
 light_energy = 0.22
-shadow_enabled = true
 omni_range = 10.0
 
 [node name="TorreEste_Luz_1" type="OmniLight3D" parent="TorresEscaleras/TorreEste" unique_id=1733356761]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69.5, 7.7, 30)
 light_color = Color(0.9, 0.95, 1, 1)
 light_energy = 0.22
-shadow_enabled = true
 omni_range = 10.0
 
 [node name="TorreEste_Luz_2" type="OmniLight3D" parent="TorresEscaleras/TorreEste" unique_id=2096828304]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69.5, 12.2, 30)
 light_color = Color(0.9, 0.95, 1, 1)
 light_energy = 0.22
-shadow_enabled = true
 omni_range = 10.0
 
 [node name="TorreEste_P0_T1_Ramp" type="StaticBody3D" parent="TorresEscaleras/TorreEste" unique_id=245141568]
@@ -10283,21 +11112,18 @@ material = SubResource("StandardMaterial3D_oluwi")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 3.2, -49.5)
 light_color = Color(0.9, 0.95, 1, 1)
 light_energy = 0.22
-shadow_enabled = true
 omni_range = 10.0
 
 [node name="TorreNorte_Luz_1" type="OmniLight3D" parent="TorresEscaleras/TorreNorte" unique_id=713090553]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 7.7, -49.5)
 light_color = Color(0.9, 0.95, 1, 1)
 light_energy = 0.22
-shadow_enabled = true
 omni_range = 10.0
 
 [node name="TorreNorte_Luz_2" type="OmniLight3D" parent="TorresEscaleras/TorreNorte" unique_id=1734825919]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 12.2, -49.5)
 light_color = Color(0.9, 0.95, 1, 1)
 light_energy = 0.22
-shadow_enabled = true
 omni_range = 10.0
 
 [node name="TorreNorte_P0_T1_Ramp" type="StaticBody3D" parent="TorresEscaleras/TorreNorte" unique_id=1166467352]
@@ -10330,428 +11156,906 @@ shape = SubResource("BoxShape3D_ramp_z")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 3.8, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzN_0_-15" type="OmniLight3D" parent="Iluminacion" unique_id=1758662212]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 3.8, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzN_0_5" type="OmniLight3D" parent="Iluminacion" unique_id=357788118]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 3.8, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzN_0_25" type="OmniLight3D" parent="Iluminacion" unique_id=97557268]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 3.8, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzN_0_42" type="OmniLight3D" parent="Iluminacion" unique_id=2125024479]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 3.8, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzW_0_-20" type="OmniLight3D" parent="Iluminacion" unique_id=80344666]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 3.8, -20)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzW_0_-5" type="OmniLight3D" parent="Iluminacion" unique_id=833110907]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 3.8, -5)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzW_0_10" type="OmniLight3D" parent="Iluminacion" unique_id=1395245080]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 3.8, 10)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzE_0_-35" type="OmniLight3D" parent="Iluminacion" unique_id=1881163511]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 3.8, -35)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzE_0_-20" type="OmniLight3D" parent="Iluminacion" unique_id=1877808653]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 3.8, -20)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzE_0_-5" type="OmniLight3D" parent="Iluminacion" unique_id=942608371]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 3.8, -5)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzE_0_10" type="OmniLight3D" parent="Iluminacion" unique_id=530006498]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 3.8, 10)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzS_0_-55" type="OmniLight3D" parent="Iluminacion" unique_id=1095732532]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55, 3.8, 30)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzS_0_-35" type="OmniLight3D" parent="Iluminacion" unique_id=2024443760]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 3.8, 30)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzS_0_-15" type="OmniLight3D" parent="Iluminacion" unique_id=1599276475]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 3.8, 30)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzS_0_0" type="OmniLight3D" parent="Iluminacion" unique_id=714227564]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.8, 30)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzS_0_15" type="OmniLight3D" parent="Iluminacion" unique_id=342494087]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 3.8, 30)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzS_0_35" type="OmniLight3D" parent="Iluminacion" unique_id=1970482175]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 3.8, 30)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzS_0_55" type="OmniLight3D" parent="Iluminacion" unique_id=110315203]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 3.8, 30)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzN_1_-35" type="OmniLight3D" parent="Iluminacion" unique_id=1212673366]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 8.3, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzN_1_-15" type="OmniLight3D" parent="Iluminacion" unique_id=1790797503]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 8.3, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzN_1_5" type="OmniLight3D" parent="Iluminacion" unique_id=1252096262]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 8.3, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzN_1_25" type="OmniLight3D" parent="Iluminacion" unique_id=1462803328]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 8.3, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzN_1_42" type="OmniLight3D" parent="Iluminacion" unique_id=868027865]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 8.3, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzW_1_-20" type="OmniLight3D" parent="Iluminacion" unique_id=179849245]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 8.3, -20)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzW_1_-5" type="OmniLight3D" parent="Iluminacion" unique_id=1738001090]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 8.3, -5)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzW_1_10" type="OmniLight3D" parent="Iluminacion" unique_id=1540967019]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 8.3, 10)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzE_1_-35" type="OmniLight3D" parent="Iluminacion" unique_id=580595963]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 8.3, -35)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzE_1_-20" type="OmniLight3D" parent="Iluminacion" unique_id=281453490]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 8.3, -20)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzE_1_-5" type="OmniLight3D" parent="Iluminacion" unique_id=99459545]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 8.3, -5)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzE_1_10" type="OmniLight3D" parent="Iluminacion" unique_id=1561895578]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 8.3, 10)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzS_1_-55" type="OmniLight3D" parent="Iluminacion" unique_id=1495636754]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55, 8.3, 30)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzS_1_-35" type="OmniLight3D" parent="Iluminacion" unique_id=211060080]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 8.3, 30)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzS_1_-15" type="OmniLight3D" parent="Iluminacion" unique_id=1932935046]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 8.3, 30)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzS_1_0" type="OmniLight3D" parent="Iluminacion" unique_id=1199289481]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.3, 30)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzS_1_15" type="OmniLight3D" parent="Iluminacion" unique_id=581225423]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 8.3, 30)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzS_1_35" type="OmniLight3D" parent="Iluminacion" unique_id=141507876]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 8.3, 30)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzS_1_55" type="OmniLight3D" parent="Iluminacion" unique_id=322994950]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 8.3, 30)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzN_2_-35" type="OmniLight3D" parent="Iluminacion" unique_id=382267342]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 12.8, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzN_2_-15" type="OmniLight3D" parent="Iluminacion" unique_id=811738981]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 12.8, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzN_2_5" type="OmniLight3D" parent="Iluminacion" unique_id=354021895]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 12.8, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzN_2_25" type="OmniLight3D" parent="Iluminacion" unique_id=1633217193]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 12.8, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzN_2_42" type="OmniLight3D" parent="Iluminacion" unique_id=1573249484]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 12.8, -28.5)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzW_2_-20" type="OmniLight3D" parent="Iluminacion" unique_id=2049852187]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 12.8, -20)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzW_2_-5" type="OmniLight3D" parent="Iluminacion" unique_id=2116847873]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 12.8, -5)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzW_2_10" type="OmniLight3D" parent="Iluminacion" unique_id=3128950]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 12.8, 10)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzE_2_-35" type="OmniLight3D" parent="Iluminacion" unique_id=1742668598]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 12.8, -35)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzE_2_-20" type="OmniLight3D" parent="Iluminacion" unique_id=1644824378]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 12.8, -20)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzE_2_-5" type="OmniLight3D" parent="Iluminacion" unique_id=969060386]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 12.8, -5)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzE_2_10" type="OmniLight3D" parent="Iluminacion" unique_id=435114014]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 12.8, 10)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzS_2_-55" type="OmniLight3D" parent="Iluminacion" unique_id=1254941893]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55, 12.8, 30)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzS_2_-35" type="OmniLight3D" parent="Iluminacion" unique_id=586556440]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 12.8, 30)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzS_2_-15" type="OmniLight3D" parent="Iluminacion" unique_id=2095872168]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 12.8, 30)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzS_2_0" type="OmniLight3D" parent="Iluminacion" unique_id=444431717]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.8, 30)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzS_2_15" type="OmniLight3D" parent="Iluminacion" unique_id=1376336157]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 12.8, 30)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzS_2_35" type="OmniLight3D" parent="Iluminacion" unique_id=176642427]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 12.8, 30)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzS_2_55" type="OmniLight3D" parent="Iluminacion" unique_id=1086207201]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 12.8, 30)
 light_color = Color(0.85, 0.9, 1, 1)
 light_energy = 0.2
-shadow_enabled = true
 omni_range = 14.0
 
 [node name="LuzAud_-8_50" type="OmniLight3D" parent="Iluminacion" unique_id=1919949964]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 8, 50)
 light_color = Color(1, 0.9, 0.7, 1)
 light_energy = 0.225
-shadow_enabled = true
 omni_range = 20.0
 
 [node name="LuzAud_-8_70" type="OmniLight3D" parent="Iluminacion" unique_id=859263614]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 8, 70)
 light_color = Color(1, 0.9, 0.7, 1)
 light_energy = 0.225
-shadow_enabled = true
 omni_range = 20.0
 
 [node name="LuzAud_8_50" type="OmniLight3D" parent="Iluminacion" unique_id=61882721]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 8, 50)
 light_color = Color(1, 0.9, 0.7, 1)
 light_energy = 0.225
-shadow_enabled = true
 omni_range = 20.0
 
 [node name="LuzAud_8_70" type="OmniLight3D" parent="Iluminacion" unique_id=1456820978]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 8, 70)
 light_color = Color(1, 0.9, 0.7, 1)
 light_energy = 0.225
-shadow_enabled = true
 omni_range = 20.0
+
+[node name="LuzAula_101" type="OmniLight3D" parent="Iluminacion" unique_id=780001]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 3.79999995231628, -39.7999992370605)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzAula_102" type="OmniLight3D" parent="Iluminacion" unique_id=780002]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 3.79999995231628, -39.7999992370605)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzAula_103" type="OmniLight3D" parent="Iluminacion" unique_id=780003]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 3.79999995231628, -39.7999992370605)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzAula_104_A" type="OmniLight3D" parent="Iluminacion" unique_id=780004]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.0, 3.79999995231628, -39.7999992370605)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzAula_104_B" type="OmniLight3D" parent="Iluminacion" unique_id=780005]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.0, 3.79999995231628, -39.7999992370605)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzAula_105" type="OmniLight3D" parent="Iluminacion" unique_id=780006]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57.2999992370605, 3.79999995231628, -25.7999992370605)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzAula_106" type="OmniLight3D" parent="Iluminacion" unique_id=780007]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57.2999992370605, 3.79999995231628, -11.8000001907349)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzAula_107" type="OmniLight3D" parent="Iluminacion" unique_id=780008]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57.2999992370605, 3.79999995231628, 2.20000004768372)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzAula_108" type="OmniLight3D" parent="Iluminacion" unique_id=780009]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57.2999992370605, 3.79999995231628, 17.2000007629395)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzAula_109" type="OmniLight3D" parent="Iluminacion" unique_id=780010]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.5, 3.79999995231628, -16.7999992370605)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzLab_Electronica" type="OmniLight3D" parent="Iluminacion" unique_id=780011]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.0, 3.79999995231628, 0.5)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzAula_110" type="OmniLight3D" parent="Iluminacion" unique_id=780012]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.5, 3.79999995231628, 18.2000007629395)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzAula_111" type="OmniLight3D" parent="Iluminacion" unique_id=780013]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5, 3.79999995231628, -16.7999992370605)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzAula_112" type="OmniLight3D" parent="Iluminacion" unique_id=780014]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5, 3.79999995231628, -0.80000001192093)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzAula_113" type="OmniLight3D" parent="Iluminacion" unique_id=780015]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5, 3.79999995231628, 15.1999998092651)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzAula_114_A" type="OmniLight3D" parent="Iluminacion" unique_id=780016]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.9000015258789, 3.79999995231628, -37.0)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzAula_114_B" type="OmniLight3D" parent="Iluminacion" unique_id=780017]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.9000015258789, 3.79999995231628, -23.0)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzAula_115" type="OmniLight3D" parent="Iluminacion" unique_id=780018]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.5, 3.79999995231628, 17.2000007629395)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzFoto_Oeste" type="OmniLight3D" parent="Iluminacion" unique_id=780019]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.0, 3.79999995231628, 40.0)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzFoto_Este" type="OmniLight3D" parent="Iluminacion" unique_id=780020]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.0, 3.79999995231628, 40.0)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzP1_Bedelia_A" type="OmniLight3D" parent="Iluminacion" unique_id=780021]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47.0, 8.30000019073486, -39.0)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzP1_Bedelia_B" type="OmniLight3D" parent="Iluminacion" unique_id=780022]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.0, 8.30000019073486, -39.0)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzP1_Direccion" type="OmniLight3D" parent="Iluminacion" unique_id=780023]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0, 8.30000019073486, -39.0)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzP1_Sistemas" type="OmniLight3D" parent="Iluminacion" unique_id=780024]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.0, 8.30000019073486, -19.0)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzP1_Electronica" type="OmniLight3D" parent="Iluminacion" unique_id=780025]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.0, 8.30000019073486, 10.0)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzP1_CETRA" type="OmniLight3D" parent="Iluminacion" unique_id=780026]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56.0, 8.30000019073486, -27.5)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzP1_Biblioteca" type="OmniLight3D" parent="Iluminacion" unique_id=780027]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56.0, 8.30000019073486, 7.5)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzAula_201" type="OmniLight3D" parent="Iluminacion" unique_id=780028]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 12.8000001907349, -39.7999992370605)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzAula_202" type="OmniLight3D" parent="Iluminacion" unique_id=780029]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 12.8000001907349, -39.7999992370605)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzAula_203" type="OmniLight3D" parent="Iluminacion" unique_id=780030]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 12.8000001907349, -39.7999992370605)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzAula_204_A" type="OmniLight3D" parent="Iluminacion" unique_id=780031]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.0, 12.8000001907349, -39.7999992370605)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzAula_204_B" type="OmniLight3D" parent="Iluminacion" unique_id=780032]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.0, 12.8000001907349, -39.7999992370605)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzAula_205" type="OmniLight3D" parent="Iluminacion" unique_id=780033]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57.2999992370605, 12.8000001907349, -25.7999992370605)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzAula_206" type="OmniLight3D" parent="Iluminacion" unique_id=780034]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57.2999992370605, 12.8000001907349, -11.8000001907349)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzAula_207" type="OmniLight3D" parent="Iluminacion" unique_id=780035]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57.2999992370605, 12.8000001907349, 2.20000004768372)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzAula_208" type="OmniLight3D" parent="Iluminacion" unique_id=780036]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57.2999992370605, 12.8000001907349, 17.2000007629395)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzAula_209" type="OmniLight3D" parent="Iluminacion" unique_id=780037]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.5, 12.8000001907349, -16.7999992370605)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzAula_210_Magna_A" type="OmniLight3D" parent="Iluminacion" unique_id=780038]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.0, 12.8000001907349, 0.40000000596046)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzAula_210_Magna_B" type="OmniLight3D" parent="Iluminacion" unique_id=780039]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.0, 12.8000001907349, 0.40000000596046)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzAula_211" type="OmniLight3D" parent="Iluminacion" unique_id=780040]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.5, 12.8000001907349, 18.2000007629395)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzAula_212" type="OmniLight3D" parent="Iluminacion" unique_id=780041]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5, 12.8000001907349, -16.7999992370605)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzAula_213" type="OmniLight3D" parent="Iluminacion" unique_id=780042]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5, 12.8000001907349, -0.80000001192093)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzAula_214" type="OmniLight3D" parent="Iluminacion" unique_id=780043]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5, 12.8000001907349, 15.1999998092651)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzAula_215_A" type="OmniLight3D" parent="Iluminacion" unique_id=780044]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.9000015258789, 12.8000001907349, -37.0)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzAula_215_B" type="OmniLight3D" parent="Iluminacion" unique_id=780045]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.9000015258789, 12.8000001907349, -23.0)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzAula_216" type="OmniLight3D" parent="Iluminacion" unique_id=780046]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56.0, 12.8000001907349, -3.0)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzAula_217" type="OmniLight3D" parent="Iluminacion" unique_id=780047]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56.4000015258789, 12.8000001907349, 17.2000007629395)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzAula_218" type="OmniLight3D" parent="Iluminacion" unique_id=780048]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.5, 12.8000001907349, 39.0)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
+
+[node name="LuzAula_219" type="OmniLight3D" parent="Iluminacion" unique_id=780049]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.7000007629395, 12.8000001907349, 36.0)
+light_color = Color(0.92, 0.95, 1, 1)
+light_energy = 0.32
+distance_fade_enabled = true
+distance_fade_begin = 35.0
+shadow_enabled = true
+distance_fade_shadow = 12.0
+distance_fade_length = 4.0
+omni_range = 15.0
 
 [node name="ExteriorEntrada" type="Node3D" parent="." unique_id=982000]
 
@@ -10795,14 +12099,12 @@ material = ExtResource("16_bm001")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -63, 3.3, 47.5)
 light_color = Color(1, 0.95, 0.85, 1)
 light_energy = 1.3
-shadow_enabled = true
 omni_range = 9.0
 
 [node name="LuzAlero2" type="OmniLight3D" parent="ExteriorEntrada" unique_id=982008]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57, 3.3, 47.5)
 light_color = Color(1, 0.95, 0.85, 1)
 light_energy = 1.3
-shadow_enabled = true
 omni_range = 9.0
 
 [node name="VeredaAcceso" type="CSGBox3D" parent="ExteriorEntrada" unique_id=982010]
@@ -10879,156 +12181,15 @@ material = ExtResource("23_alum")
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -52.3, 6.7, 52)
 light_color = Color(0.85, 0.92, 1, 1)
 light_energy = 3.5
-shadow_enabled = true
 spot_range = 28.0
 spot_angle = 55.0
 
-[node name="AutoBlanco" type="Node3D" parent="ExteriorEntrada" unique_id=982040]
+[node name="AutoSUV_1" parent="ExteriorEntrada" unique_id=982040 instance=ExtResource("34_auto_suv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -64.5, 0, 54.5)
 
-[node name="Chasis" type="CSGBox3D" parent="ExteriorEntrada/AutoBlanco" unique_id=982041]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0)
-use_collision = true
-size = Vector3(2, 0.55, 4.4)
-material = ExtResource("23_alum")
-
-[node name="Cabina" type="CSGBox3D" parent="ExteriorEntrada/AutoBlanco" unique_id=982042]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, -0.2)
-use_collision = true
-size = Vector3(1.75, 0.65, 2.2)
-material = ExtResource("23_alum")
-
-[node name="Vidrios" type="CSGBox3D" parent="ExteriorEntrada/AutoBlanco" unique_id=982043]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, -0.2)
-size = Vector3(1.78, 0.6, 2.15)
-material = ExtResource("5_68yaw")
-
-[node name="RuedaFL" type="CSGBox3D" parent="ExteriorEntrada/AutoBlanco" unique_id=982044]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.32, -1.3)
-size = Vector3(0.25, 0.64, 0.64)
-material = ExtResource("26_zocalo")
-
-[node name="RuedaFR" type="CSGBox3D" parent="ExteriorEntrada/AutoBlanco" unique_id=982045]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.32, -1.3)
-size = Vector3(0.25, 0.64, 0.64)
-material = ExtResource("26_zocalo")
-
-[node name="RuedaRL" type="CSGBox3D" parent="ExteriorEntrada/AutoBlanco" unique_id=982046]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.32, 1.3)
-size = Vector3(0.25, 0.64, 0.64)
-material = ExtResource("26_zocalo")
-
-[node name="RuedaRR" type="CSGBox3D" parent="ExteriorEntrada/AutoBlanco" unique_id=982047]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.32, 1.3)
-size = Vector3(0.25, 0.64, 0.64)
-material = ExtResource("26_zocalo")
-
-[node name="LucesFrente" type="CSGBox3D" parent="ExteriorEntrada/AutoBlanco" unique_id=982048]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -2.21)
-size = Vector3(1.6, 0.16, 0.05)
-material = ExtResource("12_uwdqk")
-
-[node name="LucesAtras" type="CSGBox3D" parent="ExteriorEntrada/AutoBlanco" unique_id=982049]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 2.21)
-size = Vector3(1.6, 0.16, 0.05)
-material = ExtResource("10_teuvw")
-
-[node name="AutoAzul" type="Node3D" parent="ExteriorEntrada" unique_id=982050]
+[node name="AutoSuspicious" parent="ExteriorEntrada" unique_id=982050 instance=ExtResource("35_auto_suspicious")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -58.5, 0, 54.5)
 
-[node name="ChasisAzul" type="CSGBox3D" parent="ExteriorEntrada/AutoAzul" unique_id=982051]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0)
-use_collision = true
-size = Vector3(2, 0.55, 4.4)
-material = ExtResource("9_t4cw7")
-
-[node name="CabinaAzul" type="CSGBox3D" parent="ExteriorEntrada/AutoAzul" unique_id=982052]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, -0.2)
-use_collision = true
-size = Vector3(1.75, 0.65, 2.2)
-material = ExtResource("9_t4cw7")
-
-[node name="VidriosAzul" type="CSGBox3D" parent="ExteriorEntrada/AutoAzul" unique_id=982053]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, -0.2)
-size = Vector3(1.78, 0.6, 2.15)
-material = ExtResource("5_68yaw")
-
-[node name="RuedaFL_A" type="CSGBox3D" parent="ExteriorEntrada/AutoAzul" unique_id=982054]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.32, -1.3)
-size = Vector3(0.25, 0.64, 0.64)
-material = ExtResource("26_zocalo")
-
-[node name="RuedaFR_A" type="CSGBox3D" parent="ExteriorEntrada/AutoAzul" unique_id=982055]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.32, -1.3)
-size = Vector3(0.25, 0.64, 0.64)
-material = ExtResource("26_zocalo")
-
-[node name="RuedaRL_A" type="CSGBox3D" parent="ExteriorEntrada/AutoAzul" unique_id=982056]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.32, 1.3)
-size = Vector3(0.25, 0.64, 0.64)
-material = ExtResource("26_zocalo")
-
-[node name="RuedaRR_A" type="CSGBox3D" parent="ExteriorEntrada/AutoAzul" unique_id=982057]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.32, 1.3)
-size = Vector3(0.25, 0.64, 0.64)
-material = ExtResource("26_zocalo")
-
-[node name="LucesFrente_A" type="CSGBox3D" parent="ExteriorEntrada/AutoAzul" unique_id=982058]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -2.21)
-size = Vector3(1.6, 0.16, 0.05)
-material = ExtResource("12_uwdqk")
-
-[node name="LucesAtras_A" type="CSGBox3D" parent="ExteriorEntrada/AutoAzul" unique_id=982059]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 2.21)
-size = Vector3(1.6, 0.16, 0.05)
-material = ExtResource("10_teuvw")
-
-[node name="AutoGris" type="Node3D" parent="ExteriorEntrada" unique_id=982060]
+[node name="AutoSUV_2" parent="ExteriorEntrada" unique_id=982060 instance=ExtResource("34_auto_suv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.5, 0, 54.5)
-
-[node name="ChasisGris" type="CSGBox3D" parent="ExteriorEntrada/AutoGris" unique_id=982061]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0)
-use_collision = true
-size = Vector3(2, 0.55, 4.4)
-material = ExtResource("16_bm001")
-
-[node name="CabinaGris" type="CSGBox3D" parent="ExteriorEntrada/AutoGris" unique_id=982062]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, -0.2)
-use_collision = true
-size = Vector3(1.75, 0.65, 2.2)
-material = ExtResource("16_bm001")
-
-[node name="VidriosGris" type="CSGBox3D" parent="ExteriorEntrada/AutoGris" unique_id=982063]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, -0.2)
-size = Vector3(1.78, 0.6, 2.15)
-material = ExtResource("5_68yaw")
-
-[node name="RuedaFL_G" type="CSGBox3D" parent="ExteriorEntrada/AutoGris" unique_id=982064]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.32, -1.3)
-size = Vector3(0.25, 0.64, 0.64)
-material = ExtResource("26_zocalo")
-
-[node name="RuedaFR_G" type="CSGBox3D" parent="ExteriorEntrada/AutoGris" unique_id=982065]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.32, -1.3)
-size = Vector3(0.25, 0.64, 0.64)
-material = ExtResource("26_zocalo")
-
-[node name="RuedaRL_G" type="CSGBox3D" parent="ExteriorEntrada/AutoGris" unique_id=982066]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.32, 1.3)
-size = Vector3(0.25, 0.64, 0.64)
-material = ExtResource("26_zocalo")
-
-[node name="RuedaRR_G" type="CSGBox3D" parent="ExteriorEntrada/AutoGris" unique_id=982067]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.32, 1.3)
-size = Vector3(0.25, 0.64, 0.64)
-material = ExtResource("26_zocalo")
-
-[node name="LucesFrente_G" type="CSGBox3D" parent="ExteriorEntrada/AutoGris" unique_id=982068]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -2.21)
-size = Vector3(1.6, 0.16, 0.05)
-material = ExtResource("12_uwdqk")
-
-[node name="LucesAtras_G" type="CSGBox3D" parent="ExteriorEntrada/AutoGris" unique_id=982069]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 2.21)
-size = Vector3(1.6, 0.16, 0.05)
-material = ExtResource("10_teuvw")
+custom_material = ExtResource("36_mat_suv_blue")

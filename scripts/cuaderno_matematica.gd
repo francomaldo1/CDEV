@@ -6,7 +6,7 @@ signal exam_solved(success: bool)
 
 @export var classroom_name: String = "Aula"
 
-@onready var prompt_label: Label3D = $PromptLabel
+@onready var prompt_label: Label3D = get_node_or_null("PromptLabel")
 @onready var light: OmniLight3D = $OmniLight3D
 
 var is_player_nearby: bool = false

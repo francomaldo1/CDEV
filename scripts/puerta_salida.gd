@@ -3,7 +3,7 @@ class_name PuertaSalida
 
 signal player_escaped
 
-@onready var prompt_label: Label3D = $PromptLabel
+@onready var prompt_label: Label3D = get_node_or_null("PromptLabel")
 @onready var candado: Node3D = $Candado
 @onready var collision_blocker: CollisionShape3D = $BloqueoFisico/CollisionShape3D
 @onready var hoja_izq: Node3D = $Visuals/HojaIzq
@@ -66,11 +66,9 @@ func _try_open_door() -> void:
 			tw.tween_property(hoja_der, "rotation:y", deg_to_rad(78.0), 1.4).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 			
 		if prompt_label:
-			prompt_label.text = "¡PUERTA DESBLOQUEADA!"
-			prompt_label.modulate = Color(0.2, 1.0, 0.4)
+			prompt_label.visible = false
 			
-		hud.show_temporary_alert("🎓 ¡HAS ESCAPADO DE LA UTN FRC! Aprobaste la materia.", Color(0.2, 1.0, 0.4))
-		hud.trigger_victory_screen()
+		_trigger_cinematic_fade_to_black()
 	else:
 		if audio_player:
 			audio_player.stream = HorrorAudio.get_door_rattle_sound()
@@ -82,6 +80,101 @@ func _try_open_door() -> void:
 			
 		if hud.has_method("show_temporary_alert"):
 			hud.show_temporary_alert("🔒 ¡PUERTA BLOQUEADA! Sin el TÍTULO no salís. Buscalo en el atril del AUDITORIO.", Color(1.0, 0.3, 0.3))
+
+func _trigger_cinematic_fade_to_black() -> void:
+	# 0. Desactivar y silenciar por completo al profesor y la música de persecución
+	var prof = get_tree().root.find_child("Profesor", true, false)
+	if prof:
+		if prof.has_method("set_active"):
+			prof.set_active(false)
+		prof.visible = false
+		prof.velocity = Vector3.ZERO
+		prof.process_mode = Node.PROCESS_MODE_DISABLED
+		
+	if is_instance_valid(player_ref) and player_ref.has_method("stop_chase_violins"):
+		player_ref.stop_chase_violins(0.1)
+
+	var hud = get_tree().root.find_child("HUD", true, false)
+	if hud:
+		hud.set_interact_prompt("")
+		var obj = hud.find_child("ObjectiveContainer", true, false)
+		if obj: obj.visible = false
+		var instr = hud.find_child("InstructionLabel", true, false)
+		if instr: instr.visible = false
+		var alert = hud.find_child("AlertLabel", true, false)
+		if alert: alert.visible = false
+		
+	var canvas = CanvasLayer.new()
+	canvas.layer = 200
+	
+	# 1. Fondo 100% negro puro para el fade out
+	var black_rect = ColorRect.new()
+	black_rect.name = "EscapeFadeRect"
+	black_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
+	black_rect.color = Color(0, 0, 0, 1)
+	black_rect.modulate.a = 0.0
+	black_rect.mouse_filter = Control.MOUSE_FILTER_STOP
+	canvas.add_child(black_rect)
+	
+	# 2. Texto cinemático de victoria "LOGRASTE ESCAPAR"
+	var escape_label = Label.new()
+	escape_label.name = "EscapeLabel"
+	escape_label.text = "LOGRASTE ESCAPAR"
+	escape_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	escape_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	escape_label.set_anchors_preset(Control.PRESET_CENTER)
+	escape_label.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	escape_label.grow_vertical = Control.GROW_DIRECTION_BOTH
+	escape_label.modulate.a = 0.0 # Comienza invisible hasta que la pantalla esté en negro
+	
+	if ResourceLoader.exists("res://fonts/typewriter.ttf"):
+		escape_label.add_theme_font_override("font", load("res://fonts/typewriter.ttf"))
+	escape_label.add_theme_font_size_override("font_size", 44)
+	escape_label.add_theme_color_override("font_color", Color(0.92, 0.94, 0.96, 1.0))
+	escape_label.add_theme_color_override("font_shadow_color", Color(0.0, 0.0, 0.0, 0.9))
+	escape_label.add_theme_constant_override("shadow_offset_x", 2)
+	escape_label.add_theme_constant_override("shadow_offset_y", 2)
+	canvas.add_child(escape_label)
+	get_tree().root.add_child.call_deferred(canvas)
+	
+	if is_instance_valid(player_ref) and "can_move" in player_ref:
+		player_ref.can_move = false
+		
+	var master_bus = AudioServer.get_bus_index("Master")
+	if master_bus != -1:
+		var current_vol = AudioServer.get_bus_volume_db(master_bus)
+		var audio_tw = create_tween()
+		audio_tw.tween_method(func(v: float): AudioServer.set_bus_volume_db(master_bus, v), current_vol, -60.0, 1.8)
+		
+	# Secuencia de animación cinemática:
+	# A) Fade a negro de la escena y desvanecimiento del audio de juego (1.8s)
+	var fade_tw = create_tween()
+	fade_tw.tween_property(black_rect, "modulate:a", 1.0, 1.8).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	
+	# Al completarse el fade a negro: restaurar volumen maestro e iniciar música de piano
+	fade_tw.tween_callback(func():
+		if master_bus != -1:
+			AudioServer.set_bus_volume_db(master_bus, 0.0)
+		HorrorAudio.start_ending_piano(get_tree())
+	)
+	
+	# B) Fade in del mensaje "LOGRASTE ESCAPAR" una vez en negro (1.2s)
+	fade_tw.tween_property(escape_label, "modulate:a", 1.0, 1.2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	
+	# C) Mantener en pantalla durante 3 segundos
+	fade_tw.tween_interval(3.0)
+	
+	# D) Segundo fade: Fade out del texto hacia negro absoluto (1.0s)
+	fade_tw.tween_property(escape_label, "modulate:a", 0.0, 1.0).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	fade_tw.tween_interval(0.5)
+	
+	# E) Transición limpia al menú principal (el piano persiste en root)
+	fade_tw.tween_callback(func():
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		if is_instance_valid(canvas):
+			canvas.queue_free()
+		get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+	)
 
 func _on_body_entered(body: Node3D) -> void:
 	if body is Player or body.is_in_group("player") or body.name == "Player":

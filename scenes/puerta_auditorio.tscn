@@ -1,6 +1,10 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://df24810paud01"]
 
 [ext_resource type="Script" path="res://scripts/puerta_auditorio.gd" id="1_paud"]
+[ext_resource type="Material" path="res://materials/mat_chain_metal.tres" id="2_metal"]
+[ext_resource type="Material" path="res://materials/mat_padlock_brass.tres" id="3_brass"]
+[ext_resource type="Material" path="res://materials/mat_padlock_shackle.tres" id="4_shackle"]
+[ext_resource type="AudioStream" path="res://audio/sfx/door_slam_loud.mp3" id="5_sfx_open"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_paud"]
 size = Vector3(3.6, 2.6, 2.4)
@@ -11,10 +15,230 @@ script = ExtResource("1_paud")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_paud")
 
-[node name="PromptLabel" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0, 0)
-billboard = 1
-text = "🔒 AUDITORIO CERRADO"
-font_size = 40
-outline_size = 8
-modulate = Color(1, 0.4, 0.3, 1)
+[node name="CadenasAuditorio" type="Node3D" parent="."]
+
+[node name="Anclaje_Izq_1" type="CSGBox3D" parent="CadenasAuditorio"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.62, 0.7, 0.92)
+size = Vector3(0.12, 0.16, 0.08)
+material = ExtResource("2_metal")
+
+[node name="Argolla_Izq_1" type="CSGBox3D" parent="CadenasAuditorio"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.58, 0.7, 0.97)
+size = Vector3(0.04, 0.08, 0.04)
+material = ExtResource("2_metal")
+
+[node name="Anclaje_Izq_2" type="CSGBox3D" parent="CadenasAuditorio"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.62, 0.25, 0.92)
+size = Vector3(0.12, 0.16, 0.08)
+material = ExtResource("2_metal")
+
+[node name="Argolla_Izq_2" type="CSGBox3D" parent="CadenasAuditorio"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.58, 0.25, 0.97)
+size = Vector3(0.04, 0.08, 0.04)
+material = ExtResource("2_metal")
+
+[node name="Anclaje_Izq_3" type="CSGBox3D" parent="CadenasAuditorio"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.62, -0.25, 0.92)
+size = Vector3(0.12, 0.16, 0.08)
+material = ExtResource("2_metal")
+
+[node name="Argolla_Izq_3" type="CSGBox3D" parent="CadenasAuditorio"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.58, -0.25, 0.97)
+size = Vector3(0.04, 0.08, 0.04)
+material = ExtResource("2_metal")
+
+[node name="Anclaje_Izq_4" type="CSGBox3D" parent="CadenasAuditorio"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.62, -0.7, 0.92)
+size = Vector3(0.12, 0.16, 0.08)
+material = ExtResource("2_metal")
+
+[node name="Argolla_Izq_4" type="CSGBox3D" parent="CadenasAuditorio"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.58, -0.7, 0.97)
+size = Vector3(0.04, 0.08, 0.04)
+material = ExtResource("2_metal")
+
+[node name="Anclaje_Der_1" type="CSGBox3D" parent="CadenasAuditorio"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.62, 0.7, 0.92)
+size = Vector3(0.12, 0.16, 0.08)
+material = ExtResource("2_metal")
+
+[node name="Argolla_Der_1" type="CSGBox3D" parent="CadenasAuditorio"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.58, 0.7, 0.97)
+size = Vector3(0.04, 0.08, 0.04)
+material = ExtResource("2_metal")
+
+[node name="Anclaje_Der_2" type="CSGBox3D" parent="CadenasAuditorio"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.62, 0.25, 0.92)
+size = Vector3(0.12, 0.16, 0.08)
+material = ExtResource("2_metal")
+
+[node name="Argolla_Der_2" type="CSGBox3D" parent="CadenasAuditorio"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.58, 0.25, 0.97)
+size = Vector3(0.04, 0.08, 0.04)
+material = ExtResource("2_metal")
+
+[node name="Anclaje_Der_3" type="CSGBox3D" parent="CadenasAuditorio"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.62, -0.25, 0.92)
+size = Vector3(0.12, 0.16, 0.08)
+material = ExtResource("2_metal")
+
+[node name="Argolla_Der_3" type="CSGBox3D" parent="CadenasAuditorio"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.58, -0.25, 0.97)
+size = Vector3(0.04, 0.08, 0.04)
+material = ExtResource("2_metal")
+
+[node name="Anclaje_Der_4" type="CSGBox3D" parent="CadenasAuditorio"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.62, -0.7, 0.92)
+size = Vector3(0.12, 0.16, 0.08)
+material = ExtResource("2_metal")
+
+[node name="Argolla_Der_4" type="CSGBox3D" parent="CadenasAuditorio"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.58, -0.7, 0.97)
+size = Vector3(0.04, 0.08, 0.04)
+material = ExtResource("2_metal")
+
+[node name="Anclaje_Sup" type="CSGBox3D" parent="CadenasAuditorio"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, 0.92)
+size = Vector3(0.18, 0.12, 0.08)
+material = ExtResource("2_metal")
+
+[node name="Argolla_Sup" type="CSGBox3D" parent="CadenasAuditorio"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.01, 0.97)
+size = Vector3(0.08, 0.04, 0.04)
+material = ExtResource("2_metal")
+
+[node name="Anclaje_Inf" type="CSGBox3D" parent="CadenasAuditorio"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.05, 0.92)
+size = Vector3(0.18, 0.12, 0.08)
+material = ExtResource("2_metal")
+
+[node name="Argolla_Inf" type="CSGBox3D" parent="CadenasAuditorio"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.01, 0.97)
+size = Vector3(0.08, 0.04, 0.04)
+material = ExtResource("2_metal")
+
+[node name="Candado_Central" type="Node3D" parent="CadenasAuditorio"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.04, -0.05, 0.84)
+
+[node name="Cuerpo" type="CSGBox3D" parent="CadenasAuditorio/Candado_Central"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.02, 0)
+size = Vector3(0.18, 0.2, 0.08)
+material = ExtResource("3_brass")
+
+[node name="Hombros" type="CSGBox3D" parent="CadenasAuditorio/Candado_Central"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.085, 0)
+size = Vector3(0.16, 0.02, 0.076)
+material = ExtResource("3_brass")
+
+[node name="Brazo_Izq" type="CSGCylinder3D" parent="CadenasAuditorio/Candado_Central"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.048, 0.11, 0)
+radius = 0.014
+height = 0.1
+material = ExtResource("4_shackle")
+
+[node name="Brazo_Der" type="CSGCylinder3D" parent="CadenasAuditorio/Candado_Central"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.048, 0.11, 0)
+radius = 0.014
+height = 0.1
+material = ExtResource("4_shackle")
+
+[node name="Arco" type="CSGTorus3D" parent="CadenasAuditorio/Candado_Central"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.12, 0)
+inner_radius = 0.034
+outer_radius = 0.062
+rings = 16
+ring_segments = 10
+material = ExtResource("4_shackle")
+
+[node name="Bocallave" type="CSGCylinder3D" parent="CadenasAuditorio/Candado_Central"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.12, 0)
+radius = 0.016
+height = 0.01
+material = ExtResource("2_metal")
+
+[node name="Candado_Izq" type="Node3D" parent="CadenasAuditorio"]
+transform = Transform3D(0.821037, 0.220002, 0, -0.220002, 0.821037, 0, 0, 0, 0.85, -0.65, 0.28, 0.85)
+
+[node name="Cuerpo" type="CSGBox3D" parent="CadenasAuditorio/Candado_Izq"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.02, 0)
+size = Vector3(0.18, 0.2, 0.08)
+material = ExtResource("3_brass")
+
+[node name="Hombros" type="CSGBox3D" parent="CadenasAuditorio/Candado_Izq"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.085, 0)
+size = Vector3(0.16, 0.02, 0.076)
+material = ExtResource("3_brass")
+
+[node name="Brazo_Izq" type="CSGCylinder3D" parent="CadenasAuditorio/Candado_Izq"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.048, 0.11, 0)
+radius = 0.014
+height = 0.1
+material = ExtResource("4_shackle")
+
+[node name="Brazo_Der" type="CSGCylinder3D" parent="CadenasAuditorio/Candado_Izq"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.048, 0.11, 0)
+radius = 0.014
+height = 0.1
+material = ExtResource("4_shackle")
+
+[node name="Arco" type="CSGTorus3D" parent="CadenasAuditorio/Candado_Izq"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.12, 0)
+inner_radius = 0.034
+outer_radius = 0.062
+rings = 16
+ring_segments = 10
+material = ExtResource("4_shackle")
+
+[node name="Bocallave" type="CSGCylinder3D" parent="CadenasAuditorio/Candado_Izq"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.12, 0)
+radius = 0.016
+height = 0.01
+material = ExtResource("2_metal")
+
+[node name="Candado_Der" type="Node3D" parent="CadenasAuditorio"]
+transform = Transform3D(0.821037, -0.220002, 0, 0.220002, 0.821037, 0, 0, 0, 0.85, 0.65, -0.22, 0.85)
+
+[node name="Cuerpo" type="CSGBox3D" parent="CadenasAuditorio/Candado_Der"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.02, 0)
+size = Vector3(0.18, 0.2, 0.08)
+material = ExtResource("3_brass")
+
+[node name="Hombros" type="CSGBox3D" parent="CadenasAuditorio/Candado_Der"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.085, 0)
+size = Vector3(0.16, 0.02, 0.076)
+material = ExtResource("3_brass")
+
+[node name="Brazo_Izq" type="CSGCylinder3D" parent="CadenasAuditorio/Candado_Der"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.048, 0.11, 0)
+radius = 0.014
+height = 0.1
+material = ExtResource("4_shackle")
+
+[node name="Brazo_Der" type="CSGCylinder3D" parent="CadenasAuditorio/Candado_Der"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.048, 0.11, 0)
+radius = 0.014
+height = 0.1
+material = ExtResource("4_shackle")
+
+[node name="Arco" type="CSGTorus3D" parent="CadenasAuditorio/Candado_Der"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.12, 0)
+inner_radius = 0.034
+outer_radius = 0.062
+rings = 16
+ring_segments = 10
+material = ExtResource("4_shackle")
+
+[node name="Bocallave" type="CSGCylinder3D" parent="CadenasAuditorio/Candado_Der"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.12, 0)
+radius = 0.016
+height = 0.01
+material = ExtResource("2_metal")
+
+[node name="AudioUnlock" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("5_sfx_open")
+unit_size = 12.0
+max_distance = 30.0
+
+[node name="AudioLocked" type="AudioStreamPlayer3D" parent="."]
+unit_size = 10.0
+max_distance = 25.0

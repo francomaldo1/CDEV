@@ -20,6 +20,48 @@ static var _prof_step_idx: int = 0
 static var _cached_heartbeat_stream: AudioStream = null
 static var _cached_heartbeat: AudioStreamWAV = null
 static var _cached_creak: AudioStreamWAV = null
+static var _cached_creepy_steps: Array[AudioStream] = []
+static var _creepy_step_idx: int = 0
+static var _cached_panic_drone: AudioStreamWAV = null
+
+## Estado y reproductor de música de piano al terminar el juego (persiste en menú principal)
+static var has_completed_game: bool = false
+static var ending_piano_player: AudioStreamPlayer = null
+
+static func start_ending_piano(tree: SceneTree) -> void:
+	has_completed_game = true
+	if ending_piano_player != null and is_instance_valid(ending_piano_player):
+		if not ending_piano_player.playing:
+			ending_piano_player.play()
+		return
+		
+	var path = "res://321146__benpm__ambient-piano-music-5.mp3"
+	if not ResourceLoader.exists(path):
+		return
+		
+	var stream = load(path) as AudioStream
+	if not stream:
+		return
+		
+	ending_piano_player = AudioStreamPlayer.new()
+	ending_piano_player.name = "EndingPianoPlayer"
+	ending_piano_player.stream = stream
+	ending_piano_player.volume_db = -5.0
+	ending_piano_player.bus = &"Master"
+	ending_piano_player.finished.connect(func():
+		if is_instance_valid(ending_piano_player):
+			ending_piano_player.play()
+	)
+	if tree and tree.root:
+		tree.root.add_child(ending_piano_player)
+	ending_piano_player.play()
+
+static func stop_ending_piano() -> void:
+	has_completed_game = false
+	if ending_piano_player != null and is_instance_valid(ending_piano_player):
+		ending_piano_player.stop()
+		ending_piano_player.queue_free()
+		ending_piano_player = null
 
 static func get_spark_sound() -> AudioStreamWAV:
 	if _cached_spark == null:
@@ -77,6 +119,44 @@ static func get_profesor_footstep() -> AudioStreamWAV:
 		return _generate_prof_step()
 	_prof_step_idx = (_prof_step_idx + 1) % _cached_prof_step.size()
 	return _cached_prof_step[_prof_step_idx]
+
+static func get_creepy_footstep() -> AudioStream:
+	if _cached_creepy_steps.is_empty():
+		for i in range(1, 5):
+			var path = "res://audio/footsteps/creepy_step_%02d.wav" % i
+			if ResourceLoader.exists(path):
+				var s = load(path)
+				if s:
+					_cached_creepy_steps.append(s)
+	if not _cached_creepy_steps.is_empty():
+		_creepy_step_idx = (_creepy_step_idx + 1) % _cached_creepy_steps.size()
+		return _cached_creepy_steps[_creepy_step_idx]
+	return get_profesor_footstep()
+
+static func get_panic_sub_drone() -> AudioStreamWAV:
+	if _cached_panic_drone != null:
+		return _cached_panic_drone
+	var sample_rate = 22050
+	var duration = 4.0
+	var total_samples = int(sample_rate * duration)
+	var data = PackedByteArray()
+	data.resize(total_samples * 2)
+	for i in range(total_samples):
+		var t = float(i) / float(sample_rate)
+		var pulse = 0.8 + 0.2 * sin(t * TAU * 3.8)
+		var val = (sin(t * TAU * 46.0) * 0.65 + sin(t * TAU * 92.0) * 0.25 + sin(t * TAU * 23.0) * 0.15) * pulse
+		var s16 = int(clampf(val, -1.0, 1.0) * 32767.0)
+		data.encode_s16(i * 2, s16)
+	var wav = AudioStreamWAV.new()
+	wav.format = AudioStreamWAV.FORMAT_16_BITS
+	wav.mix_rate = sample_rate
+	wav.stereo = false
+	wav.loop_mode = AudioStreamWAV.LOOP_FORWARD
+	wav.loop_begin = 0
+	wav.loop_end = total_samples
+	wav.data = data
+	_cached_panic_drone = wav
+	return _cached_panic_drone
 
 static func _ensure_footsteps_loaded() -> void:
 	if _cached_player_walk.is_empty():
@@ -470,6 +550,138 @@ static func get_door_rattle_sound() -> AudioStreamWAV:
 		var r2 = (sin((t - 0.08) * 440.0 * TAU) if t > 0.08 else 0.0) * exp(-max(0.0, t - 0.08) * 35.0)
 		var sample_val = clampf((r1 * 0.5 + r2 * 0.6), -1.0, 1.0)
 		var pcm = int(sample_val * 22000.0)
+		data.encode_s16(i * 2, pcm)
+	wav.data = data
+	return wav
+
+
+static var _cached_trash_enter: AudioStreamWAV = null
+static var _cached_trash_exit: AudioStreamWAV = null
+static var _cached_peronachos_pickup: AudioStreamWAV = null
+static var _cached_peronachos_crunch: AudioStreamWAV = null
+
+static func get_peronachos_pickup_sound() -> AudioStreamWAV:
+	if _cached_peronachos_pickup == null:
+		_cached_peronachos_pickup = _generate_bag_rustle()
+	return _cached_peronachos_pickup
+
+static func get_peronachos_crunch_sound() -> AudioStreamWAV:
+	if _cached_peronachos_crunch == null:
+		_cached_peronachos_crunch = _generate_snack_crunch()
+	return _cached_peronachos_crunch
+
+static func _generate_bag_rustle() -> AudioStreamWAV:
+	var wav = AudioStreamWAV.new()
+	wav.format = AudioStreamWAV.FORMAT_16_BITS
+	wav.mix_rate = 22050
+	wav.stereo = false
+	var length_sec = 0.28
+	var samples_count = int(22050 * length_sec)
+	var data = PackedByteArray()
+	data.resize(samples_count * 2)
+	
+	var bp1_low = 0.0
+	var bp1_band = 0.0
+	var f1 = 2.0 * sin(PI * 2400.0 / 22050.0)
+	var q1 = 1.6
+	
+	var bp2_low = 0.0
+	var bp2_band = 0.0
+	var f2 = 2.0 * sin(PI * 4500.0 / 22050.0)
+	var q2 = 2.0
+
+	for i in range(samples_count):
+		var t = float(i) / 22050.0
+		var noise = randf() * 2.0 - 1.0
+		
+		bp1_low += f1 * bp1_band
+		var bp1_high = noise - bp1_low - q1 * bp1_band
+		bp1_band += f1 * bp1_high
+		
+		bp2_low += f2 * bp2_band
+		var bp2_high = noise - bp2_low - q2 * bp2_band
+		bp2_band += f2 * bp2_high
+		
+		var env1 = exp(-t * 38.0)
+		var env2 = exp(-maxf(0.0, t - 0.08) * 45.0) if t >= 0.08 else 0.0
+		var env3 = exp(-maxf(0.0, t - 0.16) * 42.0) if t >= 0.16 else 0.0
+		
+		var crinkle = (bp1_band * 0.65 + bp2_band * 0.35) * (env1 * 0.8 + env2 * 0.95 + env3 * 0.65)
+		var total = tanh(crinkle * 2.2) * 0.85
+		var pcm = int(clampf(total, -1.0, 1.0) * 24000.0)
+		data.encode_s16(i * 2, pcm)
+		
+	wav.data = data
+	return wav
+
+static func _generate_snack_crunch() -> AudioStreamWAV:
+	var wav = AudioStreamWAV.new()
+	wav.format = AudioStreamWAV.FORMAT_16_BITS
+	wav.mix_rate = 22050
+	wav.stereo = false
+	var length_sec = 0.36
+	var samples_count = int(22050 * length_sec)
+	var data = PackedByteArray()
+	data.resize(samples_count * 2)
+	
+	var bp_low = 0.0
+	var bp_band = 0.0
+	var f_bp = 2.0 * sin(PI * 2600.0 / 22050.0)
+	var q_bp = 1.35
+
+	for i in range(samples_count):
+		var t = float(i) / 22050.0
+		var noise = randf() * 2.0 - 1.0
+		
+		bp_low += f_bp * bp_band
+		var bp_high = noise - bp_low - q_bp * bp_band
+		bp_band += f_bp * bp_high
+		
+		var env_bite1 = exp(-t * 42.0)
+		var crunch1 = (bp_band * 0.75 + noise * 0.25) * env_bite1
+		var body1 = sin(t * 135.0 * TAU) * exp(-t * 30.0) * 0.45
+		
+		var env_bite2 = exp(-maxf(0.0, t - 0.065) * 52.0) if t >= 0.065 else 0.0
+		var crunch2 = bp_band * env_bite2 * 0.70
+		
+		var env_bite3 = exp(-maxf(0.0, t - 0.14) * 60.0) if t >= 0.14 else 0.0
+		var crunch3 = (noise * 0.45 + bp_band * 0.55) * env_bite3 * 0.55
+		
+		var total = crunch1 + body1 + crunch2 + crunch3
+		total = tanh(total * 2.4) * 0.90
+		var pcm = int(clampf(total, -1.0, 1.0) * 27000.0)
+		data.encode_s16(i * 2, pcm)
+		
+	wav.data = data
+	return wav
+
+static func get_trashcan_sound(enter: bool = true) -> AudioStreamWAV:
+	if enter:
+		if _cached_trash_enter == null:
+			_cached_trash_enter = _generate_trashcan_sound(true)
+		return _cached_trash_enter
+	else:
+		if _cached_trash_exit == null:
+			_cached_trash_exit = _generate_trashcan_sound(false)
+		return _cached_trash_exit
+
+static func _generate_trashcan_sound(enter: bool) -> AudioStreamWAV:
+	var wav = AudioStreamWAV.new()
+	wav.format = AudioStreamWAV.FORMAT_16_BITS
+	wav.mix_rate = 22050
+	wav.stereo = false
+	var length_sec = 0.6 if enter else 0.45
+	var samples_count = int(22050 * length_sec)
+	var data = PackedByteArray()
+	data.resize(samples_count * 2)
+	for i in range(samples_count):
+		var t = float(i) / 22050.0
+		var freq1 = 120.0 if enter else 180.0
+		var thud = sin(t * freq1 * TAU) * exp(-t * 9.0)
+		var rattle = (sin(t * 410.0 * TAU) * 0.4 + sin(t * 620.0 * TAU) * 0.3) * exp(-t * 22.0)
+		var metallic_ring = sin(t * 280.0 * TAU) * exp(-t * 6.0) * 0.35
+		var sample_val = clampf((thud * 0.75 + rattle * 0.45 + metallic_ring * 0.3), -1.0, 1.0)
+		var pcm = int(sample_val * 26000.0)
 		data.encode_s16(i * 2, pcm)
 	wav.data = data
 	return wav

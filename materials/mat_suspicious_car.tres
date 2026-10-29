@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[ext_resource type="Texture2D" path="res://Suspicious Car 01/Texture Black.png" id="1_tex"]
+
+[resource]
+resource_name = "MatSuspiciousCar"
+albedo_texture = ExtResource("1_tex")
+roughness = 0.35
+metallic = 0.20

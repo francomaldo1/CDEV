@@ -3,13 +3,14 @@ class_name Fusible
 
 signal fuse_collected
 
-@onready var prompt_label: Label3D = $PromptLabel
+@onready var prompt_label: Label3D = get_node_or_null("PromptLabel")
 @onready var light: OmniLight3D = $OmniLight3D
 
 var is_player_nearby: bool = false
 var player_ref: CharacterBody3D = null
 
 func _ready() -> void:
+	add_to_group("fusibles")
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
 
@@ -26,7 +27,8 @@ func _collect() -> void:
 	if hud:
 		hud.has_fuse = true
 		hud.update_inventory_display()
-		hud.show_temporary_alert("⚡ ¡FUSIBLE RECOGIDO! Llévalo al Departamento de Ingeniería Electrónica.", Color(1.0, 0.85, 0.2))
+		if hud.has_method("set_objective_text"):
+			hud.set_objective_text("NUEVO OBJETIVO: Llevá el fusible al Dpto. de Electrónica (PB) para restaurar la luz", Color(1.0, 0.85, 0.2))
 		hud.set_interact_prompt("")
 		
 	fuse_collected.emit()

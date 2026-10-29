@@ -6,7 +6,7 @@ class_name TituloUniversitario
 
 signal title_collected
 
-@onready var prompt_label: Label3D = $PromptLabel
+@onready var prompt_label: Label3D = get_node_or_null("PromptLabel")
 @onready var light: OmniLight3D = $OmniLight3D
 
 var is_player_nearby: bool = false
@@ -31,14 +31,20 @@ func _collect() -> void:
 		hud.has_exit_key = true
 		hud.update_inventory_display()
 		hud.set_interact_prompt("")
-		hud.show_temporary_alert("🎓 ¡CONSEGUISTE TU TÍTULO! La PUERTA DE SALIDA está habilitada. ¡Corré antes de que te atrape el profesor!", Color(0.3, 1.0, 0.5))
+		if hud.has_method("set_objective_text"):
+			hud.set_objective_text("¡¡CORRÉ!! ¡EL PROFESOR ESTÁ EN CÓLERA TOTAL! ¡ESCAPÁ POR LA SALIDA PRINCIPAL!", Color(1.0, 0.15, 0.15))
+		if hud.has_method("show_temporary_alert"):
+			hud.show_temporary_alert("⚠️ ¡EL PROFESOR SE VOLVIÓ ULTRA RÁPIDO! ¡HUI A LA SALIDA PRINCIPAL!", Color(1.0, 0.2, 0.2))
 
 	var prof = get_tree().root.find_child("Profesor", true, false)
-	if prof and prof.visible and prof.has_method("_say"):
-		prof._say("¡¿QUIÉN TE DIO ESE TÍTULO?! ¡DEVOLVELO!", Color(1.0, 0.2, 0.2))
+	if prof:
+		if prof.has_method("activate_devour_rage_mode"):
+			prof.activate_devour_rage_mode(player_ref)
+		elif prof.visible and prof.has_method("_say"):
+			prof._say("¡¿QUIÉN TE DIO ESE TÍTULO?! ¡DEVOLVELO!", Color(1.0, 0.2, 0.2))
 
 	title_collected.emit()
-	print(">>> ¡TÍTULO RECOGIDO! Puerta de salida habilitada")
+	print(">>> ¡TÍTULO RECOGIDO! Modo Devour/Pacify activado para el profesor.")
 	queue_free()
 
 func _on_body_entered(body: Node3D) -> void:

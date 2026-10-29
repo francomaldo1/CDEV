@@ -5,7 +5,7 @@ class_name LlaveAuditorio
 
 signal key_collected
 
-@onready var prompt_label: Label3D = $PromptLabel
+@onready var prompt_label: Label3D = get_node_or_null("PromptLabel")
 @onready var light: OmniLight3D = $OmniLight3D
 @onready var modelo: Node3D = $Pivote
 
@@ -33,7 +33,8 @@ func _collect() -> void:
 	if hud:
 		hud.has_auditorium_key = true
 		hud.update_inventory_display()
-		hud.show_temporary_alert("🔑 ¡LLAVE DEL AUDITORIO RECOGIDA! Bajá a planta baja y abrí el auditorio.", Color(1.0, 0.85, 0.2))
+		if hud.has_method("set_objective_text"):
+			hud.set_objective_text("NUEVO OBJETIVO: ¡Llave del Auditorio obtenida! Abrí la puerta del Auditorio en PB", Color(0.2, 1.0, 0.7))
 		hud.set_interact_prompt("")
 
 	key_collected.emit()

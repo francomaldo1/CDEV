@@ -1,127 +1,140 @@
-# 🎓 UTN FRC - Terror Indie
+# 🎓 UTN FRC: Noche de Finales
 
-Juego de terror psicológico y supervivencia en primera persona inspirado en *Fears to Fathom*, ambientado en el edificio central real de la **Universidad Tecnológica Nacional - Facultad Regional Córdoba (UTN FRC)**.
+**Juego de terror psicológico y supervivencia en primera persona** desarrollado en **Godot Engine 4.7** (Forward Plus), ambientado en una recreación a escala del Edificio Central de la **Universidad Tecnológica Nacional - Facultad Regional Córdoba (UTN FRC)**.
 
-Desarrollado en **Godot Engine 4.7** (Forward Plus).
-
----
-
-## 📖 Sinopsis & Flujo del Juego
-
-El jugador se encuentra solo de noche en la facultad intentando aprobar un parcial de matemáticas para poder escapar del edificio:
-
-1. **Exploración Inicial (Planta Baja):** El jugador recorre las aulas buscando un parcial de matemáticas para resolver.
-2. **El Corte de Energía (45s):** Ocurre un apagón general programado. ~95 luces del edificio se apagan y la luz ambiental cae drásticamente.
-3. **Restauración Eléctrica:** El jugador debe ir a la cafetería a oscuras a buscar un **Fusible de alta tensión (30A)** y llevarlo al **Tablero Eléctrico** ubicado en el Laboratorio de Electrónica.
-4. **Screamer del "Falso Alivio":** Al insertar el fusible, se produce un chispazo, la linterna se apaga y el profesor se posiciona sigilosamente detrás del jugador. Tras un golpe seco de su regla en la oscuridad, la luz regresa revelando su sombra proyectada en la pared antes de iniciar la persecución.
-5. **Aprobación del Parcial:** Resolver correctamente el problema matemático otorga la **Llave de Salida**.
-6. **Escape:** Correr a la puerta principal del ala sur e interactuar para escapar y ganar la partida.
+> 📄 **Documento de Solución de Diseño (SDD) para Cátedra CDEV:**
+> Para consultar la sistematización completa del proceso creativo según los lineamientos de la cátedra CDEV (dimensiones técnica, estética, narrativa y experiencial, marco teórico de Janet Murray, guión del trailer y anexos), consultar el archivo [`resumen_proyecto.md`](./resumen_proyecto.md).
 
 ---
 
-## 🎮 Mecánicas Implementadas
+## 📖 Historia y Flujo Completo del Juego
 
-* 🎙️ **Detección de Micrófono en Tiempo Real (`scripts/mic_detector.gd`):**
-  * Captura de audio pasiva vía bus `Record` con `AudioEffectCapture`.
-  * Medidor de decibelios visual en el HUD (verde ➔ amarillo ➔ rojo).
-  * Si el jugador hace ruido por encima del umbral de peligro (`-24 dB`), alerta inmediatamente al Profesor si está en un radio de 35 metros.
+El jugador encarna a un estudiante rezagado que ha quedado atrapado de noche en el edificio central de la UTN FRC durante el turno de exámenes finales. Para escapar con vida y obtener su libertad, deberá rendir sus parciales pendientes, sobrevivir al acecho de "El Profesor" y conseguir su Título Universitario:
 
-* 🔦 **Linterna y Sigilo (`scripts/player.gd`):**
-  * Alternable con la tecla `F`.
-  * Tener la linterna encendida amplía el rango de visión del profesor en un **45%** (de 18m a ~26m).
-  * Sistema de aceleración suave, carrera con `Shift`, *head bobbing* dinámico y subida automática de escalones de hasta 35 cm.
+1. **Exploración Inicial (Planta Baja con Luz):**
+   * El jugador comienza en el Hall de Entrada de Planta Baja (PB).
+   * Los accesos a las escaleras que conducen a los pisos superiores están sellados con barreras energéticas institucionales: *"PISO SUPERIOR CERRADO - Aprobá los 4 parciales"*.
+   * El objetivo inmediato es recorrer las aulas y sectores de PB buscando los **4 cuadernos de parciales de matemáticas** repartidos estratégicamente (Aula 106, Fotocopiadora CEIT, Cafetería PB y Patio del Estudiante). Cada examen presenta un desafío de opción múltiple; errar una respuesta enfurece al profesor y acelera su velocidad.
+
+2. **El Despertar del Profesor (Segundo Parcial):**
+   * Al aprobar el **segundo examen**, el Profesor escucha el pase de las hojas y sale a patrullar la Planta Baja con su clásica regla de madera en mano (*"¡El profesor escuchó las hojas! Salió a patrullar la Planta Baja..."*).
+   * **La luz sigue encendida**: el jugador debe buscar y resolver el 3er y 4to examen con el profesor acechando activamente en los pasillos de PB.
+
+3. **El Corte de Luz & Desbloqueo de Pisos Superiores (Cuarto Parcial):**
+   * Al resolver y aprobar los **4 exámenes de matemáticas**, saltan los disyuntores y se produce el **Apagón General**: la iluminación principal colapsa, la luz ambiental cae a la penumbra total y se vuelve indispensable la **Visión Nocturna (`F` o Click Derecho)** de la videocámara.
+   * Se ejecuta el susto cinemático de giro de 180° en el pasillo, el profesor entra en fase enfurecida y las barreras de las tres torres de escaleras (Oeste, Este y Norte) se desactivan automáticamente, desbloqueando el acceso al Primer y Segundo Piso.
+
+4. **Búsqueda del Fusible de Alta Tensión (Primer Piso):**
+   * El jugador asciende las escaleras, consulta la pizarra didáctica con el esquema de la subestación en el Primer Piso y explora las oficinas (Bedelía) para hallar el **Fusible de Alta Tensión (30A)** necesario para reanimar el sistema eléctrico.
+
+5. **Restauración Eléctrica, Emboscada y Evento del Tablero:**
+   * Con el fusible en mano, desciende nuevamente a PB al **Departamento de Ingeniería Electrónica**, donde se encuentra el **Tablero Eléctrico General de 220V**.
+   * Al colocar el fusible, se produce un evento de emboscada: las luminarias del laboratorio se encienden secuencialmente y el Profesor carga a toda velocidad por el pasillo con música de violines. El jugador debe esquivarlo y salir del laboratorio para que la luz del edificio quede restablecida.
+
+6. **La Llave del Auditorio y el Título Universitario:**
+   * Con la energía restaurada, el jugador sube a la Cafetería del 2do Piso para obtener la **Llave Maestra del Auditorio**.
+   * Se dirige al **Auditorio Central**, cuyas puertas están selladas con un entramado tridimensional de cadenas metálicas cruzadas y candados dorados estilo *Silent Hill 4*. Al usar la llave, las cadenas caen y se accede al estrado principal para recoger el ansiado **Título Universitario (Diploma)**, desatando el grito final del docente (*"¡¿QUIÉN TE DIO ESE TÍTULO?! ¡DEVOLVELO!"*).
+
+7. **Escape de la Facultad:**
+   * Con el título en su poder, el jugador corre a la puerta principal vidriada de salida (clausurada por las Autoridades FRC), exhibe su diploma y escapa victorioso del campus.
+
+---
+
+## 🎮 Mecánicas de Supervivencia, Sigilo y Diegesis
+
+* 🗑️ **Esconderse en Tachos de Basura:**
+  * Repartidos por pasillos y aulas de la facultad, se encuentran los característicos **tachos de basura rectangulares** de la UTN FRC.
+  * Al pulsar `E` frente a un contenedor, el jugador se introduce en él, cambiando la cámara a una vista estrecha e invisible para el profesor.
+  * Si el profesor pasa cerca del tacho (<= 7.5 m), se detiene a inspeccionarlo susurrando frases intimidantes (*"Sé que estás por acá..."*, *"Puedo oler el miedo a desaprobar..."*).
+
+* 🎙️ **Tensión por Micrófono en Tiempo Real (`scripts/mic_detector.gd`):**
+  * La detección del micrófono se activa **únicamente mientras estás escondido dentro de un tacho de basura**.
+  * Al ingresar al tacho, aparece en pantalla el medidor de decibelios del micrófono (verde ➔ amarillo ➔ rojo).
+  * **¡Silencio absoluto!** Si el jugador hace ruido real en su habitación (respirar fuerte, hablar o toser), el profesor grita (*"¡¡TE ESCUCHÉ EN ESE TACHO, NO TE VAS A ESCAPAR!!"*), corre a toda velocidad hacia el contenedor, expulsa al jugador a la fuerza y lo golpea. Si permanece en silencio, el docente pasa de largo.
+
+* 📹 **Videocámara con Visión Nocturna y Pilas AA (`scripts/player.gd`):**
+  * Se activa con la tecla `F`, `Click Derecho` o `N`. Enciende el modo de fósforo verde infrarrojo estilo *Found Footage / Outlast*.
+  * El uso continuado consume la carga de batería de la videocámara.
+  * En escritorios y aulas se encuentran **Pilas AA** recolectables; presionar `R` recarga un +50% de batería.
+
+* ⚡ **Sistema de Estamina y Snacks "Peronachos":**
+  * Correr con `Shift` consume la barra de estamina del jugador.
+  * En estantes y buffets de la facultad se encuentran paquetes 3D de **Peronachos**; presionar `Q` consume un paquete y restaura de inmediato la energía física del estudiante.
+
+* 🏢 **Señalética Institucional y Diegesis Total:**
+  * Se reemplazaron todos los textos flotantes arcade por **50 placas institucionales acrílico-metálicas** atornilladas a las paredes con sombreado real (`shaded = true`), respetando la estética universitaria.
+  * Puerta del Auditorio bloqueada por un entramado tridimensional procedural de **cadenas metálicas oxidadas y candados dorados**.
+  * Puerta de salida con un comunicado oficial en hoja de papel A4 firmado al pie por "AUTORIDADES FRC".
 
 * 👨‍🏫 **Inteligencia Artificial del Profesor (`scripts/profesor.gd`):**
-  * Modelo procedural 3D con CSG (traje gris, anteojos, corbata roja, bigote y regla de madera de 1.05m).
-  * **Máquina de estados finitos (FSM):**
-    * `PATROL`: Recorrido multinivel de **91 waypoints** cubriendo Planta Baja, Piso 1 y Piso 2, subiendo y bajando por las escaleras en 3D.
-    * `CHASE`: Persecución activa con visión cónica (80°) y raycasts que respetan paredes.
-    * `SEARCH`: Búsqueda activa girando en el lugar si pierde de vista al jugador.
-    * `ATTACK`: Azote con la regla de madera al alcanzar al jugador, aplicando impulso de retroceso físico y sacudida de cámara.
-  * **Watchdog Anti-Stuck Agresivo:** Si el profesor colisiona contra una pared o esquina durante más de 0.8s, se empuja en dirección a la normal; si permanece trabado por 2.0s, se teletransporta automáticamente al waypoint libre más cercano.
-  * **Furia acumulativa:** Cada parcial desaprobado aumenta permanentemente la velocidad de patrulla y persecución, encendiendo sus ojos en rojo intenso.
-  * **Fix post-screamer:** Tras el evento del fusible, el profesor ya no queda atascado en el laboratorio de electrónica.
+  * Máquina de 4 estados (`PATROL`, `SEARCH`, `CHASE`, `ATTACK`).
+  * Grafo de navegación multinivel con **91 waypoints** interconectados en Planta Baja, Primer Piso, Segundo Piso y las 3 torres de escaleras en U.
+  * Ataque con regla de madera (*"¡¡¡CASTIGO POR COPIARSE!!!"*), empuje físico y sacudida de cámara.
+  * Rutinas de prevención de atascamiento (*watchdog*), visión por conos de sombra y audición direccional.
 
-* 🧮 **Exámenes de Matemáticas (`scripts/cuaderno_matematica.gd` y `hud.gd`):**
-  * Cuadernos repartidos aleatoriamente entre 8 aulas de Planta Baja.
-  * Generación dinámica de fórmulas aritméticas con opciones múltiples (1 correcta y 3 distractores).
-  * Acertar otorga la llave de escape; fallar enfurece y atrae al profesor.
+* 🎵 **Diseño Sonoro Procedural de Terror (`scripts/horror_audio.gd`):**
+  * Sintetizador dinámico de drones de baja frecuencia (30-60 Hz), estruendos de puertas, pisadas espaciales 3D, chasquidos de la regla de madera y música adaptativa según la cercanía del antagonista.
 
-* 🔊 **Audio Procedural de Terror & Paisaje Sonoro (`scripts/horror_audio.gd`):**
-  * Generación matemática en tiempo de ejecución de buffers WAV (PCM 16-bit) sin assets externos pesados:
-    * **Dron Ambiental Continuo (Dark Ambient Drone):** Zumbido grave envolvente en bucle perfecto que cambia a una atmósfera más densa, oscura y disonante durante el apagón general.
-    * **Pisadas del Jugador:** Pasos sincronizados con el balanceo de cabeza (*head bobbing*), distinguiendo entre caminar y correr sobre mosaico/granito.
-    * **Pisadas Pesadas del Profesor en 3D (`AudioStreamPlayer3D`):** Taconeo de zapato formal con resonancia de pasillo atenuada en el espacio 3D, permitiendo percibir si se acerca o por dónde patrulla.
-    * **Latidos Cardíacos de Tensión:** Sistema dinámico de pulso que se activa y acelera según la proximidad y persecución del profesor.
-    * **Crujidos Ambientales Espeluznantes:** Emisión periódica aleatoria de quejidos en cañerías o maderas en distintos puntos distantes del edificio (auditorio, escaleras, pasillos altos).
-    * **Screamer & Efectos de Impacto:** Chispazo eléctrico caótico, golpe de regla sobre mesada y stinger disonante de terror.
-
-* 🏛️ **Entorno 3D Arquitectónico (`scenes/edificio_central.tscn`):**
-  * Recreación de 3 niveles del edificio central de la UTN FRC:
-    * **Planta Baja:** Aulas 101 a 115 con pupitres y pizarrones, Laboratorio de Electrónica, fotocopiadoras, cafetería.
-    * **Patio del Estudiante:** A cielo abierto con canteros, árboles, faroles, pasarelas balconadas y fuente de agua con reflejos oscilantes (`scripts/patio_estudiante.gd`).
-    * **Auditorio Principal:** Doble altura (9m) con escenario, atril y 64 butacas individuales rojas.
-    * **Pisos 1 y 2:** Departamentos (Sistemas, Electrónica, Bedelía, Biblioteca, CETRA), aulas 201-219, cafetería piso 2 con monumento/escultura UTN.
-    * **Escaleras Realistas (Foto UTN FRC):** 3 cajas de escaleras en U con escalones individuales de granito negro (13 escalones por tramo), pasamanos/barandas metálicas a ambos lados, muro bajo divisorio y franja amarilla de seguridad al pie.
+* 🖥️ **Menús y Experiencia de Usuario:**
+  * **Menú Principal 3D:** Con paneo de cámara cinemático en tiempo real sobre el hall de ingreso, selección de opciones, ajustes de volumen independientes (Master, SFX, Música), panel de controles y créditos.
+  * **Pantalla de Carga Minimalista:** Transición suave con barra de progreso y fundido sin cortes visuales.
+  * **Menú de Pausa Diegético (`Escape`):** Permite revisar objetivos actuales, reanudar o ajustar configuración sin romper la inmersión.
 
 ---
 
 ## ⌨️ Controles
 
-| Acción | Tecla |
-|---|---|
-| Moverse | `W`, `A`, `S`, `D` |
-| Correr | `Shift` (mientras se avanza) |
-| Linterna | `F` |
-| Interactuar (tablero, parciales, fusible, puerta) | `E` |
-| Pausar / Liberar ratón | `Escape` |
-
----
-
-## 🐛 Registro de Errores y Tareas Pendientes (Issue Tracker)
-
-A continuación se detallan los bugs detectados y características faltantes para seguimiento del equipo:
-
-### 🔴 Críticos / Prioritarios
-- [x] **Sobrescritura peligrosa en `tools/generate_level.gd`:** Resuelto, desactivada la llamada a `_gen_main()` y el guardado destructivo de `main.gd`.
-- [ ] **Sin Muerte / Game Over al ser atrapado:**
-  * Cuando el profesor alcanza al jugador, lo golpea con la regla y lo empuja, pero el jugador no muere ni pierde vida. No existe pantalla de derrota ("Game Over").
-  * *Solución recomendada:* Implementar sistema de salud/vidas o captura directa con cinemática corta y reinicio de nivel.
-
-### 🟡 Medios / Jugabilidad
-- [x] **Ruteo del profesor en 3 pisos y desbugueo:** Resuelto con 91 waypoints multinivel y watchdog anti-stuck con teletransporte de emergencia.
-- [ ] **Pisos 1 y 2 sin objetivos de gameplay:**
-  * Distribuir parciales, fusibles alternativos o llaves secundarias en los pisos 1 y 2 para incentivar subir.
-
-- [ ] **Doble disparo en interacción por tecla `E`:**
-  * Varios scripts evalúan `Input.is_key_pressed(KEY_E)` en lugar de `Input.is_action_just_pressed("interact")`. Al mantener apretada la tecla un milisegundo de más, se dispara en múltiples frames consecutivos.
-  * *Archivos afectados:* `cuaderno_matematica.gd`, `fusible.gd`, `puerta_salida.gd`, `tablero_electrico.gd`.
-
-- [ ] **Reapertura de exámenes ya resueltos:**
-  * En `cuaderno_matematica.gd`, `_open_challenge()` no valida si `is_solved == true`, permitiendo volver a abrir la interfaz de parcial aunque ya haya sido aprobado.
-
-- [ ] **Acción de salto sin implementar:**
-  * La acción `jump` (barra espaciadora) está definida en `project.godot` pero no está programada en `player.gd`.
+| Acción | Tecla / Dispositivo | Descripción |
+|---|---|---|
+| **Moverse** | `W`, `A`, `S`, `D` | Desplazamiento en primera persona |
+| **Girar Vista** | Ratón | Orientación de cámara y dirección de visión nocturna |
+| **Correr (Sprint)** | `Shift` (sostenido) | Aumenta la velocidad consumiendo estamina |
+| **Visión Nocturna** | `F` / Click Der / `N` | Activa/desactiva la visión nocturna de la videocámara |
+| **Recargar Batería**| `R` | Consume una Pila AA para recargar la videocámara (+50%) |
+| **Comer Peronachos** | `Q` | Consume un paquete para regenerar la estamina al 100% |
+| **Interactuar** | `E` | Recoger exámenes, pilas, snacks, fusibles y usar puertas |
+| **Esconderse / Salir** | `E` (frente al tacho) | Ingresar al contenedor o salir de él |
+| **Voz / Silencio** | Micrófono físico | Detección de ruido real dentro del escondite |
+| **Pausar Partida** | `Escape` | Abre el menú de pausa |
+| **Ver Coordenadas (Debug)** | `F3` | Muestra posición Vector3 en pantalla |
+| **Copiar Coordenadas (Debug)**| `F2` | Copia coordenadas al portapapeles |
 
 ---
 
 ## 📁 Estructura del Repositorio
 
 ```text
-├── default_bus_layout.tres     # Configuración de buses de audio (Master y Record con Capture)
-├── project.godot               # Configuración del motor, entradas y render
-├── materials/                  # Materiales PBR (pisos, paredes, profesor, patio, etc.)
+├── default_bus_layout.tres     # Configuración de buses de audio (Master, Sfx, Music, Record con Capture)
+├── project.godot               # Configuración del motor, render Forward+ y keybindings
+├── resumen_proyecto.md         # Documento exhaustivo de diseño (SDD CDEV)
+├── README.md                   # Documentación general del repositorio
+├── materials/                  # Materiales PBR (granito, maderas, metales cepillados, papel)
+├── textures/                   # Texturas oficiales (Peronachos, metales, vidrios UTN)
+├── models/                     # Modelos 3D (pizarras, heladeras, árboles, barbijos/máscaras)
 ├── scenes/
-│   ├── main.tscn               # Nivel principal ensamblado
-│   ├── edificio_central.tscn   # Modelo completo de 3 plantas de la facultad
-│   ├── player.tscn             # Jugador en primera persona con linterna
-│   ├── profesor.tscn           # Antagonista modelado en CSG con IA
-│   ├── hud.tscn                # UI: micrófono, inventario, examen, alertas
-│   ├── tablero_electrico.tscn  # Tablero del laboratorio con fusible y screamer
-│   ├── fusible.tscn            # Ítem fusible de 30A
-│   ├── cuaderno_matematica.tscn# Parcial interactivo con lógica matemática
-│   └── puerta_salida.tscn      # Puerta vidriada con cadenas y candado
-├── scripts/                    # Lógica de juego en GDScript
-└── tools/
-    └── generate_level.gd       # Generador procedural del edificio
+│   ├── main.tscn               # Nivel principal ensamblado con todos los módulos
+│   ├── edificio_central.tscn   # Modelo arquitectónico de 3 pisos con colisiones
+│   ├── player.tscn             # Jugador en 1ra persona con cámara, visión nocturna y raycasts
+│   ├── profesor.tscn           # Antagonista modelado en CSG con IA y regla de madera
+│   ├── tacho_basura.tscn       # Contenedor interactivo para ocultamiento
+│   ├── hud.tscn                # UI: medidor de mic, batería, estamina, postproceso VHS
+│   ├── main_menu.tscn          # Menú principal con fondo 3D en vivo
+│   ├── pause_menu.tscn         # Menú de pausa interactivo
+│   ├── tablero_electrico.tscn  # Subestación del Departamento de Electrónica
+│   ├── puerta_auditorio.tscn   # Puerta con sistema de cadenas y candados
+│   ├── puerta_salida.tscn      # Salida de vidrio con cartel institucional de clausura
+│   ├── cuaderno_matematica.tscn# Exámenes con lógica de evaluación matemática
+│   ├── fusible.tscn            # Fusible de 30A recolectable
+│   ├── pila_aa.tscn            # Pila AA para la videocámara
+│   └── titulo_universitario.tscn# Diploma de graduación en el atril
+├── scripts/                    # Scripts en GDScript 2.0 (lógica del juego e IA)
+└── tools/                      # Herramientas de generación y utilidades
 ```
+
+---
+
+## 🏛️ Créditos y Cátedra
+
+* **Cátedra:** CDEV (Creatividad y Desarrollo de Entornos Virtuales).
+* **Carrera:** Ingeniería en Sistemas de Información.
+* **Institución:** Universidad Tecnológica Nacional - Facultad Regional Córdoba (UTN FRC).

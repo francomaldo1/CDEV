@@ -1,0 +1,80 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/caja_fuerte.gd" id="1_cajaf"]
+[ext_resource type="Material" path="res://materials/mat_bench_metal.tres" id="2_metal"]
+[ext_resource type="Material" path="res://materials/mat_desk_metal.tres" id="3_steel"]
+[ext_resource type="Material" path="res://materials/mat_aluminum_white.tres" id="4_alum"]
+[ext_resource type="Material" path="res://materials/mat_padlock_brass.tres" id="5_brass"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_caja"]
+size = Vector3(2.2, 1.4, 2.2)
+
+[node name="CajaFuerte" type="Area3D"]
+script = ExtResource("1_cajaf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+shape = SubResource("BoxShape3D_caja")
+
+[node name="PromptLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0.26)
+pixel_size = 0.002
+text = "[E] Caja Fuerte (Código de 3 Dígitos)"
+font_size = 14
+outline_size = 3
+outline_modulate = Color(0, 0, 0, 0.8)
+
+[node name="Visuals" type="Node3D" parent="."]
+
+[node name="CuerpoCaja" type="CSGBox3D" parent="Visuals"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.22, 0)
+size = Vector3(0.6, 0.44, 0.46)
+material = ExtResource("2_metal")
+
+[node name="PuertaPivot" type="Node3D" parent="Visuals"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.27, 0.22, 0.23)
+
+[node name="PuertaMesh" type="CSGBox3D" parent="Visuals/PuertaPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.27, 0, 0)
+size = Vector3(0.52, 0.38, 0.04)
+material = ExtResource("3_steel")
+
+[node name="TecladoPanel" type="CSGBox3D" parent="Visuals/PuertaPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.36, 0.02, 0.03)
+size = Vector3(0.18, 0.16, 0.02)
+material = ExtResource("4_alum")
+
+[node name="ManijaCaja" type="CSGBox3D" parent="Visuals/PuertaPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.12, 0, 0.04)
+size = Vector3(0.04, 0.14, 0.04)
+material = ExtResource("5_brass")
+
+[node name="TextoPuerta" type="Label3D" parent="Visuals/PuertaPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.27, 0.14, 0.026)
+pixel_size = 0.0018
+modulate = Color(0.85, 0.88, 0.92, 1)
+text = "UTN FRC - CAJA DE SEGURIDAD"
+font_size = 11
+outline_size = 2
+
+[node name="LuzLED" type="OmniLight3D" parent="Visuals"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.12, 0.34, 0.27)
+light_color = Color(1, 0.1, 0.1, 1)
+light_energy = 0.6
+omni_range = 1.2
+shadow_enabled = false
+
+[node name="LlaveInterior" type="Node3D" parent="Visuals"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12, 0)
+
+[node name="LlaveAro" type="CSGTorus3D" parent="Visuals/LlaveInterior"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.05, 0, 0)
+inner_radius = 0.035
+outer_radius = 0.055
+material = ExtResource("5_brass")
+
+[node name="LlaveVastago" type="CSGCylinder3D" parent="Visuals/LlaveInterior"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0.05, 0, 0)
+radius = 0.015
+height = 0.16
+material = ExtResource("5_brass")

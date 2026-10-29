@@ -1,0 +1,30 @@
+[gd_scene format=3]
+
+[ext_resource type="Shader" path="res://shaders/retro_fears_to_fathom.gdshader" id="1_retro"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_retro"]
+shader = ExtResource("1_retro")
+shader_parameter/night_vision_active = 0.0
+shader_parameter/panic_glitch = 0.0
+shader_parameter/exposure_boost = 1.15
+shader_parameter/black_lift = 0.04
+shader_parameter/lens_distortion = 0.03
+shader_parameter/lens_vignette = 0.22
+shader_parameter/video_noise = 0.03
+shader_parameter/scanline_intensity = 0.04
+shader_parameter/chromatic_aberration = 0.0018
+shader_parameter/glare_strength = 0.12
+shader_parameter/dither_strength = 0.22
+shader_parameter/color_depth = 36.0
+
+[node name="RetroPostProcess" type="CanvasLayer"]
+layer = 1
+
+[node name="EffectRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_retro")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
