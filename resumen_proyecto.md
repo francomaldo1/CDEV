@@ -34,8 +34,8 @@ El presente documento sistematiza el proceso integral de diseño y desarrollo de
 La concepción de la idea principal surgió a través de una dinámica grupal de brainstorming estructurado con post-its y matrices de decisión realizada durante la cursada. Dicha actividad permitió contrastar múltiples alternativas lúdicas (como simuladores médicos, mecánicas de cocina, *tower defense* o travesías de trekking). Finalmente, el equipo acordó capitalizar la potencia afectiva y la familiaridad cotidiana del Edificio Central de nuestra propia facultad (**Universidad Tecnológica Nacional - Facultad Regional Córdoba**), transformándolo en un espacio hostil, claustrofóbico y desolado durante un turno nocturno de exámenes finales.
 
 El proyecto articula armónicamente las cuatro dimensiones esenciales de la experiencia interactiva:
-1. **Dimensión Técnica:** Motor Godot 4.7 Forward+, físicas de colisión continua con lógica de *step-up*, captura de voz en tiempo real mediante bus de micrófono (`AudioEffectCapture`), inteligencia artificial con máquina de estados finitos y grafo de navegación multinivel de 91 waypoints.
-2. **Dimensión Estética:** Realismo arquitectónico brutalista institucional, iluminación penumbrosa PBR, postprocesado analógico VHS / *Found Footage* y diseño sonoro espacializado 3D con drones binaurales adaptativos.
+1. **Dimensión Técnica:** Motor Godot 4.7 Forward+, físicas de colisión continua con lógica de *step-up*, captura de voz en tiempo real mediante bus de micrófono (`AudioEffectCapture`), inteligencia artificial con máquina de estados finitos (`PATROL`, `SEARCH`, `CHASE`, `ATTACK`) y grafo de navegación multinivel con 91 waypoints.
+2. **Dimensión Estética:** Realismo arquitectónico brutalista institucional, iluminación penumbrosa PBR, postprocesado analógico VHS con modo **Visión Nocturna infrarroja** (*Found Footage*) y diseño sonoro espacializado 3D con drones binaurales adaptativos.
 3. **Dimensión Narrativa:** *Environmental storytelling*, lore universitario diegético, progresión dramática en cinco actos y simbolismo del examen académico como prueba de supervivencia.
 4. **Dimensión Experiencial:** Inmersión sensorial profunda, indefensión psicológica, agencia vinculada al sigilo y al silencio físico en el mundo real, y el recorrido de transformación del alumno pasivo en graduado superviviente.
 
@@ -54,9 +54,9 @@ Para responder a las complejidades técnicas y narrativas del entorno virtual, e
 * **Programación y Desarrollo Técnico:**
   * **Carlos Ramírez – Lead Gameplay Programmer:** A cargo de la programación y el desarrollo técnico general: controles en primera persona, físicas, interacción con objetos del mapa (`RayCast3D`), sistema de inventario, detección de micrófono en tiempo real e integración de recursos dentro del motor.
 * **Arte, Estética y Sonido:**
-  * **Bruno Nóbile & Valentina Ranieri – Art & Sound Directors:** Responsables de la dirección de arte, texturas PBR institucionales (granito, machimbre, metales cepillados, placas acrílicas), shaders analógicos VHS y diseño sonoro envolvente para transmitir atmósfera de tensión y suspenso.
+  * **Bruno Nóbile & Valentina Ranieri – Art & Sound Directors:** Responsables de la dirección de arte, texturas PBR institucionales (granito, machimbre, metales cepillados, placas acrílicas), shaders analógicos VHS / Visión Nocturna y diseño sonoro envolvente para transmitir atmósfera de tensión y suspenso.
 * **Narrativa y Construcción de Mundo:**
-  * **Equipo Completo – Narrative Designers:** Co-creación de la historia, el lore ambiental, los acertijos matemáticos de los parciales y los documentos diegéticos institucionales.
+  * **Equipo Completo – Narrative Designers:** Co-creación de la historia, el lore ambiental, los problemas matemáticos dinámicos de los parciales y los documentos diegéticos institucionales.
 * **Operaciones, Calidad y Pruebas (QA):**
   * **Franco Maldonado & Gaspar Grosso – QA Leads:** Ejecución de pruebas funcionales en detalle, detección de colisiones anómalas, balanceo de los umbrales de decibeles del micrófono y verificación de las rutinas anti-atascamiento del antagonista.
 
@@ -70,7 +70,7 @@ Para responder a las complejidades técnicas y narrativas del entorno virtual, e
 ### 3.2 Problema, Necesidad o Motivación (Dimensión Emocional)
 * **Resignificación de lo cotidiano:** Generar una experiencia de miedo, tensión y suspenso. Al tomar la facultad como escenario principal, la motivación central radica en transformar un entorno institucional conocido y seguro en un espacio hostil, generando incomodidad e inmersión a través de lo familiar.
 * **Sublimación del estrés académico:** La angustia de rendir finales, el desvelo nocturno y la presión por recibirse se transmutan en las reglas de juego: el profesor exigente se convierte en el cazador supremo y el Título Universitario es el único salvoconducto que autoriza la salida.
-* **Vulnerabilidad e indefensión:** Se despoja al avatar de armas; el jugador depende exclusivamente de su sigilo, de la gestión de baterías para su linterna, de su estamina física y de su autocontrol acústico.
+* **Vulnerabilidad e indefensión:** Se despoja al avatar de armas de fuego; el jugador depende exclusivamente de su sigilo, de la gestión de baterías para la visión nocturna de su cámara, de su estamina física (recargable con snacks *Peronachos*) y de su autocontrol acústico frente al micrófono.
 
 ### 3.3 Público Objetivo
 * **Comunidad Estudiantil y Universitaria:** Alumnos, docentes y graduados (particularmente de la UTN FRC y carreras tecnológicas) con alta identificación con la arquitectura y el lenguaje del campus.
@@ -136,31 +136,31 @@ Este mapa conceptual sirvió como base para una transición directa a Godot 4, d
 ### 5.3 Mecánica de Reconocimiento de Voz (`scripts/mic_detector.gd`)
 A través del bus de audio nativo `Record` configurado con el efecto `AudioEffectCapture`, el sistema capta el audio de entrada del micrófono físico del usuario (ruido ambiente, respiración agitada o gritos) y calcula su nivel RMS traduciéndolo a decibeles.
 * **Activación Diegética:** La detección por micrófono se activa **al esconderse dentro de los tachos de basura** de la facultad.
-* **Comportamiento Reactivo:** Si el nivel de ruido en la habitación del jugador supera el umbral de peligro, la barra visual del HUD se satura en rojo y notifica a la inteligencia artificial del Profesor, quien interrumpe su patrullaje y embiste violentamente contra el contenedor. Si el jugador mantiene silencio absoluto, el docente pasa de largo.
+* **Comportamiento Reactivo y Tensión:** Si el Profesor pasa a menos de 7.5 metros de un tacho ocupado, se detiene a inspeccionarlo (*"Sé que estás por acá..."*, *"Puedo oler el miedo a desaprobar..."*). Si durante este momento o en cualquier instante el nivel de ruido en la habitación del jugador supera el umbral de peligro (`danger_threshold`), la barra del HUD se satura en rojo y el Profesor grita (*"¡¡TE ESCUCHÉ EN ESE TACHO, NO TE VAS A ESCAPAR!!"*), corre a máxima velocidad hacia el contenedor, expulsa al jugador a la fuerza (`force_eject`) y descarga su ataque. Si el jugador mantiene silencio absoluto, el docente retoma su patrullaje.
 
 ### 5.4 Físicas, Desplazamiento y Escaleras
 * Se implementó una lógica de *step-up* y rampas de colisión invisibles (`StaticBody3D`) sobre las 3 torres de escaleras en U (Oeste, Este y Norte), permitiendo un desplazamiento vertical continuo y sin tropiezos.
-* Controlador del avatar (`scripts/player.gd`) con inercia física, balanceo de cabeza dinámico, consumo de estamina al esprintar con `Shift` y raycast frontal de interacción unificada con la tecla `E`.
+* Controlador del avatar (`scripts/player.gd`) con inercia física, balanceo de cabeza dinámico, consumo de estamina al correr con `Shift`, raycast frontal de interacción unificada con la tecla `E`, recarga de estamina consumiendo snacks con `Q`, y recarga de batería de la cámara con `R`.
 
 ---
 
 ## 6. Análisis de Actores del Entorno
 
 ### 6.1 Usuario Primario (El Alumno)
-Controla al avatar en primera persona, interactuando en las sombras con recursos limitados (una linterna con batería recargable mediante pilas AA) bajo una constante presión psicológica generada por la tensión y el sigilo, donde hasta su propia voz y respiración en el mundo real lo vuelven vulnerable.
+Controla al avatar en primera persona, interactuando en las sombras con recursos limitados. Su visión en la oscuridad depende del modo de **Visión Nocturna de su videocámara** (activado con `F` o Click Derecho), cuya batería decae de forma continua y requiere recolectar y colocar **Pilas AA** (`R`). Su capacidad de carrera prolongada depende de su barra de estamina, recargable con paquetes de **Peronachos** (`Q`).
 
 ### 6.2 El Profesor (Enemigo e Inteligencia Artificial)
 La toma de decisiones del Profesor está gobernada por una Máquina de Estados Finitos (`scripts/profesor.gd`) y un sistema de navegación multinivel con **91 waypoints interconectados**:
 * **Momento de Aparición:** **Al aprobar el segundo (2°) examen parcial**, el Profesor se manifiesta en el mapa alertado por el ruido de las hojas (*"¡El profesor escuchó las hojas! Salió a patrullar la Planta Baja..."*). En esta fase, **la iluminación general aún se encuentra encendida**, obligando al jugador a rendir los parciales restantes evitando activamente al docente en los pasillos de Planta Baja.
 * **Estados de Comportamiento:**
-  1. `[PATROL]` *(Patrulla)*: El enemigo navega metódicamente a velocidad moderada recorriendo la red de waypoints.
+  1. `[PATROL]` *(Patrulla)*: El enemigo navega metódicamente a velocidad estándar recorriendo la red de waypoints en busca de alumnos.
      * *Transición:* Si capta un ruido fuerte a través del micrófono o detecta al jugador en su campo visual, pasa a Búsqueda o Cacería.
   2. `[SEARCH]` *(Búsqueda)*: El Profesor se dirige a las coordenadas exactas de la anomalía sonora. Al llegar, inspecciona y escanea la zona durante unos segundos.
      * *Transición:* Si no detecta presencia, regresa a Patrulla. Si establece línea de visión directa mediante `RayCast3D`, transiciona a Cacería.
-  3. `[CHASE]` *(Cacería / Persecución)*: Fase de persecución agresiva con incremento de velocidad hacia la posición del jugador.
+  3. `[CHASE]` *(Cacería / Persecución)*: Fase de persecución agresiva con incremento de velocidad hacia la posición del jugador, acompañada de música de persecución con cuerdas/violines estridentes.
      * *Transición:* Si el jugador dobla una esquina, entra a un tacho de basura y mantiene silencio físico real, la IA pierde el rastro y regresa a Búsqueda en la última ubicación confirmada.
-  4. `[ATTACK]` *(Ataque)*: Al alcanzar al jugador, descarga un golpe con su regla de madera.
-* **Fase Enfurecida (Apagón):** Al aprobarse el 4to examen y desencadenarse el corte de luz, el profesor entra en fase enfurecida (*Enraged Phase*), aumentando su velocidad y rango de búsqueda en todos los pisos.
+  4. `[ATTACK]` *(Ataque con Regla)*: Al alcanzar al jugador (rango <= 1.8m), descarga un violento golpe con su regla de madera de pizarrón al grito de *"¡¡¡CASTIGO POR COPIARSE!!!"*, aplicando un fuerte impulso de retroceso físico (`velocity push`) y sacudida traumática de cámara, dándole una última oportunidad al jugador para huir y esconderse.
+* **Fase Enfurecida (Apagón):** Al aprobarse el 4to examen y saltar los disyuntores, el profesor entra en fase enfurecida (*Enraged Phase*), aumentando su velocidad, su volumen de pasos y su rango de búsqueda.
 
 ### 6.3 El Edificio Central (Entorno Hostil Activo)
 Opera como un antagonista silencioso: sus escaleras se encuentran selladas por barreras institucionales hasta aprobar los exámenes, la energía colapsa al completar los cuatro parciales y las puertas de egreso están legalmente clausuradas por las Autoridades FRC.
@@ -171,20 +171,20 @@ Opera como un antagonista silencioso: sus escaleras se encuentran selladas por b
 
 ### 7.1 Storytelling y Recorrido del Usuario en 5 Actos
 La narrativa emerge directamente del entorno (*environmental storytelling*) sin cinemáticas invasivas, estructurada en un flujo de tensión creciente:
-* **Acto I – La Convocatoria a Examen (Planta Baja con Luz):** El alumno ingresa al Hall de Entrada. Las tres escaleras están selladas con barreras energéticas (*"PISO SUPERIOR CERRADO - Aprobá los 4 parciales"*). El objetivo es explorar PB para rendir 4 parciales de matemáticas (Aula 106, Fotocopiadora CEIT, Cafetería PB y Patio del Estudiante).
+* **Acto I – La Convocatoria a Examen (Planta Baja con Luz):** El alumno ingresa al Hall de Entrada. Las tres escaleras están selladas con barreras energéticas (*"PISO SUPERIOR CERRADO - Aprobá los 4 parciales"*). El objetivo es explorar PB para rendir 4 parciales de matemáticas distribuidos en Aula 106, Fotocopiadora CEIT, Cafetería PB y Patio del Estudiante. Cada cuaderno plantea problemas matemáticos universitarios de opción múltiple; si el alumno responde mal, el Profesor se enfurece y acelera su velocidad (`boost_speed`).
 * **Acto II – El Despertar del Profesor (Segundo Parcial):** Al aprobar el **2do examen**, el Profesor despierta y sale a patrullar la Planta Baja. Con las luces aún encendidas, el alumno debe resolver con sigilo el 3er y 4to examen esquivando al docente.
-* **Acto III – El Colapso de la Red y las Escaleras Habilitadas (Cuarto Parcial):** Al aprobar el **4to examen**, saltan los disyuntores y se produce el **Apagón General**. Se ejecuta el susto cinemático del giro de 180° en el pasillo, caen las barreras de las escaleras y se vuelve obligatoria la linterna (`F`). El objetivo pasa a ser subir al Primer Piso a buscar el **Fusible de Alta Tensión (30A)** en Bedelía.
-* **Acto IV – Restauración Eléctrica y Cafetería P2:** El jugador desciende a PB al Departamento de Ingeniería Electrónica y coloca el fusible en el Tablero General de 220V, encendiendo secuencialmente las luces del edificio. Al salir del laboratorio, el nuevo objetivo lo guía a la Cafetería del 2do Piso a recuperar la **Llave Maestra del Auditorio**.
-* **Acto V – El Auditorio Encadenado y el Egreso:** Con la llave, el jugador desciende al Auditorio Central (cerrado con cadenas y candados estilo *Silent Hill 4*), libera la puerta y recoge del atril el **Título Universitario (Diploma)**. Con el diploma en mano, corre a la Puerta Principal vidriada, rompe la clausura de las Autoridades FRC y escapa con vida.
+* **Acto III – El Colapso de la Red y las Escaleras Habilitadas (Cuarto Parcial):** Al aprobar el **4to examen**, saltan los disyuntores y se produce el **Apagón General**. Se ejecuta el susto cinemático del giro de 180° en el pasillo, caen las barreras de las escaleras y se vuelve obligatoria la **Visión Nocturna (`F`)**. El objetivo pasa a ser subir al Primer Piso a buscar el **Fusible de Alta Tensión (30A)** en Bedelía, guiado por la pizarra didáctica de P1.
+* **Acto IV – Restauración Eléctrica, Emboscada y Cafetería P2:** El jugador desciende a PB al Departamento de Ingeniería Electrónica y coloca el fusible en el Tablero General de 220V. Al conectarlo, se produce un evento de emboscada: las luces del laboratorio parpadean una a una en fila y el Profesor aparece recortado a contraluz en la puerta de salida cargando a toda velocidad contra el jugador. Tras eludirlo y salir del laboratorio, el nuevo objetivo lo guía a la Cafetería del 2do Piso a recuperar la **Llave Maestra del Auditorio**.
+* **Acto V – El Auditorio Encadenado y el Egreso:** Con la llave, el jugador desciende al Auditorio Central (cerrado con cadenas y candados estilo *Silent Hill 4*), libera la puerta y recoge del atril el **Título Universitario (Diploma)**, desatando la furia final del docente (*"¡¿QUIÉN TE DIO ESE TÍTULO?! ¡DEVOLVELO!"*). Con el diploma en mano, corre a la Puerta Principal vidriada, rompe la clausura de las Autoridades FRC y escapa con vida.
 
 ### 7.2 Marco Teórico de Janet Murray (*Hamlet en la Holocubierta*)
 * **Inmersión:** Definida como la construcción activa de la creencia y suspensión voluntaria de la incredulidad. Se logra mediante la reproducción a escala del edificio real de la UTN FRC, el diseño sonoro 3D envolvente y la integración biomecánica del micrófono, donde el espacio físico de la habitación del jugador se fusiona con la simulación virtual.
-* **Agencia:** Es la posibilidad real de influir en el mundo interactivo y obtener consecuencias inmediatas. El usuario elige sus rutas de escape, administra el encendido de su linterna para preservar pilas AA, gestiona su estamina y controla conscientemente su propia respiración; cualquier emisión de sonido delata su posición ante la IA.
+* **Agencia:** Es la posibilidad real de influir en el mundo interactivo y obtener consecuencias inmediatas. El usuario elige sus rutas de escape, administra la batería de su cámara mediante pilas AA (`R`), gestiona su estamina mediante Peronachos (`Q`) y controla conscientemente su propia respiración; cualquier emisión de sonido delata su posición ante la IA.
 * **Transformación:** Capacidad del medio interactivo para transformar el espacio y al sujeto. El juego subvierte un espacio educativo diurno y familiar en una pesadilla claustrofóbica. En paralelo, el usuario atraviesa una transformación psicológica: de estudiante vulnerable y temeroso muta a superviviente graduado que conquista su título y su libertad.
 
 ### 7.3 Perspectiva del Usuario (Flujo y POV)
 * **Cámara en Primera Persona (POV):** A la altura visual humana (1.70 m), con balanceo cefálico realista al caminar y trotar.
-* **HUD Diegético de Videocámara:** Interfaz inspirada en cintas VHS / Bodycam con fechador y reloj institucional (`CAM 01 - UTN FRC | 00:02:15`), indicador de batería, punto de grabación `REC` parpadeante y viñeta analógica.
+* **HUD Diegético de Videocámara con Visión Nocturna:** Interfaz inspirada en cintas VHS / Bodycam con fechador y reloj institucional (`CAM 01 - UTN FRC | 00:02:15`), medidor de batería porcentual, punto de grabación `REC` parpadeante, viñeta analógica y modo de visión nocturna de fósforo verde.
 
 ---
 
@@ -203,8 +203,8 @@ La narrativa emerge directamente del entorno (*environmental storytelling*) sin 
 * **Latidos Cardíacos Dinámicos:** Modulados en frecuencia y volumen según la cercanía y el nivel de agresividad del enemigo.
 
 ### 8.3 Dispositivos de Interacción y Consumibles
-* **Esquema de Control:** Teclado (`W`, `A`, `S`, `D`) y ratón para locomoción y vista; tecla `Shift` para sprint administrando la estamina física; tecla `F` para la linterna y tecla `E` para interactuar.
-* **Pilas AA:** Dispersas en escritorios de docentes y estantes para recargar la batería de la linterna y evitar la oscuridad absoluta.
+* **Esquema de Control:** Teclado (`W`, `A`, `S`, `D`) y ratón para locomoción y vista; tecla `Shift` para sprint administrando la estamina física; tecla `F` (o Click Derecho) para Visión Nocturna; tecla `R` para recargar batería de cámara con Pilas AA; tecla `Q` para comer Peronachos y tecla `E` para interactuar.
+* **Pilas AA:** Dispersas en escritorios de docentes y estantes para recargar la batería de la videocámara y evitar la oscuridad absoluta.
 * **Snacks "Peronachos":** Bolsas de chips modeladas en 3D sobre repisas y buffets que regeneran de forma instantánea la barra de estamina tras persecuciones intensas.
 
 ---
@@ -214,24 +214,24 @@ La narrativa emerge directamente del entorno (*environmental storytelling*) sin 
 ### 9.1 Fases Evolutivas del Prototipo
 1. **Fase I – Prototipado 2D (diagrams.net):** Planimetría del Edificio Central a escala métrica (1 celda = 2 m) delimitando pasillos, aulas, patio y accesos.
 2. **Fase II – Greyboxing en Godot 4 (CSG):** Levantamiento tridimensional con CSGBoxes para validar distancias de carrera, líneas de visión y escaleras.
-3. **Fase III – Progresión de Exámenes y Aparición de la IA:** Programación de los 4 cuadernos de matemáticas; activación de la patrulla del Profesor al 2do parcial y corte general de luz al 4to parcial.
-4. **Fase IV – Mecánica Innovadora de Micrófono & Tachos:** Integración del bus `AudioEffectCapture` y calibración del umbral de decibeles al esconderse en contenedores.
+3. **Fase III – Progresión de Exámenes y Aparición de la IA:** Programación de los 4 cuadernos de matemáticas; activación de la patrulla del Profesor al 2do parcial y corte general de luz al 4to parcial con susto de giro 180°.
+4. **Fase IV – Mecánica Innovadora de Micrófono & Tachos:** Integración del bus `AudioEffectCapture`, suspensión de respiración y calibración del umbral de decibeles al esconderse en contenedores.
 5. **Fase V – Limpieza Diegética Institucional:** Eliminación de carteles flotantes; creación de las 50 placas metálicas fijadas a muro, cadenas tridimensionales de auditorio y cartel de clausura formal.
-6. **Fase VI – UX/UI y Menús Profesionales:** Implementación del Menú Principal 3D con paneo de cámara cinemático en tiempo real, Menú de Pausa diegético y pantalla de carga minimalista.
+6. **Fase VI – UX/UI y Menús Profesionales:** Implementación del Menú Principal 3D con paneo de cámara cinemático en tiempo real, Menú de Pausa diegético, gestión de Pilas AA / Peronachos y pantalla de carga minimalista.
 
 ### 9.2 Guión del Trailer Promocional ("Publicidad del Futuro")
-* **Duración:** 60 segundos | **Estilo:** Metraje Encontrado (*Found Footage*) con distorsión VHS.
+* **Duración:** 60 segundos | **Estilo:** Metraje Encontrado (*Found Footage*) con distorsión VHS y Visión Nocturna.
 * **0:00 - 0:12 | Escena 1 (La Calma Nocturna):**  
   * *Visual:* Cámara estática en el Hall de Entrada desierto. El fechador digital titila: `CAM 01 - UTN FRC | 23:48:12`. Viento suave agitando los árboles del Patio del Estudiante a través de los ventanales.  
   * *Audio:* Zumbido sordo de transformador. Voz en off ahogada: *"Cerraron las rejas... dijeron que nadie sale sin rendir..."*
 * **0:12 - 0:26 | Escena 2 (El Pasillo de las Aulas):**  
-  * *Visual:* Haz de linterna tembloroso barriendo las placas metálicas de las aulas 104, 105, 106. Una silueta alta de espaldas con traje gris y corbata roja se perfila al final del pasillo.  
+  * *Visual:* Haz de visión nocturna verde barriendo las placas metálicas de las aulas 104, 105, 106. Una silueta alta de espaldas con traje gris y corbata roja se perfila al final del pasillo.  
   * *Audio:* El chasquido rítmico e inconfundible de una regla de madera: *CLAC... CLAC... CLAC...*
 * **0:26 - 0:42 | Escena 3 (El Asedio y el Silencio):**  
-  * *Visual:* El jugador corre desesperado escaleras arriba hacia el Primer Piso. Se mete en un tacho de basura. En pantalla, el medidor de decibeles del micrófono sube peligrosamente mientras se escuchan pasos pesados deteniéndose exactamente frente al contenedor.  
+  * *Visual:* El jugador corre desesperado escaleras arriba hacia el Primer Piso. Se mete en un tacho de basura. En pantalla, el medidor de decibeles del micrófono sube peligrosamente mientras se escuchan pasos pesados deteniéndose exactamente frente al contenedor. El profesor asoma su rostro por la rendija susurrando: *"Sé que estás por acá..."*.  
   * *Audio:* Respiración agitada, crujido de metal y estática violenta.
 * **0:42 - 0:54 | Escena 4 (El Clímax en el Auditorio):**  
-  * *Visual:* Las cadenas de la puerta del Auditorio caen al piso. El jugador sube al escenario y levanta el Diploma Universitario. Al girar bruscamente la cámara hacia la salida, el Profesor se abalanza en carrera con el rostro distorsionado.  
+  * *Visual:* Las cadenas de la puerta del Auditorio caen al piso. El jugador sube al escenario y levanta el Diploma Universitario. Al girar bruscamente la cámara hacia la salida, el Profesor se abalanza en carrera con el rostro desencajado.  
   * *Audio:* Alarido distorsionado, golpe estridente de regla y corte abrupto de señal a pantalla negra.
 * **0:54 - 1:00 | Cierre:**  
   * *Visual:* Logotipo institucional en blanco sobre negro: **UTN FRC: NOCHE DE FINALES**.  
@@ -252,7 +252,7 @@ La utilización del propio espacio universitario no funcionó como mero decorado
 * **Videojuegos y Obras de Referencia:**
   * Rayll (2021-2023). *Fears to Fathom: Ironbark Lookout & Norwood Hitchhike* (Terror analógico y horror cotidiano).
   * Konami / Team Silent (2004). *Silent Hill 4: The Room* (Mecánica y atmósfera de puertas selladas con cadenas).
-  * Red Barrels (2013). *Outlast* (Uso de visión nocturna/baterías limitadas y vulnerabilidad del protagonista).
+  * Red Barrels (2013). *Outlast* (Uso de videocámara con visión nocturna, baterías limitadas y vulnerabilidad del protagonista).
 * **Entorno Arquitectónico de Base:**
   * Edificio Central de la Universidad Tecnológica Nacional - Facultad Regional Córdoba (Avenida Cruz Roja Argentina 200, Ciudad Universitaria, Córdoba, Argentina).
 
@@ -274,9 +274,11 @@ La utilización del propio espacio universitario no funcionó como mero decorado
 | Acción | Dispositivo / Tecla | Función en el Entorno |
 |---|---|---|
 | **Desplazamiento** | `W`, `A`, `S`, `D` | Movimiento omnidireccional en primera persona |
-| **Control de Mirada** | Ratón | Orientación de cámara y cono de linterna |
+| **Control de Mirada** | Ratón | Orientación de cámara y dirección de visión nocturna |
 | **Esprintar (Correr)** | `Shift` (mantenido) | Incremento de velocidad con consumo de estamina |
-| **Linterna (On/Off)** | `F` | Alterna iluminación (consume batería de la cámara) |
+| **Visión Nocturna** | `F` / Click Der / `N` | Activa/desactiva la visión nocturna infrarroja de la cámara |
+| **Recargar Batería Cámara**| `R` | Consume una Pila AA para recargar la videocámara (+50%) |
+| **Consumir Peronachos** | `Q` | Consume un snack para regenerar estamina al 100% al instante |
 | **Interacción General** | `E` | Recoger exámenes, pilas, fusibles, Peronachos y puertas |
 | **Ocultamiento** | `E` (frente a tacho) | Ingresar al contenedor / salir del escondite |
 | **Sensor de Silencio** | Micrófono físico | Medición de decibeles en tiempo real mientras se está oculto |
@@ -286,9 +288,9 @@ La utilización del propio espacio universitario no funcionó como mero decorado
 
 ### Anexo B: Catálogo de Ítems e Interacciones Diegéticas
 
-1. **Cuadernos de Examen (x4):** Formularios de parciales matemáticos ubicados en Aula 106, Fotocopiadora CEIT, Cafetería PB y Patio del Estudiante.
-2. **Fusible de Alta Tensión (30A):** Componente industrial situado en el Primer Piso (Bedelía) indispensable para alimentar el Tablero de 220V del Laboratorio de Electrónica.
-3. **Llave Maestra del Auditorio:** Llave de cerradura ubicada en la Cafetería del 2do Piso para desbloquear los candados de las cadenas.
-4. **Pilas AA:** Baterías cilíndricas que reabastecen la energía de la linterna y cámara del jugador.
-5. **Snacks "Peronachos":** Alimentos energéticos de cafetería que restablecen instantáneamente la barra de estamina.
-6. **Título Universitario (Diploma):** Artefacto final sobre el estrado del Auditorio que autoriza el egreso legal del campus en la puerta principal de salida.
+1. **Cuadernos de Examen (x4):** Formularios matemáticos de opción múltiple en Aula 106, Fotocopiadora CEIT, Cafetería PB y Patio del Estudiante. Errar la respuesta acelera al docente.
+2. **Pilas AA:** Baterías cilíndricas en escritorios y estantes; recargan la batería de la videocámara con la tecla `R`.
+3. **Snacks "Peronachos":** Bolsas de chips 3D en buffets y repisas; se consumen con la tecla `Q` para restaurar la estamina.
+4. **Fusible de Alta Tensión (30A):** Componente industrial en Bedelía (P1) para alimentar el Tablero de 220V del Laboratorio de Electrónica.
+5. **Llave Maestra del Auditorio:** Llave antigua en la Cafetería del 2do Piso para liberar las cadenas del Auditorio.
+6. **Título Universitario (Diploma):** Artefacto final en el estrado del Auditorio que autoriza legalmente la salida del campus en la puerta principal.
