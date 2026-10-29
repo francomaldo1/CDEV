@@ -44,6 +44,9 @@ var is_blackout: bool = false
 var original_ambient_energy: float = 0.4
 var original_moon_energy: float = 0.38
 
+var p2_safe_code: String = "742"
+var nota_tablero: Node3D = null
+
 var ambient_drone_player: AudioStreamPlayer = null
 var spook_audio_3d: AudioStreamPlayer3D = null
 var spook_interval_timer: float = 0.0
@@ -74,6 +77,7 @@ func _ready() -> void:
 		
 	_spawn_exit_door()
 	_spawn_tablero_electronica()
+	_spawn_nota_tablero()
 	_spawn_fusible()
 	_spawn_multiple_cuadernos()
 	_spawn_upper_floor_blockers()
@@ -82,6 +86,7 @@ func _ready() -> void:
 	_setup_peronachos_shelves()
 	_spawn_pilas_aa()
 	_setup_institutional_plaques()
+	_setup_p2_safe_and_chalkboards()
 	_setup_intro_fade()
 	if hud and hud.has_method("set_objective_text"):
 		hud.set_objective_text("OBJETIVO: Rendir los 4 parciales en Planta Baja (0/4)")
@@ -236,8 +241,101 @@ func _spawn_fusible() -> void:
 	
 	var fusible = fusible_scene.instantiate()
 	fusible.position = Vector3(-40.0, 5.4, -39.0)
+	if fusible.has_signal("fuse_collected"):
+		fusible.fuse_collected.connect(_on_fuse_collected)
 	add_child(fusible)
 	print(">>> Fusible de alta tensión colocado sobre escritorio en Bedelía General P1 (-40.0, 5.4, -39.0)")
+
+func _on_fuse_collected() -> void:
+	if is_instance_valid(nota_tablero):
+		nota_tablero.visible = true
+		print(">>> ¡Fusible recogido! Nota de seguridad activada junto al Tablero Eléctrico de PB.")
+
+func _spawn_nota_tablero() -> void:
+	# Montada en la pared este del Depto. de Electrónica justo al lado del Tablero de 220V
+	# Tablero en X = -17.22, Z = 0.0, rotation (0, -90, 0)
+	# Nota en X = -17.20, Y = 1.45, Z = 1.15, rotation (0, -90, 0)
+	var root_nota = Node3D.new()
+	root_nota.name = "NotaSeguridadTablero"
+	root_nota.position = Vector3(-17.20, 1.45, 1.15)
+	root_nota.rotation_degrees = Vector3(0, -90, 0)
+	root_nota.visible = false # Invisible hasta que se recoja el fusible en P1
+	nota_tablero = root_nota
+	add_child(root_nota)
+	
+	var papel = CSGBox3D.new()
+	papel.name = "PapelAviso"
+	papel.size = Vector3(0.50, 0.36, 0.01)
+	var mat_paper = load("res://materials/mat_paper_white.tres")
+	if mat_paper:
+		papel.material = mat_paper
+	root_nota.add_child(papel)
+	
+	var lbl = Label3D.new()
+	lbl.name = "TextoAviso"
+	lbl.position = Vector3(0.0, 0.0, 0.01)
+	lbl.pixel_size = 0.0016
+	lbl.modulate = Color(0.08, 0.08, 0.08, 1.0)
+	lbl.text = "AVISO:\nPor protocolo nocturno, la Llave del Auditorio quedó guardada en la caja fuerte de la cafetería del 2° Piso."
+	lbl.font_size = 14
+	lbl.outline_size = 0
+	lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	lbl.width = 280.0
+	lbl.shaded = true
+	lbl.double_sided = false
+	root_nota.add_child(lbl)
+
+func _setup_p2_safe_and_chalkboards() -> void:
+	# 1. Generar código aleatorio de 3 dígitos (0 al 9)
+	var d0 = randi_range(0, 9)
+	var d1 = randi_range(0, 9)
+	var d2 = randi_range(0, 9)
+	p2_safe_code = "%d%d%d" % [d0, d1, d2]
+	print(">>> [P2 PUZZLE] Código generado para la Caja Fuerte del 2do Piso: %s (Dígitos: %d - %d - %d)" % [p2_safe_code, d0, d1, d2])
+	
+	# 2. Configurar la Caja Fuerte en la Cafetería del 2do piso
+	var caja = find_child("CajaFuerte", true, false)
+	if not caja:
+		var caja_scene = preload("res://scenes/caja_fuerte.tscn")
+		caja = caja_scene.instantiate()
+		caja.name = "CajaFuerte"
+		caja.position = Vector3(2.15, 10.10, 81.0)
+		caja.rotation_degrees = Vector3(0, 180, 0)
+		add_child(caja)
+	if caja and "safe_code" in caja:
+		caja.safe_code = p2_safe_code
+		
+	# 3. Asignar pistas en pizarrones del 2do piso
+	# Aula Oeste 201: P2_PizW1 -> [ d0 - X - X ]
+	var piz_w = find_child("P2_PizW1", true, false)
+	if piz_w:
+		_add_chalk_clue_to_blackboard(piz_w, "CÓDIGO BUFET\n[ %d - X - X ]" % d0)
+		
+	# Aula Magna 210: P2_Piz210 -> [ X - d1 - X ]
+	var piz_210 = find_child("P2_Piz210", true, false)
+	if piz_210:
+		_add_chalk_clue_to_blackboard(piz_210, "CÓDIGO BUFET\n[ X - %d - X ]" % d1)
+		
+	# Aula Este 216: P2_PizE1 -> [ X - X - d2 ]
+	var piz_e = find_child("P2_PizE1", true, false)
+	if piz_e:
+		_add_chalk_clue_to_blackboard(piz_e, "CÓDIGO BUFET\n[ X - X - %d ]" % d2)
+
+func _add_chalk_clue_to_blackboard(blackboard: Node3D, clue_text: String) -> void:
+	var lbl = Label3D.new()
+	lbl.name = "ChalkClue"
+	lbl.position = Vector3(0.0, 0.05, 0.08)
+	lbl.pixel_size = 0.0034
+	lbl.modulate = Color(0.92, 0.95, 0.98, 0.90) # Tiza blanca suave
+	lbl.text = clue_text
+	lbl.font_size = 46
+	lbl.outline_size = 3
+	lbl.outline_modulate = Color(0.18, 0.22, 0.22, 0.6)
+	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	lbl.shaded = true
+	lbl.double_sided = false
+	blackboard.add_child(lbl)
 
 func _spawn_p1_fuse_guide() -> void:
 	var p1_guide_script = preload("res://scripts/p1_fuse_guide.gd")
@@ -625,8 +723,8 @@ func _check_lab_exit(delta: float) -> void:
 	if has_exited:
 		is_waiting_for_lab_exit = false
 		if hud and hud.has_method("set_objective_text"):
-			hud.set_objective_text("NUEVO OBJETIVO: ¡Luz restablecida! Buscá la Llave del Auditorio en el 2do Piso (Cafetería)")
-		print(">>> Jugador salió del Laboratorio de Electrónica -> Objetivo de la Llave del Auditorio mostrado")
+			hud.set_objective_text("NUEVO OBJETIVO: ¡Luz restablecida! Abrí la caja fuerte de la cafetería (P2) con las pistas de las aulas", Color(1.0, 0.85, 0.2))
+		print(">>> Jugador salió del Laboratorio de Electrónica -> Objetivo de la Caja Fuerte P2 mostrado")
 
 func _trigger_hallway_dash_scare() -> void:
 	if not is_instance_valid(profesor) or not is_instance_valid(player):
@@ -823,6 +921,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		KEY_F10:
 			_debug_toggle_retro_filter()
 			get_viewport().set_input_as_handled()
+		KEY_F11:
+			_debug_teleport_to_safe_p2()
+			get_viewport().set_input_as_handled()
 
 func _debug_teleport_to_p1() -> void:
 	_unlock_upper_floor()
@@ -902,6 +1003,16 @@ func _debug_toggle_retro_filter() -> void:
 			var col = Color(0.9, 0.7, 1.0) if is_on else Color(0.7, 0.7, 0.7)
 			hud.show_temporary_alert(msg, col)
 
+func _debug_teleport_to_safe_p2() -> void:
+	_unlock_upper_floor()
+	if is_instance_valid(player):
+		player.velocity = Vector3.ZERO
+		# Frente a la Caja Fuerte en el mostrador del bufet P2 mirando hacia +Z
+		player.global_position = Vector3(2.15, 9.2, 79.2)
+		player.rotation.y = 0.0
+	if hud and hud.has_method("show_temporary_alert"):
+		hud.show_temporary_alert("🔐 [F11] Frente a la Caja Fuerte (Bufet P2). Código generado: " + p2_safe_code, Color(0.3, 1.0, 0.6))
+
 func _setup_institutional_plaques() -> void:
 	var edificio = find_child("EdificioCentral", true, false)
 	if not edificio:
@@ -965,48 +1076,14 @@ func _apply_institutional_plaque(lbl: Label3D, mat_metal: Material, mat_acrylic:
 		plaque_w = max(1.35, text_len * 0.13)
 		font_sz = 36
 		
-	var n = lbl.name
-	var is_door_cartel = (
-		n.begins_with("CartelN") or n.begins_with("P2_CartelN") or
-		n.begins_with("CartelW") or n.begins_with("P2_CartelW") or
-		n.begins_with("CartelWI") or n.begins_with("P2_CartelWI") or
-		n.begins_with("CartelEI") or n.begins_with("P2_CartelEI") or
-		n.begins_with("CartelE") or n.begins_with("P2_CartelE") or
-		n.begins_with("P2_Cartel210") or
-		n == "CartelCafe" or
-		n == "CartelBedelia" or n == "CartelDireccion" or n == "CartelSistemas" or
-		n == "CartelDeptoElec" or n == "CartelCETRA" or n == "CartelBiblio" or
-		n == "CartelFotoO" or n == "CartelFotoE" or n == "P2_CartelSO" or n == "P2_CartelSE"
-	)
-	
-	if is_door_cartel:
-		# Mover al lado del marco de la puerta sobre la pared sólida (desplazamiento en tangente de pared)
-		var shift = 2.5 if n == "CartelCafe" else 2.2
-		lbl.position += lbl.transform.basis.x * shift
-		# Altura estándar arquitectónica a nivel visual (~2.15m desde el suelo de cada piso)
-		if lbl.position.y < 4.0:
-			lbl.position.y = 2.15
-		elif lbl.position.y < 8.0:
-			lbl.position.y = 6.65
-		else:
-			lbl.position.y = 11.15
-		lbl.position -= lbl.transform.basis.z * 0.135
-	elif n == "CartelEntradaCafe":
-		# Montar directamente contra la pared del dintel de entrada en P2 (Z = 34.91, Y = 13.1)
-		lbl.position = Vector3(0.0, 13.1, 34.91)
-	elif n == "CartelAudEntrada":
-		lbl.position -= lbl.transform.basis.z * 0.12
-	else:
-		lbl.position -= lbl.transform.basis.z * 0.135
-	
-	# Estilizar el Label3D para que NO parezca una pantalla iluminada
+	# Estilizar el Label3D para que NO parezca una pantalla iluminada (sombreado real físico)
 	lbl.shaded = true # Sombreado real: reacciona naturalmente a la luz y linterna, oscuro en sombras (no emite luz)
 	lbl.double_sided = false
 	lbl.alpha_cut = Label3D.ALPHA_CUT_DISCARD
 	lbl.render_priority = 2
 	lbl.font_size = font_sz
-	lbl.outline_size = 3
-	lbl.modulate = Color(0.80, 0.83, 0.88, 1.0) # Blanco grisáceo mate institucional (no blanco flúor)
+	lbl.outline_size = 2
+	lbl.modulate = Color(0.82, 0.85, 0.90, 1.0) # Blanco grisáceo mate institucional (no blanco flúor)
 	lbl.outline_modulate = Color(0.04, 0.05, 0.07, 0.95)
 	
 	var plaque = Node3D.new()

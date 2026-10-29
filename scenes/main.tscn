@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" path="res://scenes/player.tscn" id="5_choun"]
 [ext_resource type="Script" uid="uid://4mepc0cpop3" path="res://scripts/main.gd" id="7_main0"]
 [ext_resource type="PackedScene" uid="uid://21t23mc5bmpn" path="res://scenes/profesor.tscn" id="8_prof0"]
-[ext_resource type="PackedScene" path="res://scenes/llave_auditorio.tscn" id="9_llave"]
+[ext_resource type="PackedScene" path="res://scenes/caja_fuerte.tscn" id="9_caja"]
 [ext_resource type="PackedScene" path="res://scenes/puerta_auditorio.tscn" id="10_paud"]
 [ext_resource type="PackedScene" path="res://scenes/titulo_universitario.tscn" id="11_titulo"]
 [ext_resource type="PackedScene" path="res://scenes/pause_menu.tscn" id="12_pause"]
@@ -45,8 +45,8 @@ shadow_enabled = true
 [node name="Profesor" parent="." unique_id=1380220076 instance=ExtResource("8_prof0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, -22)
 
-[node name="LlaveAuditorio" parent="." unique_id=540969483 instance=ExtResource("9_llave")]
-transform = Transform3D(0.9063078, 0, -0.42261827, 0, 1, 0, 0.42261827, 0, 0.9063078, 2.152, 10.10374, 81.54505)
+[node name="CajaFuerte" parent="." unique_id=540969483 instance=ExtResource("9_caja")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 2.15, 10.10, 81.0)
 
 [node name="PuertaAuditorio" parent="." unique_id=1125841302 instance=ExtResource("10_paud")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 34)
