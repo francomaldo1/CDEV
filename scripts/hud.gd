@@ -734,7 +734,7 @@ func _setup_debug_cheats_panel() -> void:
 		"  [F7]  🍟 Teleport a Cafetería PB (Estantes de Peronachos)\n" + \
 		"  [F8]  🎓 Aprobar todos los Parciales y Desbloquear Accesos\n" + \
 		"  [F9]  🧊 Congelar / Descongelar al Profesor (para probar sin peligro)\n" + \
-		"  [F10] 📼 Cambiar Filtro (PS1 / Fears to Fathom / Desactivado)\n" + \
+		"  [F10] 📼 Alternar Filtro Retro Fears to Fathom (Dithering + Color Cuantizado)\n" + \
 		"  [F2]  📋 Copiar coordenadas exactas al portapapeles\n" + \
 		"  [F3]  👁️ Ocultar / Mostrar visor de coordenadas\n" + \
 		"  [F1]  ❌ Cerrar esta ventana de ayuda"

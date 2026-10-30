@@ -16,14 +16,6 @@ class_name Player
 @onready var camera: Camera3D = $CameraPivot/Camera3D
 @onready var flashlight: SpotLight3D = $CameraPivot/Camera3D/Flashlight
 @onready var retro_post_process: CanvasLayer = get_node_or_null("RetroPostProcess")
-@onready var ps1_post_process: MeshInstance3D = get_node_or_null("CameraPivot/Camera3D/PS1PostProcess")
-
-enum RetroFilterMode {
-	PS1 = 0,
-	FEARS_TO_FATHOM = 1,
-	DISABLED = 2
-}
-var current_filter_mode: RetroFilterMode = RetroFilterMode.PS1
 @onready var night_vision_light: SpotLight3D = get_node_or_null("CameraPivot/Camera3D/NightVisionLight")
 @onready var night_vision_omni: OmniLight3D = get_node_or_null("CameraPivot/Camera3D/NightVisionOmni")
 
@@ -90,7 +82,6 @@ func _ready() -> void:
 	floor_constant_speed = true
 	floor_max_angle = deg_to_rad(50.0)
 	floor_block_on_wall = false
-	set_filter_mode(RetroFilterMode.PS1)
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_APPLICATION_FOCUS_IN:
@@ -704,30 +695,16 @@ func reload_camera_battery() -> bool:
 			
 	return true
 
-func set_filter_mode(mode: RetroFilterMode) -> String:
-	current_filter_mode = mode
-	if is_instance_valid(ps1_post_process):
-		ps1_post_process.visible = (current_filter_mode == RetroFilterMode.PS1)
-	if is_instance_valid(retro_post_process):
-		retro_post_process.visible = (current_filter_mode == RetroFilterMode.FEARS_TO_FATHOM)
-	match current_filter_mode:
-		RetroFilterMode.PS1:
-			return "Shader PS1 (Dithering + Color Cuantizado + Niebla)"
-		RetroFilterMode.FEARS_TO_FATHOM:
-			return "Shader Fears to Fathom (VHS Camcorder)"
-		_:
-			return "DESACTIVADO (Vanilla)"
-
-func cycle_filter_mode() -> String:
-	var next_mode = (int(current_filter_mode) + 1) % 3
-	return set_filter_mode(next_mode as RetroFilterMode)
-
 func toggle_retro_shader() -> bool:
-	cycle_filter_mode()
-	return current_filter_mode != RetroFilterMode.DISABLED
+	if is_instance_valid(retro_post_process):
+		retro_post_process.visible = not retro_post_process.visible
+		return retro_post_process.visible
+	return false
 
 func is_retro_shader_enabled() -> bool:
-	return current_filter_mode != RetroFilterMode.DISABLED
+	if is_instance_valid(retro_post_process):
+		return retro_post_process.visible
+	return false
 
 
 func toggle_night_vision() -> void:

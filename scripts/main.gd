@@ -1001,11 +1001,7 @@ func _debug_toggle_freeze_profesor() -> void:
 			hud.show_temporary_alert("🏃 [F9] Profesor DESCONGELADO (Patrullando normalmente)", Color(1.0, 0.4, 0.4))
 
 func _debug_toggle_retro_filter() -> void:
-	if is_instance_valid(player) and player.has_method("cycle_filter_mode"):
-		var mode_name = player.cycle_filter_mode()
-		if hud and hud.has_method("show_temporary_alert"):
-			hud.show_temporary_alert("📼 [F10] Filtro: " + mode_name, Color(0.4, 0.9, 1.0))
-	elif is_instance_valid(player) and player.has_method("toggle_retro_shader"):
+	if is_instance_valid(player) and player.has_method("toggle_retro_shader"):
 		var is_on = player.toggle_retro_shader()
 		if hud and hud.has_method("show_temporary_alert"):
 			var msg = "📼 [F10] Filtro Retro Fears to Fathom: " + ("ACTIVADO" if is_on else "DESACTIVADO")
