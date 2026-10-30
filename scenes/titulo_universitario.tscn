@@ -1,7 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/titulo_universitario.gd" id="1_titulo"]
-[ext_resource type="PackedScene" path="res://objetos/titulo_universitario.glb" id="2_glb"]
+[ext_resource type="PackedScene" path="res://models/objetos/titulo_universitario.glb" id="2_glb"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_titulo"]
 size = Vector3(3.5, 3, 3.5)
