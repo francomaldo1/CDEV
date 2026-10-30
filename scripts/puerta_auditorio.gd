@@ -30,11 +30,8 @@ func _ready() -> void:
 	
 	if audio_locked and not audio_locked.stream:
 		var path1 = "res://audio/sfx/forzando_puerta.mp3"
-		var path2 = "res://Forzando puerta 🔊- Efecto de Sonido 🚪.mp3"
 		if ResourceLoader.exists(path1):
 			audio_locked.stream = load(path1)
-		elif ResourceLoader.exists(path2):
-			audio_locked.stream = load(path2)
 
 func _build_3d_chains() -> void:
 	if not cadenas:

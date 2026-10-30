@@ -35,7 +35,7 @@ static func start_ending_piano(tree: SceneTree) -> void:
 			ending_piano_player.play()
 		return
 		
-	var path = "res://321146__benpm__ambient-piano-music-5.mp3"
+	var path = "res://audio/ambient/piano_ending.mp3"
 	if not ResourceLoader.exists(path):
 		return
 		
