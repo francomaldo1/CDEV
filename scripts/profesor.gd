@@ -58,6 +58,7 @@ var idle_anim_time: float = 0.0
 var is_attacking: bool = false
 var attack_timer: float = 0.0
 var attack_anim_time: float = 0.0
+var has_hit_in_attack: bool = false
 
 var time_without_sight: float = 0.0
 var search_timer: float = 0.0
@@ -930,6 +931,10 @@ func _enter_chase_state() -> void:
 		player.start_chase_violins(35.0)
 
 func _process_chase_state(delta: float, can_see_player: bool) -> void:
+	if is_instance_valid(player) and player.get("is_dead") == true:
+		velocity = Vector3.ZERO
+		move_and_slide()
+		return
 	if is_screamer_ambush:
 		velocity = Vector3.ZERO
 		move_and_slide()
@@ -1073,6 +1078,7 @@ func _start_attack() -> void:
 	current_state = State.ATTACK
 	is_attacking = true
 	attack_anim_time = 0.0
+	has_hit_in_attack = false
 	attack_timer = attack_cooldown
 	_say("¡¡¡CASTIGO POR COPIARSE!!!", Color(1.0, 0.1, 0.1))
 
@@ -1104,9 +1110,10 @@ func _process_attack(delta: float) -> void:
 		if torso: torso.rotation.x = lerpf(deg_to_rad(-5.0), deg_to_rad(26.0), p)
 		regla.rotation.x = lerpf(deg_to_rad(-45.0), deg_to_rad(70.0), p)
 		
-		if p > 0.6 and is_instance_valid(player):
+		if p > 0.6 and not has_hit_in_attack and is_instance_valid(player):
 			var dist = global_position.distance_to(player.global_position)
 			if dist <= attack_range + 0.6:
+				has_hit_in_attack = true
 				_hit_player()
 	elif attack_anim_time < 0.65:
 		var p = (attack_anim_time - 0.38) / 0.27
@@ -1121,17 +1128,31 @@ func _process_attack(delta: float) -> void:
 
 func _hit_player() -> void:
 	_cut_screamer_audio()
-	if is_instance_valid(player) and player.has_method("start_chase_violins"):
-		player.start_chase_violins(45.0)
 	if is_instance_valid(player):
 		var push_dir = (player.global_position - global_position).normalized()
-		player.velocity += push_dir * 9.0 + Vector3(0, 3.2, 0)
+		if player.has_method("take_damage"):
+			player.take_damage(self, push_dir)
+		else:
+			if player.has_method("start_chase_violins"):
+				player.start_chase_violins(45.0)
+			player.velocity += push_dir * 9.0 + Vector3(0, 3.2, 0)
+			var cam = player.find_child("Camera3D", true, false) as Camera3D
+			if cam:
+				var tw = create_tween()
+				tw.tween_property(cam, "rotation:z", deg_to_rad(randf_range(-14.0, 14.0)), 0.05)
+				tw.tween_property(cam, "rotation:z", 0.0, 0.18)
 		
-		var cam = player.find_child("Camera3D", true, false) as Camera3D
-		if cam:
-			var tw = create_tween()
-			tw.tween_property(cam, "rotation:z", deg_to_rad(randf_range(-14.0, 14.0)), 0.05)
-			tw.tween_property(cam, "rotation:z", 0.0, 0.18)
+		if player.get("is_dead") == true:
+			is_attacking = false
+			current_state = State.PATROL
+			velocity = Vector3.ZERO
+			var death_phrases = [
+				"¡¡ENTREGUE LA LIBRETA Y RETÍRESE!!",
+				"¡¡QUEDASTE LIBRE POR INASISTENCIA Y PARCIALES!!",
+				"¡Nos vemos en febrero, alumno!",
+				"¡Para la próxima estudie en vez de correr!"
+			]
+			_say(death_phrases[randi() % death_phrases.size()], Color(1.0, 0.15, 0.15))
 
 ## =====================================================================
 ## MOVIMIENTO Y ESQUIVA CON BIGOTES (WHISKERS)

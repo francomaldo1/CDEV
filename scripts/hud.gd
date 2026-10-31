@@ -29,6 +29,11 @@ var has_auditorium_key: bool = false
 
 var active_cuaderno: Node = null
 var current_correct_answer: int = 0
+var blood_vignette: TextureRect = null
+var red_flash_rect: ColorRect = null
+var death_panel: ColorRect = null
+var is_death_screen_shown: bool = false
+var blood_pulse_tween: Tween = null
 var option_buttons: Array[Button] = []
 
 const ICON_EXAMS = preload("res://textures/inv_parcial.png")
@@ -135,6 +140,7 @@ func _ready() -> void:
 	_setup_camcorder_ui()
 	_setup_typewriter_objective()
 	_style_mic_bar()
+	_setup_damage_and_death_ui()
 
 func _style_mic_bar() -> void:
 	if mic_icon:
@@ -159,7 +165,7 @@ func _style_mic_bar() -> void:
 		mic_progress_bar.add_theme_stylebox_override("fill", fill_box)
 
 func is_modal_active() -> bool:
-	return (math_panel and math_panel.visible) or (victory_panel and victory_panel.visible)
+	return (math_panel and math_panel.visible) or (victory_panel and victory_panel.visible) or is_death_screen_active()
 
 func set_exams_progress(count: int, total: int = 4) -> void:
 	exams_approved_count = count
@@ -1057,3 +1063,241 @@ func _process_camcorder_ui(delta: float) -> void:
 		var m = int(camcorder_time_elapsed / 60.0) % 60
 		var h = int(camcorder_time_elapsed / 3600.0)
 		camcorder_timecode_label.text = "CAM 01 - UTN FRC | %02d:%02d:%02d" % [h, m, s]
+
+
+func _setup_damage_and_death_ui() -> void:
+	# 1. Viñeta de sangre en los bordes
+	blood_vignette = TextureRect.new()
+	blood_vignette.name = "BloodVignette"
+	blood_vignette.set_anchors_preset(Control.PRESET_FULL_RECT)
+	blood_vignette.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	blood_vignette.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	blood_vignette.stretch_mode = TextureRect.STRETCH_SCALE
+	
+	var grad = Gradient.new()
+	grad.colors = PackedColorArray([
+		Color(0.8, 0.02, 0.02, 0.0),
+		Color(0.7, 0.01, 0.01, 0.0),
+		Color(0.65, 0.0, 0.0, 0.45),
+		Color(0.5, 0.0, 0.0, 0.88),
+		Color(0.35, 0.0, 0.0, 0.98)
+	])
+	grad.offsets = PackedFloat32Array([0.0, 0.42, 0.72, 0.9, 1.0])
+	
+	var grad_tex = GradientTexture2D.new()
+	grad_tex.gradient = grad
+	grad_tex.fill = GradientTexture2D.FILL_RADIAL
+	grad_tex.fill_from = Vector2(0.5, 0.5)
+	grad_tex.fill_to = Vector2(1.0, 1.0)
+	grad_tex.width = 512
+	grad_tex.height = 512
+	
+	blood_vignette.texture = grad_tex
+	blood_vignette.modulate.a = 0.0
+	blood_vignette.visible = false
+	add_child(blood_vignette)
+	
+	# 2. Flash rojo instantáneo de impacto
+	red_flash_rect = ColorRect.new()
+	red_flash_rect.name = "RedFlashRect"
+	red_flash_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
+	red_flash_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	red_flash_rect.color = Color(0.85, 0.04, 0.04, 0.5)
+	red_flash_rect.modulate.a = 0.0
+	red_flash_rect.visible = false
+	add_child(red_flash_rect)
+	
+	# 3. Pantalla de Muerte / Game Over
+	death_panel = ColorRect.new()
+	death_panel.name = "DeathPanel"
+	death_panel.set_anchors_preset(Control.PRESET_FULL_RECT)
+	death_panel.color = Color(0.04, 0.01, 0.01, 0.96)
+	death_panel.mouse_filter = Control.MOUSE_FILTER_STOP
+	death_panel.modulate.a = 0.0
+	death_panel.visible = false
+	add_child(death_panel)
+	
+	var dp_vignette = TextureRect.new()
+	dp_vignette.set_anchors_preset(Control.PRESET_FULL_RECT)
+	dp_vignette.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	dp_vignette.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	dp_vignette.stretch_mode = TextureRect.STRETCH_SCALE
+	var dp_grad = Gradient.new()
+	dp_grad.colors = PackedColorArray([Color(0,0,0,0), Color(0,0,0,0.85)])
+	var dp_grad_tex = GradientTexture2D.new()
+	dp_grad_tex.gradient = dp_grad
+	dp_grad_tex.fill = GradientTexture2D.FILL_RADIAL
+	dp_grad_tex.fill_from = Vector2(0.5, 0.5)
+	dp_grad_tex.fill_to = Vector2(1.0, 1.0)
+	dp_vignette.texture = dp_grad_tex
+	death_panel.add_child(dp_vignette)
+	
+	var vbox = VBoxContainer.new()
+	vbox.name = "DeathVBox"
+	vbox.set_anchors_preset(Control.PRESET_CENTER)
+	vbox.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	vbox.grow_vertical = Control.GROW_DIRECTION_BOTH
+	vbox.alignment = BoxContainer.ALIGNMENT_CENTER
+	vbox.add_theme_constant_override("separation", 20)
+	vbox.custom_minimum_size = Vector2(650, 380)
+	death_panel.add_child(vbox)
+	
+	var sub_lbl = Label.new()
+	sub_lbl.text = "— INFORME DE EXAMEN FINAL —"
+	sub_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	sub_lbl.add_theme_color_override("font_color", Color(0.75, 0.4, 0.4))
+	sub_lbl.add_theme_font_size_override("font_size", 14)
+	vbox.add_child(sub_lbl)
+	
+	var title_lbl = Label.new()
+	title_lbl.name = "DeathTitleLabel"
+	title_lbl.text = "QUEDASTE LIBRE"
+	title_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title_lbl.add_theme_color_override("font_color", Color(0.95, 0.15, 0.15))
+	title_lbl.add_theme_color_override("font_shadow_color", Color(0.2, 0.0, 0.0, 0.9))
+	title_lbl.add_theme_constant_override("shadow_offset_x", 3)
+	title_lbl.add_theme_constant_override("shadow_offset_y", 3)
+	title_lbl.add_theme_font_size_override("font_size", 46)
+	vbox.add_child(title_lbl)
+	
+	var quote_lbl = Label.new()
+	quote_lbl.name = "DeathQuoteLabel"
+	quote_lbl.text = "El profesor no tuvo piedad...\nNos vemos en la mesa de Febrero."
+	quote_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	quote_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	quote_lbl.custom_minimum_size = Vector2(580, 50)
+	quote_lbl.add_theme_color_override("font_color", Color(0.88, 0.88, 0.9, 0.95))
+	quote_lbl.add_theme_font_size_override("font_size", 16)
+	vbox.add_child(quote_lbl)
+	
+	var sep = Control.new()
+	sep.custom_minimum_size = Vector2(0, 16)
+	vbox.add_child(sep)
+	
+	var btn_box = HBoxContainer.new()
+	btn_box.alignment = BoxContainer.ALIGNMENT_CENTER
+	btn_box.add_theme_constant_override("separation", 24)
+	vbox.add_child(btn_box)
+	
+	var btn_retry = Button.new()
+	btn_retry.name = "BtnRetryDeath"
+	btn_retry.text = "🔄  REINTENTAR PARCIAL"
+	btn_retry.custom_minimum_size = Vector2(240, 48)
+	btn_retry.mouse_filter = Control.MOUSE_FILTER_STOP
+	_style_death_button(btn_retry, true)
+	btn_retry.pressed.connect(_on_death_retry_pressed)
+	btn_box.add_child(btn_retry)
+	
+	var btn_menu = Button.new()
+	btn_menu.name = "BtnMenuDeath"
+	btn_menu.text = "🏛️  MENÚ PRINCIPAL"
+	btn_menu.custom_minimum_size = Vector2(240, 48)
+	btn_menu.mouse_filter = Control.MOUSE_FILTER_STOP
+	_style_death_button(btn_menu, false)
+	btn_menu.pressed.connect(_on_death_menu_pressed)
+	btn_box.add_child(btn_menu)
+
+func _style_death_button(btn: Button, is_primary: bool) -> void:
+	btn.add_theme_font_size_override("font_size", 15)
+	
+	var norm_style = StyleBoxFlat.new()
+	norm_style.bg_color = Color(0.14, 0.03, 0.03, 0.9) if is_primary else Color(0.06, 0.06, 0.08, 0.85)
+	norm_style.border_color = Color(0.9, 0.2, 0.2, 0.85) if is_primary else Color(0.5, 0.5, 0.55, 0.6)
+	norm_style.set_border_width_all(1)
+	norm_style.set_corner_radius_all(3)
+	norm_style.set_content_margin_all(8)
+	
+	var hover_style = StyleBoxFlat.new()
+	hover_style.bg_color = Color(0.28, 0.06, 0.06, 1.0) if is_primary else Color(0.14, 0.14, 0.18, 1.0)
+	hover_style.border_color = Color(1.0, 0.35, 0.35, 1.0) if is_primary else Color(0.85, 0.85, 0.9, 1.0)
+	hover_style.set_border_width_all(2)
+	hover_style.set_corner_radius_all(3)
+	hover_style.set_content_margin_all(8)
+	
+	btn.add_theme_stylebox_override("normal", norm_style)
+	btn.add_theme_stylebox_override("hover", hover_style)
+	btn.add_theme_stylebox_override("pressed", hover_style)
+	btn.add_theme_color_override("font_color", Color(0.95, 0.95, 0.95))
+	btn.add_theme_color_override("font_hover_color", Color(1.0, 1.0, 1.0))
+
+func _on_death_retry_pressed() -> void:
+	get_tree().paused = false
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	get_tree().reload_current_scene()
+
+func _on_death_menu_pressed() -> void:
+	get_tree().paused = false
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+
+func on_player_damaged(lives_remaining: int, _max_lives: int) -> void:
+	if lives_remaining == 1:
+		if red_flash_rect:
+			red_flash_rect.visible = true
+			red_flash_rect.modulate.a = 0.5
+			var tw_flash = create_tween()
+			tw_flash.tween_property(red_flash_rect, "modulate:a", 0.0, 0.45)
+			tw_flash.tween_callback(func():
+				if red_flash_rect: red_flash_rect.visible = false
+			)
+			
+		if blood_vignette:
+			blood_vignette.visible = true
+			if blood_pulse_tween and blood_pulse_tween.is_valid():
+				blood_pulse_tween.kill()
+			blood_pulse_tween = create_tween().set_loops()
+			blood_pulse_tween.tween_property(blood_vignette, "modulate:a", 0.88, 0.45).set_trans(Tween.TRANS_SINE)
+			blood_pulse_tween.tween_property(blood_vignette, "modulate:a", 0.55, 0.65).set_trans(Tween.TRANS_SINE)
+
+func on_player_healed() -> void:
+	if blood_pulse_tween and blood_pulse_tween.is_valid():
+		blood_pulse_tween.kill()
+	if blood_vignette:
+		var tw = create_tween()
+		tw.tween_property(blood_vignette, "modulate:a", 0.0, 0.8)
+		tw.tween_callback(func():
+			if blood_vignette: blood_vignette.visible = false
+		)
+
+func show_death_screen() -> void:
+	if is_death_screen_shown:
+		return
+	is_death_screen_shown = true
+	
+	if mic_container: mic_container.visible = false
+	if stamina_container: stamina_container.visible = false
+	if inventory_container: inventory_container.visible = false
+	if objective_banner_panel: objective_banner_panel.visible = false
+	if interact_prompt: interact_prompt.visible = false
+	if notification_banner: notification_banner.visible = false
+	if camcorder_container: camcorder_container.visible = false
+	
+	var quotes = [
+		"El profesor no tuvo piedad...\nNos vemos en la mesa de Febrero.",
+		"Desaprobaste los parciales.\nDejá la libreta sobre el escritorio.",
+		"Quedaste libre por inasistencia y parciales desaprobados.",
+		"Te faltó estudio, te faltó sigilo y te sobró ruido.",
+		"Para la próxima recursás con los de primer año..."
+	]
+	var quote_lbl = death_panel.find_child("DeathQuoteLabel", true, false) as Label
+	if quote_lbl:
+		quote_lbl.text = quotes[randi() % quotes.size()]
+		
+	if red_flash_rect:
+		red_flash_rect.visible = true
+		red_flash_rect.modulate.a = 0.75
+		var tw_f = create_tween()
+		tw_f.tween_property(red_flash_rect, "modulate:a", 0.2, 0.6)
+		
+	if death_panel:
+		death_panel.visible = true
+		death_panel.modulate.a = 0.0
+		var tw = create_tween()
+		tw.tween_interval(0.65)
+		tw.tween_property(death_panel, "modulate:a", 1.0, 1.2).set_trans(Tween.TRANS_SINE)
+		tw.tween_callback(func():
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		)
+
+func is_death_screen_active() -> bool:
+	return is_death_screen_shown or (death_panel and death_panel.visible)

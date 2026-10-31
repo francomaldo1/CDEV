@@ -51,6 +51,8 @@ func _input(event: InputEvent) -> void:
 		# Verificar si el HUD tiene modal activo o si el juego terminó
 		var hud = get_tree().root.find_child("HUD", true, false)
 		if hud:
+			if hud.has_method("is_death_screen_active") and hud.is_death_screen_active():
+				return
 			var vic = hud.get_node_or_null("VictoryPanel")
 			if vic and vic.visible:
 				return

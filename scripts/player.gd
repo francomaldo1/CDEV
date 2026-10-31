@@ -33,6 +33,13 @@ var was_flashlight_on_before_hiding: bool = false
 var is_night_vision_on: bool = false
 var night_vision_active_val: float = 0.0
 var night_vision_battery: float = 100.0
+
+var max_lives: int = 2
+var current_lives: int = 2
+var is_injured: bool = false
+var injury_slowdown_timer: float = 0.0
+var is_dead: bool = false
+var invulnerability_timer: float = 0.0
 const NIGHT_VISION_BATTERY_DRAIN_SPEED: float = 0.65
 const NIGHT_VISION_BATTERY_RECHARGE_SPEED: float = 1.2
 var shake_tween: Tween = null
@@ -225,10 +232,19 @@ func toggle_flashlight() -> void:
 		flashlight.visible = false
 
 func _process(delta: float) -> void:
+	if invulnerability_timer > 0.0:
+		invulnerability_timer -= delta
+	if injury_slowdown_timer > 0.0 and not is_hidden:
+		injury_slowdown_timer -= delta
 	_update_night_vision_process(delta)
 	_update_heartbeat(delta)
 
 func _physics_process(delta: float) -> void:
+	if is_dead:
+		velocity.x = 0.0
+		velocity.z = 0.0
+		move_and_slide()
+		return
 	# Si hay un menú/examen abierto o el jugador está congelado en una cinemática de terror
 	if is_hidden:
 		velocity.x = 0.0
@@ -276,6 +292,8 @@ func _physics_process(delta: float) -> void:
 		_regenerate_stamina(delta)
 
 	var current_speed = sprint_speed if is_sprinting else walk_speed
+	if is_injured and injury_slowdown_timer > 0.0 and not is_sprinting:
+		current_speed *= 0.85 # -15% de velocidad al caminar por herida
 
 	# Aceleración horizontal
 	if direction:
@@ -464,7 +482,7 @@ func _update_heartbeat(delta: float) -> void:
 	if post_screamer_heartbeat_timer > 0.0:
 		post_screamer_heartbeat_timer -= delta
 		
-	var in_danger = (is_chasing and dist < 16.0) or dist < 8.0 or post_screamer_heartbeat_timer > 0.0
+	var in_danger = (is_chasing and dist < 16.0) or dist < 8.0 or post_screamer_heartbeat_timer > 0.0 or is_injured
 	if in_danger:
 		if heartbeat_player and not heartbeat_player.playing:
 			heartbeat_player.volume_db = -8.0
@@ -472,6 +490,8 @@ func _update_heartbeat(delta: float) -> void:
 		var danger_factor = 0.5
 		if post_screamer_heartbeat_timer > 0.0:
 			danger_factor = maxf(danger_factor, clampf(post_screamer_heartbeat_timer / 15.0, 0.5, 1.0))
+		if is_injured:
+			danger_factor = maxf(danger_factor, 0.85)
 		if dist < 16.0:
 			var prox_factor = clampf(1.0 - (dist / 16.0), 0.35, 1.0)
 			danger_factor = maxf(danger_factor, prox_factor)
@@ -556,6 +576,8 @@ func _update_heartbeat(delta: float) -> void:
 
 func enter_hiding(spot: Node, hide_global_pos: Vector3, face_dir: Vector3) -> void:
 	is_hidden = true
+	# Al esconderse en un tacho se calma la adrenalina y se corta la ralentización por herida
+	injury_slowdown_timer = 0.0
 	current_hiding_spot = spot
 	velocity = Vector3.ZERO
 	was_flashlight_on_before_hiding = flashlight and flashlight.visible
@@ -651,6 +673,15 @@ func consume_peronachos() -> bool:
 	current_stamina = max_stamina
 	stamina_exhausted = false
 	time_since_sprint = stamina_regen_delay
+	
+	if is_injured:
+		is_injured = false
+		current_lives = 2
+		injury_slowdown_timer = 0.0
+		if hud and hud.has_method("on_player_healed"):
+			hud.on_player_healed()
+		if hud and hud.has_method("show_temporary_alert"):
+			hud.show_temporary_alert("🍟 ¡Peronachos nutritivos! Te recuperaste del golpe (+1 Vida).", Color(0.4, 1.0, 0.5))
 	
 	if snack_audio_player:
 		snack_audio_player.stream = load("res://audio/sfx/eating-chips.mp3")
@@ -800,4 +831,77 @@ func _play_night_vision_sound(is_on: bool) -> void:
 	get_tree().create_timer(0.2).timeout.connect(func():
 		if is_instance_valid(click_player):
 			click_player.queue_free()
+	)
+
+
+func _get_hud() -> Node:
+	if is_inside_tree() and get_tree() and get_tree().root:
+		return get_tree().root.find_child("HUD", true, false)
+	return null
+
+func take_damage(from_node: Node = null, push_dir: Vector3 = Vector3.ZERO) -> void:
+	if is_dead or invulnerability_timer > 0.0:
+		return
+	
+	invulnerability_timer = 1.3
+	var hud = _get_hud()
+	
+	if current_lives > 1:
+		# PRIMER GOLPE: HERIDO / DESAPROBADO
+		current_lives = 1
+		is_injured = true
+		injury_slowdown_timer = 10.0
+		
+		trigger_post_screamer_heartbeat(20.0)
+		shake_camera(0.65, 0.45)
+		if push_dir != Vector3.ZERO:
+			velocity += push_dir * 8.5 + Vector3(0, 2.8, 0)
+			
+		if stinger_player:
+			stinger_player.pitch_scale = randf_range(0.85, 0.95)
+			stinger_player.play()
+			
+		var cam_node = camera if camera else find_child("Camera3D", true, false)
+		if cam_node:
+			var tw_cam = create_tween()
+			tw_cam.tween_property(cam_node, "rotation:z", deg_to_rad(randf_range(-14.0, 14.0)), 0.05)
+			tw_cam.tween_property(cam_node, "rotation:z", 0.0, 0.22)
+			
+		if hud and hud.has_method("on_player_damaged"):
+			hud.on_player_damaged(1, 2)
+		if hud and hud.has_method("show_temporary_alert"):
+			hud.show_temporary_alert("⚠️ ¡GOLPE RECIBIDO! Estás herido (-15% vel.). ¡Escapá o escondete en un tacho!", Color(1.0, 0.25, 0.25))
+	else:
+		# SEGUNDO GOLPE: MUERTE DEFINITIVA
+		current_lives = 0
+		is_dead = true
+		is_frozen = true
+		velocity = Vector3.ZERO
+		
+		if jumpscare_player:
+			jumpscare_player.volume_db = 10.0
+			jumpscare_player.play()
+			
+		_play_death_collapse(from_node)
+		
+		if hud and hud.has_method("show_death_screen"):
+			hud.show_death_screen()
+
+func _play_death_collapse(killer_node: Node = null) -> void:
+	if not camera or not camera_pivot:
+		return
+		
+	var tw = create_tween().set_parallel(true)
+	if is_instance_valid(killer_node):
+		var to_killer = (killer_node.global_position - global_position).normalized()
+		to_killer.y = 0.0
+		if to_killer.length_squared() > 0.01:
+			var target_yaw = atan2(-to_killer.x, -to_killer.z) - rotation.y
+			tw.tween_property(camera_pivot, "rotation:y", target_yaw, 0.35).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+			
+	tw.tween_property(camera_pivot, "position:y", 0.22, 0.65).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	tw.tween_property(camera, "rotation:z", deg_to_rad(70.0), 0.7).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+	
+	get_tree().create_timer(0.65).timeout.connect(func():
+		shake_camera(0.35, 0.2)
 	)
