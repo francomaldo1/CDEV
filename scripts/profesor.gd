@@ -1148,7 +1148,7 @@ func _hit_player() -> void:
 			velocity = Vector3.ZERO
 			var death_phrases = [
 				"¡¡ENTREGUE LA LIBRETA Y RETÍRESE!!",
-				"¡¡QUEDASTE LIBRE POR INASISTENCIA Y PARCIALES!!",
+				"¡¡A RECURSAR LA MATERIA!!",
 				"¡Nos vemos en febrero, alumno!",
 				"¡Para la próxima estudie en vez de correr!"
 			]

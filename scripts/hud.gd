@@ -1181,8 +1181,8 @@ func _setup_damage_and_death_ui() -> void:
 	
 	var btn_retry = Button.new()
 	btn_retry.name = "BtnRetryDeath"
-	btn_retry.text = "🔄  REINTENTAR PARCIAL"
-	btn_retry.custom_minimum_size = Vector2(240, 48)
+	btn_retry.text = "REINTENTAR"
+	btn_retry.custom_minimum_size = Vector2(220, 48)
 	btn_retry.mouse_filter = Control.MOUSE_FILTER_STOP
 	_style_death_button(btn_retry, true)
 	btn_retry.pressed.connect(_on_death_retry_pressed)
@@ -1190,8 +1190,8 @@ func _setup_damage_and_death_ui() -> void:
 	
 	var btn_menu = Button.new()
 	btn_menu.name = "BtnMenuDeath"
-	btn_menu.text = "🏛️  MENÚ PRINCIPAL"
-	btn_menu.custom_minimum_size = Vector2(240, 48)
+	btn_menu.text = "MENÚ PRINCIPAL"
+	btn_menu.custom_minimum_size = Vector2(220, 48)
 	btn_menu.mouse_filter = Control.MOUSE_FILTER_STOP
 	_style_death_button(btn_menu, false)
 	btn_menu.pressed.connect(_on_death_menu_pressed)
@@ -1275,7 +1275,6 @@ func show_death_screen() -> void:
 	var quotes = [
 		"El profesor no tuvo piedad...\nNos vemos en la mesa de Febrero.",
 		"Desaprobaste los parciales.\nDejá la libreta sobre el escritorio.",
-		"Quedaste libre por inasistencia y parciales desaprobados.",
 		"Te faltó estudio, te faltó sigilo y te sobró ruido.",
 		"Para la próxima recursás con los de primer año..."
 	]
