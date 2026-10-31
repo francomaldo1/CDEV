@@ -869,8 +869,6 @@ func take_damage(from_node: Node = null, push_dir: Vector3 = Vector3.ZERO) -> vo
 			
 		if hud and hud.has_method("on_player_damaged"):
 			hud.on_player_damaged(1, 2)
-		if hud and hud.has_method("show_temporary_alert"):
-			hud.show_temporary_alert("⚠️ ¡GOLPE RECIBIDO! Estás herido (-15% vel.). ¡Escapá o escondete en un tacho!", Color(1.0, 0.25, 0.25))
 	else:
 		# SEGUNDO GOLPE: MUERTE DEFINITIVA
 		current_lives = 0

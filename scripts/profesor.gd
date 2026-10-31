@@ -1146,13 +1146,6 @@ func _hit_player() -> void:
 			is_attacking = false
 			current_state = State.PATROL
 			velocity = Vector3.ZERO
-			var death_phrases = [
-				"¡¡ENTREGUE LA LIBRETA Y RETÍRESE!!",
-				"¡¡A RECURSAR LA MATERIA!!",
-				"¡Nos vemos en febrero, alumno!",
-				"¡Para la próxima estudie en vez de correr!"
-			]
-			_say(death_phrases[randi() % death_phrases.size()], Color(1.0, 0.15, 0.15))
 
 ## =====================================================================
 ## MOVIMIENTO Y ESQUIVA CON BIGOTES (WHISKERS)

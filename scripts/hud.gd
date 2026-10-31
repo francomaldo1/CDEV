@@ -1138,16 +1138,9 @@ func _setup_damage_and_death_ui() -> void:
 	vbox.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	vbox.grow_vertical = Control.GROW_DIRECTION_BOTH
 	vbox.alignment = BoxContainer.ALIGNMENT_CENTER
-	vbox.add_theme_constant_override("separation", 20)
-	vbox.custom_minimum_size = Vector2(650, 380)
+	vbox.add_theme_constant_override("separation", 28)
+	vbox.custom_minimum_size = Vector2(650, 320)
 	death_panel.add_child(vbox)
-	
-	var sub_lbl = Label.new()
-	sub_lbl.text = "— INFORME DE EXAMEN FINAL —"
-	sub_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	sub_lbl.add_theme_color_override("font_color", Color(0.75, 0.4, 0.4))
-	sub_lbl.add_theme_font_size_override("font_size", 14)
-	vbox.add_child(sub_lbl)
 	
 	var title_lbl = Label.new()
 	title_lbl.name = "DeathTitleLabel"
@@ -1157,21 +1150,11 @@ func _setup_damage_and_death_ui() -> void:
 	title_lbl.add_theme_color_override("font_shadow_color", Color(0.2, 0.0, 0.0, 0.9))
 	title_lbl.add_theme_constant_override("shadow_offset_x", 3)
 	title_lbl.add_theme_constant_override("shadow_offset_y", 3)
-	title_lbl.add_theme_font_size_override("font_size", 46)
+	title_lbl.add_theme_font_size_override("font_size", 54)
 	vbox.add_child(title_lbl)
 	
-	var quote_lbl = Label.new()
-	quote_lbl.name = "DeathQuoteLabel"
-	quote_lbl.text = "El profesor no tuvo piedad...\nNos vemos en la mesa de Febrero."
-	quote_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	quote_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	quote_lbl.custom_minimum_size = Vector2(580, 50)
-	quote_lbl.add_theme_color_override("font_color", Color(0.88, 0.88, 0.9, 0.95))
-	quote_lbl.add_theme_font_size_override("font_size", 16)
-	vbox.add_child(quote_lbl)
-	
 	var sep = Control.new()
-	sep.custom_minimum_size = Vector2(0, 16)
+	sep.custom_minimum_size = Vector2(0, 10)
 	vbox.add_child(sep)
 	
 	var btn_box = HBoxContainer.new()
@@ -1271,16 +1254,6 @@ func show_death_screen() -> void:
 	if interact_prompt: interact_prompt.visible = false
 	if notification_banner: notification_banner.visible = false
 	if camcorder_container: camcorder_container.visible = false
-	
-	var quotes = [
-		"El profesor no tuvo piedad...\nNos vemos en la mesa de Febrero.",
-		"Desaprobaste los parciales.\nDejá la libreta sobre el escritorio.",
-		"Te faltó estudio, te faltó sigilo y te sobró ruido.",
-		"Para la próxima recursás con los de primer año..."
-	]
-	var quote_lbl = death_panel.find_child("DeathQuoteLabel", true, false) as Label
-	if quote_lbl:
-		quote_lbl.text = quotes[randi() % quotes.size()]
 		
 	if red_flash_rect:
 		red_flash_rect.visible = true
