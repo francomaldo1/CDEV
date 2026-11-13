@@ -165,7 +165,7 @@ func _create_phantom() -> void:
 		if not is_custom_tscn:
 			var mesh = scp_inst.find_child("scp096", true, false) as MeshInstance3D
 			if mesh:
-				var tex = load("res://scpcb-future-horror-mod-scp-096/textures/SCP096_fh_fix.jpg")
+				var tex = load("res://models/scpcb-future-horror-mod-scp-096/textures/SCP096_fh_fix.jpg")
 				if tex:
 					var mat0 = mesh.get_active_material(0)
 					if mat0 is StandardMaterial3D:
@@ -213,7 +213,7 @@ func _load_scp_scene() -> PackedScene:
 	var path_tscn = "res://scenes/scp_096_guia.tscn"
 	if ResourceLoader.exists(path_tscn):
 		return load(path_tscn)
-	var path_fbx = "res://scpcb-future-horror-mod-scp-096/source/SCP-096.fbx"
+	var path_fbx = "res://models/scpcb-future-horror-mod-scp-096/source/SCP-096.fbx"
 	if ResourceLoader.exists(path_fbx):
 		return load(path_fbx)
 	return null

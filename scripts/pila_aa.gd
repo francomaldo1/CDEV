@@ -31,7 +31,7 @@ func _build_visuals() -> void:
 	mesh_container.position = Vector3(0.0, 0.02, 0.0)
 	add_child(mesh_container)
 	
-	var fbx_path = "res://aa-battery/source/AA_Battery.fbx"
+	var fbx_path = "res://models/aa-battery/source/AA_Battery.fbx"
 	if ResourceLoader.exists(fbx_path):
 		var fbx_scene = load(fbx_path) as PackedScene
 		if fbx_scene:
@@ -45,20 +45,20 @@ func _build_visuals() -> void:
 			# Material PBR fiel al modelo original sin emisión que lave el color
 			var mat = StandardMaterial3D.new()
 			mat.cull_mode = BaseMaterial3D.CULL_DISABLED
-			if ResourceLoader.exists("res://aa-battery/textures/AA_Battery_BaseColor.png"):
-				mat.albedo_texture = load("res://aa-battery/textures/AA_Battery_BaseColor.png")
-			if ResourceLoader.exists("res://aa-battery/textures/AA_Battery_Metallic.png"):
+			if ResourceLoader.exists("res://models/aa-battery/textures/AA_Battery_BaseColor.png"):
+				mat.albedo_texture = load("res://models/aa-battery/textures/AA_Battery_BaseColor.png")
+			if ResourceLoader.exists("res://models/aa-battery/textures/AA_Battery_Metallic.png"):
 				mat.metallic = 0.85
-				mat.metallic_texture = load("res://aa-battery/textures/AA_Battery_Metallic.png")
-			if ResourceLoader.exists("res://aa-battery/textures/AA_Battery_Roughness.png"):
+				mat.metallic_texture = load("res://models/aa-battery/textures/AA_Battery_Metallic.png")
+			if ResourceLoader.exists("res://models/aa-battery/textures/AA_Battery_Roughness.png"):
 				mat.roughness = 0.35
-				mat.roughness_texture = load("res://aa-battery/textures/AA_Battery_Roughness.png")
-			if ResourceLoader.exists("res://aa-battery/textures/AA_Battery_Normal.png"):
+				mat.roughness_texture = load("res://models/aa-battery/textures/AA_Battery_Roughness.png")
+			if ResourceLoader.exists("res://models/aa-battery/textures/AA_Battery_Normal.png"):
 				mat.normal_enabled = true
-				mat.normal_texture = load("res://aa-battery/textures/AA_Battery_Normal.png")
-			if ResourceLoader.exists("res://aa-battery/textures/AA_Battery_AO.png"):
+				mat.normal_texture = load("res://models/aa-battery/textures/AA_Battery_Normal.png")
+			if ResourceLoader.exists("res://models/aa-battery/textures/AA_Battery_AO.png"):
 				mat.ao_enabled = true
-				mat.ao_texture = load("res://aa-battery/textures/AA_Battery_AO.png")
+				mat.ao_texture = load("res://models/aa-battery/textures/AA_Battery_AO.png")
 			
 			# Aplicar el material a las 5 pilas del pack (3 paradas y 2 acostadas adelante)
 			for c in inst.get_children():

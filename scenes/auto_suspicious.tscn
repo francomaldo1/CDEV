@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="ArrayMesh" path="res://Suspicious Car 01/Suspicious Car.obj" id="1_mesh"]
+[ext_resource type="ArrayMesh" path="res://models/Suspicious Car 01/Suspicious Car.obj" id="1_mesh"]
 [ext_resource type="Material" path="res://materials/mat_suspicious_car.tres" id="2_mat"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_sedan"]

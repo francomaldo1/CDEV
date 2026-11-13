@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://scripts/auto_suv.gd" id="1_script"]
-[ext_resource type="PackedScene" path="res://Suv/suv.glb" id="2_suv"]
+[ext_resource type="PackedScene" path="res://models/Suv/suv.glb" id="2_suv"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_suv"]
 size = Vector3(2.35, 1.85, 4.8)
