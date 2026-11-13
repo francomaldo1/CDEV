@@ -46,7 +46,6 @@ La propuesta integra mecanicas diegeticas de inmersion, destacandose la deteccio
 
 ### Requisitos
 * **Godot Engine:** version 4.2 o superior (probado y optimizado en Godot 4.7 Standard x86_64).
-* **Renderizador:** Forward+ o Mobile.
 * **Microfono:** Conectado y habilitado en el sistema operativo (necesario para la mecanica de sigilo en tachos).
 
 ### Pasos
