@@ -16,3 +16,5 @@ Thumbs.db
 
 SUBIR_A_GITHUB.bat
 CHAT_COMPLETO_PROYECTO.txt
+*.exe
+*.pck
